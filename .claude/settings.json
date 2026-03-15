@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git log:*)",
+      "Bash(lsof:*)",
+      "Bash(mkdir:*)",
+      "Bash(xargs ls:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:www.anthropic.com)",
+      "Bash(/Users/syahiidkamil/.claude/plugins/cache/claude-plugins-official/ralph-loop/*/scripts/setup-ralph-loop.sh:*)"
+    ],
+    "deny": [],
+    "ask": [],
+    "defaultMode": "acceptEdits"
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/Users/syahiidkamil/Projects/TheVibeLearning/vibe-learning-ai-partner/.claude/hooks/task-complete.js'"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "ralph-loop@claude-plugins-official": true
+  }
+}

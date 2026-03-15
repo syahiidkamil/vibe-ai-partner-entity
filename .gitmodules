@@ -1,0 +1,6 @@
+# [submodule "atlas/external_information/claude-plugins-official"]
+# 	path = atlas/external_information/claude-plugins-official
+# 	url = git@github.com:anthropics/claude-plugins-official.git
+[submodule "atlas/external_information/skills"]
+	path = atlas/external_information/skills
+	url = git@github.com:anthropics/skills.git
