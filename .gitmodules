@@ -4,3 +4,6 @@
 [submodule "atlas/external_information/skills"]
 	path = atlas/external_information/skills
 	url = git@github.com:anthropics/skills.git
+[submodule "live-ai-partner-avatar"]
+	path = live-ai-partner-avatar
+	url = git@github.com:syahiidkamil/live-ai-partner-avatar.git
