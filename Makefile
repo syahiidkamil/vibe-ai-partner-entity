@@ -1,6 +1,6 @@
 CLI = node $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/desktop/cli.js
 
-.PHONY: start stop restart list status normal angry sad surprised blushing cry mad say tts-start tts-stop tts-status tts-restart help
+.PHONY: start stop restart list status normal angry sad surprised blushing cry mad say tts-start tts-stop tts-status tts-restart tts-say help
 
 start: ## Start avatar (single instance)
 	@if pgrep -f "Electron\.app.*MacOS/Electron \." > /dev/null 2>&1; then \
@@ -60,6 +60,9 @@ tts-restart: ## Restart Kokoro TTS daemon
 	@$(KOKORO) stop
 	@sleep 1
 	@$(KOKORO) start
+
+tts-say: ## Speak text: make tts-say t="Hello" v=af_heart
+	@python3 -c "import socket,json,sys; s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM); s.connect('/tmp/vibe-kokoro.sock'); s.sendall(json.dumps({'text':'$(t)','voice':'$(or $(v),af_heart)'}).encode()); s.close()"
 
 help: ## Show commands
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  make %-12s %s\n", $$1, $$2}'
