@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 200px;
+      height: 250px;
+      overflow: hidden;
+      background: transparent;
+      user-select: none;
+    }
+
+    #avatar-container {
+      position: relative;
+      width: 200px;
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      -webkit-app-region: drag;
+      cursor: grab;
+    }
+
+    /* Speech Bubble */
+    #speech-bubble {
+      position: absolute;
+      top: 0;
+      background: white;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 6px 10px;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      font-size: 11px;
+      max-width: 160px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 10;
+    }
+    #speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #333;
+    }
+    #speech-bubble.visible { opacity: 1; }
+
+    /* Avatar SVG Canvas */
+    #avatar-canvas {
+      width: 150px;
+      height: 200px;
+    }
+
+    /* Mood indicator */
+    #mood-label {
+      font-family: 'SF Pro', 'Helvetica Neue', sans-serif;
+      font-size: 10px;
+      color: rgba(100, 100, 100, 0.8);
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 8px;
+      padding: 2px 8px;
+      margin-top: 2px;
+      -webkit-app-region: no-drag;
+      cursor: pointer;
+    }
+
+    /* Right-click context menu area */
+    .no-drag { -webkit-app-region: no-drag; }
+
+    /* Animations */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-8deg); }
+      75% { transform: rotate(8deg); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .jumping { animation: bounce 0.4s ease-in-out; }
+    .dancing { animation: wiggle 0.3s ease-in-out infinite; }
+    .idle { animation: float 3s ease-in-out infinite; }
+  </style>
+</head>
+<body>
+  <div id="avatar-container">
+    <div id="speech-bubble"></div>
+    <canvas id="avatar-canvas" width="150" height="200"></canvas>
+    <div id="mood-label" title="Right-click for options">😊 neutral</div>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+    const canvas = document.getElementById('avatar-canvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('avatar-container');
+    const speechBubble = document.getElementById('speech-bubble');
+    const moodLabel = document.getElementById('mood-label');
+
+    // --- State ---
+    let mood = 'neutral';
+    let currentAction = 'idle';
+    let animFrame = 0;
+    let blinkTimer = 0;
+    let isBlinking = false;
+    let waveAngle = 0;
+    let idleOffset = 0;
+
+    // --- Colors ---
+    const SKIN = '#FFD93D';
+    const OUTLINE = '#333333';
+    const CHEEK = '#FF9999';
+
+    // --- Mood configs ---
+    const moods = {
+      neutral: { eyes: 'normal', mouth: 'line', emoji: '😊' },
+      happy:   { eyes: 'happy', mouth: 'smile', emoji: '😄' },
+      sad:     { eyes: 'sad', mouth: 'frown', emoji: '😢' },
+      angry:   { eyes: 'angry', mouth: 'grr', emoji: '😠' },
+      thinking:{ eyes: 'look_up', mouth: 'hmm', emoji: '🤔' },
+    };
+
+    // --- Draw Functions ---
+    function drawBody(oY) {
+      // Body
+      ctx.fillStyle = '#4A90D9';
+      ctx.beginPath();
+      ctx.roundRect(50, 115 + oY, 50, 55, 8);
+      ctx.fill();
+      ctx.strokeStyle = OUTLINE;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Legs
+      ctx.fillStyle = '#333';
+      ctx.fillRect(58, 168 + oY, 14, 25);
+      ctx.fillRect(78, 168 + oY, 14, 25);
+
+      // Shoes
+      ctx.fillStyle = '#8B4513';
+      ctx.beginPath();
+      ctx.roundRect(54, 188 + oY, 20, 10, [0, 0, 4, 4]);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.roundRect(76, 188 + oY, 20, 10, [0, 0, 4, 4]);
+      ctx.fill();
+    }
+
+    function drawArms(oY) {
+      ctx.strokeStyle = SKIN;
+      ctx.lineWidth = 6;
+      ctx.lineCap = 'round';
+
+      // Left arm
+      ctx.beginPath();
+      ctx.moveTo(50, 125 + oY);
+      if (currentAction === 'wave') {
+        const wx = 30 + Math.sin(waveAngle) * 10;
+        const wy = 100 + Math.cos(waveAngle) * 5 + oY;
+        ctx.quadraticCurveTo(35, 115 + oY, wx, wy);
+      } else {
+        ctx.quadraticCurveTo(40, 140 + oY, 38, 155 + oY);
+      }
+      ctx.stroke();
+
+      // Right arm
+      ctx.beginPath();
+      ctx.moveTo(100, 125 + oY);
+      ctx.quadraticCurveTo(110, 140 + oY, 112, 155 + oY);
+      ctx.stroke();
+
+      // Hands
+      ctx.fillStyle = SKIN;
+      if (currentAction === 'wave') {
+        const hx = 30 + Math.sin(waveAngle) * 10;
+        const hy = 100 + Math.cos(waveAngle) * 5 + oY;
+        ctx.beginPath();
+        ctx.arc(hx, hy - 3, 5, 0, Math.PI * 2);
+        ctx.fill();
+        // Wave text
+        ctx.font = '16px serif';
+        ctx.fillText('👋', hx - 12, hy - 12);
+      } else {
+        ctx.beginPath();
+        ctx.arc(38, 157 + oY, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(112, 157 + oY, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    function drawHead(oY) {
+      const m = moods[mood];
+
+      // Head circle
+      ctx.fillStyle = SKIN;
+      ctx.beginPath();
+      ctx.arc(75, 70 + oY, 42, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = OUTLINE;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Hair
+      ctx.fillStyle = '#4A3728';
+      ctx.beginPath();
+      ctx.arc(75, 55 + oY, 42, Math.PI, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(75, 35 + oY, 30, 12, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Cheeks
+      ctx.fillStyle = CHEEK;
+      ctx.globalAlpha = 0.3;
+      ctx.beginPath();
+      ctx.ellipse(52, 80 + oY, 8, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(98, 80 + oY, 8, 5, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Eyes
+      drawEyes(m.eyes, oY);
+
+      // Mouth
+      drawMouth(m.mouth, oY);
+
+      // Thinking bubble
+      if (mood === 'thinking') {
+        ctx.font = '14px serif';
+        ctx.fillText('💭', 110, 40 + oY);
+      }
+    }
+
+    function drawEyes(type, oY) {
+      ctx.fillStyle = OUTLINE;
+
+      if (isBlinking) {
+        // Blink - horizontal lines
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(58, 68 + oY);
+        ctx.lineTo(68, 68 + oY);
+        ctx.moveTo(82, 68 + oY);
+        ctx.lineTo(92, 68 + oY);
+        ctx.stroke();
+        return;
+      }
+
+      switch (type) {
+        case 'normal':
+          ctx.beginPath();
+          ctx.arc(63, 68 + oY, 4, 0, Math.PI * 2);
+          ctx.arc(87, 68 + oY, 4, 0, Math.PI * 2);
+          ctx.fill();
+          // Shine
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc(65, 66 + oY, 1.5, 0, Math.PI * 2);
+          ctx.arc(89, 66 + oY, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+
+        case 'happy':
+          ctx.lineWidth = 2.5;
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.arc(63, 70 + oY, 5, Math.PI, Math.PI * 2);
+          ctx.moveTo(82, 70 + oY);
+          ctx.arc(87, 70 + oY, 5, Math.PI, Math.PI * 2);
+          ctx.stroke();
+          break;
+
+        case 'sad':
+          ctx.beginPath();
+          ctx.arc(63, 70 + oY, 4, 0, Math.PI * 2);
+          ctx.arc(87, 70 + oY, 4, 0, Math.PI * 2);
+          ctx.fill();
+          // Tear
+          ctx.fillStyle = '#5BC0EB';
+          ctx.beginPath();
+          ctx.ellipse(69, 78 + oY, 2, 4, 0.2, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+
+        case 'angry':
+          // Angry eyebrows
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(55, 58 + oY);
+          ctx.lineTo(70, 62 + oY);
+          ctx.moveTo(95, 58 + oY);
+          ctx.lineTo(80, 62 + oY);
+          ctx.stroke();
+          // Eyes
+          ctx.beginPath();
+          ctx.arc(63, 70 + oY, 3.5, 0, Math.PI * 2);
+          ctx.arc(87, 70 + oY, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+
+        case 'look_up':
+          ctx.beginPath();
+          ctx.arc(63, 65 + oY, 4, 0, Math.PI * 2);
+          ctx.arc(87, 65 + oY, 4, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc(65, 63 + oY, 1.5, 0, Math.PI * 2);
+          ctx.arc(89, 63 + oY, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+          break;
+      }
+    }
+
+    function drawMouth(type, oY) {
+      ctx.strokeStyle = OUTLINE;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+
+      switch (type) {
+        case 'line':
+          ctx.beginPath();
+          ctx.moveTo(67, 88 + oY);
+          ctx.lineTo(83, 88 + oY);
+          ctx.stroke();
+          break;
+
+        case 'smile':
+          ctx.beginPath();
+          ctx.arc(75, 84 + oY, 10, 0.1, Math.PI - 0.1);
+          ctx.stroke();
+          break;
+
+        case 'frown':
+          ctx.beginPath();
+          ctx.arc(75, 96 + oY, 8, Math.PI + 0.3, -0.3);
+          ctx.stroke();
+          break;
+
+        case 'grr':
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(64, 88 + oY);
+          ctx.lineTo(69, 91 + oY);
+          ctx.lineTo(74, 88 + oY);
+          ctx.lineTo(79, 91 + oY);
+          ctx.lineTo(86, 88 + oY);
+          ctx.stroke();
+          break;
+
+        case 'hmm':
+          ctx.beginPath();
+          ctx.moveTo(68, 90 + oY);
+          ctx.quadraticCurveTo(75, 87 + oY, 85, 90 + oY);
+          ctx.stroke();
+          break;
+      }
+    }
+
+    // --- Main Draw ---
+    function draw() {
+      ctx.clearRect(0, 0, 150, 200);
+
+      let oY = 0;
+
+      // Idle floating
+      if (currentAction === 'idle') {
+        idleOffset += 0.03;
+        oY = Math.sin(idleOffset) * 3;
+      }
+
+      // Jump offset
+      if (currentAction === 'jump') {
+        animFrame++;
+        const t = animFrame / 30;
+        oY = -Math.sin(t * Math.PI) * 40;
+        if (animFrame >= 30) {
+          currentAction = 'idle';
+          animFrame = 0;
+        }
+      }
+
+      // Wave animation
+      if (currentAction === 'wave') {
+        waveAngle += 0.2;
+        animFrame++;
+        if (animFrame >= 40) {
+          currentAction = 'idle';
+          animFrame = 0;
+        }
+      }
+
+      // Dance
+      if (currentAction === 'dance') {
+        animFrame++;
+        oY = Math.sin(animFrame * 0.3) * 5;
+        const wobble = Math.sin(animFrame * 0.2) * 3;
+        ctx.save();
+        ctx.translate(wobble, 0);
+      }
+
+      // Blink timer
+      blinkTimer++;
+      if (blinkTimer > 120 && !isBlinking) {
+        isBlinking = true;
+        setTimeout(() => { isBlinking = false; }, 150);
+        blinkTimer = 0;
+      }
+
+      drawBody(oY);
+      drawArms(oY);
+      drawHead(oY);
+
+      if (currentAction === 'dance') {
+        ctx.restore();
+        animFrame++;
+        if (animFrame >= 80) {
+          currentAction = 'idle';
+          animFrame = 0;
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    // --- Speech ---
+    function showSpeech(text, duration = 3000) {
+      speechBubble.textContent = text;
+      speechBubble.classList.add('visible');
+      setTimeout(() => speechBubble.classList.remove('visible'), duration);
+    }
+
+    // --- Set Mood ---
+    function setMood(newMood) {
+      mood = newMood;
+      const m = moods[mood];
+      moodLabel.textContent = `${m.emoji} ${mood}`;
+    }
+
+    // --- IPC Listeners ---
+    ipcRenderer.on('mood', (_, newMood) => {
+      setMood(newMood);
+      showSpeech(`Feeling ${newMood}!`);
+    });
+
+    ipcRenderer.on('action', (_, action) => {
+      currentAction = action;
+      animFrame = 0;
+      const messages = {
+        wave: 'Hi there! 👋',
+        jump: 'Wheee!',
+        dance: '💃 Let\'s dance!',
+      };
+      showSpeech(messages[action] || action);
+    });
+
+    // --- Right-click menu ---
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      const { remote } = require('electron');
+      // Fallback: cycle mood on right click
+      const moodList = Object.keys(moods);
+      const idx = (moodList.indexOf(mood) + 1) % moodList.length;
+      setMood(moodList[idx]);
+      showSpeech(`Now I'm ${mood}!`);
+    });
+
+    // --- Click actions ---
+    moodLabel.addEventListener('click', () => {
+      const actions = ['wave', 'jump', 'dance'];
+      const action = actions[Math.floor(Math.random() * actions.length)];
+      currentAction = action;
+      animFrame = 0;
+      const messages = {
+        wave: 'Hi! 👋',
+        jump: 'Boing!',
+        dance: '🎵 Dance time!',
+      };
+      showSpeech(messages[action]);
+    });
+
+    // --- Greeting on start ---
+    setTimeout(() => showSpeech('Hello Boss! 🙌', 3000), 500);
+
+    // --- Start ---
+    draw();
+  </script>
+</body>
+</html>
