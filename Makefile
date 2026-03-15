@@ -1,6 +1,6 @@
 CLI = node $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/desktop/cli.js
 
-.PHONY: start stop restart list status normal angry sad surprised blushing cry mad say help
+.PHONY: start stop restart list status normal angry sad surprised blushing cry mad say tts-start tts-stop tts-status tts-restart help
 
 start: ## Start avatar (single instance)
 	@if pgrep -f "Electron\.app.*MacOS/Electron \." > /dev/null 2>&1; then \
@@ -43,6 +43,23 @@ mad: ## Expression: mad (alias for angry)
 
 say: ## Say something: make say m="Hello"
 	@$(CLI) say $(m)
+
+## --- Kokoro TTS ---
+KOKORO = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/kokoro-tts/kokoro
+
+tts-start: ## Start Kokoro TTS daemon
+	@$(KOKORO) start
+
+tts-stop: ## Stop Kokoro TTS daemon
+	@$(KOKORO) stop
+
+tts-status: ## Show Kokoro TTS daemon status
+	@$(KOKORO) status
+
+tts-restart: ## Restart Kokoro TTS daemon
+	@$(KOKORO) stop
+	@sleep 1
+	@$(KOKORO) start
 
 help: ## Show commands
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  make %-12s %s\n", $$1, $$2}'
