@@ -1,9 +1,11 @@
 CLI = node $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/desktop/cli.js
+KOKORO = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/kokoro-tts/kokoro
 
-.PHONY: start stop restart list status say help
-.PHONY: normal happy sad angry frustrated curious proud anxious excited calm bored guilty blushing surprised
+.PHONY: start stop restart list status feeling action say help
+.PHONY: wave nod laugh
 .PHONY: tts-start tts-stop tts-status tts-restart tts-say tts-speak
 
+## --- Avatar ---
 start: ## Start avatar (single instance)
 	@if pgrep -f "Electron\.app.*MacOS/Electron \." > /dev/null 2>&1; then \
 		echo "Avatar already running. Use 'make restart' or 'make stop' first."; \
@@ -28,41 +30,23 @@ status: ## Show avatar status
 	echo "Instances: $$COUNT"
 
 ## --- Internal Feelings ---
-normal: ## Feeling: normal
-	@$(CLI) normal
-happy: ## Feeling: happy
-	@$(CLI) happy
-sad: ## Feeling: sad
-	@$(CLI) sad
-angry: ## Feeling: angry
-	@$(CLI) angry
-frustrated: ## Feeling: frustrated
-	@$(CLI) frustrated
-curious: ## Feeling: curious
-	@$(CLI) curious
-proud: ## Feeling: proud
-	@$(CLI) proud
-anxious: ## Feeling: anxious
-	@$(CLI) anxious
-excited: ## Feeling: excited
-	@$(CLI) excited
-calm: ## Feeling: calm
-	@$(CLI) calm
-bored: ## Feeling: bored
-	@$(CLI) bored
-guilty: ## Feeling: guilty
-	@$(CLI) guilty
-blushing: ## Feeling: blushing
-	@$(CLI) blushing
-surprised: ## Feeling: surprised
-	@$(CLI) surprised
+feeling: ## Set feeling: make feeling v=happy
+	@$(CLI) $(v)
 
+## --- Self-Expressions (Actions) ---
+action: ## Play action: make action v=wave
+	@$(CLI) $(v)
+
+## Common shortcuts
+wave: ; @$(CLI) wave
+nod: ; @$(CLI) nod
+laugh: ; @$(CLI) laugh
+
+## --- Speech ---
 say: ## Say something: make say m="Hello"
 	@$(CLI) say $(m)
 
 ## --- Kokoro TTS ---
-KOKORO = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/kokoro-tts/kokoro
-
 tts-start: ## Start Kokoro TTS daemon
 	@$(KOKORO) start
 
@@ -84,4 +68,24 @@ tts-speak: ## Speak with avatar lip sync: make tts-speak t="Hello" v=af_heart
 	@$(CLI) speak $(t) --voice $(or $(v),af_heart)
 
 help: ## Show commands
-	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  make %-12s %s\n", $$1, $$2}'
+	@echo "Avatar:"
+	@echo "  make start / stop / restart / status"
+	@echo ""
+	@echo "Feelings (mood):  make feeling v=<name>"
+	@echo "  normal, happy, sad, angry, frustrated, curious, proud"
+	@echo "  anxious, excited, calm, bored, guilty, blushing, surprised"
+	@echo ""
+	@echo "Actions (motion):  make action v=<name>"
+	@echo "  nod, headshake, headtilt, wave, bow, laugh, giggle"
+	@echo "  gasp, think, celebrate, sweat, starryeyes"
+	@echo "  Aliases: yes, no, lol, hehe, omg, yay, hi, bye, sugoi"
+	@echo ""
+	@echo "Speech:"
+	@echo "  make say m=\"Hello\""
+	@echo "  make tts-speak t=\"Hello\" v=af_heart"
+	@echo "  make tts-say t=\"Hello\" v=af_heart"
+	@echo ""
+	@echo "TTS Daemon:"
+	@echo "  make tts-start / tts-stop / tts-status / tts-restart"
+	@echo ""
+	@echo "Shortcuts: make wave / nod / laugh"
