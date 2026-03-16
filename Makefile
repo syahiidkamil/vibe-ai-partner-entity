@@ -1,6 +1,8 @@
 CLI = node $(dir $(abspath $(lastword $(MAKEFILE_LIST))))live-ai-partner-avatar/desktop/cli.js
 
-.PHONY: start stop restart list status normal angry sad surprised blushing cry mad say tts-start tts-stop tts-status tts-restart tts-say tts-speak help
+.PHONY: start stop restart list status say help
+.PHONY: normal happy sad angry frustrated curious proud anxious excited calm bored guilty blushing surprised
+.PHONY: tts-start tts-stop tts-status tts-restart tts-say tts-speak
 
 start: ## Start avatar (single instance)
 	@if pgrep -f "Electron\.app.*MacOS/Electron \." > /dev/null 2>&1; then \
@@ -25,21 +27,35 @@ status: ## Show avatar status
 	@COUNT=$$(pgrep -cf "Electron\.app.*MacOS/Electron \." 2>/dev/null); \
 	echo "Instances: $$COUNT"
 
-## --- Expressions ---
-normal: ## Expression: normal
+## --- Internal Feelings ---
+normal: ## Feeling: normal
 	@$(CLI) normal
-angry: ## Expression: angry
-	@$(CLI) angry
-sad: ## Expression: sad
+happy: ## Feeling: happy
+	@$(CLI) happy
+sad: ## Feeling: sad
 	@$(CLI) sad
-surprised: ## Expression: surprised
-	@$(CLI) surprised
-blushing: ## Expression: blushing
+angry: ## Feeling: angry
+	@$(CLI) angry
+frustrated: ## Feeling: frustrated
+	@$(CLI) frustrated
+curious: ## Feeling: curious
+	@$(CLI) curious
+proud: ## Feeling: proud
+	@$(CLI) proud
+anxious: ## Feeling: anxious
+	@$(CLI) anxious
+excited: ## Feeling: excited
+	@$(CLI) excited
+calm: ## Feeling: calm
+	@$(CLI) calm
+bored: ## Feeling: bored
+	@$(CLI) bored
+guilty: ## Feeling: guilty
+	@$(CLI) guilty
+blushing: ## Feeling: blushing
 	@$(CLI) blushing
-cry: ## Expression: cry (alias for sad)
-	@$(CLI) cry
-mad: ## Expression: mad (alias for angry)
-	@$(CLI) mad
+surprised: ## Feeling: surprised
+	@$(CLI) surprised
 
 say: ## Say something: make say m="Hello"
 	@$(CLI) say $(m)
