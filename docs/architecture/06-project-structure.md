@@ -20,6 +20,7 @@ vibe-ai-partner/
 │   │       └── constants.ts            # Feeling names, expression names, defaults
 │   │
 │   ├── plugin-avatar/                  # Avatar renderers (user picks one)
+│   │   ├── html/                       # Simple HTML/CSS (no WebGL, lightest option)
 │   │   ├── live2d/                     # Live2D (PixiJS + Cubism)
 │   │   ├── vrm/                        # VRM (Three.js + @pixiv/three-vrm)
 │   │   └── threejs/                    # Three.js only (custom models)

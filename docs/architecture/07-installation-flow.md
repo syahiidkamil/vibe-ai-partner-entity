@@ -24,9 +24,10 @@ Setup is interactive. It asks questions, installs only what the user chooses.
 ```
 Which avatar renderer?
 
-  1) Live2D    — 2D anime style (default model: Shizuku, ~5MB download)
-  2) VRM       — 3D model (bring your own .vrm file)
-  3) Three.js  — 3D custom (bring your own .glb/.gltf)
+  1) HTML       — simple HTML/CSS avatar (no WebGL, works everywhere, lightest)
+  2) Live2D     — 2D anime style (default model: Shizuku, ~5MB download)
+  3) VRM        — 3D model (bring your own .vrm file)
+  4) Three.js   — 3D custom (bring your own .glb/.gltf)
 
 Your choice [1]:
 ```
@@ -35,6 +36,7 @@ Your choice [1]:
 
 | Choice | npm deps installed | Model downloaded | Storage |
 |--------|-------------------|-----------------|---------|
+| HTML | None (pure HTML/CSS) | None | ~0MB |
 | Live2D | pixi-live2d-display (~50MB) | Shizuku (~5MB from GitHub Releases) | ~55MB |
 | VRM | three.js + @pixiv/three-vrm (~80MB) | None (user provides .vrm) | ~80MB |
 | Three.js | three.js only (~40MB) | None (user provides .glb) | ~40MB |

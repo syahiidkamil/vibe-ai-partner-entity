@@ -41,6 +41,7 @@ That's it.
 
 | Option | Style | What you need |
 |--------|-------|--------------|
+| **HTML** | Simple HTML/CSS | Nothing (lightest, works everywhere) |
 | **Live2D** | 2D anime | Included model (Shizuku) |
 | **VRM** | 3D character | Bring your own .vrm file |
 | **Three.js** | 3D custom | Bring your own .glb model |
