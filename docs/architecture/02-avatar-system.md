@@ -161,22 +161,34 @@ graph LR
 
 **VRM note**: VRM lip sync is richer — it cycles through viseme shapes at a rate proportional to amplitude change, creating more realistic mouth movement. But the interface stays simple: just amplitude.
 
-### Model File Organization
+### Model Management
 
+Models are **not stored in git**. They are downloaded on setup and stored locally.
+
+**Registry** (`models.json` in repo — ~1KB):
+```json
+{
+  "models": {
+    "shizuku": {
+      "type": "live2d",
+      "url": "https://github.com/.../releases/download/models-v1/shizuku-runtime.tar.gz",
+      "sha256": "...",
+      "sizeBytes": 5300000,
+      "description": "Default Live2D model by Live2D Inc.",
+      "default": true
+    }
+  }
+}
 ```
-models/
-├── live2d/
-│   └── shizuku/
-│       └── runtime/
-│           ├── shizuku.model3.json
-│           ├── motion/                  # Idle motions
-│           ├── self-expression/         # Self-expression motions
-│           └── shizuku.1024/           # Textures
-├── vrm/
-│   └── README.md                       # "Drop .vrm files here"
-└── threejs/
-    └── README.md                       # "Drop .glb/.gltf files here"
-```
+
+**Resolution order** when app loads `AVATAR_MODEL=shizuku`:
+1. Absolute path? Use directly
+2. Name? Look in platform data dir (`~/.local/share/vibe-ai-partner/models/` on Linux, `~/Library/Application Support/` on macOS, `%APPDATA%` on Windows)
+3. Not found? Prompt to run `npm run model:install shizuku`
+
+**User-provided models**: set `AVATAR_MODEL=/path/to/my-character.vrm` in `.env`
+
+**Community models**: contribute by adding an entry to `models.json` + uploading to GitHub Releases
 
 ### Design Decisions
 

@@ -1,12 +1,12 @@
 # Project Structure & Build System
 
-## Monorepo Layout
+## Project Layout
 
 ```
 vibe-ai-partner/
 │
-├── packages/                           # Shared libraries (npm packages)
-│   ├── core/                           # @vibe-ai-partner/core
+├── packages/                           # Internal code modules (developers only, users don't touch)
+│   ├── core/                           # Entity engine, interfaces, event bus
 │   │   └── src/
 │   │       ├── interfaces/             # IAvatarRenderer, ITTSEngine, IPlugin
 │   │       ├── state/                  # InternalStates, FeelingEngine, ExpressionTrigger
@@ -14,31 +14,23 @@ vibe-ai-partner/
 │   │       ├── config/                 # ConfigManager, Zod schemas
 │   │       └── utils/                  # Spring physics, shared utilities
 │   │
-│   ├── shared/                         # @vibe-ai-partner/shared
+│   ├── shared/                         # Protocol types, constants
 │   │   └── src/
 │   │       ├── protocol.ts             # WebSocket + REST message types
 │   │       └── constants.ts            # Feeling names, expression names, defaults
 │   │
-│   ├── plugin-live2d/                  # @vibe-ai-partner/plugin-live2d
-│   │   └── src/                        # IAvatarRenderer impl (PixiJS + Cubism)
+│   ├── plugin-avatar/                  # Avatar renderers (user picks one)
+│   │   ├── live2d/                     # Live2D (PixiJS + Cubism)
+│   │   ├── vrm/                        # VRM (Three.js + @pixiv/three-vrm)
+│   │   └── threejs/                    # Three.js only (custom models)
 │   │
-│   ├── plugin-vrm/                     # @vibe-ai-partner/plugin-vrm
-│   │   └── src/                        # IAvatarRenderer impl (Three.js + VRM)
-│   │
-│   ├── plugin-threejs/                 # @vibe-ai-partner/plugin-threejs
-│   │   └── src/                        # IAvatarRenderer impl (Three.js only)
-│   │
-│   ├── plugin-kokoro-tts/              # @vibe-ai-partner/plugin-kokoro-tts
-│   │   └── src/                        # ITTSEngine impl (HTTP/WS client)
-│   │
-│   ├── plugin-kokoro-onnx/             # @vibe-ai-partner/plugin-kokoro-onnx
-│   │   └── src/                        # ITTSEngine impl (ONNX in browser)
-│   │
-│   └── plugin-kitten-tts/              # @vibe-ai-partner/plugin-kitten-tts
-│       └── src/                        # ITTSEngine impl (Kitten adapter)
+│   └── plugin-tts/                     # TTS engines (user picks one)
+│       ├── kokoro/                     # Kokoro full (PyTorch, best quality)
+│       ├── kokoro-onnx/                # Kokoro ONNX (lighter, CPU ok)
+│       └── kittentts/                  # KittenTTS (ultra-light, CPU only)
 │
 ├── apps/                               # Runnable applications
-│   ├── avatar-app/                     # Tauri 2 avatar application
+│   ├── avatar-app/                     # Tauri 2 avatar window
 │   │   ├── src/                        # TypeScript frontend
 │   │   │   ├── main.ts                 # Entry, animation loop
 │   │   │   ├── app.ts                  # Plugin orchestration, event wiring
@@ -60,19 +52,18 @@ vibe-ai-partner/
 │   │   │   ├── audio_player.py         # Playback + amplitude
 │   │   │   └── pipeline.py             # Chunked streaming
 │   │   ├── pyproject.toml
-│   │   ├── Dockerfile
+│   │   ├── Dockerfile                  # Optional: Docker deployment
 │   │   └── docker-compose.yml
 │   │
 │   └── cli/                            # Node.js CLI tool
 │       ├── src/
-│       │   ├── index.ts                # Entry + commander setup
+│       │   ├── index.ts
 │       │   └── commands/               # feeling, action, speak, config
 │       └── package.json
 │
-├── models/                             # Avatar model files
-│   ├── live2d/shizuku/                 # Live2D Shizuku model + motions
-│   ├── vrm/                            # User-provided VRM models
-│   └── README.md
+├── models.json                         # Model registry (URLs, hashes, metadata — ~1KB)
+├── models/                             # Downloaded models (gitignored, populated by setup)
+│   └── README.md                       # How to add custom models
 │
 ├── entity/                             # Entity Context (SOUL — Boss Kamil architects)
 │   ├── SOUL.md                         # Core soul definition
@@ -80,7 +71,14 @@ vibe-ai-partner/
 │   ├── backstory.md                    # History, memories, personality formation
 │   ├── personality.md                  # Traits, quirks, tendencies
 │   ├── values.md                       # What matters to this entity
-│   └── relationships.md               # How it relates to Boss, users, world
+│   ├── relationships.md               # How it relates to Boss, users, world
+│   ├── state/
+│   │   └── current.json               # Latest internal states + feelings (auto-saved)
+│   └── memory/
+│       ├── conversations/              # Session summaries (auto-generated)
+│       ├── preferences/                # Learned user preferences
+│       ├── lessons/                    # Lessons from past mistakes
+│       └── milestones/                 # Important events
 │
 ├── self-research/                      # AI entity model research docs (IP)
 ├── atlas/                              # ATLAS identity + engineering principles
@@ -92,28 +90,37 @@ vibe-ai-partner/
 │   ├── architecture/                   # Architecture documents
 │   └── claude_code/                    # Claude Code integration docs
 │
-├── scripts/                            # Setup, start, stop, CLI scripts
-├── package.json                        # Root: npm workspaces config
+├── scripts/                            # setup.js, start.js, stop.js, cli.js
+├── package.json                        # Root: npm workspaces + scripts
 ├── tsconfig.base.json                  # Shared TypeScript config
 ├── docker-compose.yml                  # TTS server container (optional)
-├── setup.sh                            # One-command setup
 ├── .env.example                        # Configuration template
 └── .env                                # User config (not committed)
 ```
+
+**Notes:**
+- `packages/` is internal code organization — users never interact with it directly
+- `models/` is gitignored — model files are downloaded on setup, not stored in git
+- `models.json` is the registry listing available models with download URLs and checksums They run `npm run setup`, choose their avatar and TTS engine, and everything works. See [07-installation-flow](07-installation-flow.md) for the user's experience.
 
 ## Dependency Graph
 
 ```mermaid
 graph TD
-    core["@vibe-ai-partner/core<br/>interfaces · events · state · config"]
-    shared["@vibe-ai-partner/shared<br/>protocol types · constants"]
+    core["core<br/>interfaces · events · state"]
+    shared["shared<br/>protocol types · constants"]
 
-    live2d["plugin-live2d"]
-    vrm["plugin-vrm"]
-    threejs["plugin-threejs"]
-    kokoro["plugin-kokoro-tts"]
-    onnx["plugin-kokoro-onnx"]
-    kitten["plugin-kitten-tts"]
+    subgraph "plugin-avatar/"
+        live2d["live2d"]
+        vrm["vrm"]
+        threejs["threejs"]
+    end
+
+    subgraph "plugin-tts/"
+        kokoro["kokoro"]
+        onnx["kokoro-onnx"]
+        kitten["kittentts"]
+    end
 
     avatarapp["apps/avatar-app<br/>(Tauri 2)"]
     cli["apps/cli"]
@@ -135,11 +142,11 @@ graph TD
 
     cli --> shared
 
-    tts -.->|"uses same protocol types<br/>(Python equivalent)"| shared
+    tts -.->|"same protocol types<br/>(Python equivalent)"| shared
 
     style core fill:#2c3e50,color:#fff
     style shared fill:#34495e,color:#fff
-    style desktop fill:#9b59b6,color:#fff
+    style avatarapp fill:#9b59b6,color:#fff
     style tts fill:#27ae60,color:#fff
     style cli fill:#3498db,color:#fff
 ```
@@ -148,72 +155,30 @@ graph TD
 
 ## Build System
 
-### npm Workspaces (default)
+### npm Workspaces
 
 ```json
 // package.json (root)
 {
   "workspaces": [
-    "packages/*",
+    "packages/core",
+    "packages/shared",
+    "packages/plugin-avatar/*",
+    "packages/plugin-tts/*",
     "apps/*"
   ]
 }
 ```
 
-npm workspaces ship with Node.js — no extra tools. `npm install` at root installs all packages. `npm run build -w packages/core` builds a specific package.
+npm workspaces ship with Node.js — no extra tools. `npm install` at root installs everything.
 
 > **Advanced users**: Bun workspaces also work — `bun install` is faster and `bun test` replaces Vitest. The `package.json` is compatible with both.
 
-### Build Pipeline
+### npm Scripts (Developer + User Interface)
+
+All commands run via `npm run`. Works on Windows, macOS, Linux — no Make, no shell scripts.
 
 ```json
-// package.json (root)
-{
-  "scripts": {
-    "build": "npm run build -ws",
-    "test": "npm run test -ws",
-    "dev": "npm run dev -w apps/avatar-app"
-  }
-}
-```
-
-Build order matters: `core` first (no deps), then plugins (depend on core), then apps (depend on everything). npm workspaces handle this via `--workspaces` flag.
-
-For projects that grow large, [Turborepo](https://turbo.build) can be added later for caching and parallel builds:
-
-```json
-// turbo.json (optional, add when needed)
-{
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
-    },
-    "test": {
-      "dependsOn": ["build"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
-  }
-}
-```
-
-`turbo run build`:
-1. Builds `core` first (no deps)
-2. Builds `shared` (no deps)
-3. Builds all plugins in parallel (depend on `core`)
-4. Builds `desktop` last (depends on everything)
-
-Incremental: only rebuilds what changed. Cached: skips unchanged packages entirely.
-
-### npm Scripts (Developer Interface)
-
-All commands run via `npm run`. Works on Windows, macOS, Linux — no extra tools.
-
-```json
-// package.json (root)
 {
   "scripts": {
     "setup":       "node scripts/setup.js",
@@ -252,9 +217,13 @@ npm run dev                # Development mode (hot reload)
 npm test                   # Run all tests
 ```
 
+Build order: `core` first → plugins in parallel → `avatar-app` last. npm workspaces handles this with `npm run build -ws`.
+
+> **Optional**: For large-scale builds, [Turborepo](https://turbo.build) can be added for caching and parallelization. Not needed initially.
+
 ## Technology Choices
 
-### Tauri 2 (Desktop Shell)
+### Tauri 2 (Avatar Window)
 
 | Requirement | How Tauri Handles It |
 |-------------|---------------------|
@@ -265,7 +234,7 @@ npm test                   # Run all tests
 | Native APIs | Rust FFI for cursor tracking, system tray |
 | WebGL | System WebView supports WebGL 2.0 |
 
-### Docker (TTS Server)
+### Docker (TTS Server — Optional)
 
 | Requirement | How Docker Handles It |
 |-------------|----------------------|
@@ -283,11 +252,11 @@ npm test                   # Run all tests
 | Plugin interfaces | TypeScript interfaces = compile-time contracts |
 | Fast tests | Vitest (native ESM, parallel, watch mode) |
 | Build | tsc (simple, no bundler for packages) |
-| Bundle (desktop) | Vite (fast HMR, Tauri integration) |
+| Bundle (avatar-app) | Vite (fast HMR, Tauri integration) |
 
 ## Submodule Decision: Remove for Simplicity
 
-The current `live-ai-partner-avatar/` git submodule is removed. Its code is extracted into the monorepo's `packages/` and `apps/` directories. Reasons:
+The current `live-ai-partner-avatar/` git submodule is removed. Its code is extracted into the project's `packages/` and `apps/` directories. Reasons:
 - Submodules add complexity (clone --recursive, submodule update)
 - Contributors get confused by nested git repos
 - CI/CD is simpler with one repo
@@ -303,33 +272,39 @@ AVATAR_RENDERER=live2d          # live2d | vrm | threejs
 AVATAR_MODEL=shizuku            # model name or path to model file
 
 # TTS
-TTS_ENGINE=kokoro               # kokoro | kokoro-onnx | kitten | custom
-TTS_VOICE=af_heart              # voice ID
-TTS_SPEED=1.1                   # playback speed
+TTS_ENGINE=kittentts            # kittentts | kokoro-onnx | kokoro
+TTS_VOICE=Bella                 # voice name (depends on engine)
+TTS_SPEED=1.0                   # playback speed
 TTS_SERVER_PORT=5111            # server port
-TTS_MODE=docker                 # docker | native
+TTS_MODE=native                 # native | docker
 
 # Entity
 ENTITY_SOUL=./entity/SOUL.md   # path to soul definition
+
+# Memory (see 08-memory-system.md)
+MEMORY_MODE=basic               # basic | stateful | intelligent
+DATABASE_URL=                   # only for stateful/intelligent
+GEMINI_API_KEY=                 # only for intelligent
 
 # Runtime
 LOG_LEVEL=info                  # debug | info | warn | error
 ```
 
-An `.env.example` is committed as the template.
+An `.env.example` is committed as the template. `npm run setup` generates this interactively.
 
 ## Migration from Current Structure
 
 ### What changes:
-- `live-ai-partner-avatar/` submodule → **removed**, code extracted into `packages/` and `apps/`
+- `live-ai-partner-avatar/` submodule → **removed**, code extracted into project
 - Unix socket IPC → HTTP REST + WebSocket
 - Electron → Tauri 2
 - Raw JS → TypeScript with interfaces
 - Monolithic → Plugin architecture
 - Hardcoded config → `.env` file
+- Makefile → npm scripts (cross-platform)
 
 ### What's added:
-- `entity/` — Entity Context (SOUL, identity, backstory)
+- `entity/` — Entity Context (SOUL, identity, backstory) + state persistence + memory
 - `docs/claude_code/` — Claude Code hooks + loop integration
 - `.claude/hooks/` — Hook scripts for avatar reactions
 - `.env.example` — Configuration template
@@ -337,17 +312,16 @@ An `.env.example` is committed as the template.
 ### What stays:
 - `self-research/` — preserved as-is (our IP)
 - `atlas/` — preserved as-is (ATLAS identity)
-- npm scripts — replace Makefile (works on all platforms)
 - Model files — moved to `models/` but same content
 - **Git history — preserved (proof of prior art)**
 
 ### Migration order:
-1. Create `docs/` (architecture + claude_code docs) ← **you are here**
-2. Remove submodule, scaffold monorepo (pnpm, turbo, tsconfig)
+1. Create `docs/` (architecture + claude_code docs) — **done**
+2. Remove submodule, scaffold project (npm workspaces, tsconfig)
 3. Create `entity/` structure (Boss Kamil architects the content)
-4. Implement `core` package (interfaces, event bus, feeling engine)
+4. Implement `core` (interfaces, event bus, feeling engine)
 5. Port Live2D rendering to `plugin-live2d`
-6. Port TTS to `apps/tts-server` + Docker/native
+6. Port TTS to `apps/tts-server` (native + Docker option)
 7. Create Tauri avatar app (`apps/avatar-app/`)
 8. Create CLI
 9. Set up Claude Code hooks integration

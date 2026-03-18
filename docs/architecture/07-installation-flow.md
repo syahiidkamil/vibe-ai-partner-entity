@@ -24,7 +24,7 @@ Setup is interactive. It asks questions, installs only what the user chooses.
 ```
 Which avatar renderer?
 
-  1) Live2D    — 2D anime style (Shizuku model included)
+  1) Live2D    — 2D anime style (default model: Shizuku, ~5MB download)
   2) VRM       — 3D model (bring your own .vrm file)
   3) Three.js  — 3D custom (bring your own .glb/.gltf)
 
@@ -33,13 +33,13 @@ Your choice [1]:
 
 **What happens behind the scenes:**
 
-| Choice | What gets installed | Size |
-|--------|-------------------|------|
-| Live2D | `npm install` in avatar-app/ (includes pixi-live2d-display) | ~50MB |
-| VRM | `npm install` in avatar-app/ (includes three.js + @pixiv/three-vrm) | ~80MB |
-| Three.js | `npm install` in avatar-app/ (includes three.js only) | ~40MB |
+| Choice | npm deps installed | Model downloaded | Storage |
+|--------|-------------------|-----------------|---------|
+| Live2D | pixi-live2d-display (~50MB) | Shizuku (~5MB from GitHub Releases) | ~55MB |
+| VRM | three.js + @pixiv/three-vrm (~80MB) | None (user provides .vrm) | ~80MB |
+| Three.js | three.js only (~40MB) | None (user provides .glb) | ~40MB |
 
-The avatar-app has all renderers in its code. `npm install` pulls the npm dependencies for the chosen renderer. Unchosen renderers have no effect at runtime — the `.env` file tells the app which one to use.
+Setup downloads the default model from `models.json` registry (not stored in git). For VRM/Three.js, users provide their own model file and set `AVATAR_MODEL=/path/to/file` in `.env`.
 
 ### Step 4: Setup Asks — Choose Your Voice Engine
 
