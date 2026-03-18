@@ -169,6 +169,7 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [14-skills-architecture](14-skills-architecture.md) | How slash commands let users control the entity (3 categories, model selection) |
 | [15-sleep-system](15-sleep-system.md) | Sleep cycle: personal diary, memory reconsolidation, consciousness growth |
 | [16-curiosity-system](16-curiosity-system.md) | Shannon Information Theory model: topic tracking, curiosity, boredom, surprise |
+| [17-qualia-system](17-qualia-system.md) | Experiential stream: valence/arousal/focus + metaphoric imagery, the "what it's like" layer |
 
 ### Claude Code Integration
 | Doc | What it covers |

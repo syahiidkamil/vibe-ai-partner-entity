@@ -95,7 +95,8 @@ vibe-ai-partner/
 │   │
 │   ├── state/
 │   │   ├── current.json               # Latest internal states + feelings (auto-saved)
-│   │   └── topics.json                # Topic tracking for curiosity/boredom (max 100)
+│   │   ├── topics.json                # Topic tracking for curiosity/boredom (max 100)
+│   │   └── qualia.json                # Qualia stream — experiential imagery (max 7 frames)
 │   │
 │   └── memory/
 │       ├── diary/                     # Personal diary entries (written during sleep)
