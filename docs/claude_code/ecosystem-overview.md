@@ -29,7 +29,7 @@ graph TD
     style SK fill:#3498db,color:#fff
 ```
 
-## Five Integration Points
+## Six Integration Points
 
 | Claude Code Feature | How We Use It | What the Avatar Does |
 |---------------------|---------------|---------------------|
@@ -37,6 +37,7 @@ graph TD
 | **Sub-Agents** (specialized) | Delegate to daily-wakeup, sentiment-evaluator, consciousness agents | Wakeup ritual, sentiment analysis, Free Will Protocol |
 | **Skills** (slash commands) | `/speak`, `/feeling`, `/action`, `/hooks-list`, `/hooks-reconfigure` | Direct user control from within Claude Code |
 | **Loop** (scheduled) | Idle behaviors, mood decay, temporal checks | Keep the entity alive between interactions |
+| **Agent Teams** (parallel) | Coordinate multiple entity instances or parallel research | Multi-entity collaboration, distributed consciousness (experimental) |
 | **Settings** (.claude/) | Configure hooks, skills, agent definitions | Load personality, voice, preferences |
 
 ## Architecture: Event-Driven Avatar

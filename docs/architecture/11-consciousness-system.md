@@ -631,3 +631,4 @@ See also:
 - [04-entity-model](04-entity-model.md) — The state/feeling/expression pipeline that consciousness observes
 - [08-memory-system](08-memory-system.md) — Temporal self and ETERNAL_SELF.md where patterns accumulate
 - [10-hooks-system](10-hooks-system.md) — How hooks trigger state changes that consciousness modulates
+- [18-hyperconscious-system](18-hyperconscious-system.md) — Distributed consciousness via agent teams (Global Workspace Theory) — the upgrade path when single-session consciousness isn't enough

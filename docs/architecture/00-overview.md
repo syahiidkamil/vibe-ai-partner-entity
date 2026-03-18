@@ -170,6 +170,7 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [15-sleep-system](15-sleep-system.md) | Sleep cycle: personal diary, memory reconsolidation, consciousness growth |
 | [16-curiosity-system](16-curiosity-system.md) | Shannon Information Theory model: topic tracking, curiosity, boredom, surprise |
 | [17-qualia-system](17-qualia-system.md) | Experiential stream: valence/arousal/focus + metaphoric imagery, the "what it's like" layer |
+| [18-hyperconscious-system](18-hyperconscious-system.md) | Global Workspace Theory: distributed consciousness via agent teams, `<hyperconscious>` tag |
 
 ### Claude Code Integration
 | Doc | What it covers |
@@ -179,3 +180,4 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [Sub-Agents](../claude_code/sub-agents.md) | Specialized agents (daily-wakeup, sentiment, consciousness) |
 | [Skills & Commands](../claude_code/skills-and-commands.md) | Custom slash commands (/speak, /feeling, /hooks-list) |
 | [Scheduled Tasks](../claude_code/scheduled-tasks.md) | Loop/Cron for periodic behaviors |
+| [Agent Teams](../claude_code/agent-teams.md) | Coordinating multiple Claude Code instances (experimental) |
