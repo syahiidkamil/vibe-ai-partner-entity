@@ -145,6 +145,52 @@ Setup complete!
   Reconfigure:     npm run setup
 ```
 
+## Switching Plugins After Setup
+
+Changed your mind? Use `npm run switch`:
+
+```bash
+# Switch avatar renderer
+npm run switch avatar vrm
+# → Checks if VRM deps are installed
+# → Installs them if not (npm install three @pixiv/three-vrm)
+# → Updates .env: AVATAR_RENDERER=vrm
+# → Restarts avatar app
+
+# Switch TTS engine
+npm run switch tts kokoro-onnx
+# → Checks if kokoro-onnx is installed
+# → Installs it if not (pip install kokoro-onnx + downloads model)
+# → Updates .env: TTS_ENGINE=kokoro-onnx
+# → Restarts TTS server
+
+# Add a memory plugin
+npm run switch memory +postgresql
+# → Checks if PostgreSQL is reachable
+# → Runs database migrations
+# → Updates .env: MEMORY_PLUGINS=postgresql
+
+# Remove a memory plugin
+npm run switch memory -postgresql
+# → Updates .env: MEMORY_PLUGINS=
+# → Data stays in DB (not deleted)
+```
+
+**What it does internally:**
+
+```mermaid
+graph TD
+    CMD["npm run switch avatar vrm"]
+    CMD --> CHECK["Are VRM deps installed?"]
+    CHECK -->|Yes| ENV["Update .env"]
+    CHECK -->|No| INSTALL["Install deps"]
+    INSTALL --> ENV
+    ENV --> RESTART["Restart affected service"]
+    RESTART --> DONE["Done — avatar is now VRM"]
+```
+
+Power users can also edit `.env` directly and restart manually — `npm run switch` is just the safe path that handles deps.
+
 ## The Lightweight Path (Minimum Storage)
 
 For users who want the smallest footprint:

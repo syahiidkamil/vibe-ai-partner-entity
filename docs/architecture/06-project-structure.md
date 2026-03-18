@@ -204,7 +204,9 @@ All commands run via `npm run`. Works on Windows, macOS, Linux — no Make, no s
 
     "feeling":     "node scripts/cli.js feeling",
     "action":      "node scripts/cli.js action",
-    "speak":       "node scripts/cli.js speak"
+    "speak":       "node scripts/cli.js speak",
+
+    "switch":      "node scripts/switch.js"
   }
 }
 ```
@@ -219,6 +221,11 @@ npm run status             # Health check
 npm run feeling happy      # Set feeling
 npm run action wave        # Trigger self-expression
 npm run speak "Hello!"     # TTS speak with lip sync
+
+npm run switch avatar vrm         # Switch avatar (installs deps if needed, updates .env)
+npm run switch tts kokoro-onnx    # Switch TTS engine
+npm run switch memory +postgresql # Add memory plugin
+npm run switch memory -postgresql # Remove memory plugin
 
 npm run dev                # Development mode (hot reload)
 npm test                   # Run all tests
