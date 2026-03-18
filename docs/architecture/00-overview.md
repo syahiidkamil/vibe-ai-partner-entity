@@ -165,6 +165,7 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [10-hooks-system](10-hooks-system.md) | How hooks make the entity feel alive (temporal grounding, reactions, sentiment, state persistence, inner voice vs speech) |
 | [11-consciousness-system](11-consciousness-system.md) | Consciousness as meta-capability (self-observation, pattern recognition, present-moment choice, growth) |
 | [12-end-to-end-flow](12-end-to-end-flow.md) | Complete user journey from git clone to daily use |
+| [13-sub-agent-architecture](13-sub-agent-architecture.md) | How sub-agents fit the entity model (6 agents, model selection, lifecycle) |
 
 ### Claude Code Integration
 | Doc | What it covers |
