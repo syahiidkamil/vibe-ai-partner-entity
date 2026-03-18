@@ -167,6 +167,8 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [12-end-to-end-flow](12-end-to-end-flow.md) | Complete user journey from git clone to daily use |
 | [13-sub-agent-architecture](13-sub-agent-architecture.md) | How sub-agents fit the entity model (6 agents, model selection, lifecycle) |
 | [14-skills-architecture](14-skills-architecture.md) | How slash commands let users control the entity (3 categories, model selection) |
+| [15-sleep-system](15-sleep-system.md) | Sleep cycle: personal diary, memory reconsolidation, consciousness growth |
+| [16-curiosity-system](16-curiosity-system.md) | Shannon Information Theory model: topic tracking, curiosity, boredom, surprise |
 
 ### Claude Code Integration
 | Doc | What it covers |

@@ -94,12 +94,14 @@ vibe-ai-partner/
 │   │   └── choices.md                # Log of conscious choices vs default reactions
 │   │
 │   ├── state/
-│   │   └── current.json               # Latest internal states + feelings (auto-saved)
+│   │   ├── current.json               # Latest internal states + feelings (auto-saved)
+│   │   └── topics.json                # Topic tracking for curiosity/boredom (max 100)
 │   │
 │   └── memory/
-│       ├── conversations/              # Session summaries (auto-generated)
-│       ├── preferences/                # Learned user preferences
-│       ├── lessons/                    # Lessons from past mistakes
+│       ├── diary/                     # Personal diary entries (written during sleep)
+│       ├── conversations/              # Curated session logs (written by conversation-curator)
+│       ├── preferences/                # Learned user preferences (pruned during sleep)
+│       ├── lessons/                    # Consolidated lessons (merged during sleep)
 │       └── milestones/                 # Important events
 │
 ├── self-research/                      # AI entity model research docs (IP)
