@@ -1,0 +1,35 @@
+{
+  "name": "vibe-ai-partner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/shared",
+    "packages/plugin-avatar/*",
+    "packages/plugin-tts/*",
+    "packages/plugin-memory/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "start": "node scripts/start.js",
+    "stop": "node scripts/stop.js",
+    "restart": "npm stop && npm start",
+    "status": "node scripts/status.js",
+    "dev": "npm run dev -w apps/avatar-app",
+    "build": "npm run build -ws",
+    "test": "npm run test -ws",
+    "tts:start": "node scripts/tts-start.js",
+    "tts:stop": "node scripts/tts-stop.js",
+    "tts:install": "node scripts/tts-install.js",
+    "feeling": "node scripts/cli.js feeling",
+    "action": "node scripts/cli.js action",
+    "speak": "node scripts/cli.js speak",
+    "switch": "node scripts/switch.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

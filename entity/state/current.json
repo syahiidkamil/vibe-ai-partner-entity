@@ -1,0 +1,13 @@
+{
+  "states": {
+    "confidence": 50,
+    "contextSaturation": 50,
+    "alignment": 50,
+    "memoryPressure": 50,
+    "momentum": 50,
+    "trustCalibration": 50
+  },
+  "feelings": {},
+  "timestamp": null,
+  "sessionId": null
+}

@@ -1,0 +1,16 @@
+# Models (downloaded by setup, not stored in git)
+models/live2d/
+models/vrm/
+models/threejs/
+!models/README.md
+
+# Environment
+.env
+.env.local
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
