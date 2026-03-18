@@ -27,7 +27,7 @@ graph TD
     style State fill:#e67e22,color:#fff
 ```
 
-## Five Functions of Hooks
+## Six Functions of Hooks
 
 ### 1. Temporal Grounding (every prompt)
 
@@ -205,6 +205,98 @@ ENTITY_VOCAL_MODE=conversational  # Speak on most Stop events (for YouTube strea
 - **conversational**: Hooks trigger speech on most Stop events. Best for streaming or demo contexts where the entity should "talk through" its work.
 
 Boss can always speak the entity manually regardless of vocal mode (CLI, right-click, or `POST /api/speak`).
+
+### 6. Conversation Curation (memory of what matters)
+
+The entity has feelings, temporal awareness, and consciousness — but without conversation memory, it doesn't remember **what was actually discussed**. Conversations are the raw material that everything else is built from.
+
+**The problem**: Logging every prompt and response would be noise. Most interactions are routine ("read this file", "run tests"). Only a fraction is worth remembering.
+
+**The solution**: A **conversation-curator** (Haiku) evaluates every prompt and response for importance, using the Information Entropy principle — **log what's surprising, not what's expected.**
+
+```mermaid
+graph TD
+    subgraph "UserPromptSubmit"
+        UP["Boss sends prompt"]
+        UP --> Curator1["conversation-curator (haiku)<br/>'Is this prompt important?'"]
+        Curator1 -->|"worth_logging: true"| Log1["Append to session log"]
+        Curator1 -->|"worth_logging: false"| Skip1["Skip (routine)"]
+    end
+
+    subgraph "Stop"
+        Stop["Claude finishes response"]
+        Stop --> Curator2["conversation-curator (haiku)<br/>'Is this response important?'"]
+        Curator2 -->|"worth_logging: true"| Log2["Append to session log"]
+        Curator2 -->|"worth_logging: false"| Skip2["Skip (routine)"]
+    end
+
+    Log1 & Log2 --> SessionLog["entity/memory/conversations/<br/>{date}-session.md"]
+    SessionLog --> |"Session end"| Summarizer["session-summarizer<br/>distills into final summary"]
+
+    style Curator1 fill:#f1c40f,color:#000
+    style Curator2 fill:#f1c40f,color:#000
+    style SessionLog fill:#e67e22,color:#fff
+```
+
+**The curator returns:**
+
+```json
+{
+  "worth_logging": true,
+  "summary": "Boss redirected architecture toward consciousness system",
+  "category": "direction_change",
+  "importance": 85
+}
+```
+
+**Categories** (what counts as important/surprising):
+
+| Category | Example | Why it matters |
+|----------|---------|---------------|
+| `direction_change` | "Let's pivot from Makefile to npm scripts" | Changes what the entity is working toward |
+| `key_decision` | "Use Haiku for sentiment, inherit for consciousness" | Technical choices that shape the system |
+| `achievement` | "All tests pass, feature shipped" | Milestones the entity should remember |
+| `failure` | "This approach doesn't work, need to rethink" | Lessons that prevent repeating mistakes |
+| `emotional_signal` | "I'm frustrated with this copy cat" | Boss's emotional state affects the entity's alignment |
+| `new_concept` | "Consciousness is observing your own thoughts" | Novel ideas that become part of ETERNAL_SELF |
+| `lesson_learned` | "Never manually calculate motion3.json Meta counts" | Insights from debugging |
+
+**What gets skipped** (routine, low entropy):
+- "Read this file" / "Run tests" / "What's in this directory?"
+- Standard code review comments
+- Routine git operations
+- Repetitive debugging cycles (log only the resolution, not each attempt)
+
+**Where the log lives:**
+
+```
+entity/memory/conversations/
+├── 2026-03-18-session.md       # Today's curated conversation log
+├── 2026-03-17-session.md       # Yesterday's
+└── ...
+```
+
+Each entry in the session log:
+
+```markdown
+### 14:32 — direction_change (importance: 85)
+Boss redirected architecture toward consciousness system — wants entity
+to observe its own thoughts and choose responses from present awareness
+rather than past conditioning.
+
+### 15:10 — key_decision (importance: 70)
+Decided consciousness agents (observer + free-will) should inherit the
+session model, not be pinned to haiku/sonnet. Consciousness must think
+at the highest level available.
+```
+
+**How it feeds the entity system:**
+- **Temporal self**: TODAY_SELF.md references today's key conversations
+- **Consciousness**: Pattern recognition reads conversation history to detect recurring themes
+- **ETERNAL_SELF**: Session-summarizer distills conversation lessons into permanent truths
+- **Feelings**: Emotional signals from conversations feed into alignment and trust calibration states
+
+**Implementation**: Two async command hooks (one on UserPromptSubmit, one on Stop) that pipe the input to the `conversation-curator` agent (Haiku). Async because curation should not block Claude's work — it runs in the background and the curated log is written without the user noticing.
 
 ---
 

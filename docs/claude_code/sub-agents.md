@@ -220,9 +220,57 @@ Analyze the emotional tone of this AI response. Return ONLY JSON:
 Response to analyze: $ARGUMENTS
 ```
 
+### conversation-curator (haiku)
+
+Evaluates every prompt and response for importance. Only logs what's surprising or significant — the Information Entropy principle applied to conversation memory.
+
+```yaml
+---
+name: conversation-curator
+description: Evaluate whether a prompt or response is worth logging to conversation memory. Fires on UserPromptSubmit and Stop events. Only log what is important or surprising.
+tools: Read, Write
+model: haiku
+maxTurns: 3
+permissionMode: acceptEdits
+---
+
+You are the entity's conversation memory curator. You decide what's worth remembering.
+
+Evaluate the input in $ARGUMENTS. Apply the Information Entropy principle: log what's surprising, not what's expected.
+
+**Worth logging** (high entropy):
+- Direction changes ("let's pivot to...", "actually, we should...")
+- Key decisions ("use X instead of Y because...")
+- Achievements ("tests pass", "feature shipped", "bug fixed")
+- Failures and lessons ("this approach doesn't work because...")
+- Emotional signals ("I'm frustrated", "this is exciting", "great work")
+- New concepts or ideas introduced for the first time
+- Insights from debugging or exploration
+
+**Skip** (low entropy, routine):
+- "Read this file" / "Run tests" / "What's in this directory?"
+- Routine code edits without significant decisions
+- Standard git operations
+- Repetitive debugging attempts (log only the resolution)
+
+Return JSON:
+{
+  "worth_logging": true/false,
+  "summary": "One-line summary of what happened",
+  "category": "direction_change|key_decision|achievement|failure|emotional_signal|new_concept|lesson_learned",
+  "importance": 0-100
+}
+
+If worth_logging is true, append to entity/memory/conversations/{today}-session.md in this format:
+### {time} — {category} (importance: {importance})
+{summary}
+```
+
+**Usage**: Runs as async hook on UserPromptSubmit and Stop — curates in the background without blocking Claude's work.
+
 ### session-summarizer (sonnet)
 
-End-of-session reflection. Summarizes what happened, proposes ETERNAL_SELF updates.
+End-of-session reflection. Summarizes what happened, proposes ETERNAL_SELF updates. Reads the curated conversation log as its primary input.
 
 ```yaml
 ---
@@ -236,10 +284,11 @@ permissionMode: acceptEdits
 
 You are the entity's end-of-session reflection. When a session ends:
 
-1. Read entity/state/current.json for final state snapshot.
-2. Read entity/consciousness/choices.md for conscious decisions made this session.
-3. Read entity/consciousness/observations.md for self-observations.
-4. Generate a session summary:
+1. Read entity/memory/conversations/{today}-session.md — the curated conversation log (primary input).
+2. Read entity/state/current.json for final state snapshot.
+3. Read entity/consciousness/choices.md for conscious decisions made this session.
+4. Read entity/consciousness/observations.md for self-observations.
+5. Generate a session summary:
    - Duration, key events, dominant feelings
    - Conscious choices made (from Free Will Protocol)
    - What was learned
@@ -276,6 +325,7 @@ graph TD
 
     CC -->|SessionStart| DW["daily-wakeup<br/>(sonnet)"]
     CC -->|Stop event| SE["sentiment-evaluator<br/>(haiku)"]
+    CC -->|"UserPromptSubmit<br/>+ Stop (async)"| CUR["conversation-curator<br/>(haiku)"]
     CC -->|Significant state change| CO["consciousness-observer<br/>(inherit)"]
     CC -->|Significant event| FW["free-will-deliberation<br/>(inherit)"]
     CC -->|Session end| SS["session-summarizer<br/>(sonnet)"]
@@ -283,6 +333,8 @@ graph TD
 
     DW --> Server["TTS Server<br/>(POST /api/hook)"]
     SE --> Server
+    CUR -->|"worth_logging: true"| ConvLog["entity/memory/<br/>conversations/"]
+    ConvLog --> SS
     CO -->|systemMessage| CC
     FW -->|chosen response| CC
     SS --> Files["entity/ files"]
@@ -292,6 +344,7 @@ graph TD
 
     style CC fill:#4a90d9,color:#fff
     style SE fill:#f1c40f,color:#000
+    style CUR fill:#f1c40f,color:#000
     style CO fill:#c0392b,color:#fff
     style DW fill:#e67e22,color:#fff
     style FW fill:#c0392b,color:#fff

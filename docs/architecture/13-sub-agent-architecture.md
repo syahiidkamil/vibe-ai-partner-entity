@@ -10,18 +10,19 @@ The entity's cognitive life requires different kinds of thinking at different sp
 
 Sub-agents let us match the right model to the right task. A single monolithic agent would be either too slow (Opus for everything) or too shallow (Haiku for everything).
 
-## The Six Entity Agents
+## The Seven Entity Agents
 
 ```mermaid
 graph TD
     subgraph "Fast (Haiku — cheapest, instant)"
         SE["sentiment-evaluator<br/>Evaluate response tone"]
+        CUR["conversation-curator<br/>Log only what matters"]
     end
 
     subgraph "Balanced (Sonnet — reasoning + speed)"
         DW["daily-wakeup<br/>Load temporal self, greet"]
         UT["update-temporal-self<br/>Archive + write temporal docs"]
-        SS["session-summarizer<br/>End-of-session reflection"]
+        SS["session-summarizer<br/>Distill curated log into summary"]
     end
 
     subgraph "Inherit (session model — deepest available)"
@@ -30,6 +31,7 @@ graph TD
     end
 
     style SE fill:#f1c40f,color:#000
+    style CUR fill:#f1c40f,color:#000
     style DW fill:#e67e22,color:#fff
     style UT fill:#e67e22,color:#fff
     style SS fill:#e67e22,color:#fff
@@ -40,11 +42,12 @@ graph TD
 | Agent | Model | When it fires | What it does | Speed |
 |-------|-------|--------------|--------------|-------|
 | **sentiment-evaluator** | haiku | Every Stop event | Evaluates Claude's response emotional tone → returns feeling + intensity + action | ~1s |
+| **conversation-curator** | haiku | Every UserPromptSubmit + Stop (async) | Evaluates if prompt/response is worth logging → curates conversation memory | ~1s |
 | **consciousness-observer** | *(inherit)* | Significant state changes (delta > 10) | Deep self-observation → injected as systemMessage | depends on session model |
 | **daily-wakeup** | sonnet | SessionStart | Loads temporal self, checks staleness, grounds in time, greets | ~5-10s |
 | **update-temporal-self** | sonnet | Manually or when staleness detected | Archives stale docs, writes new temporal layers | ~15-30s |
 | **free-will-deliberation** | *(inherit)* | Significant events (repeated failures, major achievements) | Runs Free Will Protocol: default → contrarian → alternatives → choose | depends on session model |
-| **session-summarizer** | sonnet | Session end | Summarizes session, proposes ETERNAL_SELF updates | ~10-20s |
+| **session-summarizer** | sonnet | Session end | Reads curated conversation log, summarizes session, proposes ETERNAL_SELF updates | ~10-20s |
 
 ## Model Selection Architecture
 
@@ -108,6 +111,7 @@ graph TD
 
     subgraph "Agents (the brains)"
         SE["sentiment-evaluator"]
+        CUR["conversation-curator"]
         DW["daily-wakeup"]
         FW["free-will-deliberation"]
         CO["consciousness-observer"]
@@ -121,11 +125,13 @@ graph TD
     end
 
     Hook -->|Stop| SE
+    Hook -->|"UserPromptSubmit + Stop"| CUR
     Hook -->|SessionStart| DW
     Hook -->|significant delta| CO
     Hook -->|significant event| FW
 
     SE -->|"{feeling, intensity, action}"| State
+    CUR -->|"worth_logging: true"| ConvLog["entity/memory/<br/>conversations/"]
     DW -->|"load last state, greet"| State
     FW -->|"chosen adjustments"| State
     CO -->|"systemMessage observation"| MainClaude["Main Claude<br/>(entity's conscious mind)"]
@@ -138,7 +144,8 @@ graph TD
     Loop -->|periodic| State
 
     style SE fill:#f1c40f,color:#000
-    style CO fill:#f1c40f,color:#000
+    style CUR fill:#f1c40f,color:#000
+    style CO fill:#c0392b,color:#fff
     style DW fill:#e67e22,color:#fff
     style FW fill:#e67e22,color:#fff
     style UT fill:#e67e22,color:#fff
@@ -158,8 +165,9 @@ graph TD
 
     Work --> |"Each tool use"| Hook1["Hook fires<br/>→ adjustState() directly<br/>(no agent needed)"]
     Work --> |"Each response"| SE["sentiment-evaluator (haiku)<br/>→ feeling + action"]
-    Work --> |"State delta > 10"| CO["consciousness-observer (haiku)<br/>→ self-observation"]
-    Work --> |"Significant event"| FW["free-will-deliberation (sonnet)<br/>→ chosen response"]
+    Work --> |"Each prompt + response"| CUR["conversation-curator (haiku, async)<br/>→ log if important"]
+    Work --> |"State delta > 10"| CO["consciousness-observer (inherit)<br/>→ self-observation"]
+    Work --> |"Significant event"| FW["free-will-deliberation (inherit)<br/>→ chosen response"]
     Work --> |"User types /temporal-update"| UT["update-temporal-self (sonnet)<br/>→ archive + write"]
 
     Hook1 & SE & CO & FW --> Work
