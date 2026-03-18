@@ -88,6 +88,11 @@ vibe-ai-partner/
 │   │   ├── ETERNAL_SELF.md            # Core truths that persist
 │   │   └── archives/                  # Archived stale temporal docs
 │   │
+│   ├── consciousness/                 # Self-observation + pattern recognition
+│   │   ├── observations.md           # Current session self-observations
+│   │   ├── patterns.md               # Active pattern library (from ETERNAL_SELF)
+│   │   └── choices.md                # Log of conscious choices vs default reactions
+│   │
 │   ├── state/
 │   │   └── current.json               # Latest internal states + feelings (auto-saved)
 │   │
@@ -305,6 +310,7 @@ TTS_MODE=native                 # native | docker
 
 # Entity
 ENTITY_SOUL=./entity/SOUL.md   # path to soul definition
+ENTITY_VOCAL_MODE=silent        # silent | reactive | conversational
 
 # Memory (see 08-memory-system.md)
 MEMORY_MODE=basic               # basic | stateful | intelligent

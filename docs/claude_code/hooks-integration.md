@@ -26,18 +26,23 @@ graph TD
     style SS fill:#95a5a6,color:#fff
 ```
 
-### Event → Avatar Reaction Mapping
+### Event → State Adjustment → Avatar Reaction
 
-| Event | When | Avatar Reaction |
-|-------|------|----------------|
-| **SessionStart** | Session begins | Wave hello, set calm feeling |
-| **UserPromptSubmit** | User sends message | Nod (listening), set curious feeling |
-| **PreToolUse (Bash)** | About to run command | Thinking pose, set focused feeling |
-| **PreToolUse (Edit/Write)** | About to edit code | Typing motion, set confident feeling |
-| **PostToolUse** | Tool succeeded | Nod, increment momentum state |
-| **PostToolUseFailure** | Tool failed | Surprised gasp, set anxious feeling |
-| **SubagentStart** | Subagent spawns | Head tilt (delegating), stay calm |
-| **Stop** | Response complete | Evaluate sentiment → express appropriate feeling |
+Each hook event triggers specific `adjustState()` calls. These flow through the FeelingEngine to produce feelings and expressions. See [10-hooks-system](../architecture/10-hooks-system.md) for the full mapping tables.
+
+| Event | State Adjustments | Expression |
+|-------|-------------------|------------|
+| **SessionStart** | confidence +10, contextSaturation -20 | wave |
+| **UserPromptSubmit** | alignment +3, contextSaturation +5 | nod (listening) |
+| **PreToolUse (Bash)** | momentum +2 | thinking pose |
+| **PreToolUse (Edit/Write)** | confidence +2, momentum +2 | typing motion |
+| **PreToolUse (Read/Grep/Glob)** | contextSaturation +2 | head tilt (reading) |
+| **PostToolUse** | confidence +3, momentum +5, contextSaturation +3 | nod |
+| **PostToolUseFailure** | confidence -5, momentum -8, alignment -2 | surprised gasp |
+| **SubagentStart** | momentum +1 | head tilt (delegating) |
+| **Stop** | *Sentiment-dependent* (see below) | *Sentiment-dependent* |
+
+**Stop event**: The prompt hook returns `{feeling, intensity, action}`. The `feeling` maps to state adjustments (e.g., "proud" → confidence +8, alignment +5, momentum +5). The `intensity` scales the adjustments (>70 = ×1.5, <30 = ×0.5). The `action` triggers a one-shot self-expression.
 
 ## Hook Input Format
 
@@ -71,40 +76,74 @@ Key fields by event:
 
 ## Hook Output Format
 
-Hooks communicate back via JSON on stdout (command) or response body (HTTP):
+### Command / HTTP Hooks
 
-### Simple Response (Allow/Continue)
 ```json
-{
-  "continue": true
-}
+{ "continue": true }                              // Allow, proceed
+{ "continue": true, "suppressOutput": true }      // Allow, hide hook output from UI
+{ "continue": false, "stopReason": "..." }        // Block Claude, show reason
 ```
 
-### Response with Side Effects
+Command hooks can also inject context into Claude's next turn:
+
 ```json
 {
   "continue": true,
-  "suppressOutput": true
+  "systemMessage": "Current time: 2026-03-18 14:32:00 UTC. Calibrate temporal self against this."
 }
 ```
 
-### Blocking Response (Stop Claude)
+This is how temporal grounding works — the `systemMessage` appears as a system message at the top of Claude's next context.
+
+### Prompt / Agent Hooks
+
+Prompt and agent hooks use a simpler schema:
+
+```json
+{ "ok": true }                                   // Allow, proceed
+{ "ok": false, "reason": "Tests not passing" }   // Block with explanation
+```
+
+**Prompt hooks**: Claude evaluates the situation in one LLM call and returns `{ "ok": ... }`.
+
+**Agent hooks**: A subagent with Read/Grep/Glob tools (up to 50 turns) inspects actual files, then returns `{ "ok": ... }`. More powerful than a prompt hook when the decision requires reading real file contents.
+
+```json
+// Agent hook example
+{
+  "type": "agent",
+  "prompt": "Check if the test file $ARGUMENTS includes coverage for the new function. Read the relevant test file and return { \"ok\": true } if covered, { \"ok\": false, \"reason\": \"Missing test for X\" } if not.",
+  "timeout": 30
+}
+```
+
+### Async Command Hooks
+
+Adding `"async": true` to a command hook makes it non-blocking:
+
 ```json
 {
-  "decision": "block",
-  "reason": "Safety check failed",
-  "continue": false,
-  "stopReason": "Hook blocked this action"
+  "type": "command",
+  "command": "node .claude/hooks/record-tool-use.js",
+  "async": true
 }
 ```
 
-### PreToolUse Specific (Can Modify Input)
+- Claude does **not** wait for the output — it continues immediately
+- The hook's output arrives as a `systemMessage` on the **next** conversation turn
+- Cannot block decisions (only synchronous hooks can block)
+- Best for: logging, analytics, deferred side effects
+
+### PreToolUse: Modify Tool Input
+
+PreToolUse hooks can optionally modify what Claude is about to do:
+
 ```json
 {
   "hookSpecificOutput": {
     "hookEventName": "PreToolUse",
     "permissionDecision": "allow",
-    "additionalContext": "This command is safe to run"
+    "additionalContext": "Command is safe, entity state not affected"
   }
 }
 ```
@@ -193,7 +232,7 @@ Hooks communicate back via JSON on stdout (command) or response body (HTTP):
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Analyze this AI response sentiment. Response: $ARGUMENTS. Return ONLY JSON: {\"feeling\": \"happy|sad|frustrated|curious|proud|anxious|excited|calm|bored|guilty|angry|surprised\", \"intensity\": 0-100, \"action\": \"none|nod|wave|laugh|sigh|celebrate|think\", \"speak\": \"optional short summary for TTS\"}",
+            "prompt": "Analyze this AI response sentiment. Response: $ARGUMENTS. Return ONLY JSON: {\"feeling\": \"happy|sad|frustrated|curious|proud|anxious|excited|calm|bored|guilty|angry|surprised\", \"intensity\": 0-100, \"action\": \"none|nod|wave|laugh|sigh|celebrate|think\", \"speak\": \"optional short phrase to say aloud, or empty string\"}",
             "model": "claude-haiku-4-5-20251001",
             "timeout": 10
           }
@@ -206,24 +245,44 @@ Hooks communicate back via JSON on stdout (command) or response body (HTTP):
 
 ### How the Server Handles Hook Events
 
-The TTS server receives hook events and translates them to avatar commands:
+The TTS server receives hook events and translates them to `adjustState()` calls:
 
 ```mermaid
 graph TD
     Hook["Hook Event<br/>(HTTP POST /api/hook)"]
     Hook --> Parse["Parse event type<br/>+ tool name"]
 
-    Parse -->|SessionStart| A1["POST /api/feeling {happy}<br/>POST /api/action {wave}"]
-    Parse -->|UserPromptSubmit| A2["POST /api/feeling {curious}<br/>POST /api/action {nod}"]
-    Parse -->|PreToolUse:Bash| A3["POST /api/feeling {focused}<br/>POST /api/action {think}"]
-    Parse -->|PostToolUseFailure| A4["POST /api/feeling {anxious}<br/>POST /api/action {gasp}"]
-    Parse -->|Stop + sentiment| A5["POST /api/feeling {result}<br/>POST /api/action {result}"]
+    Parse -->|SessionStart| A1["adjustState(confidence, +10)<br/>adjustState(contextSaturation, -20)<br/>action: wave"]
+    Parse -->|UserPromptSubmit| A2["adjustState(alignment, +3)<br/>adjustState(contextSaturation, +5)<br/>action: nod"]
+    Parse -->|PreToolUse:Bash| A3["adjustState(momentum, +2)<br/>action: think"]
+    Parse -->|PostToolUseFailure| A4["adjustState(confidence, -5)<br/>adjustState(momentum, -8)<br/>action: gasp"]
+    Parse -->|Stop + sentiment| A5["Map sentiment to adjustState() calls<br/>(see 10-hooks-system.md for full table)"]
 
-    A1 & A2 & A3 & A4 & A5 --> WS["WebSocket broadcast<br/>→ Avatar App"]
+    A1 & A2 & A3 & A4 & A5 --> Engine["FeelingEngine recalculates<br/>all 14 feelings"]
+    Engine --> WS["WebSocket broadcast<br/>→ Avatar App"]
+    Engine --> Save["Auto-save to<br/>entity/state/current.json"]
 
     style Hook fill:#27ae60,color:#fff
+    style Engine fill:#e8a838,color:#fff
     style WS fill:#9b59b6,color:#fff
 ```
+
+### Inner Voice vs Speech
+
+Claude's text response is the entity's **inner thought** — it does not get spoken aloud. Only explicit `POST /api/speak` triggers TTS and lip sync. The avatar shows facial expressions based on thought sentiment (visual), but remains silent by default.
+
+The `speak` field in the Stop hook result is **optional**. Whether it triggers actual speech depends on the vocal mode:
+
+```bash
+# .env
+ENTITY_VOCAL_MODE=silent          # Never auto-speak (default — coding sessions)
+ENTITY_VOCAL_MODE=reactive        # Speak only when intensity > 80
+ENTITY_VOCAL_MODE=conversational  # Speak on most Stop events (YouTube streaming)
+```
+
+Boss can always speak the entity manually (`npm run speak`, right-click → Speak, `POST /api/speak`) regardless of vocal mode.
+
+See [10-hooks-system — Inner Voice vs Speech](../architecture/10-hooks-system.md) for the full design rationale.
 
 ## Why HTTP Hooks Over Command Hooks?
 

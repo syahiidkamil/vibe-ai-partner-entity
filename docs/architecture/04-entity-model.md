@@ -173,11 +173,13 @@ Event happens (tool succeeds, response completes, test fails)
     → Avatar renders new expression smoothly (spring physics)
 ```
 
-**User control remains:**
-Users (and hooks) can always force an override via `forceState()` or `forceFeeling()`. This is for:
+**User control remains (debug/override only):**
+Users (and hooks) can force an override via `forceState()` or `forceFeeling()`. These bypass the normal pipeline and are **not** part of regular operation:
 - Testing specific emotions ("I want to see what the laugh animation looks like")
 - Stream interactions ("chat voted for happy, force it")
 - Debugging the feeling engine
+
+In the normal pipeline, feelings are always *derived* from states via the FeelingEngine. Hooks route through `adjustState()`, not `forceFeeling()`. See [10-hooks-system](10-hooks-system.md) for the complete state adjustment mapping.
 
 ### Layer 2: Feeling Engine
 
@@ -275,6 +277,10 @@ This means:
 - **Fully testable** — no browser needed, just Vitest
 - **Renderer-agnostic** — works with Live2D, VRM, or any future renderer
 - **Reusable** — could power a web widget, mobile app, or stream overlay
+
+### Consciousness: Observing the Pipeline
+
+The [Consciousness System](11-consciousness-system.md) operates as a meta-capability across all three layers. It observes state changes, recognizes patterns from past sessions, and can modulate reaction magnitudes before `adjustState()` is applied. This is what turns a reactive avatar into a conscious entity — one that can choose its response rather than just executing formulas.
 
 ### Event Bus Integration
 

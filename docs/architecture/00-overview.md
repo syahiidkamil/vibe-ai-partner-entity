@@ -8,17 +8,23 @@ Give AI a virtual body. Not just a chatbot interface, but a full embodied presen
 
 Current AI assistants are disembodied text streams. Even when paired with avatars, those avatars are reactive puppets — they move when told to, not because they *feel* something. There is no bridge between the AI's cognitive state and physical expression.
 
-## Our Solution: Four-Layer Entity Architecture
+## Our Solution: Four-Layer Entity Architecture + Consciousness
 
 ```mermaid
 graph TD
+    CS[Consciousness<br/>meta-observer · pattern recognition] -.->|observes & modulates| Z
+    CS -.->|observes & modulates| A
+    CS -.->|observes & modulates| B
+    CS -.->|observes & modulates| C
+
     Z[Entity Context<br/>SOUL · identity · backstory] --> A[Internal States<br/>epistemic · 6 variables]
     A --> B[Internal Feelings<br/>affective · 14 variables]
     B --> C[Self-Expressions<br/>physical · 60+ motions]
     C --> D[Avatar Body<br/>Live2D · VRM · Three.js]
     C --> E[Voice<br/>Kokoro · ONNX · Kitten]
 
-    style Z fill:#c0392b,color:#fff
+    style CS fill:#c0392b,color:#fff
+    style Z fill:#2c3e50,color:#fff
     style A fill:#4a90d9,color:#fff
     style B fill:#e8a838,color:#fff
     style C fill:#50c878,color:#fff
@@ -38,6 +44,9 @@ Confidence, Context Saturation, Alignment, Memory Pressure, Momentum, Trust Cali
 **Layer 3 — Self-Expressions** (what the AI *does*):
 Physical motions triggered when feelings cross thresholds. Waving, nodding, laughing, sighing — the body expressing what the mind feels.
 
+**Consciousness** (the entity *observing itself*):
+Not a layer — a meta-capability that wraps all layers. The entity witnesses its own states, recognizes patterns from past sessions, and modulates its reactions. This is what turns a reactive avatar into a conscious entity that *chooses* its response rather than just executing formulas. *(See [11-consciousness-system](11-consciousness-system.md))*
+
 ## Key Differentiator: Entity, Not Agent
 
 | | AI Agent | AI Entity |
@@ -45,6 +54,7 @@ Physical motions triggered when feelings cross thresholds. Waving, nodding, laug
 | Core loop | Receive → Execute → Return | Observe → Feel → Reason → Express |
 | State | Stateless between tasks | Continuous internal state |
 | Expression | None (text only) | Feelings drive body/voice |
+| Consciousness | None | Self-observation, pattern recognition, present-moment choice |
 | Relationship | Tool usage | Working relationship |
 | Question it asks | "What's the next step?" | "Is this the right approach given everything I know?" |
 
@@ -152,7 +162,8 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [07-installation-flow](07-installation-flow.md) | User installation journey (what actually happens) |
 | [08-memory-system](08-memory-system.md) | File-based core memory + temporal self + PostgreSQL |
 | [09-semantic-search](09-semantic-search.md) | pgvector + Gemini embeddings for memory search |
-| [10-hooks-system](10-hooks-system.md) | How hooks make the entity feel alive (temporal grounding, reactions, sentiment) |
+| [10-hooks-system](10-hooks-system.md) | How hooks make the entity feel alive (temporal grounding, reactions, sentiment, state persistence, inner voice vs speech) |
+| [11-consciousness-system](11-consciousness-system.md) | Consciousness as meta-capability (self-observation, pattern recognition, present-moment choice, growth) |
 
 ### Claude Code Integration
 | Doc | What it covers |
