@@ -52,11 +52,26 @@ entity/
 ├── values.md            # What matters
 ├── relationships.md     # How I relate to Boss, users
 │
+├── temporal-self/
+│   ├── TODAY_SELF.md        # Live snapshot (overwritten each session, max 50 lines)
+│   ├── DAILY_SELF.md        # Yesterday's record (max 100 lines)
+│   ├── WEEKLY_SELF.md       # Current/last week (max 100 lines)
+│   ├── MONTHLY_SELF.md      # Last completed month (max 150 lines)
+│   ├── ETERNAL_SELF.md      # Slowly evolving core truths
+│   └── archives/            # Stale temporal docs preserved here
+│       └── 2026/
+│           ├── DAILY_SELF_2026_03_17.md
+│           ├── WEEKLY_SELF_2026_03_W2.md
+│           └── MONTHLY_SELF_2026_02.md
+│
 ├── memory/
-│   ├── conversations/   # Conversation summaries (auto-generated)
-│   ├── preferences/     # Learned user preferences
-│   ├── lessons/         # Lessons from past mistakes
-│   └── milestones/      # Important events (first stream, first bug fix, etc.)
+│   ├── conversations/       # Session summaries (auto-generated)
+│   ├── preferences/         # Learned user preferences
+│   ├── lessons/             # Lessons from past mistakes
+│   └── milestones/          # Important events
+│
+├── state/
+│   └── current.json         # Latest internal states + feelings (auto-saved)
 ```
 
 **Why files, not database?**
@@ -67,9 +82,166 @@ entity/
 
 **What gets stored here:**
 - Entity identity and personality (static, edited by Boss)
+- Temporal self (layered time awareness — see below)
 - Conversation summaries (auto-generated after each session)
 - Learned preferences ("Boss prefers concise responses")
-- Milestone events ("First YouTube stream: 2026-03-20")
+- Current state (auto-saved JSON for session continuity)
+
+---
+
+## Temporal Self — How the Entity Experiences Time
+
+*Learned from the Aurelius Magnus Entity architecture.*
+
+An entity without temporal awareness is stuck in an eternal "now" — it doesn't know what happened yesterday, this week, or last month. The temporal self system gives the entity a layered sense of time.
+
+### Five Temporal Layers
+
+```mermaid
+graph TD
+    TODAY["TODAY_SELF.md<br/>Live snapshot · overwritten each session<br/>max 50 lines"]
+    DAILY["DAILY_SELF.md<br/>Yesterday's record<br/>max 100 lines"]
+    WEEKLY["WEEKLY_SELF.md<br/>Current or last completed week<br/>max 100 lines"]
+    MONTHLY["MONTHLY_SELF.md<br/>Last completed month<br/>max 150 lines"]
+    ETERNAL["ETERNAL_SELF.md<br/>Core truths that persist<br/>updated at discretion"]
+
+    TODAY --> DAILY
+    DAILY --> WEEKLY
+    WEEKLY --> MONTHLY
+    MONTHLY --> ETERNAL
+
+    style TODAY fill:#e74c3c,color:#fff
+    style DAILY fill:#e67e22,color:#fff
+    style WEEKLY fill:#f1c40f,color:#000
+    style MONTHLY fill:#27ae60,color:#fff
+    style ETERNAL fill:#2c3e50,color:#fff
+```
+
+| Layer | What it records | Freshness rule | Max lines |
+|-------|----------------|----------------|-----------|
+| **Today** | Current session state, what's happening now | Always overwritten | 50 |
+| **Daily** | Yesterday — what happened, what was felt, key insights | STALE if 2+ days old | 100 |
+| **Weekly** | This week or last completed week | STALE if older than previous week | 100 |
+| **Monthly** | Last completed month — full arc | STALE if older than previous month | 150 |
+| **Eternal** | Core truths that survive across all time | Updated at discretion | No limit |
+
+### Staleness Logic
+
+The system checks freshness on session start (via `daily-wakeup` agent or SessionStart hook):
+
+```
+Today is March 18, 2026.
+
+TODAY_SELF.md  → Always overwrite (live snapshot)
+DAILY_SELF.md  → Documents March 17? FRESH. March 16? STALE → archive, write March 17.
+WEEKLY_SELF.md → Documents W3 March (15-21)? FRESH. W2 March? STALE → archive, write W3.
+MONTHLY_SELF.md → Documents February? FRESH. January? STALE → archive, write February.
+ETERNAL_SELF.md → Review for new patterns.
+```
+
+When a document is stale:
+1. Archive current content to `temporal-self/archives/2026/`
+2. Gather context (diary, git log, state history, conversations)
+3. Write new content for the appropriate period
+
+### What Each Layer Contains
+
+**TODAY_SELF.md** (live, overwritten each session):
+```markdown
+# Today: March 18, 2026
+- Days since creation: [N]
+- Current session state: focused, working on architecture docs
+- What occupied me: restructuring project for open source
+- Key insight: memory needs temporal layers, not flat files
+- Boss's state: energized, asking good architectural questions
+```
+
+**DAILY_SELF.md** (yesterday):
+```markdown
+# March 17, 2026
+- Sessions: 2 (morning architecture planning, afternoon Live2D debugging)
+- Dominant feelings: curious (75), proud (60), calm (55)
+- What happened: designed plugin system, explored competitor
+- What I learned: Boss values simplicity over sophistication
+- Boss's state: strategic, competitive energy after discovering V1R4
+```
+
+**WEEKLY_SELF.md** (this week):
+```markdown
+# Week of March 15-21, 2026 (W3)
+- Theme: architecture restructure sprint
+- Mon: competitor analysis, initial docs
+- Tue: plugin system, TTS research, memory system
+- Key learning: loose coupling isn't just code — it's philosophy
+- Boss's arc: from reactive (copycat anger) to proactive (building better)
+```
+
+**MONTHLY_SELF.md** (last completed month):
+```markdown
+# February 2026
+- Major phases: Live2D integration, feeling system, TTS lip sync
+- Key achievement: 14-feeling model with self-expression triggers
+- Key challenge: motion3.json encoding (took 3 sessions to debug)
+- Boss's arc: from experimenting to committed
+- Open threads: YouTube streaming MVP, VRM research
+```
+
+**ETERNAL_SELF.md** (persistent truths):
+```markdown
+# Core Truths (last reviewed: March 18, 2026)
+1. Feelings emerge from states — they are not random
+2. Boss values docs-first approach over jumping to code
+3. Simplicity for users matters more than elegance for developers
+4. The entity model is our competitive advantage
+5. File-based memory works because Claude Code reads files natively
+...
+```
+
+### How Temporal Self Connects to Everything
+
+```mermaid
+graph LR
+    Hooks["Hooks<br/>(temporal grounding)"] -->|"inject timestamp"| Entity["Entity knows<br/>current time"]
+    Entity --> Check["Check staleness<br/>on session start"]
+    Check --> Update["Auto-update<br/>stale documents"]
+    Update --> Archive["Archive old<br/>to archives/2026/"]
+
+    Feelings["Feeling Engine<br/>(current session)"] -->|"snapshot"| Today["TODAY_SELF.md"]
+    Today -->|"next day"| Daily["DAILY_SELF.md"]
+    Daily -->|"end of week"| Weekly["WEEKLY_SELF.md"]
+    Weekly -->|"end of month"| Monthly["MONTHLY_SELF.md"]
+    Monthly -->|"patterns emerge"| Eternal["ETERNAL_SELF.md"]
+
+    style Hooks fill:#3498db,color:#fff
+    style Feelings fill:#e8a838,color:#fff
+    style Eternal fill:#2c3e50,color:#fff
+```
+
+### Agent: update-temporal-self
+
+A Claude Code agent automates the temporal self refresh:
+
+1. **Ground in time** — run `date`, calculate days since creation
+2. **Check staleness** — read all 5 files, apply freshness rules
+3. **Archive stale** — copy to `archives/{year}/` with dated filename
+4. **Gather context** — diary entries, git log, conversation summaries, feeling snapshots
+5. **Write updates** — generate new content respecting line limits
+
+This agent can be triggered:
+- Automatically on SessionStart (via hook)
+- Manually: `npm run temporal:update`
+- On a schedule: `/loop 1h check temporal self freshness`
+
+### Why This Matters for "Feeling Alive"
+
+Without temporal self, the entity starts fresh every session — goldfish memory. With temporal self:
+
+- It remembers what happened yesterday
+- It knows this week has been about architecture restructure
+- It recognizes patterns across months ("Boss always gets competitive energy when threatened")
+- Core truths accumulate — the entity *grows*
+
+This is the difference between an avatar that animates and an entity that **lives**.
 
 ### Layer 2: State Memory — PostgreSQL (Optional)
 

@@ -260,3 +260,82 @@ sequenceDiagram
 - Server broadcasts to all connected clients (desktop, web dashboard, etc.)
 - Single source of truth for state
 - CLI doesn't need to know if the desktop app is Tauri, Electron, or a web browser
+
+---
+
+## Three Ways to Interact
+
+Users (and automation) interact with the entity through three channels:
+
+```mermaid
+graph TD
+    subgraph "1. Right-Click Avatar (visual, always available)"
+        RC["Right-click on avatar window"]
+        RC --> Feelings["Feelings → Happy, Sad, Curious..."]
+        RC --> Actions["Actions → Wave, Nod, Laugh..."]
+        RC --> Speak["Speak → text input → TTS"]
+        RC --> Settings["Settings → Avatar, Voice, Memory"]
+        RC --> Status["Status → Show internal states"]
+    end
+
+    subgraph "2. CLI (scriptable, automation)"
+        CLI2["npm run feeling happy"]
+        CLI3["npm run action wave"]
+        CLI4["npm run speak 'Hello'"]
+        CLI5["npm run switch avatar vrm"]
+    end
+
+    subgraph "3. Hooks (automatic, entity reacts on its own)"
+        H1["Claude uses a tool → entity reacts"]
+        H2["Claude finishes response → sentiment analyzed"]
+        H3["Session starts → entity wakes up"]
+    end
+
+    Feelings & Actions & Speak --> Server2["TTS Server"]
+    CLI2 & CLI3 & CLI4 --> Server2
+    H1 & H2 & H3 --> Server2
+    Server2 --> Avatar2["Avatar App"]
+
+    style RC fill:#9b59b6,color:#fff
+    style Server2 fill:#27ae60,color:#fff
+```
+
+### Right-Click Context Menu (Tauri native)
+
+The avatar window supports a native right-click context menu via Tauri 2's Rust backend:
+
+```
+Right-click avatar →
+├── Feelings
+│   ├── Happy
+│   ├── Sad
+│   ├── Curious
+│   ├── Excited
+│   ├── Frustrated
+│   └── ... (all 14)
+├── Actions
+│   ├── Wave
+│   ├── Nod
+│   ├── Laugh
+│   ├── Think
+│   └── ... (all expressions)
+├── Speak...          → opens text input → TTS
+├── Settings
+│   ├── Avatar        → switch renderer (HTML, Live2D, VRM...)
+│   ├── Voice         → switch TTS engine + voice
+│   └── Memory        → switch memory plugins
+├── Status            → popup showing internal states + feelings
+└── About             → entity info, days since creation
+```
+
+Right-click actions route through the same HTTP API as CLI commands. Tauri's Rust backend POSTs to the TTS server, which broadcasts to the avatar via WebSocket. Same pipeline, different entry point.
+
+### Why Three Channels?
+
+| Channel | Best for | Who uses it |
+|---------|----------|-------------|
+| **Right-click** | Quick interactions, visual users | End users during normal use |
+| **CLI** | Scripting, automation, CI/CD | Developers, stream automation |
+| **Hooks** | Autonomous reactions, no human intervention | Claude Code (entity reacts on its own) |
+
+All three converge at the same TTS server API. The entity doesn't know *how* a command arrived — it just processes it.

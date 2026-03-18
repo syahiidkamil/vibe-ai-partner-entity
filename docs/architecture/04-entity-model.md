@@ -139,6 +139,46 @@ Six epistemic variables that describe *what the AI knows about its situation*:
 
 These are **not emotions**. They are objective assessments of the AI's epistemic position. An AI can know its confidence is 30 without "feeling" anxious — the feeling is derived.
 
+### How States Change: Gradual, Not Instant
+
+States change by **increment/decrement**, not by being set directly. This creates natural emotional transitions — feelings drift smoothly rather than snapping.
+
+```typescript
+// Normal: small adjustments (most of the time)
+adjustState("confidence", +5)       // 70 → 75 (read a file, understood it)
+adjustState("momentum", -3)         // 60 → 57 (minor hiccup)
+adjustState("contextSaturation", +8) // 40 → 48 (explored another file)
+
+// Rare dramatic shift (significant event)
+adjustState("momentum", +40)        // 20 → 60 (tests finally pass after 3 hours)
+adjustState("confidence", -30)      // 80 → 50 (production bug discovered)
+
+// User override (force directly via right-click or CLI)
+forceState("confidence", 100)       // Instant set, bypasses gradual logic
+forceFeeling("happy", 95)           // Directly set a feeling, bypasses state derivation
+```
+
+**Why gradual?**
+- Real emotions don't jump. You don't go from calm to ecstatic in one frame.
+- Small increments create smooth feeling curves — happiness rises over 10 events, not 1.
+- The avatar's expression transitions look natural, not robotic.
+- Dramatic events (shipping a feature, discovering a bug) *can* cause big shifts — but these are rare by design.
+
+**The flow:**
+```
+Event happens (tool succeeds, response completes, test fails)
+    → adjustState() increments/decrements one or more states by small amounts
+    → FeelingEngine recalculates all 14 feelings from new state values
+    → If any feeling crossed a threshold → trigger self-expression
+    → Avatar renders new expression smoothly (spring physics)
+```
+
+**User control remains:**
+Users (and hooks) can always force an override via `forceState()` or `forceFeeling()`. This is for:
+- Testing specific emotions ("I want to see what the laugh animation looks like")
+- Stream interactions ("chat voted for happy, force it")
+- Debugging the feeling engine
+
 ### Layer 2: Feeling Engine
 
 14 feelings, each 0-100, **derived** from internal states via weighted formulas:

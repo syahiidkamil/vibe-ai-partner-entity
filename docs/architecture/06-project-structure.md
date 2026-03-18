@@ -71,15 +71,26 @@ vibe-ai-partner/
 ├── models/                             # Downloaded models (gitignored, populated by setup)
 │   └── README.md                       # How to add custom models
 │
-├── entity/                             # Entity Context (SOUL — Boss Kamil architects)
-│   ├── SOUL.md                         # Core soul definition
-│   ├── identity.md                     # Name, role, origin
-│   ├── backstory.md                    # History, memories, personality formation
-│   ├── personality.md                  # Traits, quirks, tendencies
-│   ├── values.md                       # What matters to this entity
-│   ├── relationships.md               # How it relates to Boss, users, world
+├── entity/                             # Entity Context (Boss Kamil architects the content)
+│   ├── self/                           # Core identity (immutable — who the entity IS)
+│   │   ├── SOUL.md                     # Core soul definition
+│   │   ├── identity.md                 # Name, role, origin
+│   │   ├── backstory.md               # History, formative memories
+│   │   ├── personality.md             # Traits, quirks, tendencies
+│   │   ├── values.md                  # What matters
+│   │   └── relationships.md           # How it relates to Boss, users, world
+│   │
+│   ├── temporal-self/                  # Time awareness (auto-maintained by agents)
+│   │   ├── TODAY_SELF.md               # Live session snapshot (overwritten)
+│   │   ├── DAILY_SELF.md              # Yesterday's record
+│   │   ├── WEEKLY_SELF.md             # Current/last week
+│   │   ├── MONTHLY_SELF.md            # Last completed month
+│   │   ├── ETERNAL_SELF.md            # Core truths that persist
+│   │   └── archives/                  # Archived stale temporal docs
+│   │
 │   ├── state/
 │   │   └── current.json               # Latest internal states + feelings (auto-saved)
+│   │
 │   └── memory/
 │       ├── conversations/              # Session summaries (auto-generated)
 │       ├── preferences/                # Learned user preferences

@@ -150,8 +150,9 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [05-communication](05-communication.md) | Communication architecture (REST + WebSocket + EventBus) |
 | [06-project-structure](06-project-structure.md) | Project layout and npm scripts |
 | [07-installation-flow](07-installation-flow.md) | User installation journey (what actually happens) |
-| [08-memory-system](08-memory-system.md) | File-based core memory + PostgreSQL state persistence |
+| [08-memory-system](08-memory-system.md) | File-based core memory + temporal self + PostgreSQL |
 | [09-semantic-search](09-semantic-search.md) | pgvector + Gemini embeddings for memory search |
+| [10-hooks-system](10-hooks-system.md) | How hooks make the entity feel alive (temporal grounding, reactions, sentiment) |
 
 ### Claude Code Integration
 | Doc | What it covers |
