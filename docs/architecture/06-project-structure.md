@@ -25,10 +25,15 @@ vibe-ai-partner/
 │   │   ├── vrm/                        # VRM (Three.js + @pixiv/three-vrm)
 │   │   └── threejs/                    # Three.js only (custom models)
 │   │
-│   └── plugin-tts/                     # TTS engines (user picks one)
-│       ├── kokoro/                     # Kokoro full (PyTorch, best quality)
-│       ├── kokoro-onnx/                # Kokoro ONNX (lighter, CPU ok)
-│       └── kittentts/                  # KittenTTS (ultra-light, CPU only)
+│   ├── plugin-tts/                     # TTS engines (user picks one)
+│   │   ├── kokoro/                     # Kokoro full (PyTorch, best quality)
+│   │   ├── kokoro-onnx/                # Kokoro ONNX (lighter, CPU ok)
+│   │   └── kittentts/                  # KittenTTS (ultra-light, CPU only)
+│   │
+│   └── plugin-memory/                  # Memory backends (optional add-ons)
+│       ├── postgresql/                 # State persistence, feeling history
+│       ├── pgvector/                   # Semantic search (requires postgresql)
+│       └── sqlite/                     # Lightweight DB alternative
 │
 ├── apps/                               # Runnable applications
 │   ├── avatar-app/                     # Tauri 2 avatar window
@@ -166,6 +171,7 @@ graph TD
     "packages/shared",
     "packages/plugin-avatar/*",
     "packages/plugin-tts/*",
+    "packages/plugin-memory/*",
     "apps/*"
   ]
 }

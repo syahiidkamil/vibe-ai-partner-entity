@@ -4,33 +4,40 @@
 
 An entity without memory is a goldfish. Every conversation starts from zero — no history of what happened, no continuity of feelings, no learned preferences. Memory is what turns "AI with an avatar" into "AI that remembers who it is."
 
-## Two Memory Layers
+## Architecture: Core + Plugins
 
 ```mermaid
 graph TD
-    subgraph "Layer 1: Core Memory (File-Based)"
-        FM["Markdown files<br/>entity/, self-research/"]
-        FM --> ID["Identity & Soul"]
-        FM --> CONV["Conversation context"]
-        FM --> LEARN["Learned preferences"]
+    subgraph "Core (always available)"
+        FM["File-based memory<br/>JSON + Markdown in entity/"]
     end
 
-    subgraph "Layer 2: State Memory (PostgreSQL)"
-        DB["PostgreSQL"]
-        DB --> IS["Internal state history"]
-        DB --> FH["Feeling timeline"]
-        DB --> EH["Expression event log"]
-        DB --> REL["Relationship data"]
+    subgraph "plugin-memory/ (optional add-ons)"
+        PG["postgresql/<br/>State history, feeling timeline"]
+        PGV["pgvector/<br/>Semantic search"]
+        SQL["sqlite/<br/>Lightweight alternative"]
     end
 
     FM --> ENGINE["Entity Engine"]
-    DB --> ENGINE
+    PG --> ENGINE
+    PGV --> ENGINE
+    SQL --> ENGINE
     ENGINE --> AVATAR["Avatar behavior"]
 
     style FM fill:#3498db,color:#fff
-    style DB fill:#27ae60,color:#fff
+    style PG fill:#27ae60,color:#fff
+    style PGV fill:#9b59b6,color:#fff
+    style SQL fill:#e67e22,color:#fff
     style ENGINE fill:#e8a838,color:#fff
 ```
+
+File-based memory is **built into core** — it's always there, no setup needed. Database backends are **optional plugins** in `packages/plugin-memory/`, following the same pattern as avatar and TTS plugins.
+
+| Plugin group | How you choose |
+|-------------|---------------|
+| **plugin-avatar/** | Pick one (html, live2d, vrm, threejs) |
+| **plugin-tts/** | Pick one (kittentts, kokoro-onnx, kokoro) |
+| **plugin-memory/** | File is default + add extras (postgresql, pgvector, sqlite) |
 
 ### Layer 1: Core Memory — File-Based (Markdown)
 
@@ -129,21 +136,24 @@ CREATE TABLE conversations (
 - Expression event log (what motions fired and why)
 - Conversation metadata (summaries, dominant feelings per session)
 
-## Installation Tiers
+## Memory Plugins
 
-PostgreSQL is **optional**. The system works at three levels:
+Database backends live in `packages/plugin-memory/`. Each is an optional add-on:
 
-| Tier | Memory | What works | What you need |
-|------|--------|-----------|---------------|
-| **Basic** | Files only | Identity, personality, conversation summaries | Nothing extra |
-| **Stateful** | Files + PostgreSQL | All above + feeling history, state persistence, cross-session continuity | PostgreSQL installed |
-| **Intelligent** | Files + PostgreSQL + pgvector | All above + semantic search across memories | PostgreSQL + pgvector + Gemini API key |
+| Plugin | What it adds | What you need |
+|--------|-------------|---------------|
+| **postgresql/** | Feeling history, state timeline, cross-session queries | PostgreSQL installed |
+| **pgvector/** | Semantic search across memories (requires postgresql) | PostgreSQL + pgvector + Gemini API key |
+| **sqlite/** | Same as postgresql but lighter, single file, no server | Nothing extra (SQLite is embedded) |
 
 ```bash
 # .env
-MEMORY_MODE=basic              # basic | stateful | intelligent
-DATABASE_URL=                  # only needed for stateful/intelligent
-GEMINI_API_KEY=                # only needed for intelligent
+MEMORY_PLUGINS=                         # empty = file-only (default)
+MEMORY_PLUGINS=postgresql               # add PostgreSQL backend
+MEMORY_PLUGINS=postgresql,pgvector      # add PostgreSQL + semantic search
+MEMORY_PLUGINS=sqlite                   # lightweight alternative
+DATABASE_URL=                           # only for postgresql/pgvector
+GEMINI_API_KEY=                         # only for pgvector
 ```
 
 `npm run setup` asks:
