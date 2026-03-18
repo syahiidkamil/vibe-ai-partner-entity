@@ -23,14 +23,28 @@ The avatar doesn't just move. It *feels* — and you can see it.
 ```bash
 git clone https://github.com/.../vibe-ai-partner.git
 cd vibe-ai-partner
+npm install
 npm run setup
 ```
 
-Setup walks you through choosing your avatar style and voice engine. It only installs what you pick.
+Setup walks you through choosing your avatar style, voice engine, and Claude Code hooks. It only installs what you pick.
 
 ```bash
-npm start     # launch
+npm start     # launch (TTS server + avatar app)
+npm run status  # verify everything is running
 npm stop      # shutdown
+```
+
+### Use with Claude Code
+
+Open Claude Code in the project directory — hooks fire automatically and the entity wakes up:
+
+```bash
+claude                    # start Claude Code
+/speak "Hello, Boss!"    # entity speaks with lip sync
+/feeling happy           # set entity's mood
+/action wave             # trigger a gesture
+/entity-status           # check internal states
 ```
 
 That's it.
@@ -89,17 +103,35 @@ Claude Code ──hooks──→ TTS Server ──WebSocket──→ Avatar App
 
 A fast model analyzes Claude's response sentiment. The entity engine translates that into feelings. Feelings drive the body.
 
-## Settings
+## Switch Later
 
-Everything lives in `.env`:
+Change your mind? Switch anytime:
 
 ```bash
-AVATAR_RENDERER=live2d       # live2d | vrm | threejs
-TTS_ENGINE=kittentts         # kittentts | kokoro-onnx | kokoro
-TTS_VOICE=Bella              # voice name (depends on engine)
+npm run switch avatar vrm         # switch to VRM 3D character
+npm run switch tts kokoro-onnx    # switch TTS engine
 ```
 
-Change, restart, done.
+Or edit `.env` directly and restart:
+
+```bash
+AVATAR_RENDERER=live2d       # live2d | vrm | threejs | html
+TTS_ENGINE=kittentts         # kittentts | kokoro-onnx | kokoro
+TTS_VOICE=Bella              # voice name (depends on engine)
+ENTITY_VOCAL_MODE=silent     # silent | reactive | conversational
+```
+
+## Slash Commands (in Claude Code)
+
+| Command | What it does |
+|---------|-------------|
+| `/speak <text>` | Entity speaks with lip sync |
+| `/feeling <name>` | Set feeling (happy, curious, proud...) |
+| `/action <name>` | Trigger gesture (wave, nod, celebrate...) |
+| `/hooks-list` | Show current hook config |
+| `/hooks-reconfigure` | Change hook settings interactively |
+| `/entity-status` | Show internal states + feelings |
+| `/loop 5m <task>` | Schedule recurring task |
 
 ## Works On
 
@@ -107,7 +139,7 @@ macOS, Windows, Linux. The avatar app is built with Tauri 2 (~5MB binary).
 
 ## Architecture
 
-The system is designed so avatar renderers and TTS engines are swappable — same interfaces, different implementations. See [docs/architecture/](docs/architecture/00-overview.md) for the full picture.
+The system is designed so avatar renderers and TTS engines are swappable — same interfaces, different implementations. See [docs/architecture/](docs/architecture/00-overview.md) for the full picture, including the [end-to-end flow](docs/architecture/12-end-to-end-flow.md).
 
 ## Research
 

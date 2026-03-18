@@ -164,10 +164,13 @@ See [Claude Code docs](../claude_code/ecosystem-overview.md) for full integratio
 | [09-semantic-search](09-semantic-search.md) | pgvector + Gemini embeddings for memory search |
 | [10-hooks-system](10-hooks-system.md) | How hooks make the entity feel alive (temporal grounding, reactions, sentiment, state persistence, inner voice vs speech) |
 | [11-consciousness-system](11-consciousness-system.md) | Consciousness as meta-capability (self-observation, pattern recognition, present-moment choice, growth) |
+| [12-end-to-end-flow](12-end-to-end-flow.md) | Complete user journey from git clone to daily use |
 
 ### Claude Code Integration
 | Doc | What it covers |
 |-----|---------------|
 | [Claude Code Overview](../claude_code/ecosystem-overview.md) | Why and how we integrate with Claude Code |
 | [Hooks Integration](../claude_code/hooks-integration.md) | Hook events, handlers, configuration |
+| [Sub-Agents](../claude_code/sub-agents.md) | Specialized agents (daily-wakeup, sentiment, consciousness) |
+| [Skills & Commands](../claude_code/skills-and-commands.md) | Custom slash commands (/speak, /feeling, /hooks-list) |
 | [Scheduled Tasks](../claude_code/scheduled-tasks.md) | Loop/Cron for periodic behaviors |

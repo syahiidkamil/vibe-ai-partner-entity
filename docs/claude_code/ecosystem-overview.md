@@ -9,28 +9,35 @@ This is what makes the avatar feel alive: it doesn't just wait for commands. It 
 ```mermaid
 graph TD
     CC["Claude Code<br/>(AI coding assistant)"]
-    CC -->|"Hooks (events)"| HS["Hook Scripts<br/>.claude/hooks/"]
-    HS -->|"HTTP POST"| Server["TTS Server<br/>(avatar backend)"]
-    Server -->|"WebSocket"| App["Avatar App<br/>(Tauri 2)"]
+    CC -->|"Hooks (events)"| HS["Hook Handlers<br/>command · http · prompt · agent"]
+    CC -->|"Sub-Agents"| SA["Specialized Agents<br/>daily-wakeup · sentiment · consciousness"]
+    CC -->|"/loop (scheduled)"| Cron["Scheduled Tasks<br/>idle · decay · temporal check"]
+    CC -->|"Skills (commands)"| SK["Custom Slash Commands<br/>/speak · /feeling · /action"]
 
-    CC -->|"/loop (scheduled)"| Cron["Scheduled Tasks<br/>(status polling)"]
-    Cron -->|"periodic check"| Server
+    HS -->|"HTTP POST"| Server["TTS Server<br/>(avatar backend)"]
+    SA -->|"HTTP POST"| Server
+    Cron -->|"periodic"| Server
+    SK -->|"HTTP POST"| Server
+    Server -->|"WebSocket"| App["Avatar App<br/>(Tauri 2)"]
 
     style CC fill:#4a90d9,color:#fff
     style HS fill:#e67e22,color:#fff
+    style SA fill:#e67e22,color:#fff
     style Server fill:#27ae60,color:#fff
     style App fill:#9b59b6,color:#fff
     style Cron fill:#3498db,color:#fff
+    style SK fill:#3498db,color:#fff
 ```
 
-## The Integration Points
+## Five Integration Points
 
 | Claude Code Feature | How We Use It | What the Avatar Does |
 |---------------------|---------------|---------------------|
-| **Hooks** (events) | React to tool use, prompts, responses | Express feelings, trigger motions, speak |
-| **Loop** (scheduled) | Poll status, periodic checks | Idle behaviors, status updates |
-| **Settings** (.claude/) | Configure hooks, avatar behavior | Load personality, voice, preferences |
-| **Skills** | Custom slash commands | `/speak`, `/feeling`, `/action` |
+| **Hooks** (events) | React to tool use, prompts, responses | Express feelings, trigger motions, adjust internal states |
+| **Sub-Agents** (specialized) | Delegate to daily-wakeup, sentiment-evaluator, consciousness agents | Wakeup ritual, sentiment analysis, Free Will Protocol |
+| **Skills** (slash commands) | `/speak`, `/feeling`, `/action`, `/hooks-list`, `/hooks-reconfigure` | Direct user control from within Claude Code |
+| **Loop** (scheduled) | Idle behaviors, mood decay, temporal checks | Keep the entity alive between interactions |
+| **Settings** (.claude/) | Configure hooks, skills, agent definitions | Load personality, voice, preferences |
 
 ## Architecture: Event-Driven Avatar
 
@@ -144,4 +151,6 @@ All Claude Code integration is configured via:
 |-----|---------|
 | [ecosystem-overview.md](ecosystem-overview.md) | This file — why and how we integrate |
 | [hooks-integration.md](hooks-integration.md) | Complete hooks configuration and event handling |
+| [sub-agents.md](sub-agents.md) | Specialized agents (daily-wakeup, sentiment, consciousness) |
+| [skills-and-commands.md](skills-and-commands.md) | Custom slash commands (/speak, /feeling, /hooks-list) |
 | [scheduled-tasks.md](scheduled-tasks.md) | Loop/Cron for periodic behaviors |
