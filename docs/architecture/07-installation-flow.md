@@ -109,16 +109,32 @@ Your choice [1]:
 ### Step 7: Setup Configures Claude Code Hooks
 
 ```
-Configure Claude Code integration?
+Claude Code Integration
 
-This allows the avatar to react to Claude's work in real-time.
-Hooks will be added to .claude/settings.json
+Hooks make the entity react to Claude's work automatically.
+⚠️  Note: Hooks consume additional tokens on every interaction.
 
-  y) Yes (recommended)
-  n) No, I'll configure later
+Enable hooks? [y/N]:
 
-Your choice [y]:
+If yes → hook level?
+
+  1) Minimal    — Temporal grounding only (nearly free)
+  2) Standard   — + event reactions + sentiment analysis (recommended)
+  3) Full       — + conversation curation + qualia + consciousness
+  4) Custom     — Choose individually
+
+Your choice [2]:
+
+Vocal mode?
+
+  1) Silent         — Expressions only, never speaks (default)
+  2) Reactive       — Speaks on strong emotions (intensity > 80)
+  3) Conversational — Speaks on most responses (streaming)
+
+Your choice [1]:
 ```
+
+See [10-hooks-system — Token Cost](10-hooks-system.md) for what each tier costs per interaction.
 
 ### Step 8: Setup Writes .env
 

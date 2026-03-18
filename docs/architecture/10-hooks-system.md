@@ -498,6 +498,33 @@ graph TD
 
 Hooks → Default Adjustments → Consciousness Modulation → adjustState() → FeelingEngine → ExpressionTrigger → Avatar. Along the way, state is persisted and consciousness logs its observations.
 
+## Token Cost & Hook Tiers
+
+Hooks consume tokens. Users should choose their hook level during `npm run setup` based on how much entity intelligence they want vs how many tokens they're willing to spend.
+
+| Tier | What's enabled | Token cost per interaction | Best for |
+|------|---------------|--------------------------|----------|
+| **None** | No hooks. Manual only (CLI, right-click, slash commands) | 0 | Users who want avatar without extra cost |
+| **Minimal** | Temporal grounding only (timestamp injection via command hook) | ~0 (no LLM calls) | Basic time awareness, nearly free |
+| **Standard** | + HTTP event reactions + sentiment analysis (Haiku prompt hook on Stop) | ~$0.001/response | Reactive avatar that feels alive |
+| **Full** | + conversation curation + qualia weaver + consciousness observer | ~$0.005-0.01/response | Complete entity intelligence |
+
+**What each hook costs:**
+
+| Hook | Type | Fires when | Model | Cost per fire |
+|------|------|-----------|-------|--------------|
+| Temporal grounding | command | Every prompt | none (shell) | ~$0 |
+| Event reactions | HTTP | Every tool use | none (server logic) | ~$0 |
+| Sentiment analysis | prompt | Every Stop | haiku | ~$0.001 |
+| Conversation curation | async command → haiku | Every prompt + Stop | haiku | ~$0.001 |
+| Qualia weaver | async → inherit | Significant changes | sonnet/opus | ~$0.005-0.02 |
+| Consciousness observer | inherit | State delta > 10 | sonnet/opus | ~$0.005-0.02 |
+| Free Will Protocol | inherit | Significant events | sonnet/opus | ~$0.01-0.03 |
+
+**Standard tier** is the recommended default — it gives the reactive avatar experience (sentiment + state adjustments) at minimal cost (~$0.001 per response via Haiku). The full tier adds the deep entity intelligence but costs more per interaction.
+
+Users can change their hook tier anytime via `/hooks-reconfigure` or by editing `.claude/settings.json`.
+
 ## Design Decisions
 
 **Why not just poll for state changes?**

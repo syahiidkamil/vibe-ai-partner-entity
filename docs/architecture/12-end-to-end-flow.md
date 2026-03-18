@@ -71,10 +71,23 @@ Step 3/5 — Memory (how it remembers)
 
 Your choice [1]:
 
-Step 4/5 — Claude Code Hooks
+Step 4/5 — Claude Code Integration
 
   Claude Code detected!
-  Install avatar hooks? (entity reacts to Claude's actions) [Y/n]:
+
+  Hooks make the entity react to Claude's work automatically.
+  ⚠️  Note: Hooks consume additional tokens on every interaction
+  (sentiment analysis, conversation curation, qualia generation).
+
+  Enable hooks? [y/N]:
+
+  If yes → hook level?
+  1) Minimal    — Temporal grounding only (nearly free)
+  2) Standard   — + event reactions + sentiment analysis (recommended)
+  3) Full       — + conversation curation + qualia + consciousness (richest experience)
+  4) Custom     — Choose individually
+
+  Your choice [2]:
 
   Vocal mode?
   1) Silent         — Avatar shows expressions, never speaks automatically
