@@ -1,0 +1,21 @@
+{
+  "name": "@vibe-ai-partner/plugin-avatar-live2d",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vibe-ai-partner/core": "*",
+    "@vibe-ai-partner/shared": "*",
+    "pixi.js": "^7.0.0",
+    "pixi-live2d-display": "^0.4.0"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  },
+  "files": ["dist"]
+}

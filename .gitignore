@@ -12,5 +12,14 @@ models/threejs/
 dist/
 *.tsbuildinfo
 
+# Proprietary SDK (not distributed in git)
+**/live2dcubismcore.min.js
+
 # Dependencies
 node_modules/
+
+# Phase 2 runtime
+apps/tts-server/.venv/
+apps/avatar-app/src-tauri/target/
+.tts-server.pid
+.avatar-app.pid

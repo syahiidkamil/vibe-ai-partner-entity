@@ -1,0 +1,14 @@
+{
+  "models": [
+    {
+      "id": "shizuku",
+      "renderer": "live2d",
+      "name": "Shizuku",
+      "version": "1.0",
+      "description": "Live2D anime character with 13 feelings and 12 self-expressions",
+      "files": "https://github.com/syahiidkamil/vibe-ai-partner/releases/download/models-v1.0/shizuku.tar.gz",
+      "hash": "sha256:TO_BE_COMPUTED_ON_RELEASE",
+      "size": "5MB"
+    }
+  ]
+}

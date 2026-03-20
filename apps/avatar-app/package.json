@@ -1,0 +1,23 @@
+{
+  "name": "@vibe-ai-partner/avatar-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "tauri": "tauri",
+    "test": "echo 'Manual testing only'"
+  },
+  "dependencies": {
+    "@vibe-ai-partner/core": "*",
+    "@vibe-ai-partner/shared": "*"
+  },
+  "devDependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/cli": "^2.0.0",
+    "@tauri-apps/plugin-shell": "^2.0.0",
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

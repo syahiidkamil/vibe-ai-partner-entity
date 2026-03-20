@@ -29,6 +29,7 @@
     "switch": "node scripts/switch.js"
   },
   "devDependencies": {
+    "@types/node": "^25.5.0",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
   }
