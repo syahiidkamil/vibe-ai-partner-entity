@@ -1,9 +1,17 @@
 import { spawn } from "child_process";
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(import.meta.dirname, "../../../..");
-const TTS_PORT = process.env.TTS_SERVER_PORT || 5111;
+const CONFIG_PATH = resolve(ROOT, "config.json");
+
+function readConfig(): Record<string, unknown> {
+  try {
+    return JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
+  } catch {
+    return {};
+  }
+}
 
 async function checkHealth(port: string | number): Promise<boolean> {
   try {
@@ -56,22 +64,27 @@ async function logEngineInfo(port: string | number): Promise<void> {
 }
 
 export async function start(opts: { prod?: boolean }): Promise<void> {
+  const config = readConfig();
+  const ttsPort = (config.ttsPort as number) || 5111;
+
   console.log("Starting Vibe AI Partner...");
 
   // 1. TTS Server
-  if (await checkHealth(TTS_PORT)) {
-    await logEngineInfo(TTS_PORT);
+  if (await checkHealth(ttsPort)) {
+    await logEngineInfo(ttsPort);
   } else {
     console.log("  Starting TTS server...");
     const env = { ...process.env };
-    // macOS: PyTorch MPS fallback needed to avoid GPU errors
-    if (process.platform === "darwin") {
+
+    // PyTorch MPS fallback (configurable via config.json)
+    if (config.pytorchMpsFallback !== false) {
       env.PYTORCH_ENABLE_MPS_FALLBACK = env.PYTORCH_ENABLE_MPS_FALLBACK || "1";
-      // phonemizer can't auto-detect espeak-ng from homebrew
-      if (!env.PHONEMIZER_ESPEAK_LIBRARY) {
-        const lib = "/opt/homebrew/lib/libespeak-ng.dylib";
-        if (existsSync(lib)) env.PHONEMIZER_ESPEAK_LIBRARY = lib;
-      }
+    }
+
+    // macOS: phonemizer can't auto-detect espeak-ng from homebrew
+    if (process.platform === "darwin" && !env.PHONEMIZER_ESPEAK_LIBRARY) {
+      const lib = "/opt/homebrew/lib/libespeak-ng.dylib";
+      if (existsSync(lib)) env.PHONEMIZER_ESPEAK_LIBRARY = lib;
     }
 
     const tts = spawn(
@@ -81,7 +94,7 @@ export async function start(opts: { prod?: boolean }): Promise<void> {
         "uvicorn",
         "vibe_tts.server:app",
         "--port",
-        String(TTS_PORT),
+        String(ttsPort),
         "--host",
         "0.0.0.0",
       ],
@@ -112,8 +125,8 @@ export async function start(opts: { prod?: boolean }): Promise<void> {
 
     tts.unref();
     writeFileSync(resolve(ROOT, ".tts-server.pid"), String(tts.pid));
-    await waitForHealth(TTS_PORT);
-    await logEngineInfo(TTS_PORT);
+    await waitForHealth(ttsPort);
+    await logEngineInfo(ttsPort);
   }
 
   // 2. Avatar App
