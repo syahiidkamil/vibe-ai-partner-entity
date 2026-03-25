@@ -1,3 +1,10 @@
 {
-  "ttsEngine": "kokoro"
+  "ttsEngine": "kokoro",
+  "ttsVoice": "af_heart",
+  "ttsSpeed": 1.0,
+  "ttsPort": 5111,
+  "avatarRenderer": "live2d",
+  "avatarModel": "shizuku",
+  "vocalMode": "silent",
+  "pytorchMpsFallback": true
 }
