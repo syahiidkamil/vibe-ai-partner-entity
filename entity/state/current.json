@@ -7,7 +7,22 @@
     "momentum": 50,
     "trustCalibration": 50
   },
-  "feelings": {},
-  "timestamp": null,
+  "feelings": {
+    "happy": 50,
+    "sad": 50,
+    "frustrated": 0,
+    "curious": 50,
+    "proud": 0,
+    "anxious": 50,
+    "excited": 0,
+    "calm": 100,
+    "bored": 0,
+    "guilty": 0,
+    "angry": 0,
+    "blushing": 15,
+    "surprised": 0,
+    "relieved": 0
+  },
+  "timestamp": "2026-03-25T04:18:05.764175+00:00",
   "sessionId": null
 }
