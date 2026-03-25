@@ -86,7 +86,7 @@ export async function setup(): Promise<void> {
     });
 
     // Kokoro with Japanese support needs UniDic dictionary download
-    if (engine.group === "kokoro") {
+    if (engine.group === "kokoro" || engine.group === "kokoro-onnx") {
       const hasUnidic = (() => {
         try {
           const result = execSync(
