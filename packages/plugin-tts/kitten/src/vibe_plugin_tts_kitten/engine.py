@@ -1,6 +1,7 @@
 """
-KittenTTS Engine — 15M param model, CPU-only, 8 voices.
+KittenTTS Engine — lightweight model, CPU-only, 8 voices.
 
+Uses KittenML/kitten-tts-nano-0.8-int8 (25MB, ONNX).
 Auto-downloads from HuggingFace on first run.
 """
 
@@ -10,6 +11,8 @@ import numpy as np
 from kittentts import KittenTTS as KittenModel
 
 from vibe_plugin_tts_core import AudioChunk, TTSEngineBase
+
+KITTEN_MODEL = "KittenML/kitten-tts-nano-0.8-int8"
 
 KITTEN_VOICES = [
     {"id": "Bella",  "name": "Bella",  "language": "en-us", "gender": "female"},
@@ -35,7 +38,7 @@ class KittenEngine(TTSEngineBase):
 
     def initialize(self) -> None:
         if self._model is None:
-            self._model = KittenModel()
+            self._model = KittenModel(KITTEN_MODEL)
 
     def generate(self, text: str, voice: str | None = None, speed: float = 1.0) -> list[AudioChunk]:
         if self._model is None:

@@ -10,9 +10,11 @@ Routes match the protocol types from @vibe-ai-partner/shared:
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any
 
@@ -152,6 +154,16 @@ pipeline: TTSPipeline | None = None
 start_time: float = 0.0
 
 
+def _read_preferred_engine() -> str | None:
+    """Read preferred TTS engine from root config.json."""
+    config_path = Path(__file__).resolve().parents[4] / "config.json"
+    try:
+        config = json.loads(config_path.read_text())
+        return config.get("ttsEngine")
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup: register engines, load default. Shutdown: cleanup."""
@@ -177,9 +189,12 @@ async def lifespan(app: FastAPI):
     except ImportError:
         pass
 
-    # Activate first available engine
+    # Activate preferred engine from config.json, or first available
+    preferred = _read_preferred_engine()
     available = registry.list()
-    if available:
+    if preferred and preferred in available:
+        registry.switch(preferred)
+    elif available:
         registry.switch(available[0])
 
     # Wire up pipeline with broadcast callbacks
