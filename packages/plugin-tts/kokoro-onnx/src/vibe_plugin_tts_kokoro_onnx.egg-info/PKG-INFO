@@ -5,4 +5,5 @@ Summary: Kokoro ONNX TTS engine plugin — lightweight, CPU-friendly
 Requires-Python: <3.13,>=3.10
 Requires-Dist: vibe-plugin-tts-core
 Requires-Dist: kokoro-onnx>=0.4.0
+Requires-Dist: misaki-fork[en,ja]>=0.9.0
 Requires-Dist: soundfile>=0.12.0

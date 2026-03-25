@@ -925,6 +925,38 @@ zh = [
 ]
 
 [[package]]
+name = "misaki-fork"
+version = "0.9.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "addict" },
+    { name = "pip" },
+    { name = "regex" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4d/60/13f61cacba1ce9b29d8f285630b095c605cf99509b055665117ff5680be1/misaki_fork-0.9.6.tar.gz", hash = "sha256:dd75b77bdccb4c01c97274ed490d9e2ada9e69c3ec84ecea2b6d23302082bce0", size = 3755175, upload-time = "2026-01-30T02:48:35.994Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/31/72/9d69211d0689400459d83c0853ab8bb77282a17967536de58b926c9cd613/misaki_fork-0.9.6-py3-none-any.whl", hash = "sha256:e6654af901ee6ab2b625587b7ad6fc81460bc7576bc8455a0bcb390808057b88", size = 3765635, upload-time = "2026-01-30T02:48:32.345Z" },
+]
+
+[package.optional-dependencies]
+en = [
+    { name = "espeakng-loader" },
+    { name = "num2words" },
+    { name = "phonemizer-fork" },
+    { name = "spacy" },
+    { name = "spacy-curated-transformers" },
+    { name = "torch" },
+    { name = "transformers" },
+]
+ja = [
+    { name = "fugashi" },
+    { name = "jaconv" },
+    { name = "mojimoji" },
+    { name = "pyopenjtalk" },
+    { name = "unidic" },
+]
+
+[[package]]
 name = "mojimoji"
 version = "0.0.13"
 source = { registry = "https://pypi.org/simple" }
@@ -1347,6 +1379,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/42/fa/9294d2f11890ca49d0bdac7a4da60cbe5686629bfd4987cae0ad75e051cc/phonemizer_fork-3.3.2.tar.gz", hash = "sha256:10e16e827d0443b087062e21b55e805c00989cf1343b2e81e734cae5f6c0cf69", size = 300989, upload-time = "2025-01-30T13:02:31.201Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/64/f1/0dcce21b0ae16a82df4b6583f8f3ad8e55b35f7e98b6bf536a4dd225fa08/phonemizer_fork-3.3.2-py3-none-any.whl", hash = "sha256:97305c76f4183b3825dae8f4c032265fe78c9946ce58c47d4b62161349264b74", size = 82700, upload-time = "2025-01-30T13:02:28.667Z" },
+]
+
+[[package]]
+name = "pip"
+version = "26.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/48/83/0d7d4e9efe3344b8e2fe25d93be44f64b65364d3c8d7bc6dc90198d5422e/pip-26.0.1.tar.gz", hash = "sha256:c4037d8a277c89b320abe636d59f91e6d0922d08a05b60e85e53b296613346d8", size = 1812747, upload-time = "2026-02-05T02:20:18.702Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/de/f0/c81e05b613866b76d2d1066490adf1a3dbc4ee9d9c839961c3fc8a6997af/pip-26.0.1-py3-none-any.whl", hash = "sha256:bdb1b08f4274833d62c1aa29e20907365a2ceb950410df15fc9521bad440122b", size = 1787723, upload-time = "2026-02-05T02:20:16.416Z" },
 ]
 
 [[package]]
@@ -2465,6 +2506,7 @@ version = "0.1.0"
 source = { editable = "../../packages/plugin-tts/kokoro-onnx" }
 dependencies = [
     { name = "kokoro-onnx" },
+    { name = "misaki-fork", extra = ["en", "ja"] },
     { name = "soundfile" },
     { name = "vibe-plugin-tts-core" },
 ]
@@ -2472,6 +2514,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "kokoro-onnx", specifier = ">=0.4.0" },
+    { name = "misaki-fork", extras = ["en", "ja"], specifier = ">=0.9.0" },
     { name = "soundfile", specifier = ">=0.12.0" },
     { name = "vibe-plugin-tts-core", editable = "../../packages/plugin-tts/core" },
 ]
