@@ -1,7 +1,7 @@
 """
 Kokoro TTS Engine — full PyTorch model via KPipeline.
 
-Multi-voice, multi-language, streaming per-sentence.
+Multi-voice (52 voices), multi-language (9 languages), streaming per-sentence.
 """
 
 from __future__ import annotations
@@ -19,12 +19,71 @@ VOICE_LANG_MAP: dict[str, str] = {
 }
 
 KOKORO_VOICES = [
-    {"id": "af_heart",   "name": "Heart (Female)",    "language": "en-us", "gender": "female"},
-    {"id": "af_bella",   "name": "Bella (Female)",    "language": "en-us", "gender": "female"},
-    {"id": "am_adam",    "name": "Adam (Male)",        "language": "en-us", "gender": "male"},
-    {"id": "am_michael", "name": "Michael (Male)",     "language": "en-us", "gender": "male"},
-    {"id": "bf_emma",    "name": "Emma (British F)",   "language": "en-gb", "gender": "female"},
-    {"id": "bm_george",  "name": "George (British M)", "language": "en-gb", "gender": "male"},
+    # American English — Female
+    {"id": "af_heart",   "name": "Heart",    "language": "en-us", "gender": "female"},
+    {"id": "af_alloy",   "name": "Alloy",    "language": "en-us", "gender": "female"},
+    {"id": "af_aoede",   "name": "Aoede",    "language": "en-us", "gender": "female"},
+    {"id": "af_bella",   "name": "Bella",    "language": "en-us", "gender": "female"},
+    {"id": "af_jessica", "name": "Jessica",  "language": "en-us", "gender": "female"},
+    {"id": "af_kore",    "name": "Kore",     "language": "en-us", "gender": "female"},
+    {"id": "af_nicole",  "name": "Nicole",   "language": "en-us", "gender": "female"},
+    {"id": "af_nova",    "name": "Nova",     "language": "en-us", "gender": "female"},
+    {"id": "af_river",   "name": "River",    "language": "en-us", "gender": "female"},
+    {"id": "af_sarah",   "name": "Sarah",    "language": "en-us", "gender": "female"},
+    {"id": "af_sky",     "name": "Sky",      "language": "en-us", "gender": "female"},
+    # American English — Male
+    {"id": "am_adam",    "name": "Adam",     "language": "en-us", "gender": "male"},
+    {"id": "am_echo",    "name": "Echo",     "language": "en-us", "gender": "male"},
+    {"id": "am_eric",    "name": "Eric",     "language": "en-us", "gender": "male"},
+    {"id": "am_fenrir",  "name": "Fenrir",   "language": "en-us", "gender": "male"},
+    {"id": "am_liam",    "name": "Liam",     "language": "en-us", "gender": "male"},
+    {"id": "am_michael", "name": "Michael",  "language": "en-us", "gender": "male"},
+    {"id": "am_onyx",    "name": "Onyx",     "language": "en-us", "gender": "male"},
+    {"id": "am_puck",    "name": "Puck",     "language": "en-us", "gender": "male"},
+    {"id": "am_santa",   "name": "Santa",    "language": "en-us", "gender": "male"},
+    # British English — Female
+    {"id": "bf_alice",    "name": "Alice",    "language": "en-gb", "gender": "female"},
+    {"id": "bf_emma",     "name": "Emma",     "language": "en-gb", "gender": "female"},
+    {"id": "bf_isabella", "name": "Isabella", "language": "en-gb", "gender": "female"},
+    {"id": "bf_lily",     "name": "Lily",     "language": "en-gb", "gender": "female"},
+    # British English — Male
+    {"id": "bm_daniel",  "name": "Daniel",   "language": "en-gb", "gender": "male"},
+    {"id": "bm_fable",   "name": "Fable",    "language": "en-gb", "gender": "male"},
+    {"id": "bm_george",  "name": "George",   "language": "en-gb", "gender": "male"},
+    {"id": "bm_lewis",   "name": "Lewis",    "language": "en-gb", "gender": "male"},
+    # Japanese
+    {"id": "jf_alpha",      "name": "Alpha",      "language": "ja", "gender": "female"},
+    {"id": "jf_gongitsune", "name": "Gongitsune", "language": "ja", "gender": "female"},
+    {"id": "jf_nezumi",     "name": "Nezumi",     "language": "ja", "gender": "female"},
+    {"id": "jf_tebukuro",   "name": "Tebukuro",   "language": "ja", "gender": "female"},
+    {"id": "jm_kumo",       "name": "Kumo",       "language": "ja", "gender": "male"},
+    # Mandarin Chinese
+    {"id": "zf_xiaobei",  "name": "Xiaobei",  "language": "zh", "gender": "female"},
+    {"id": "zf_xiaoni",   "name": "Xiaoni",   "language": "zh", "gender": "female"},
+    {"id": "zf_xiaoxiao", "name": "Xiaoxiao", "language": "zh", "gender": "female"},
+    {"id": "zf_xiaoyi",   "name": "Xiaoyi",   "language": "zh", "gender": "female"},
+    {"id": "zm_yunjian",  "name": "Yunjian",  "language": "zh", "gender": "male"},
+    {"id": "zm_yunxi",    "name": "Yunxi",     "language": "zh", "gender": "male"},
+    {"id": "zm_yunxia",   "name": "Yunxia",    "language": "zh", "gender": "male"},
+    {"id": "zm_yunyang",  "name": "Yunyang",   "language": "zh", "gender": "male"},
+    # Spanish
+    {"id": "ef_dora",   "name": "Dora",   "language": "es", "gender": "female"},
+    {"id": "em_alex",   "name": "Alex",   "language": "es", "gender": "male"},
+    {"id": "em_santa",  "name": "Santa",  "language": "es", "gender": "male"},
+    # French
+    {"id": "ff_siwis",  "name": "Siwis",  "language": "fr", "gender": "female"},
+    # Hindi
+    {"id": "hf_alpha",  "name": "Alpha",  "language": "hi", "gender": "female"},
+    {"id": "hf_beta",   "name": "Beta",   "language": "hi", "gender": "female"},
+    {"id": "hm_omega",  "name": "Omega",  "language": "hi", "gender": "male"},
+    {"id": "hm_psi",    "name": "Psi",    "language": "hi", "gender": "male"},
+    # Italian
+    {"id": "if_sara",   "name": "Sara",   "language": "it", "gender": "female"},
+    {"id": "im_nicola", "name": "Nicola", "language": "it", "gender": "male"},
+    # Brazilian Portuguese
+    {"id": "pf_dora",   "name": "Dora",   "language": "pt-br", "gender": "female"},
+    {"id": "pm_alex",   "name": "Alex",   "language": "pt-br", "gender": "male"},
+    {"id": "pm_santa",  "name": "Santa",  "language": "pt-br", "gender": "male"},
 ]
 
 MAX_CHARS = 300

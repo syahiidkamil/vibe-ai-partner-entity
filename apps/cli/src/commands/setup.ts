@@ -84,6 +84,19 @@ export async function setup(): Promise<void> {
       cwd: TTS_DIR,
       stdio: "inherit",
     });
+
+    // Kokoro with Japanese support needs UniDic dictionary download
+    if (engine.group === "kokoro") {
+      console.log("\nDownloading Japanese language dictionary (UniDic)...");
+      try {
+        execSync("uv run python -m unidic download", {
+          cwd: TTS_DIR,
+          stdio: "inherit",
+        });
+      } catch {
+        console.log("  UniDic download skipped (Japanese may not work)");
+      }
+    }
   } catch {
     console.error(`\nFailed to install ${engine.name}. Check the error above.`);
     process.exit(1);
