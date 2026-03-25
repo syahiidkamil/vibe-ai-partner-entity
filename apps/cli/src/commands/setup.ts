@@ -87,14 +87,28 @@ export async function setup(): Promise<void> {
 
     // Kokoro with Japanese support needs UniDic dictionary download
     if (engine.group === "kokoro") {
-      console.log("\nDownloading Japanese language dictionary (UniDic)...");
-      try {
-        execSync("uv run python -m unidic download", {
-          cwd: TTS_DIR,
-          stdio: "inherit",
-        });
-      } catch {
-        console.log("  UniDic download skipped (Japanese may not work)");
+      const hasUnidic = (() => {
+        try {
+          const result = execSync(
+            'uv run python -c "import unidic; import os; print(os.path.exists(os.path.join(os.path.dirname(unidic.__file__), \'dicdir\', \'mecabrc\')))"',
+            { cwd: TTS_DIR, encoding: "utf-8", stdio: ["pipe", "pipe", "pipe"] },
+          ).trim();
+          return result === "True";
+        } catch { return false; }
+      })();
+
+      if (!hasUnidic) {
+        console.log("\nDownloading Japanese language dictionary (UniDic, ~526MB)...");
+        try {
+          execSync("uv run python -m unidic download", {
+            cwd: TTS_DIR,
+            stdio: "inherit",
+          });
+        } catch {
+          console.log("  UniDic download skipped (Japanese may not work)");
+        }
+      } else {
+        console.log("\n  UniDic dictionary already installed.");
       }
     }
   } catch {
