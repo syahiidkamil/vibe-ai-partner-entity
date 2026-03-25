@@ -63,11 +63,15 @@ export async function start(opts: { prod?: boolean }): Promise<void> {
     await logEngineInfo(TTS_PORT);
   } else {
     console.log("  Starting TTS server...");
-    // macOS: phonemizer can't auto-detect espeak-ng from homebrew
     const env = { ...process.env };
-    if (process.platform === "darwin" && !env.PHONEMIZER_ESPEAK_LIBRARY) {
-      const lib = "/opt/homebrew/lib/libespeak-ng.dylib";
-      if (existsSync(lib)) env.PHONEMIZER_ESPEAK_LIBRARY = lib;
+    // macOS: PyTorch MPS fallback needed to avoid GPU errors
+    if (process.platform === "darwin") {
+      env.PYTORCH_ENABLE_MPS_FALLBACK = env.PYTORCH_ENABLE_MPS_FALLBACK || "1";
+      // phonemizer can't auto-detect espeak-ng from homebrew
+      if (!env.PHONEMIZER_ESPEAK_LIBRARY) {
+        const lib = "/opt/homebrew/lib/libespeak-ng.dylib";
+        if (existsSync(lib)) env.PHONEMIZER_ESPEAK_LIBRARY = lib;
+      }
     }
 
     const tts = spawn(
