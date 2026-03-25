@@ -7,7 +7,8 @@ dependencies = [
     "vibe-plugin-tts-core",
     "kokoro>=0.9.0",
     "torch>=2.0.0",
-    "misaki[en,ja]>=0.8.0",
+    "misaki[en,ja,zh]>=0.8.0",
+    "ordered-set>=4.1.0",
     "soundfile>=0.12.0",
 ]
 
