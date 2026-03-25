@@ -86,6 +86,11 @@ export class Live2DRenderer implements IAvatarRenderer {
     const { Live2DModel, MotionPreloadStrategy } = await import(
       "pixi-live2d-display"
     );
+    const PIXI = await import("pixi.js");
+
+    // Register PIXI ticker so Live2D model animates (physics, idle, expressions)
+    // Type cast needed: pixi.js re-exports @pixi/ticker with duplicate declarations
+    Live2DModel.registerTicker(PIXI.Ticker as any);
     const modelPath = `${this.config.modelPath}/${this.capabilities.model}.model3.json`;
 
     this.model = await Live2DModel.from(modelPath, {

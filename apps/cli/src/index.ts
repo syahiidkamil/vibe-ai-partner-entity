@@ -3,6 +3,10 @@ import { Command } from "commander";
 import { speak } from "./commands/speak.js";
 import { feeling } from "./commands/feeling.js";
 import { action } from "./commands/action.js";
+import { start } from "./commands/start.js";
+import { stop } from "./commands/stop.js";
+import { status } from "./commands/status.js";
+import { setup } from "./commands/setup.js";
 
 const program = new Command();
 const TTS_URL = `http://localhost:${process.env.TTS_SERVER_PORT || 5111}`;
@@ -11,6 +15,27 @@ program
   .name("vibe")
   .description("Vibe AI Partner CLI")
   .version("0.1.0");
+
+program
+  .command("setup")
+  .description("Install a TTS engine (interactive)")
+  .action(() => setup());
+
+program
+  .command("start")
+  .description("Start TTS server and avatar app")
+  .option("--prod", "Launch Tauri binary instead of dev server")
+  .action((opts) => start(opts));
+
+program
+  .command("stop")
+  .description("Stop TTS server and avatar app")
+  .action(() => stop());
+
+program
+  .command("status")
+  .description("Check status of TTS server and avatar app")
+  .action(() => status());
 
 program
   .command("speak <text>")

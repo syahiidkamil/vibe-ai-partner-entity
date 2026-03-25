@@ -1,10 +1,9 @@
-#!/usr/bin/env node
 import { readFileSync, unlinkSync, existsSync } from "fs";
 import { resolve } from "path";
 
-const ROOT = resolve(import.meta.dirname, "..");
+const ROOT = resolve(import.meta.dirname, "../../../..");
 
-function stopProcess(pidFile, name) {
+function stopProcess(pidFile: string, name: string): void {
   const path = resolve(ROOT, pidFile);
   if (!existsSync(path)) {
     console.log(`  ${name}: not running (no PID file)`);
@@ -21,6 +20,8 @@ function stopProcess(pidFile, name) {
   }
 }
 
-console.log("Stopping Vibe AI Partner...");
-stopProcess(".tts-server.pid", "TTS Server");
-stopProcess(".avatar-app.pid", "Avatar App");
+export function stop(): void {
+  console.log("Stopping Vibe AI Partner...");
+  stopProcess(".tts-server.pid", "TTS Server");
+  stopProcess(".avatar-app.pid", "Avatar App");
+}
