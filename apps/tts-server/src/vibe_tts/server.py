@@ -10,8 +10,10 @@ Routes match the protocol types from @vibe-ai-partner/shared:
 from __future__ import annotations
 
 import asyncio
+import os
 import time
 from contextlib import asynccontextmanager
+from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
@@ -20,6 +22,7 @@ from pydantic import BaseModel, Field
 from vibe_tts.audio_player import AudioPlayer
 from vibe_tts.engine_registry import EngineRegistry
 from vibe_tts.pipeline import TTSPipeline
+from vibe_tts.sentiment import analyze_sentiment
 from vibe_tts.state_manager import StateManager
 
 
@@ -53,6 +56,40 @@ class StateAdjustRequest(BaseModel):
 class VoiceRequest(BaseModel):
     """POST /api/voice — switch active voice"""
     voice: str
+
+class HookEvent(BaseModel):
+    """POST /api/hook — receives Claude Code hook events."""
+    hook_event_name: str
+    session_id: str | None = None
+    tool_name: str | None = None
+    tool_input: dict | None = None
+    tool_output: str | None = None
+    tool_error: str | None = None
+    user_prompt: str | None = None
+    stop_response: str | None = None
+    session_trigger: str | None = None
+    sentiment: dict | None = None
+
+
+# ═══════════════════════════════════════════════════════════════
+# Vocal mode
+# ═══════════════════════════════════════════════════════════════
+
+VOCAL_MODE = os.getenv("ENTITY_VOCAL_MODE", "silent")
+
+
+def _should_speak(sentiment: dict) -> bool:
+    """Check if vocal mode allows speaking for this sentiment."""
+    speak_text = sentiment.get("speak", "")
+    if not speak_text:
+        return False
+    if VOCAL_MODE == "silent":
+        return False
+    if VOCAL_MODE == "reactive":
+        return sentiment.get("intensity", 0) > 80
+    if VOCAL_MODE == "conversational":
+        return True
+    return False
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -230,6 +267,71 @@ async def adjust_state(req: StateAdjustRequest):
         await manager.broadcast_status({"type": "action", "name": expr})
 
     return result
+
+
+@app.post("/api/hook")
+async def hook(event: HookEvent):
+    """
+    Receive Claude Code hook events. Translate to state adjustments,
+    broadcast expressions, handle sentiment on Stop events.
+    """
+    name = event.hook_event_name
+
+    # Track session ID
+    if event.session_id:
+        state_mgr._session_id = event.session_id
+
+    # SessionStart: load previous state with decay
+    if name == "SessionStart":
+        saved = state_mgr.load_state()
+        if saved and saved.get("timestamp"):
+            try:
+                last_time = datetime.fromisoformat(saved["timestamp"])
+                now = datetime.now(timezone.utc)
+                hours = (now - last_time).total_seconds() / 3600
+                state_mgr.apply_decay(hours)
+            except (ValueError, TypeError):
+                pass
+
+    # Get hook adjustments and apply
+    adjustments = state_mgr.get_hook_adjustments(name, event.tool_name)
+    result = state_mgr.adjust(adjustments)
+
+    # Broadcast triggered expressions
+    for expr in result["expressionsTriggered"]:
+        await manager.broadcast_status({"type": "action", "name": expr})
+
+    # SessionStart: broadcast wave
+    if name == "SessionStart":
+        await manager.broadcast_status({"type": "action", "name": "wave"})
+
+    # Stop: handle sentiment analysis
+    if name == "Stop":
+        sentiment = event.sentiment
+        if not sentiment and event.stop_response:
+            sentiment = analyze_sentiment(event.stop_response)
+
+        if sentiment:
+            feeling = sentiment.get("feeling", "calm")
+            intensity = sentiment.get("intensity", 30)
+            sent_result = state_mgr.apply_sentiment(feeling, intensity)
+
+            # Broadcast sentiment-triggered expressions
+            for expr in sent_result["expressionsTriggered"]:
+                await manager.broadcast_status({"type": "action", "name": expr})
+
+            # Broadcast suggested action
+            action_name = sentiment.get("action", "none")
+            if action_name and action_name != "none":
+                await manager.broadcast_status({"type": "action", "name": action_name})
+
+            # Vocal mode check for speak
+            if pipeline and _should_speak(sentiment):
+                asyncio.create_task(pipeline.speak(sentiment["speak"]))
+
+            result = sent_result
+
+    return {"continue": True, **result}
 
 
 @app.post("/api/voice")

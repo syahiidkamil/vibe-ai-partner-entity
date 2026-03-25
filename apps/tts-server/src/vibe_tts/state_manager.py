@@ -12,7 +12,10 @@ Returns StateResponse matching protocol.ts:
 
 from __future__ import annotations
 
+import json
+import os
 import time
+from datetime import datetime, timezone
 from typing import Any
 
 
@@ -50,6 +53,51 @@ EXPRESSION_THRESHOLDS = [
 ]
 
 
+# ─── Hook event → state adjustment mapping (from 10-hooks-system.md) ──
+
+HOOK_ADJUSTMENTS: dict[str, list[tuple[str, float]]] = {
+    "SessionStart":              [("confidence", +10), ("contextSaturation", -20)],
+    "UserPromptSubmit":          [("alignment", +3), ("contextSaturation", +5)],
+    "PreToolUse:Bash":           [("momentum", +2)],
+    "PreToolUse:Edit|Write":     [("confidence", +2), ("momentum", +2)],
+    "PreToolUse:Read|Grep|Glob": [("contextSaturation", +2)],
+    "PostToolUse":               [("confidence", +3), ("momentum", +5), ("contextSaturation", +3)],
+    "PostToolUseFailure":        [("confidence", -5), ("momentum", -8), ("alignment", -2)],
+}
+
+# ─── Sentiment → state adjustment mapping (from 10-hooks-system.md) ──
+
+SENTIMENT_ADJUSTMENTS: dict[str, list[tuple[str, float]]] = {
+    "happy":      [("confidence", +5), ("momentum", +3), ("alignment", +3)],
+    "proud":      [("confidence", +8), ("alignment", +5), ("momentum", +5)],
+    "frustrated": [("momentum", -5)],
+    "curious":    [("contextSaturation", -5), ("confidence", -2)],
+    "anxious":    [("confidence", -5), ("alignment", -3)],
+    "sad":        [("momentum", -5), ("alignment", -3), ("trustCalibration", -2)],
+    "excited":    [("momentum", +8), ("contextSaturation", -3)],
+    "calm":       [],
+    "bored":      [("contextSaturation", +5), ("momentum", -3)],
+    "surprised":  [("contextSaturation", -10)],
+    "guilty":     [("alignment", -8), ("confidence", -3)],
+    "angry":      [("alignment", -5), ("momentum", -3)],
+}
+
+# ─── Tool name → category mapping for PreToolUse ──
+
+TOOL_CATEGORIES: dict[str, str] = {
+    "Bash": "Bash",
+    "Edit": "Edit|Write", "Write": "Edit|Write",
+    "Read": "Read|Grep|Glob", "Grep": "Read|Grep|Glob", "Glob": "Read|Grep|Glob",
+}
+
+# ─── State persistence path ──
+
+ENTITY_STATE_PATH = os.getenv(
+    "ENTITY_STATE_PATH",
+    os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "entity", "state", "current.json"),
+)
+
+
 def _clamp(value: float) -> int:
     """Clamp to 0-100 integer."""
     return max(0, min(100, round(value)))
@@ -71,6 +119,8 @@ class StateManager:
         self._prev_ctx_sat: int | None = None
         # Cooldown tracking: expression name -> last fired timestamp (ms)
         self._last_fired: dict[str, float] = {}
+        # Session tracking for persistence
+        self._session_id: str | None = None
 
     def adjust(self, adjustments: list[tuple[str, float]]) -> dict[str, Any]:
         """
@@ -98,11 +148,89 @@ class StateManager:
         self._prev_ctx_sat = self.states["contextSaturation"]
         self._prev_feelings = dict(feelings)
 
-        return {
+        result = {
             "states": dict(self.states),
             "feelings": feelings,
             "expressionsTriggered": triggered,
         }
+
+        # Auto-save state after every adjustment
+        self.save_state()
+
+        return result
+
+    # ─── Hook event mapping ────────────────────────────────────
+
+    def get_hook_adjustments(self, event_name: str, tool_name: str | None = None) -> list[tuple[str, float]]:
+        """Look up state adjustments for a hook event."""
+        if event_name == "PreToolUse" and tool_name:
+            category = TOOL_CATEGORIES.get(tool_name)
+            if category:
+                return list(HOOK_ADJUSTMENTS.get(f"PreToolUse:{category}", []))
+            return []
+        return list(HOOK_ADJUSTMENTS.get(event_name, []))
+
+    def scale_adjustments(
+        self, adjustments: list[tuple[str, float]], intensity: int,
+    ) -> list[tuple[str, float]]:
+        """Scale adjustment deltas based on sentiment intensity."""
+        if intensity < 30:
+            factor = 0.5
+        elif intensity > 70:
+            factor = 1.5
+        else:
+            factor = 1.0
+        return [(state, delta * factor) for state, delta in adjustments]
+
+    def apply_sentiment(self, feeling: str, intensity: int) -> dict[str, Any]:
+        """Look up sentiment adjustments, scale by intensity, apply to state."""
+        base = list(SENTIMENT_ADJUSTMENTS.get(feeling, []))
+        scaled = self.scale_adjustments(base, intensity)
+        return self.adjust(scaled)
+
+    # ─── State persistence ─────────────────────────────────────
+
+    def save_state(self, filepath: str | None = None) -> None:
+        """Auto-save current states + feelings to JSON file."""
+        path = os.path.normpath(filepath or ENTITY_STATE_PATH)
+        data = {
+            "states": dict(self.states),
+            "feelings": self._recalculate_feelings(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "sessionId": self._session_id,
+        }
+        try:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w") as f:
+                json.dump(data, f, indent=2)
+        except OSError:
+            pass  # Non-fatal — don't crash server if file write fails
+
+    def load_state(self, filepath: str | None = None) -> dict | None:
+        """Load saved state from JSON file. Returns parsed data or None."""
+        path = os.path.normpath(filepath or ENTITY_STATE_PATH)
+        if not os.path.exists(path):
+            return None
+        try:
+            with open(path) as f:
+                data = json.load(f)
+            for name in STATE_NAMES:
+                if name in data.get("states", {}):
+                    self.states[name] = _clamp(data["states"][name])
+            self._session_id = data.get("sessionId")
+            return data
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    def apply_decay(self, hours_inactive: float) -> None:
+        """Decay all states toward baseline based on hours of inactivity."""
+        if hours_inactive <= 0:
+            return
+        decay_factor = 0.5 ** hours_inactive
+        for name in STATE_NAMES:
+            current = self.states[name]
+            decayed = STATE_BASELINE + (current - STATE_BASELINE) * decay_factor
+            self.states[name] = _clamp(decayed)
 
     # ─── FeelingEngine mirror ─────────────────────────────────
 
