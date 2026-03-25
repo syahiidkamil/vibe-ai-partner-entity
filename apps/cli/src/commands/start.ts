@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { writeFileSync } from "fs";
+import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 
 const ROOT = resolve(import.meta.dirname, "../../../..");
@@ -39,14 +39,37 @@ async function waitForHealth(
   );
 }
 
+async function logEngineInfo(port: string | number): Promise<void> {
+  try {
+    const [healthRes, voicesRes] = await Promise.all([
+      fetch(`http://localhost:${port}/api/health`),
+      fetch(`http://localhost:${port}/api/voices`),
+    ]);
+    const health = (await healthRes.json()) as { engine?: string };
+    const voices = (await voicesRes.json()) as { voices?: { id: string; name: string }[] };
+    const engine = health.engine || "none";
+    const voice = voices.voices?.[0]?.name || "default";
+    console.log(`  TTS Server running on http://localhost:${port} (${engine}, voice: ${voice})`);
+  } catch {
+    console.log(`  TTS Server running on http://localhost:${port}`);
+  }
+}
+
 export async function start(opts: { prod?: boolean }): Promise<void> {
   console.log("Starting Vibe AI Partner...");
 
   // 1. TTS Server
   if (await checkHealth(TTS_PORT)) {
-    console.log(`  TTS Server already running on port ${TTS_PORT}`);
+    await logEngineInfo(TTS_PORT);
   } else {
     console.log("  Starting TTS server...");
+    // macOS: phonemizer can't auto-detect espeak-ng from homebrew
+    const env = { ...process.env };
+    if (process.platform === "darwin" && !env.PHONEMIZER_ESPEAK_LIBRARY) {
+      const lib = "/opt/homebrew/lib/libespeak-ng.dylib";
+      if (existsSync(lib)) env.PHONEMIZER_ESPEAK_LIBRARY = lib;
+    }
+
     const tts = spawn(
       "uv",
       [
@@ -62,6 +85,7 @@ export async function start(opts: { prod?: boolean }): Promise<void> {
         cwd: resolve(ROOT, "apps/tts-server"),
         stdio: "pipe",
         detached: true,
+        env,
       },
     );
 
@@ -85,7 +109,7 @@ export async function start(opts: { prod?: boolean }): Promise<void> {
     tts.unref();
     writeFileSync(resolve(ROOT, ".tts-server.pid"), String(tts.pid));
     await waitForHealth(TTS_PORT);
-    console.log(`  TTS Server running on http://localhost:${TTS_PORT}`);
+    await logEngineInfo(TTS_PORT);
   }
 
   // 2. Avatar App

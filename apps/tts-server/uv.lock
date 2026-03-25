@@ -686,21 +686,34 @@ wheels = [
 
 [[package]]
 name = "kittentts"
-version = "0.1.3"
-source = { registry = "https://pypi.org/simple" }
+version = "0.8.1"
+source = { url = "https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl" }
 dependencies = [
     { name = "espeakng-loader" },
     { name = "huggingface-hub" },
+    { name = "misaki", extra = ["en"] },
+    { name = "num2words" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "onnxruntime", version = "1.24.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "onnxruntime", version = "1.24.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "phonemizer" },
     { name = "soundfile" },
+    { name = "spacy" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/34/a0/205826d5d3b962f1fa9ec10f860630454f196dda5259bd10485a7ca1cae3/kittentts-0.1.3.tar.gz", hash = "sha256:e48cc069f84c09817a38c77920e9567cf0b65ab980deb46ff94a61669364cf1a", size = 2275, upload-time = "2025-08-10T09:29:22.716Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/bc/3d24d68f666dcd853b38eda1a44e722ea3ddcfc9b415f18d9024bd477ef4/kittentts-0.1.3-py2.py3-none-any.whl", hash = "sha256:da41beef7e5a13201f849d5e688a978fabd8cdd196250816e7a07972d6aacf43", size = 2576, upload-time = "2025-08-10T09:29:21.769Z" },
+    { url = "https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl", hash = "sha256:482a436c4f1f3192153710376e459ff3689517ebcda7c2b051e2fd4187b41851" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "espeakng-loader" },
+    { name = "huggingface-hub" },
+    { name = "misaki", extras = ["en"], specifier = ">=0.9.4" },
+    { name = "num2words" },
+    { name = "numpy" },
+    { name = "onnxruntime" },
+    { name = "soundfile" },
+    { name = "spacy" },
 ]
 
 [[package]]
@@ -1216,22 +1229,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/65/ee/299d360cdc32edc7d2cf530f3accf79c4fca01e96ffc950d8a52213bd8e4/packaging-26.0.tar.gz", hash = "sha256:00243ae351a257117b6a241061796684b084ed1c516a08c48a3f7e147a9d80b4", size = 143416, upload-time = "2026-01-21T20:50:39.064Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/b9/c538f279a4e237a006a2c98387d081e9eb060d203d8ed34467cc0f0b9b53/packaging-26.0-py3-none-any.whl", hash = "sha256:b36f1fef9334a5588b4166f8bcd26a14e521f2b55e6b9de3aaa80d3ff7a37529", size = 74366, upload-time = "2026-01-21T20:50:37.788Z" },
-]
-
-[[package]]
-name = "phonemizer"
-version = "3.3.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "attrs" },
-    { name = "dlinfo" },
-    { name = "joblib" },
-    { name = "segments" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c4/ff/3574c55a71b42ad6944a5bf0a7d59f0251ea2ba47e51a5c4005e32e9145c/phonemizer-3.3.0.tar.gz", hash = "sha256:5e0c38122effe0b331a24e674aff256874ece169d70a9cf1120337b56f8e3d0c", size = 88564, upload-time = "2024-08-01T14:29:50.299Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b6/23/e8d67c2052e132181c4c9027c2d8ed9e37e8acb27acfc13ed2d0c41ed850/phonemizer-3.3.0-py3-none-any.whl", hash = "sha256:17afaa98691fe73b025dd8d8727b0e67cc376c5e7ee27590853e457fb3f43602", size = 103800, upload-time = "2024-08-01T14:29:47.572Z" },
 ]
 
 [[package]]
@@ -2264,12 +2261,14 @@ version = "0.1.0"
 source = { editable = "../../packages/plugin-tts/kitten" }
 dependencies = [
     { name = "kittentts" },
+    { name = "soundfile" },
     { name = "vibe-plugin-tts-core" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "kittentts", specifier = ">=0.1.0" },
+    { name = "kittentts", url = "https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl" },
+    { name = "soundfile", specifier = ">=0.12.0" },
     { name = "vibe-plugin-tts-core", editable = "../../packages/plugin-tts/core" },
 ]
 

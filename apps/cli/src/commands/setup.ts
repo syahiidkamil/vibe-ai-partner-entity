@@ -1,9 +1,11 @@
 import { execSync } from "child_process";
 import { createInterface } from "readline";
 import { resolve } from "path";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 
 const ROOT = resolve(import.meta.dirname, "../../../..");
 const TTS_DIR = resolve(ROOT, "apps/tts-server");
+const CONFIG_PATH = resolve(ROOT, "config.json");
 
 const ENGINES = [
   {
@@ -36,14 +38,33 @@ function ask(question: string): Promise<string> {
   });
 }
 
+function readConfig(): Record<string, unknown> {
+  if (existsSync(CONFIG_PATH)) {
+    return JSON.parse(readFileSync(CONFIG_PATH, "utf-8"));
+  }
+  return {};
+}
+
+function writeConfig(config: Record<string, unknown>): void {
+  writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2) + "\n");
+}
+
 export async function setup(): Promise<void> {
   console.log("\nVibe AI Partner Setup\n");
+
+  const currentConfig = readConfig();
+  const currentEngine = (currentConfig.ttsEngine as string) || "none";
+  if (currentEngine !== "none") {
+    console.log(`  Current engine: ${currentEngine}\n`);
+  }
+
   console.log("Choose a TTS engine:\n");
 
   for (let i = 0; i < ENGINES.length; i++) {
     const e = ENGINES[i];
     const tag = e.tag ? ` (${e.tag})` : "";
-    console.log(`  ${i + 1}. ${e.name}${tag}`);
+    const current = e.group === currentEngine ? " *" : "";
+    console.log(`  ${i + 1}. ${e.name}${tag}${current}`);
     console.log(`     ${e.desc}\n`);
   }
 
@@ -68,6 +89,18 @@ export async function setup(): Promise<void> {
     process.exit(1);
   }
 
+  // Save choice to config.json
+  writeConfig({ ...currentConfig, ttsEngine: engine.group });
+
+  // Stop running server so next start picks up the new engine
+  try {
+    const { stop } = await import("./stop.js");
+    stop();
+  } catch {
+    // Server wasn't running — that's fine
+  }
+
   console.log(`\n${engine.name} installed successfully!`);
+  console.log(`Config saved to config.json (ttsEngine: "${engine.group}")`);
   console.log("\nNext: npm start");
 }

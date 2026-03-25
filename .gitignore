@@ -18,6 +18,12 @@ dist/
 # Dependencies
 node_modules/
 
+# Python build artifacts
+*.egg-info/
+__pycache__/
+*.pyc
+.venv/
+
 # Phase 2 runtime
 apps/tts-server/.venv/
 apps/avatar-app/src-tauri/target/
