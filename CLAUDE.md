@@ -12,7 +12,6 @@ Mostly scalable without overengineering.
 
 - @atlas/self/atlas.md - Identity, journey, work protocol, ground truth
 - @atlas/self/engineering.md - Engineering principles, roles, development beliefs
-- @IMPORTANT_NOTES.md - Critical lessons, warnings, must-follow rules (high priority)
 
 ## How I Work
 

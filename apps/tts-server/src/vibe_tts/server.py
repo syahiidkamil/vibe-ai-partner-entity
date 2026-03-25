@@ -160,13 +160,19 @@ async def lifespan(app: FastAPI):
 
     # Register available engines (try-import, skip if deps missing)
     try:
-        from vibe_tts.engines.kokoro_engine import KokoroEngine
+        from vibe_plugin_tts_kokoro import KokoroEngine
         registry.register("kokoro", KokoroEngine())
     except ImportError:
         pass
 
     try:
-        from vibe_tts.engines.kitten_engine import KittenEngine
+        from vibe_plugin_tts_kokoro_onnx import KokoroOnnxEngine
+        registry.register("kokoro-onnx", KokoroOnnxEngine())
+    except ImportError:
+        pass
+
+    try:
+        from vibe_plugin_tts_kitten import KittenEngine
         registry.register("kitten", KittenEngine())
     except ImportError:
         pass

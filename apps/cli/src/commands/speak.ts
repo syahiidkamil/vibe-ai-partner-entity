@@ -18,6 +18,7 @@ export async function speak(
     process.exit(1);
   }
 
-  const data = await res.json();
-  console.log(`Speaking: "${text}" (estimated ${data.duration_estimate}s)`);
+  const data = (await res.json()) as Record<string, unknown>;
+  const duration = data.duration_estimate;
+  console.log(duration ? `Speaking: "${text}" (~${duration}s)` : `Speaking: "${text}"`);
 }

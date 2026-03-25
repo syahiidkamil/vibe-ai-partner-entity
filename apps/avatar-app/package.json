@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@vibe-ai-partner/core": "*",
-    "@vibe-ai-partner/shared": "*"
+    "@vibe-ai-partner/shared": "*",
+    "@vibe-ai-partner/plugin-avatar-live2d": "*"
   },
   "devDependencies": {
     "@tauri-apps/api": "^2.0.0",

@@ -1,0 +1,1 @@
+vibe_plugin_tts_core
