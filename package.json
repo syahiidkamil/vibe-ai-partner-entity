@@ -11,9 +11,9 @@
     "apps/*"
   ],
   "scripts": {
-    "setup": "node apps/cli/dist/index.js setup",
     "start": "node apps/cli/dist/index.js start",
     "stop": "node apps/cli/dist/index.js stop",
+    "setup": "npm stop && node apps/cli/dist/index.js setup",
     "restart": "npm stop && npm start",
     "status": "node apps/cli/dist/index.js status",
     "dev": "npm run dev -w apps/avatar-app",
