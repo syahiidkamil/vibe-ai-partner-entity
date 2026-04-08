@@ -1,10 +1,26 @@
 {
-  "ttsEngine": "kokoro-onnx",
-  "ttsVoice": "af_heart",
-  "ttsSpeed": 1,
-  "ttsPort": 5111,
-  "avatarRenderer": "live2d",
-  "avatarModel": "shizuku",
-  "vocalMode": "silent",
-  "pytorchMpsFallback": true
+  "server": {
+    "port": 5111
+  },
+  "tts": {
+    "engine": "kokoro-onnx",
+    "voice": "af_heart",
+    "speed": 1,
+    "plugins": {
+      "kokoro": {
+        "pytorchMpsFallback": true
+      }
+    }
+  },
+  "avatar": {
+    "renderer": "live2d",
+    "plugins": {
+      "live2d": {
+        "model": "shizuku"
+      }
+    }
+  },
+  "entity": {
+    "vocalMode": "silent"
+  }
 }

@@ -84,17 +84,23 @@ class HookEvent(BaseModel):
 # Vocal mode
 # ═══════════════════════════════════════════════════════════════
 
-VOCAL_MODE = os.getenv("ENTITY_VOCAL_MODE", "silent")
+def _get_vocal_mode() -> str:
+    try:
+        config = json.loads((ROOT_DIR / "config.json").read_text())
+        return config.get("entity", {}).get("vocalMode", "silent")
+    except (FileNotFoundError, json.JSONDecodeError):
+        return os.getenv("ENTITY_VOCAL_MODE", "silent")
 
 def _should_speak(sentiment: dict) -> bool:
     speak_text = sentiment.get("speak", "")
     if not speak_text:
         return False
-    if VOCAL_MODE == "silent":
+    mode = _get_vocal_mode()
+    if mode == "silent":
         return False
-    if VOCAL_MODE == "reactive":
+    if mode == "reactive":
         return sentiment.get("intensity", 0) > 80
-    if VOCAL_MODE == "conversational":
+    if mode == "conversational":
         return True
     return False
 
@@ -174,7 +180,7 @@ async def lifespan(app: FastAPI):
     config_renderer = None
     try:
         config = json.loads((ROOT_DIR / "config.json").read_text())
-        config_renderer = config.get("avatarRenderer")
+        config_renderer = config.get("avatar", {}).get("renderer")
     except (FileNotFoundError, json.JSONDecodeError):
         pass
 

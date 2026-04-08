@@ -150,7 +150,7 @@ def setup() -> None:
         raise typer.Exit(1)
 
     # Step 3: Engine selection
-    current = read_config().get("ttsEngine")
+    current = read_config().get("tts", {}).get("engine")
     manifest = _select_engine(manifests, current)
 
     # Step 4: Install dependencies
@@ -168,7 +168,7 @@ def setup() -> None:
         _download_language_pack(lang)
 
     # Step 7: Save config
-    write_config({"ttsEngine": manifest["name"]})
+    write_config({"tts": {"engine": manifest["name"]}})
 
     # Done
     console.print(Panel(

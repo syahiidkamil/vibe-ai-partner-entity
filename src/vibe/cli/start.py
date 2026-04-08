@@ -29,8 +29,10 @@ def _is_port_in_use(port: int) -> bool:
 
 def _set_env_defaults() -> None:
     """Set platform-specific environment variables."""
-    # PyTorch MPS fallback for macOS
-    if "PYTORCH_ENABLE_MPS_FALLBACK" not in os.environ:
+    # PyTorch MPS fallback for macOS (reads from tts.plugins.kokoro config)
+    from vibe.cli._config import read_config
+    kokoro_config = read_config().get("tts", {}).get("plugins", {}).get("kokoro", {})
+    if kokoro_config.get("pytorchMpsFallback", True) and "PYTORCH_ENABLE_MPS_FALLBACK" not in os.environ:
         os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
     # macOS: espeak-ng library path
