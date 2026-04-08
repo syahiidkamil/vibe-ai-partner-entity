@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 import sys
 
 from rich.console import Console
@@ -21,10 +22,22 @@ def check_python_version() -> tuple[bool, str]:
 
 def check_uv_available() -> tuple[bool, str]:
     """Check if uv is available in PATH."""
-    uv = shutil.which("uv")
-    if uv:
+    if shutil.which("uv"):
         return True, "uv found"
     return False, "uv not found (install: https://docs.astral.sh/uv/)"
+
+
+def check_node_available() -> tuple[bool, str]:
+    """Check if Node.js is available in PATH."""
+    node = shutil.which("node")
+    if not node:
+        return False, "Node.js not found (install: https://nodejs.org/)"
+    try:
+        result = subprocess.run([node, "--version"], capture_output=True, text=True, timeout=5)
+        version = result.stdout.strip()
+        return True, f"Node.js {version}"
+    except Exception:
+        return False, "Node.js found but version check failed"
 
 
 def check_disk_space(required_mb: int = 500) -> tuple[bool, str]:
@@ -41,6 +54,7 @@ def run_all_checks(required_mb: int = 500) -> bool:
     checks = [
         ("Python", check_python_version()),
         ("uv", check_uv_available()),
+        ("Node.js", check_node_available()),
         ("Disk space", check_disk_space(required_mb)),
     ]
 
