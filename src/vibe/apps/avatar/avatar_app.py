@@ -2,17 +2,22 @@
 AvatarApp — Plugin-agnostic avatar facade.
 
 Discovers avatar plugins from plugins/avatar-*/ directories.
-Each plugin provides pre-built static files (HTML/JS/CSS) that the
-server serves. The selected plugin is determined by config.json.
+Each plugin has source code (package.json + src/) that gets built
+automatically during setup via npm install && npm run build.
 
-Avatar plugins are frontend bundles, not Python packages — they only
-need a plugin.json manifest and a dist/ directory.
+The user never runs npm commands — the CLI handles it.
 """
 
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 from pathlib import Path
+
+from rich.console import Console
+
+console = Console()
 
 
 class AvatarPlugin:
@@ -30,14 +35,68 @@ class AvatarPlugin:
         self._dist_dir_name = manifest.get("distDir", "dist")
 
     @property
+    def plugin_dir(self) -> Path:
+        return self._plugin_dir
+
+    @property
     def dist_dir(self) -> Path:
-        """Path to the pre-built static files."""
+        """Path to the built static files."""
         return self._plugin_dir / self._dist_dir_name
 
     @property
-    def is_ready(self) -> bool:
-        """Check if the plugin has built static files."""
+    def has_source(self) -> bool:
+        """Check if this plugin has buildable source code."""
+        return (self._plugin_dir / "package.json").exists()
+
+    @property
+    def is_built(self) -> bool:
+        """Check if the plugin has been built (dist/index.html exists)."""
         return (self.dist_dir / "index.html").exists()
+
+    @property
+    def is_ready(self) -> bool:
+        """Check if the plugin can be served."""
+        return self.is_built
+
+    def build(self) -> bool:
+        """Build this plugin via npm install && npm run build. Returns success."""
+        if not self.has_source:
+            return False
+
+        node = shutil.which("node")
+        npm = shutil.which("npm")
+        if not node or not npm:
+            return False
+
+        try:
+            # npm install
+            result = subprocess.run(
+                [npm, "install"],
+                cwd=str(self._plugin_dir),
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+            if result.returncode != 0:
+                console.print(f"  [red]npm install failed for {self.name}[/red]")
+                return False
+
+            # npm run build
+            result = subprocess.run(
+                [npm, "run", "build"],
+                cwd=str(self._plugin_dir),
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+            if result.returncode != 0:
+                console.print(f"  [red]npm run build failed for {self.name}[/red]")
+                return False
+
+            return True
+        except subprocess.TimeoutExpired:
+            console.print(f"  [red]Build timed out for {self.name}[/red]")
+            return False
 
     def to_dict(self) -> dict:
         return {
@@ -48,6 +107,7 @@ class AvatarPlugin:
             "features": self.features,
             "models": self.models,
             "ready": self.is_ready,
+            "hasSource": self.has_source,
         }
 
 
@@ -90,6 +150,30 @@ class AvatarApp:
             if plugin.is_ready:
                 return plugin
         return None
+
+    def build_plugin(self, name: str) -> bool:
+        """Build a specific avatar plugin. Returns success."""
+        plugin = self._plugins.get(name)
+        if not plugin:
+            return False
+        if plugin.is_built:
+            console.print(f"  [dim]✓ {plugin.display_name} already built[/dim]")
+            return True
+        if not plugin.has_source:
+            console.print(f"  [yellow]No source code for {plugin.display_name}[/yellow]")
+            return False
+        console.print(f"  Building {plugin.display_name}...")
+        success = plugin.build()
+        if success:
+            console.print(f"  [green]✓ {plugin.display_name} built[/green]")
+        return success
+
+    def build_active(self, config_renderer: str | None = None) -> bool:
+        """Build the active avatar plugin if not already built."""
+        name = config_renderer or next(iter(self._plugins), None)
+        if not name:
+            return False
+        return self.build_plugin(name)
 
     def list_plugins(self) -> list[dict]:
         """List all discovered avatar plugins."""

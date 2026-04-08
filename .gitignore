@@ -8,10 +8,8 @@ model-stocks/threejs/
 .env
 .env.local
 
-# Build output
+# Build output (avatar plugins build during setup)
 dist/
-!plugins/avatar-*/dist/
-**/live2dcubismcore.min.js
 *.tsbuildinfo
 
 # Proprietary SDK (not distributed in git)
@@ -26,8 +24,6 @@ __pycache__/
 *.pyc
 .venv/
 
-# Phase 2 runtime
-apps/tts-server/.venv/
-apps/avatar-app/src-tauri/target/
+# Runtime
 .tts-server.pid
 .avatar-app.pid

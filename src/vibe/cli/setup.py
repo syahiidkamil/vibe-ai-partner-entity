@@ -167,7 +167,14 @@ def setup() -> None:
     for lang in selected_langs:
         _download_language_pack(lang)
 
-    # Step 7: Save config
+    # Step 7: Build avatar
+    from vibe.apps.avatar import AvatarApp
+    avatar_app = AvatarApp(PLUGINS_DIR)
+    config = read_config()
+    avatar_renderer = config.get("avatar", {}).get("renderer")
+    avatar_app.build_active(avatar_renderer)
+
+    # Step 8: Save config
     write_config({"tts": {"engine": manifest["name"]}})
 
     # Done

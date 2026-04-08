@@ -1,0 +1,19 @@
+{
+  "name": "@vibe/avatar-live2d",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "dependencies": {
+    "@vibe-ai-partner/core": "file:packages/core",
+    "@vibe-ai-partner/shared": "file:packages/shared",
+    "@vibe-ai-partner/plugin-avatar-live2d": "file:packages/plugin-avatar-live2d"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}

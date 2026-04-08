@@ -1,0 +1,18 @@
+{
+  "name": "@vibe-ai-partner/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@vibe-ai-partner/shared": "*"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  },
+  "files": ["dist"]
+}
