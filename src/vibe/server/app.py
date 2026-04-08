@@ -1,10 +1,8 @@
 """
-Vibe TTS Server — FastAPI app with REST + WebSocket endpoints.
+Vibe TTS Server — Thin HTTP/WebSocket layer.
 
-Routes match the protocol types from @vibe-ai-partner/shared:
-  - SpeakRequest, FeelingRequest, ActionRequest, StateAdjustRequest
-  - HealthResponse, StateResponse
-  - WSStatusMessage, WSAudioChunk
+Delegates all TTS operations to TTSApp (vibe.apps.tts).
+Owns: HTTP routes, WebSocket management, state/sentiment (non-TTS domain).
 """
 
 from __future__ import annotations
@@ -21,11 +19,10 @@ from typing import Any
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from vibe.server.audio_player import AudioPlayer
-from vibe.server.engine_registry import EngineRegistry
-from vibe.server.pipeline import TTSPipeline
+from vibe.apps.tts import TTSApp
+from vibe.apps.avatar import AvatarApp
 from vibe.server.sentiment import analyze_sentiment
 from vibe.server.state_manager import StateManager
 
@@ -35,7 +32,6 @@ from vibe.server.state_manager import StateManager
 # ═══════════════════════════════════════════════════════════════
 
 def _find_root() -> Path:
-    """Walk up from this file to find project root."""
     current = Path(__file__).resolve().parent
     for _ in range(10):
         if (current / ".git").exists() or (current / "config.json").exists():
@@ -47,38 +43,31 @@ ROOT_DIR = _find_root()
 
 
 # ═══════════════════════════════════════════════════════════════
-# Pydantic models — mirrors of shared/protocol.ts types
+# Pydantic models
 # ═══════════════════════════════════════════════════════════════
 
 class SpeakRequest(BaseModel):
-    """POST /api/speak — mirrors SpeakRequest from protocol.ts"""
     text: str
     voice: str | None = None
     speed: float | None = None
 
 class FeelingRequest(BaseModel):
-    """POST /api/feeling — mirrors FeelingRequest from protocol.ts"""
     name: str
 
 class ActionRequest(BaseModel):
-    """POST /api/action — mirrors ActionRequest from protocol.ts"""
     name: str
 
 class StateAdjustment(BaseModel):
-    """Single state delta — mirrors StateAdjustment from types.ts"""
     state: str
     delta: float
 
 class StateAdjustRequest(BaseModel):
-    """POST /api/state — mirrors StateAdjustRequest from protocol.ts"""
     adjustments: list[StateAdjustment]
 
 class VoiceRequest(BaseModel):
-    """POST /api/voice — switch active voice"""
     voice: str
 
 class HookEvent(BaseModel):
-    """POST /api/hook — receives Claude Code hook events."""
     hook_event_name: str
     session_id: str | None = None
     tool_name: str | None = None
@@ -97,9 +86,7 @@ class HookEvent(BaseModel):
 
 VOCAL_MODE = os.getenv("ENTITY_VOCAL_MODE", "silent")
 
-
 def _should_speak(sentiment: dict) -> bool:
-    """Check if vocal mode allows speaking for this sentiment."""
     speak_text = sentiment.get("speak", "")
     if not speak_text:
         return False
@@ -117,8 +104,6 @@ def _should_speak(sentiment: dict) -> bool:
 # ═══════════════════════════════════════════════════════════════
 
 class ConnectionManager:
-    """Manages WebSocket connections for status and audio channels."""
-
     def __init__(self) -> None:
         self.status_clients: list[WebSocket] = []
         self.audio_clients: list[WebSocket] = []
@@ -138,7 +123,6 @@ class ConnectionManager:
         self.audio_clients.remove(ws)
 
     async def broadcast_status(self, message: dict[str, Any]) -> None:
-        """Broadcast JSON to all /ws/status clients."""
         dead: list[WebSocket] = []
         for ws in self.status_clients:
             try:
@@ -149,7 +133,6 @@ class ConnectionManager:
             self.status_clients.remove(ws)
 
     async def broadcast_audio(self, message: dict[str, Any]) -> None:
-        """Broadcast JSON to all /ws/audio clients."""
         dead: list[WebSocket] = []
         for ws in self.audio_clients:
             try:
@@ -165,261 +148,155 @@ class ConnectionManager:
 # ═══════════════════════════════════════════════════════════════
 
 manager = ConnectionManager()
-registry = EngineRegistry()
 state_mgr = StateManager()
-audio_player = AudioPlayer()
-pipeline: TTSPipeline | None = None
+tts: TTSApp | None = None
+avatar: AvatarApp | None = None
 start_time: float = 0.0
 
 
-def _read_preferred_engine() -> str | None:
-    """Read preferred TTS engine from root config.json."""
-    config_path = ROOT_DIR / "config.json"
-    try:
-        config = json.loads(config_path.read_text())
-        return config.get("ttsEngine")
-    except (FileNotFoundError, json.JSONDecodeError):
-        return None
+async def _broadcast_amplitude(value: float) -> None:
+    await manager.broadcast_status({"type": "amplitude", "value": value, "timestamp": time.time()})
+
+async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool) -> None:
+    await manager.broadcast_audio({"type": "audio_chunk", "data": data_b64, "sampleRate": sample_rate, "isLast": is_last})
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Startup: register engines, load default. Shutdown: cleanup."""
-    global pipeline, start_time
+    global tts, avatar, start_time
     start_time = time.time()
 
-    # Register available engines (try-import, skip if deps missing)
+    # Create TTS app via factory — discovers plugins, loads config, wires pipeline
+    tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_amplitude, _broadcast_audio_chunk)
+
+    # Discover avatar plugins and mount the active one
+    avatar = AvatarApp(ROOT_DIR / "plugins")
+    config_renderer = None
     try:
-        from vibe_plugin_tts_kokoro import KokoroEngine
-        registry.register("kokoro", KokoroEngine())
-    except ImportError:
+        config = json.loads((ROOT_DIR / "config.json").read_text())
+        config_renderer = config.get("avatarRenderer")
+    except (FileNotFoundError, json.JSONDecodeError):
         pass
 
-    try:
-        from vibe_plugin_tts_kokoro_onnx import KokoroOnnxEngine
-        registry.register("kokoro-onnx", KokoroOnnxEngine())
-    except ImportError:
-        pass
-
-    try:
-        from vibe_plugin_tts_kitten import KittenEngine
-        registry.register("kitten", KittenEngine())
-    except ImportError:
-        pass
-
-    # Activate preferred engine from config.json, or first available
-    preferred = _read_preferred_engine()
-    available = registry.list()
-    if preferred and preferred in available:
-        registry.switch(preferred)
-    elif available:
-        registry.switch(available[0])
-
-    # Wire up pipeline with broadcast callbacks
-    pipeline = TTSPipeline(
-        registry=registry,
-        audio_player=audio_player,
-        on_amplitude=_broadcast_amplitude,
-        on_audio_chunk=_broadcast_audio_chunk,
-    )
+    avatar_dir = avatar.get_static_dir(config_renderer)
+    if avatar_dir and avatar_dir.is_dir():
+        app.mount("/", StaticFiles(directory=str(avatar_dir), html=True), name="avatar")
 
     yield
 
     # Cleanup
-    active = registry.get_active()
-    if active:
-        active.stop()
+    if tts:
+        tts.shutdown()
 
 
 app = FastAPI(title="Vibe TTS Server", version="0.1.0", lifespan=lifespan)
 
 
 # ═══════════════════════════════════════════════════════════════
-# Broadcast helpers (called from pipeline during generation)
-# ═══════════════════════════════════════════════════════════════
-
-async def _broadcast_amplitude(value: float) -> None:
-    """Send amplitude update to /ws/status clients."""
-    await manager.broadcast_status({
-        "type": "amplitude",
-        "value": value,
-        "timestamp": time.time(),
-    })
-
-async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool) -> None:
-    """Send audio chunk to /ws/audio clients."""
-    await manager.broadcast_audio({
-        "type": "audio_chunk",
-        "data": data_b64,
-        "sampleRate": sample_rate,
-        "isLast": is_last,
-    })
-
-
-# ═══════════════════════════════════════════════════════════════
-# REST Routes
+# REST Routes — delegate TTS to TTSApp
 # ═══════════════════════════════════════════════════════════════
 
 @app.post("/api/speak")
 async def speak(req: SpeakRequest):
-    """Generate TTS audio, stream via WebSocket. Non-blocking."""
-    if not pipeline:
+    if not tts:
         return {"status": "error", "message": "No TTS engine available"}
-
-    # Broadcast speaking state
     await manager.broadcast_status({"type": "state", "mode": "speaking", "mood": ""})
-
-    # Run generation in background so the HTTP response returns immediately
-    asyncio.create_task(
-        pipeline.speak(req.text, voice=req.voice, speed=req.speed)
-    )
-
+    asyncio.create_task(tts.speak(req.text, voice=req.voice, speed=req.speed))
     return {"status": "ok"}
-
 
 @app.post("/api/feeling")
 async def feeling(req: FeelingRequest):
-    """Set a feeling — broadcast to /ws/status."""
     await manager.broadcast_status({"type": "feeling", "name": req.name})
     return {"status": "ok"}
 
-
 @app.post("/api/action")
 async def action(req: ActionRequest):
-    """Trigger an action — broadcast to /ws/status."""
     await manager.broadcast_status({"type": "action", "name": req.name})
     return {"status": "ok"}
 
-
 @app.post("/api/state")
 async def adjust_state(req: StateAdjustRequest):
-    """
-    Apply state adjustments, recalculate feelings, check expression thresholds.
-    Returns full StateResponse (mirrors protocol.ts StateResponse).
-    """
-    result = state_mgr.adjust(
-        [(adj.state, adj.delta) for adj in req.adjustments]
-    )
-
-    # Broadcast any triggered expressions
+    result = state_mgr.adjust([(adj.state, adj.delta) for adj in req.adjustments])
     for expr in result["expressionsTriggered"]:
         await manager.broadcast_status({"type": "action", "name": expr})
-
     return result
-
 
 @app.post("/api/hook")
 async def hook(event: HookEvent):
-    """
-    Receive Claude Code hook events. Translate to state adjustments,
-    broadcast expressions, handle sentiment on Stop events.
-    """
     name = event.hook_event_name
-
-    # Track session ID
     if event.session_id:
         state_mgr._session_id = event.session_id
 
-    # SessionStart: load previous state with decay
     if name == "SessionStart":
         saved = state_mgr.load_state()
         if saved and saved.get("timestamp"):
             try:
                 last_time = datetime.fromisoformat(saved["timestamp"])
-                now = datetime.now(timezone.utc)
-                hours = (now - last_time).total_seconds() / 3600
+                hours = (datetime.now(timezone.utc) - last_time).total_seconds() / 3600
                 state_mgr.apply_decay(hours)
             except (ValueError, TypeError):
                 pass
 
-    # Get hook adjustments and apply
     adjustments = state_mgr.get_hook_adjustments(name, event.tool_name)
     result = state_mgr.adjust(adjustments)
 
-    # Broadcast triggered expressions
     for expr in result["expressionsTriggered"]:
         await manager.broadcast_status({"type": "action", "name": expr})
 
-    # SessionStart: broadcast wave
     if name == "SessionStart":
         await manager.broadcast_status({"type": "action", "name": "wave"})
 
-    # Stop: handle sentiment analysis
     if name == "Stop":
         sentiment = event.sentiment
         if not sentiment and event.stop_response:
             sentiment = analyze_sentiment(event.stop_response)
-
         if sentiment:
             feeling_name = sentiment.get("feeling", "calm")
             intensity = sentiment.get("intensity", 30)
             sent_result = state_mgr.apply_sentiment(feeling_name, intensity)
-
-            # Broadcast sentiment-triggered expressions
             for expr in sent_result["expressionsTriggered"]:
                 await manager.broadcast_status({"type": "action", "name": expr})
-
-            # Broadcast suggested action
             action_name = sentiment.get("action", "none")
             if action_name and action_name != "none":
                 await manager.broadcast_status({"type": "action", "name": action_name})
-
-            # Vocal mode check for speak
-            if pipeline and _should_speak(sentiment):
-                asyncio.create_task(pipeline.speak(sentiment["speak"]))
-
+            if tts and _should_speak(sentiment):
+                asyncio.create_task(tts.speak(sentiment["speak"]))
             result = sent_result
 
     return {"continue": True, **result}
 
-
 @app.post("/api/voice")
 async def switch_voice(req: VoiceRequest):
-    """Switch the active voice on the current engine."""
-    active = registry.get_active()
-    if not active:
+    if not tts:
         return {"status": "error", "message": "No engine active"}
-    active.set_voice(req.voice)
+    tts.switch_voice(req.voice)
     return {"status": "ok"}
-
 
 @app.post("/api/stop")
 async def stop():
-    """Abort current TTS generation/playback."""
-    active = registry.get_active()
-    if active:
-        active.stop()
-    audio_player.stop()
+    if tts:
+        tts.stop()
     await manager.broadcast_status({"type": "state", "mode": "idle", "mood": ""})
     return {"status": "ok"}
 
-
 @app.post("/api/shutdown")
 async def shutdown():
-    """Gracefully shut down the server."""
     os.kill(os.getpid(), signal.SIGTERM)
     return {"status": "shutting_down"}
 
-
 @app.get("/api/health")
 async def health():
-    """Health check — mirrors HealthResponse from protocol.ts."""
-    active = registry.get_active()
     return {
         "status": "ok",
-        "engine": active.name if active else "none",
+        "engine": tts.active_engine_name if tts else "none",
         "uptime": round(time.time() - start_time),
     }
 
-
 @app.get("/api/voices")
 async def voices():
-    """List voices for the active engine."""
-    active = registry.get_active()
-    if not active:
+    if not tts:
         return {"voices": []}
-    voice_list = active.get_voices()
-    return {"voices": voice_list}
+    return {"voices": tts.get_voices()}
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -428,25 +305,15 @@ async def voices():
 
 @app.websocket("/ws/status")
 async def ws_status(ws: WebSocket):
-    """
-    Status channel — broadcasts state, amplitude, feeling, action updates.
-    Message types: WSStateUpdate, WSAmplitude, WSFeelingUpdate, WSActionUpdate
-    """
     await manager.connect_status(ws)
     try:
         while True:
-            # Keep connection alive. Client can send pings.
             await ws.receive_text()
     except WebSocketDisconnect:
         manager.disconnect_status(ws)
 
-
 @app.websocket("/ws/audio")
 async def ws_audio(ws: WebSocket):
-    """
-    Audio channel — streams PCM audio chunks as base64 JSON.
-    Message type: WSAudioChunk { type, data, sampleRate, isLast }
-    """
     await manager.connect_audio(ws)
     try:
         while True:
@@ -455,10 +322,3 @@ async def ws_audio(ws: WebSocket):
         manager.disconnect_audio(ws)
 
 
-# ═══════════════════════════════════════════════════════════════
-# Static Avatar Files (served after API routes take priority)
-# ═══════════════════════════════════════════════════════════════
-
-_avatar_dist = Path(__file__).resolve().parent.parent / "apps" / "avatar"
-if _avatar_dist.is_dir():
-    app.mount("/", StaticFiles(directory=str(_avatar_dist), html=True), name="avatar")

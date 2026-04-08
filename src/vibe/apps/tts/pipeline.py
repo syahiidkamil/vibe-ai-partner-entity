@@ -11,8 +11,8 @@ from typing import Callable, Awaitable
 
 import numpy as np
 
-from vibe.server.audio_player import AudioPlayer
-from vibe.server.engine_registry import EngineRegistry
+from vibe.apps.tts.audio_player import AudioPlayer
+from vibe.apps.tts.registry import EngineRegistry
 
 
 class TTSPipeline:

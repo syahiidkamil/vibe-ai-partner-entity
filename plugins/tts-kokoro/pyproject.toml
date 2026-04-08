@@ -12,6 +12,9 @@ dependencies = [
     "soundfile>=0.12.0",
 ]
 
+[project.entry-points."vibe.tts.engines"]
+kokoro = "vibe_plugin_tts_kokoro:KokoroEngine"
+
 [build-system]
 requires = ["setuptools>=75.0"]
 build-backend = "setuptools.build_meta"
