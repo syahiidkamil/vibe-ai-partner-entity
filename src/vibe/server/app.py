@@ -459,6 +459,6 @@ async def ws_audio(ws: WebSocket):
 # Static Avatar Files (served after API routes take priority)
 # ═══════════════════════════════════════════════════════════════
 
-_avatar_dist = Path(__file__).resolve().parent.parent / "avatar"
+_avatar_dist = Path(__file__).resolve().parent.parent / "apps" / "avatar"
 if _avatar_dist.is_dir():
     app.mount("/", StaticFiles(directory=str(_avatar_dist), html=True), name="avatar")
