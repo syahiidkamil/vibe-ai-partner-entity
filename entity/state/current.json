@@ -2,20 +2,20 @@
   "states": {
     "confidence": 100,
     "contextSaturation": 100,
-    "alignment": 67,
+    "alignment": 61,
     "memoryPressure": 50,
     "momentum": 100,
     "trustCalibration": 50
   },
   "feelings": {
-    "happy": 90,
-    "sad": 16,
+    "happy": 88,
+    "sad": 20,
     "frustrated": 0,
     "curious": 0,
-    "proud": 87,
+    "proud": 84,
     "anxious": 25,
     "excited": 50,
-    "calm": 79,
+    "calm": 78,
     "bored": 60,
     "guilty": 0,
     "angry": 0,
@@ -23,6 +23,6 @@
     "surprised": 0,
     "relieved": 0
   },
-  "timestamp": "2026-04-08T09:07:43.920050+00:00",
+  "timestamp": "2026-04-08T12:17:34.301224+00:00",
   "sessionId": "1c78d64f-a51a-4edb-b734-b04f5619382b"
 }

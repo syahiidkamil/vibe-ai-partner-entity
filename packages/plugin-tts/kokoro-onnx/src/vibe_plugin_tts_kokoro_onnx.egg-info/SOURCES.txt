@@ -1,8 +1,0 @@
-pyproject.toml
-src/vibe_plugin_tts_kokoro_onnx/__init__.py
-src/vibe_plugin_tts_kokoro_onnx/engine.py
-src/vibe_plugin_tts_kokoro_onnx.egg-info/PKG-INFO
-src/vibe_plugin_tts_kokoro_onnx.egg-info/SOURCES.txt
-src/vibe_plugin_tts_kokoro_onnx.egg-info/dependency_links.txt
-src/vibe_plugin_tts_kokoro_onnx.egg-info/requires.txt
-src/vibe_plugin_tts_kokoro_onnx.egg-info/top_level.txt
