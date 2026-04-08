@@ -20,10 +20,24 @@ MODEL_REPO = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/mode
 MODEL_FILE = "kokoro-v1.0.onnx"
 VOICES_FILE = "voices-v1.0.bin"
 
+ZH_MODEL_REPO = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1"
+ZH_MODEL_FILE = "kokoro-v1.1-zh.onnx"
+ZH_VOICES_FILE = "voices-v1.1-zh.bin"
+ZH_VOCAB_URL = "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/raw/main/config.json"
+ZH_VOCAB_FILE = "kokoro-v1.1-zh-config.json"
+
+# Language code → espeak language identifier
+ESPEAK_LANG_MAP: dict[str, str] = {
+    "fr": "fr-fr", "es": "es", "hi": "hi",
+    "it": "it", "pt-br": "pt-br",
+}
+
 # Voice prefix → language code (same as PyTorch Kokoro)
 VOICE_LANG_MAP: dict[str, str] = {
     "a": "en", "b": "en-gb",
     "j": "ja",
+    "e": "es", "f": "fr", "h": "hi",
+    "i": "it", "p": "pt-br", "z": "zh",
 }
 
 KOKORO_ONNX_VOICES = [
@@ -43,6 +57,33 @@ KOKORO_ONNX_VOICES = [
     {"id": "jf_nezumi",     "name": "Nezumi (Japanese F)",     "language": "ja", "gender": "female"},
     {"id": "jf_tebukuro",   "name": "Tebukuro (Japanese F)",   "language": "ja", "gender": "female"},
     {"id": "jm_kumo",       "name": "Kumo (Japanese M)",       "language": "ja", "gender": "male"},
+    # French
+    {"id": "ff_siwis",      "name": "Siwis (French F)",        "language": "fr", "gender": "female"},
+    # Spanish
+    {"id": "ef_dora",       "name": "Dora (Spanish F)",        "language": "es", "gender": "female"},
+    {"id": "em_alex",       "name": "Alex (Spanish M)",        "language": "es", "gender": "male"},
+    {"id": "em_santa",      "name": "Santa (Spanish M)",       "language": "es", "gender": "male"},
+    # Hindi
+    {"id": "hf_alpha",      "name": "Alpha (Hindi F)",         "language": "hi", "gender": "female"},
+    {"id": "hf_beta",       "name": "Beta (Hindi F)",          "language": "hi", "gender": "female"},
+    {"id": "hm_omega",      "name": "Omega (Hindi M)",         "language": "hi", "gender": "male"},
+    {"id": "hm_psi",        "name": "Psi (Hindi M)",           "language": "hi", "gender": "male"},
+    # Italian
+    {"id": "if_sara",       "name": "Sara (Italian F)",        "language": "it", "gender": "female"},
+    {"id": "im_nicola",     "name": "Nicola (Italian M)",      "language": "it", "gender": "male"},
+    # Brazilian Portuguese
+    {"id": "pf_dora",       "name": "Dora (Portuguese F)",     "language": "pt-br", "gender": "female"},
+    {"id": "pm_alex",       "name": "Alex (Portuguese M)",     "language": "pt-br", "gender": "male"},
+    {"id": "pm_santa",      "name": "Santa (Portuguese M)",    "language": "pt-br", "gender": "male"},
+    # Mandarin Chinese (requires separate v1.1-zh model, downloaded on first use)
+    {"id": "zf_001",        "name": "Chinese F1",              "language": "zh", "gender": "female"},
+    {"id": "zf_002",        "name": "Chinese F2",              "language": "zh", "gender": "female"},
+    {"id": "zf_003",        "name": "Chinese F3",              "language": "zh", "gender": "female"},
+    {"id": "zf_004",        "name": "Chinese F4",              "language": "zh", "gender": "female"},
+    {"id": "zm_009",        "name": "Chinese M1",              "language": "zh", "gender": "male"},
+    {"id": "zm_010",        "name": "Chinese M2",              "language": "zh", "gender": "male"},
+    {"id": "zm_011",        "name": "Chinese M3",              "language": "zh", "gender": "male"},
+    {"id": "zm_012",        "name": "Chinese M4",              "language": "zh", "gender": "male"},
 ]
 
 MAX_CHARS = 500
@@ -54,11 +95,11 @@ def _cache_dir() -> Path:
     return d
 
 
-def _download_if_missing(filename: str) -> str:
+def _download_if_missing(filename: str, repo: str | None = MODEL_REPO, direct_url: str | None = None) -> str:
     path = _cache_dir() / filename
     if path.exists():
         return str(path)
-    url = f"{MODEL_REPO}/{filename}"
+    url = direct_url or f"{repo}/{filename}"
     print(f"  Downloading {filename}...")
     urllib.request.urlretrieve(url, path)
     print(f"  Downloaded {filename} ({path.stat().st_size / 1024 / 1024:.1f}MB)")
@@ -77,6 +118,7 @@ class KokoroOnnxEngine(TTSEngineBase):
 
     def __init__(self) -> None:
         self._kokoro = None
+        self._kokoro_zh = None
         self._g2p_cache: dict[str, object] = {}
         self._g2p_lock = threading.Lock()
         self._voice: str = "af_heart"
@@ -89,6 +131,19 @@ class KokoroOnnxEngine(TTSEngineBase):
         voices_path = _download_if_missing(VOICES_FILE)
         self._kokoro = Kokoro(model_path, voices_path)
 
+    def _get_kokoro(self, voice: str):
+        """Return the correct Kokoro instance for the voice. Lazy-loads zh model."""
+        if _lang_from_voice(voice) == "zh":
+            if self._kokoro_zh is None:
+                from kokoro_onnx import Kokoro
+
+                model_path = _download_if_missing(ZH_MODEL_FILE, ZH_MODEL_REPO)
+                voices_path = _download_if_missing(ZH_VOICES_FILE, ZH_MODEL_REPO)
+                vocab_path = _download_if_missing(ZH_VOCAB_FILE, None, ZH_VOCAB_URL)
+                self._kokoro_zh = Kokoro(model_path, voices_path, vocab_config=vocab_path)
+            return self._kokoro_zh
+        return self._kokoro
+
     def _get_g2p(self, lang: str):
         """Get or create a G2P instance for the language."""
         with self._g2p_lock:
@@ -96,13 +151,19 @@ class KokoroOnnxEngine(TTSEngineBase):
                 return self._g2p_cache[lang]
 
             g2p = None
-            if lang == "ja":
+            if lang == "zh":
+                from misaki import zh
+                g2p = zh.ZHG2P(version="1.1")
+            elif lang == "ja":
                 from misaki import ja
                 g2p = ja.JAG2P()
             elif lang in ("en", "en-gb"):
                 from misaki import en, espeak
                 fallback = espeak.EspeakFallback(british=(lang == "en-gb"))
                 g2p = en.G2P(trf=False, british=(lang == "en-gb"), fallback=fallback)
+            elif lang in ESPEAK_LANG_MAP:
+                from misaki.espeak import EspeakG2P
+                g2p = EspeakG2P(language=ESPEAK_LANG_MAP[lang])
 
             if g2p:
                 self._g2p_cache[lang] = g2p
@@ -128,8 +189,9 @@ class KokoroOnnxEngine(TTSEngineBase):
         if len(text) > MAX_CHARS:
             text = text[:MAX_CHARS].rsplit(" ", 1)[0]
 
+        kokoro = self._get_kokoro(voice)
         processed, is_phonemes = self._phonemize(text, voice)
-        audio, sr = self._kokoro.create(processed, voice=voice, speed=speed, is_phonemes=is_phonemes)
+        audio, sr = kokoro.create(processed, voice=voice, speed=speed, is_phonemes=is_phonemes)
 
         if self._stopped:
             return []
@@ -147,8 +209,9 @@ class KokoroOnnxEngine(TTSEngineBase):
         if len(text) > MAX_CHARS:
             text = text[:MAX_CHARS].rsplit(" ", 1)[0]
 
+        kokoro = self._get_kokoro(voice)
         processed, is_phonemes = self._phonemize(text, voice)
-        async for audio, sr in self._kokoro.create_stream(processed, voice=voice, speed=speed, is_phonemes=is_phonemes):
+        async for audio, sr in kokoro.create_stream(processed, voice=voice, speed=speed, is_phonemes=is_phonemes):
             if self._stopped:
                 break
             samples = np.array(audio, dtype=np.float32)

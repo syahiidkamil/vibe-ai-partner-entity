@@ -1,4 +1,5 @@
 vibe-plugin-tts-core
 kokoro-onnx>=0.4.0
-misaki-fork[en,ja]>=0.9.0
+misaki-fork[en,ja,zh]>=0.9.0
+ordered-set>=4.1.0
 soundfile>=0.12.0
