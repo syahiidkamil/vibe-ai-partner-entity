@@ -1,8 +1,8 @@
 # Models (downloaded by setup, not stored in git)
-models/live2d/
-models/vrm/
-models/threejs/
-!models/README.md
+model-stocks/live2d/
+model-stocks/vrm/
+model-stocks/threejs/
+!model-stocks/README.md
 
 # Environment
 .env
