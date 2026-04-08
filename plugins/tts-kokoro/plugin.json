@@ -1,0 +1,28 @@
+{
+  "name": "kokoro",
+  "displayName": "Kokoro (PyTorch)",
+  "description": "Best quality, GPU-accelerated, ~2GB download (PyTorch + model)",
+  "tag": "",
+  "uvExtra": "tts-kokoro",
+  "models": [],
+  "note": "Model auto-downloads via KPipeline on first use (~800MB). PyTorch itself is ~1.5GB.",
+  "languages": [
+    { "code": "en", "name": "English", "included": true, "models": [] },
+    { "code": "en-gb", "name": "British English", "included": true, "models": [] },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "included": false,
+      "models": [],
+      "postInstall": "uv run python -m unidic download",
+      "postInstallSize_mb": 526,
+      "postInstallCheck": "uv run python -c \"import unidic; import os; print(os.path.exists(os.path.join(os.path.dirname(unidic.__file__), 'dicdir', 'mecabrc')))\""
+    },
+    { "code": "zh", "name": "Chinese (Mandarin)", "included": true, "models": [] },
+    { "code": "fr", "name": "French", "included": true, "models": [] },
+    { "code": "es", "name": "Spanish", "included": true, "models": [] },
+    { "code": "hi", "name": "Hindi", "included": true, "models": [] },
+    { "code": "it", "name": "Italian", "included": true, "models": [] },
+    { "code": "pt-br", "name": "Brazilian Portuguese", "included": true, "models": [] }
+  ]
+}

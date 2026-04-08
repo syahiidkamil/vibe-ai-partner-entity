@@ -1,0 +1,64 @@
+{
+  "name": "kokoro-onnx",
+  "displayName": "Kokoro ONNX",
+  "description": "Good quality, CPU-only, ~300MB model download",
+  "tag": "Recommended",
+  "uvExtra": "tts-kokoro-onnx",
+  "models": [
+    {
+      "name": "kokoro-v1.0.onnx",
+      "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx",
+      "size_mb": 310,
+      "cache_dir": "kokoro-onnx"
+    },
+    {
+      "name": "voices-v1.0.bin",
+      "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin",
+      "size_mb": 27,
+      "cache_dir": "kokoro-onnx"
+    }
+  ],
+  "languages": [
+    { "code": "en", "name": "English", "included": true, "models": [] },
+    { "code": "en-gb", "name": "British English", "included": true, "models": [] },
+    {
+      "code": "ja",
+      "name": "Japanese",
+      "included": false,
+      "models": [],
+      "postInstall": "uv run python -m unidic download",
+      "postInstallSize_mb": 526,
+      "postInstallCheck": "uv run python -c \"import unidic; import os; print(os.path.exists(os.path.join(os.path.dirname(unidic.__file__), 'dicdir', 'mecabrc')))\""
+    },
+    {
+      "code": "zh",
+      "name": "Chinese (Mandarin)",
+      "included": false,
+      "models": [
+        {
+          "name": "kokoro-v1.1-zh.onnx",
+          "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.1-zh.onnx",
+          "size_mb": 328,
+          "cache_dir": "kokoro-onnx"
+        },
+        {
+          "name": "voices-v1.1-zh.bin",
+          "url": "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/voices-v1.1-zh.bin",
+          "size_mb": 51,
+          "cache_dir": "kokoro-onnx"
+        },
+        {
+          "name": "kokoro-v1.1-zh-config.json",
+          "url": "https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh/raw/main/config.json",
+          "size_mb": 1,
+          "cache_dir": "kokoro-onnx"
+        }
+      ]
+    },
+    { "code": "fr", "name": "French", "included": true, "models": [] },
+    { "code": "es", "name": "Spanish", "included": true, "models": [] },
+    { "code": "hi", "name": "Hindi", "included": true, "models": [] },
+    { "code": "it", "name": "Italian", "included": true, "models": [] },
+    { "code": "pt-br", "name": "Brazilian Portuguese", "included": true, "models": [] }
+  ]
+}

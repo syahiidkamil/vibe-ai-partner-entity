@@ -1,0 +1,40 @@
+[project]
+name = "vibe-ai-partner"
+version = "0.1.0"
+description = "Vibe AI Partner — Live AI companion with TTS and avatar"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "numpy>=1.26.0",
+    "sounddevice>=0.5.0",
+    "typer[all]>=0.15.0",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+tts-kokoro-onnx = ["vibe-plugin-tts-kokoro-onnx"]
+tts-kokoro = ["vibe-plugin-tts-kokoro"]
+tts-kitten = ["vibe-plugin-tts-kitten"]
+dev = [
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
+]
+
+[project.scripts]
+vibe = "vibe.cli.main:app"
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv.workspace]
+members = ["plugins/*"]
+
+[tool.uv.sources]
+vibe-plugin-tts-kokoro-onnx = { workspace = true }
+vibe-plugin-tts-kokoro = { workspace = true }
+vibe-plugin-tts-kitten = { workspace = true }

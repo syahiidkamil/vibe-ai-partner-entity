@@ -1,0 +1,1 @@
+"""Vibe AI Partner CLI."""

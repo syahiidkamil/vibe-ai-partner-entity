@@ -1,0 +1,12 @@
+{
+  "name": "kitten",
+  "displayName": "KittenTTS",
+  "description": "Lightest, CPU-only, 15M params, ~25MB model",
+  "tag": "",
+  "uvExtra": "tts-kitten",
+  "models": [],
+  "note": "Model auto-downloads from HuggingFace via kittentts on first use (~25MB ONNX).",
+  "languages": [
+    { "code": "en", "name": "English", "included": true, "models": [] }
+  ]
+}
