@@ -103,6 +103,6 @@ def _read_preferred_engine(config_path: Path) -> str | None:
     """Read preferred TTS engine from config.json."""
     try:
         config = json.loads(config_path.read_text())
-        return config.get("ttsEngine")
+        return config.get("tts", {}).get("engine")
     except (FileNotFoundError, json.JSONDecodeError):
         return None
