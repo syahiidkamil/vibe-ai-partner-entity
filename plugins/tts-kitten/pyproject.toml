@@ -9,6 +9,9 @@ dependencies = [
     "soundfile>=0.12.0",
 ]
 
+[project.entry-points."vibe.tts.engines"]
+kitten = "vibe_plugin_tts_kitten:KittenEngine"
+
 [build-system]
 requires = ["setuptools>=75.0"]
 build-backend = "setuptools.build_meta"

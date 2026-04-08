@@ -1,0 +1,21 @@
+{
+  "name": "three-js",
+  "displayName": "Three.js Avatar",
+  "description": "3D avatar with Three.js — custom models, full 3D environment",
+  "tag": "",
+  "category": "avatar",
+  "renderer": "threejs",
+  "distDir": "dist",
+  "models": [],
+  "features": {
+    "lipSync": true,
+    "feelings": true,
+    "expressions": true,
+    "physics": true
+  },
+  "connection": {
+    "wsStatus": "/ws/status",
+    "wsAudio": "/ws/audio",
+    "apiBase": "/api"
+  }
+}

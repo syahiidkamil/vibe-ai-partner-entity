@@ -10,8 +10,8 @@ models/threejs/
 
 # Build output
 dist/
-!src/vibe/apps/avatar/
-src/vibe/apps/avatar/lib/live2dcubismcore.min.js
+!plugins/avatar-*/dist/
+**/live2dcubismcore.min.js
 *.tsbuildinfo
 
 # Proprietary SDK (not distributed in git)
