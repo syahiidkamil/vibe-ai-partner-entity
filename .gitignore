@@ -34,3 +34,6 @@ __pycache__/
 
 # Generated interface (rebuilt at startup)
 src/vape/apps/avatar/interface.json
+
+# Entity state (changes at runtime)
+entity/state/current.json
