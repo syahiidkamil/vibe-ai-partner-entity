@@ -22,16 +22,16 @@ class TTSApp:
     def __init__(
         self,
         registry: EngineRegistry,
-        on_audio_chunk: Callable[[str, int, bool, str | None], Awaitable[None]],
+        on_audio: Callable[[str, str, bool], Awaitable[None]],
     ) -> None:
         self.registry = registry
-        self.pipeline = TTSPipeline(registry, on_audio_chunk)
+        self.pipeline = TTSPipeline(registry, on_audio)
 
     @classmethod
     def create(
         cls,
         config_path: Path,
-        on_audio_chunk: Callable[[str, int, bool, str | None], Awaitable[None]],
+        on_audio: Callable[[str, str, bool], Awaitable[None]],
     ) -> "TTSApp":
         """Factory: discover plugins, load config, wire everything."""
         # Discover available plugins
@@ -50,7 +50,7 @@ class TTSApp:
         elif available:
             registry.switch(available[0])
 
-        return cls(registry, on_audio_chunk)
+        return cls(registry, on_audio)
 
     async def speak(self, text: str, voice: str | None = None, speed: float | None = None) -> None:
         """Generate and play TTS audio."""

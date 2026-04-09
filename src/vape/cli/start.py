@@ -16,7 +16,7 @@ import typer
 from rich.console import Console
 
 from vape.cli._config import get_port, read_config
-from vape.cli._paths import PLUGINS_DIR, ROOT_DIR
+from vape.cli._paths import PLUGINS_DIR
 
 console = Console()
 
@@ -53,13 +53,14 @@ def _set_env_defaults() -> None:
                 break
 
 
-def _launch_shell(shell_name: str, port: int) -> subprocess.Popen | None:
-    """Launch the desktop avatar (Electron) alongside the server."""
+def _launch_avatar(plugin_name: str, port: int) -> subprocess.Popen | None:
+    """Launch the avatar desktop window from its plugin directory."""
     import shutil
 
-    avatar_dir = ROOT_DIR / "archives" / "live-ai-partner-avatar" / "desktop"
-    if not avatar_dir.exists():
-        console.print(f"  [yellow]Avatar app not found at {avatar_dir}[/yellow]")
+    avatar_dir = PLUGINS_DIR / f"avatar-{plugin_name}"
+    main_js = avatar_dir / "main.js"
+    if not main_js.exists():
+        console.print(f"  [yellow]Avatar plugin '{plugin_name}' has no main.js — skipping desktop window[/yellow]")
         return None
 
     npm = shutil.which("npm")
@@ -76,7 +77,7 @@ def _launch_shell(shell_name: str, port: int) -> subprocess.Popen | None:
 
     console.print(f"  Launching avatar desktop window...")
     return subprocess.Popen(
-        [npx, "electron", str(avatar_dir / "main.js"), "--port", str(port)],
+        [npx, "electron", str(main_js), "--port", str(port)],
         cwd=str(avatar_dir),
         start_new_session=True,
         stdout=subprocess.DEVNULL,
@@ -101,7 +102,7 @@ def start(
     _set_env_defaults()
 
     config = read_config()
-    avatar_shell = config.get("avatar", {}).get("shell", "electron")
+    avatar_plugin = config.get("avatar", {}).get("plugin", "live2d-electron")
 
     if daemon:
         console.print(f"  Starting server in background on port {port}...")
@@ -118,21 +119,20 @@ def start(
         console.print(f"  [green]Server started (PID {proc.pid})[/green]")
 
         if _wait_for_server(port):
-            _launch_shell(avatar_shell, port)
+            _launch_avatar(avatar_plugin, port)
         return
 
     console.print(f"  Starting VAPE on port {port}...")
 
-    # Start server in background thread, launch shell after server is ready
     avatar_proc = None
 
-    def _start_shell_when_ready():
+    def _start_avatar_when_ready():
         nonlocal avatar_proc
         if _wait_for_server(port):
-            avatar_proc = _launch_shell(avatar_shell, port)
+            avatar_proc = _launch_avatar(avatar_plugin, port)
 
-    shell_thread = threading.Thread(target=_start_shell_when_ready, daemon=True)
-    shell_thread.start()
+    avatar_thread = threading.Thread(target=_start_avatar_when_ready, daemon=True)
+    avatar_thread.start()
 
     console.print(f"  TTS server: http://localhost:{port}")
     console.print(f"  Press [bold]Ctrl+C[/bold] to stop.\n")

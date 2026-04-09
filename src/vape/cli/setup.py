@@ -269,19 +269,15 @@ def setup() -> None:
     avatar_app = AvatarApp(PLUGINS_DIR)
     avatar_manifest = _select_avatar(avatar_app, read_config().get("avatar", {}).get("plugin"))
 
-    # Step 8: Shell selection
-    shell_manifest = _select_shell(avatar_app, read_config().get("avatar", {}).get("shell"))
-
-    # Step 9: Build avatar
+    # Step 8: Build avatar
     if avatar_manifest:
         avatar_app.build_plugin(avatar_manifest["name"])
 
-    # Step 10: Save config
+    # Step 9: Save config
     write_config({
         "tts": {"engine": manifest["name"]},
         "avatar": {
-            "plugin": avatar_manifest["name"] if avatar_manifest else "live2d",
-            "shell": shell_manifest["name"] if shell_manifest else "electron",
+            "plugin": avatar_manifest["name"] if avatar_manifest else "live2d-electron",
         },
     })
 

@@ -160,11 +160,8 @@ avatar: AvatarApp | None = None
 start_time: float = 0.0
 
 
-async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool, text: str | None = None) -> None:
-    msg: dict = {"type": "audio_chunk", "data": data_b64, "sampleRate": sample_rate, "isLast": is_last}
-    if text:
-        msg["text"] = text
-    await manager.broadcast_audio(msg)
+async def _broadcast_audio(wav_path: str, text: str, is_last: bool) -> None:
+    await manager.broadcast_audio({"type": "audio", "path": wav_path, "text": text, "isLast": is_last})
 
 async def _broadcast_action(name: str) -> None:
     """Resolve system expression trigger via avatar interface, then broadcast."""
@@ -179,7 +176,7 @@ async def lifespan(app: FastAPI):
     start_time = time.time()
 
     # Create TTS app via factory — discovers plugins, loads config, wires pipeline
-    tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_audio_chunk)
+    tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_audio)
 
     # Discover avatar plugins and mount the active one
     avatar = AvatarApp(ROOT_DIR / "plugins")

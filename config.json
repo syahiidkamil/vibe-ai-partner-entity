@@ -13,10 +13,9 @@
     }
   },
   "avatar": {
-    "plugin": "live2d",
-    "shell": "electron",
+    "plugin": "live2d-electron",
     "plugins": {
-      "live2d": {
+      "live2d-electron": {
         "model": "shizuku"
       }
     }

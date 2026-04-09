@@ -1,18 +1,18 @@
 {
-  "name": "live2d",
-  "displayName": "Live2D Avatar",
-  "description": "Anime-style Live2D Cubism avatar with PixiJS — 13 feelings, 12 expressions, physics",
+  "name": "live2d-electron",
+  "displayName": "Live2D Avatar (Electron)",
+  "description": "Anime-style Live2D Cubism avatar in Electron — 13 feelings, 12 expressions, lip sync, physics",
   "tag": "Default",
   "category": "avatar",
   "renderer": "live2d",
-  "distDir": "dist",
+  "shell": "electron",
   "order": 1,
   "models": [
     {
       "id": "shizuku",
       "name": "Shizuku",
       "description": "Anime character with full expression set",
-      "path": "models/live2d/shizuku",
+      "path": "shizuku/runtime",
       "default": true
     }
   ],

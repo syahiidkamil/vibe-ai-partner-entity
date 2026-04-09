@@ -1,8 +1,0 @@
-{
-  "name": "tauri",
-  "displayName": "Tauri Shell",
-  "description": "Desktop window via Tauri — lightweight Rust-based, smaller binary (not yet implemented)",
-  "tag": "",
-  "category": "shell",
-  "order": 2
-}
