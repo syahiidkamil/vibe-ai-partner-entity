@@ -211,7 +211,7 @@ app = FastAPI(title="Vibe TTS Server", version="0.1.0", lifespan=lifespan)
 async def speak(req: SpeakRequest):
     if not tts:
         return {"status": "error", "message": "No TTS engine available"}
-    await manager.broadcast_status({"type": "state", "mode": "speaking", "mood": ""})
+    await manager.broadcast_status({"type": "state", "mode": "speaking", "text": req.text})
     asyncio.create_task(tts.speak(req.text, voice=req.voice, speed=req.speed))
     return {"status": "ok"}
 

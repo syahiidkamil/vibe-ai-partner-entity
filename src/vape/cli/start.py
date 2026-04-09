@@ -76,7 +76,7 @@ def _launch_shell(shell_name: str, port: int) -> subprocess.Popen | None:
 
     console.print(f"  Launching avatar desktop window...")
     return subprocess.Popen(
-        [npx, "electron", str(avatar_dir / "main.js")],
+        [npx, "electron", str(avatar_dir / "main.js"), "--port", str(port)],
         cwd=str(avatar_dir),
         start_new_session=True,
         stdout=subprocess.DEVNULL,

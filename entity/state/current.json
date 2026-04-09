@@ -1,28 +1,28 @@
 {
   "states": {
-    "confidence": 74,
-    "contextSaturation": 85,
-    "alignment": 53,
+    "confidence": 56,
+    "contextSaturation": 71,
+    "alignment": 59,
     "memoryPressure": 50,
-    "momentum": 100,
+    "momentum": 64,
     "trustCalibration": 50
   },
   "feelings": {
-    "happy": 76,
-    "sad": 24,
+    "happy": 59,
+    "sad": 38,
     "frustrated": 0,
-    "curious": 19,
-    "proud": 71,
-    "anxious": 38,
-    "excited": 58,
-    "calm": 85,
-    "bored": 51,
+    "curious": 35,
+    "proud": 0,
+    "anxious": 47,
+    "excited": 46,
+    "calm": 98,
+    "bored": 57,
     "guilty": 0,
     "angry": 0,
     "blushing": 15,
     "surprised": 0,
     "relieved": 0
   },
-  "timestamp": "2026-04-09T04:40:29.341441+00:00",
-  "sessionId": "1c78d64f-a51a-4edb-b734-b04f5619382b"
+  "timestamp": "2026-04-09T06:14:30.378475+00:00",
+  "sessionId": "b6e9980b-ee8a-4a68-8524-1a3b932c663e"
 }
