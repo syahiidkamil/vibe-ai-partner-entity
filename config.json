@@ -13,7 +13,7 @@
     }
   },
   "avatar": {
-    "plugin": "html-electron",
+    "plugin": "threejs-electron",
     "plugins": {
       "live2d-electron": {
         "model": "shizuku"
