@@ -1,62 +1,76 @@
 """
 TTS Pipeline — orchestrates engine generation + audio playback + broadcasting.
 
-Flow: text -> engine.generate() -> audio_player.play_chunks() -> amplitude/audio callbacks
+Flow: text -> split sentences -> per-sentence: engine.generate() -> broadcast audio chunk
 """
 
 from __future__ import annotations
 
 import base64
+import re
 from typing import Callable, Awaitable
 
 import numpy as np
 
-from vape.apps.tts.audio_player import AudioPlayer
 from vape.apps.tts.registry import EngineRegistry
+
+
+def split_sentences(text: str, max_chars: int = 200) -> list[str]:
+    """Split text into sentences, further breaking long ones at commas."""
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+    result = []
+    for s in sentences:
+        s = s.strip()
+        if not s:
+            continue
+        if len(s) <= max_chars:
+            result.append(s)
+        else:
+            # Split long sentences at commas
+            parts = re.split(r',\s*', s)
+            buf = ""
+            for part in parts:
+                if buf and len(buf) + len(part) + 2 > max_chars:
+                    result.append(buf.strip())
+                    buf = part
+                else:
+                    buf = f"{buf}, {part}" if buf else part
+            if buf.strip():
+                result.append(buf.strip())
+    return result
 
 
 class TTSPipeline:
     def __init__(
         self,
         registry: EngineRegistry,
-        audio_player: AudioPlayer,
-        on_amplitude: Callable[[float], Awaitable[None]],
-        on_audio_chunk: Callable[[str, int, bool], Awaitable[None]],
+        on_audio_chunk: Callable[[str, int, bool, str | None], Awaitable[None]],
     ) -> None:
-        """
-        Args:
-            registry: Engine registry to get active engine
-            audio_player: Handles playback + amplitude
-            on_amplitude: Called with normalized 0-1 amplitude at ~30Hz
-            on_audio_chunk: Called with (base64_data, sample_rate, is_last) for /ws/audio
-        """
         self._registry = registry
-        self._player = audio_player
-        self._on_amplitude = on_amplitude
         self._on_audio_chunk = on_audio_chunk
 
     async def speak(self, text: str, voice: str | None = None, speed: float | None = None) -> None:
-        """
-        Full speak pipeline:
-          1. Generate audio via active engine
-          2. Broadcast audio chunks via /ws/audio
-          3. Play audio locally (with amplitude broadcasting via /ws/status)
-        """
+        """Split text into sentences, generate and broadcast audio per sentence."""
         engine = self._registry.get_active()
         if engine is None:
             return
 
         effective_speed = speed if speed is not None else 1.0
-        chunks = engine.generate(text, voice=voice, speed=effective_speed)
-
-        if not chunks:
+        sentences = split_sentences(text)
+        if not sentences:
             return
 
-        # Broadcast audio chunks to /ws/audio clients
-        for chunk in chunks:
-            pcm_int16 = (chunk.samples * 32767).astype(np.int16)
-            data_b64 = base64.b64encode(pcm_int16.tobytes()).decode("ascii")
-            await self._on_audio_chunk(data_b64, chunk.sample_rate, chunk.is_last)
+        for i, sentence in enumerate(sentences):
+            is_last_sentence = (i == len(sentences) - 1)
 
-        # Broadcast amplitude for lip sync (without local playback)
-        await self._player.broadcast_amplitude(chunks, self._on_amplitude)
+            chunks = engine.generate(sentence, voice=voice, speed=effective_speed)
+            if not chunks:
+                continue
+
+            for j, chunk in enumerate(chunks):
+                is_last_chunk = is_last_sentence and (j == len(chunks) - 1)
+                # Attach sentence text to the first chunk of each sentence
+                text_label = sentence if j == 0 else None
+                pcm_int16 = (chunk.samples * 32767).astype(np.int16)
+                data_b64 = base64.b64encode(pcm_int16.tobytes()).decode("ascii")
+                await self._on_audio_chunk(data_b64, chunk.sample_rate, is_last_chunk, text_label)

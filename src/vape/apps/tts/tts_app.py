@@ -11,7 +11,6 @@ import json
 from pathlib import Path
 from typing import Callable, Awaitable
 
-from vape.apps.tts.audio_player import AudioPlayer
 from vape.apps.tts.pipeline import TTSPipeline
 from vape.apps.tts.plugin_loader import PluginLoader
 from vape.apps.tts.registry import EngineRegistry
@@ -23,20 +22,16 @@ class TTSApp:
     def __init__(
         self,
         registry: EngineRegistry,
-        audio_player: AudioPlayer,
-        on_amplitude: Callable[[float], Awaitable[None]],
-        on_audio_chunk: Callable[[str, int, bool], Awaitable[None]],
+        on_audio_chunk: Callable[[str, int, bool, str | None], Awaitable[None]],
     ) -> None:
         self.registry = registry
-        self.audio_player = audio_player
-        self.pipeline = TTSPipeline(registry, audio_player, on_amplitude, on_audio_chunk)
+        self.pipeline = TTSPipeline(registry, on_audio_chunk)
 
     @classmethod
     def create(
         cls,
         config_path: Path,
-        on_amplitude: Callable[[float], Awaitable[None]],
-        on_audio_chunk: Callable[[str, int, bool], Awaitable[None]],
+        on_audio_chunk: Callable[[str, int, bool, str | None], Awaitable[None]],
     ) -> "TTSApp":
         """Factory: discover plugins, load config, wire everything."""
         # Discover available plugins
@@ -55,18 +50,17 @@ class TTSApp:
         elif available:
             registry.switch(available[0])
 
-        return cls(registry, AudioPlayer(), on_amplitude, on_audio_chunk)
+        return cls(registry, on_audio_chunk)
 
     async def speak(self, text: str, voice: str | None = None, speed: float | None = None) -> None:
         """Generate and play TTS audio."""
         await self.pipeline.speak(text, voice=voice, speed=speed)
 
     def stop(self) -> None:
-        """Abort current generation/playback."""
+        """Abort current generation."""
         active = self.registry.get_active()
         if active:
             active.stop()
-        self.audio_player.stop()
 
     def get_voices(self) -> list[dict]:
         """List available voices for the active engine."""

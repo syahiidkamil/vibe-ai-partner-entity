@@ -160,11 +160,11 @@ avatar: AvatarApp | None = None
 start_time: float = 0.0
 
 
-async def _broadcast_amplitude(value: float) -> None:
-    await manager.broadcast_status({"type": "amplitude", "value": value, "timestamp": time.time()})
-
-async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool) -> None:
-    await manager.broadcast_audio({"type": "audio_chunk", "data": data_b64, "sampleRate": sample_rate, "isLast": is_last})
+async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool, text: str | None = None) -> None:
+    msg: dict = {"type": "audio_chunk", "data": data_b64, "sampleRate": sample_rate, "isLast": is_last}
+    if text:
+        msg["text"] = text
+    await manager.broadcast_audio(msg)
 
 async def _broadcast_action(name: str) -> None:
     """Resolve system expression trigger via avatar interface, then broadcast."""
@@ -179,7 +179,7 @@ async def lifespan(app: FastAPI):
     start_time = time.time()
 
     # Create TTS app via factory — discovers plugins, loads config, wires pipeline
-    tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_amplitude, _broadcast_audio_chunk)
+    tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_audio_chunk)
 
     # Discover avatar plugins and mount the active one
     avatar = AvatarApp(ROOT_DIR / "plugins")
@@ -211,7 +211,6 @@ app = FastAPI(title="Vibe TTS Server", version="0.1.0", lifespan=lifespan)
 async def speak(req: SpeakRequest):
     if not tts:
         return {"status": "error", "message": "No TTS engine available"}
-    await manager.broadcast_status({"type": "state", "mode": "speaking", "text": req.text})
     asyncio.create_task(tts.speak(req.text, voice=req.voice, speed=req.speed))
     return {"status": "ok"}
 
