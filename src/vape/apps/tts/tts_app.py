@@ -11,10 +11,10 @@ import json
 from pathlib import Path
 from typing import Callable, Awaitable
 
-from vibe.apps.tts.audio_player import AudioPlayer
-from vibe.apps.tts.pipeline import TTSPipeline
-from vibe.apps.tts.plugin_loader import PluginLoader
-from vibe.apps.tts.registry import EngineRegistry
+from vape.apps.tts.audio_player import AudioPlayer
+from vape.apps.tts.pipeline import TTSPipeline
+from vape.apps.tts.plugin_loader import PluginLoader
+from vape.apps.tts.registry import EngineRegistry
 
 
 class TTSApp:

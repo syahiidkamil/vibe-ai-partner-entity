@@ -13,7 +13,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._config import get_port
+from vape.cli._config import get_port
 
 console = Console()
 
@@ -30,7 +30,7 @@ def _is_port_in_use(port: int) -> bool:
 def _set_env_defaults() -> None:
     """Set platform-specific environment variables."""
     # PyTorch MPS fallback for macOS (reads from tts.plugins.kokoro config)
-    from vibe.cli._config import read_config
+    from vape.cli._config import read_config
     kokoro_config = read_config().get("tts", {}).get("plugins", {}).get("kokoro", {})
     if kokoro_config.get("pytorchMpsFallback", True) and "PYTORCH_ENABLE_MPS_FALLBACK" not in os.environ:
         os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
@@ -57,7 +57,7 @@ def start(
 
     if _is_port_in_use(port):
         console.print(f"  [red]Port {port} is already in use.[/red]")
-        console.print(f"  Run [bold]uv run vibe stop[/bold] or use [bold]--port {port + 1}[/bold]")
+        console.print(f"  Run [bold]uv run vape stop[/bold] or use [bold]--port {port + 1}[/bold]")
         raise typer.Exit(1)
 
     _set_env_defaults()
@@ -65,23 +65,23 @@ def start(
     if daemon:
         console.print(f"  Starting server in background on port {port}...")
         proc = subprocess.Popen(
-            [sys.executable, "-m", "uvicorn", "vibe.server.app:app",
+            [sys.executable, "-m", "uvicorn", "vape.server.app:app",
              "--host", host, "--port", str(port)],
             start_new_session=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
         # Write PID for stop command
-        from vibe.cli._paths import cache_dir
+        from vape.cli._paths import cache_dir
         pid_file = cache_dir() / "server.pid"
         pid_file.write_text(str(proc.pid))
         console.print(f"  [green]Server started (PID {proc.pid})[/green]")
         console.print(f"  Avatar: http://localhost:{port}")
         return
 
-    console.print(f"  Starting Vibe AI Partner on port {port}...")
+    console.print(f"  Starting VAPE on port {port}...")
     console.print(f"  Avatar: http://localhost:{port}")
     console.print(f"  Press [bold]Ctrl+C[/bold] to stop.\n")
 
     import uvicorn
-    uvicorn.run("vibe.server.app:app", host=host, port=port)
+    uvicorn.run("vape.server.app:app", host=host, port=port)

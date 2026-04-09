@@ -7,7 +7,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._config import get_port
+from vape.cli._config import get_port
 
 console = Console()
 
@@ -25,4 +25,4 @@ def action_cmd(
         httpx.post(f"http://localhost:{port}/api/action", json={"name": name}, timeout=5)
         console.print(f"  Action: [bold]{name}[/bold]")
     except httpx.ConnectError:
-        console.print("  [red]Server not running.[/red] Start with: uv run vibe start")
+        console.print("  [red]Server not running.[/red] Start with: uv run vape start")

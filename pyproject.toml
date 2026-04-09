@@ -22,7 +22,7 @@ dev = [
 ]
 
 [project.scripts]
-vibe = "vibe.cli.main:app"
+vape = "vape.cli.main:app"
 
 [build-system]
 requires = ["setuptools>=75.0"]

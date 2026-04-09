@@ -4,24 +4,23 @@ from __future__ import annotations
 
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 import typer
 from rich.console import Console
 from rich.panel import Panel
-from rich.prompt import IntPrompt, Confirm
+from rich.prompt import IntPrompt
 
-from vibe.cli._paths import ROOT_DIR, PLUGINS_DIR
-from vibe.cli._config import read_config, write_config
-from vibe.cli._prereqs import run_all_checks
-from vibe.cli._progress import download_models
+from vape.cli._paths import ROOT_DIR, PLUGINS_DIR
+from vape.cli._config import read_config, write_config
+from vape.cli._prereqs import run_all_checks
+from vape.cli._progress import download_models
 
 console = Console()
 
 
 def _load_plugin_manifests() -> list[dict]:
-    """Load all plugin.json files from plugins/tts-*/ directories."""
+    """Load all plugin.json files from plugins/tts-*/ directories. Recommended first."""
     manifests = []
     for plugin_dir in sorted(PLUGINS_DIR.glob("tts-*")):
         manifest_path = plugin_dir / "plugin.json"
@@ -29,6 +28,9 @@ def _load_plugin_manifests() -> list[dict]:
             data = json.loads(manifest_path.read_text())
             data["_dir"] = str(plugin_dir)
             manifests.append(data)
+    # Fixed order: kokoro-onnx (recommended), kokoro (pytorch), kitten
+    _order = {"kokoro-onnx": 0, "kokoro": 1, "kitten": 2}
+    manifests.sort(key=lambda m: _order.get(m["name"], 99))
     return manifests
 
 
@@ -61,7 +63,7 @@ def _install_deps(manifest: dict) -> None:
     extra = manifest["uvExtra"]
     console.print(f"\n  Installing {manifest['displayName']} dependencies...")
     result = subprocess.run(
-        [sys.executable, "-m", "uv", "sync", "--extra", extra],
+        ["uv", "sync", "--extra", extra],
         cwd=str(ROOT_DIR),
         capture_output=False,
     )
@@ -91,10 +93,15 @@ def _select_languages(manifest: dict) -> list[dict]:
         )
         console.print(f"    {i}. {lang['name']} (+{size}MB)")
 
-    if not Confirm.ask("\n  Download additional languages?", default=False):
+    console.print(f"\n  [dim]Enter: 1,2 for specific, * for all, 0 or empty to skip[/dim]")
+    selection = typer.prompt("  Select languages", default="0")
+
+    if selection.strip() in ("0", ""):
         return []
 
-    selection = typer.prompt("  Select languages (comma-separated numbers)")
+    if selection.strip() == "*":
+        return list(optional)
+
     selected = []
     for part in selection.split(","):
         try:
@@ -133,9 +140,20 @@ def _download_language_pack(lang: dict) -> None:
         subprocess.run(post_install, shell=True, cwd=str(ROOT_DIR))
 
 
+BANNER = r"""[bold cyan]
+ ██╗   ██╗ █████╗ ██████╗ ███████╗
+ ██║   ██║██╔══██╗██╔══██╗██╔════╝
+ ██║   ██║███████║██████╔╝█████╗
+ ╚██╗ ██╔╝██╔══██║██╔═══╝ ██╔══╝
+  ╚████╔╝ ██║  ██║██║     ███████╗
+   ╚═══╝  ╚═╝  ╚═╝╚═╝     ╚══════╝[/bold cyan]
+ [dim]Vibe AI Partner Entity[/dim]
+"""
+
+
 def setup() -> None:
     """Interactive setup wizard — choose engine, download models, pick languages."""
-    console.print(Panel("[bold]Vibe AI Partner Setup[/bold]", style="blue"))
+    console.print(BANNER)
 
     # Step 1: Prerequisites
     console.print("\n  [bold]Checking prerequisites...[/bold]")
@@ -168,7 +186,7 @@ def setup() -> None:
         _download_language_pack(lang)
 
     # Step 7: Build avatar
-    from vibe.apps.avatar import AvatarApp
+    from vape.apps.avatar import AvatarApp
     avatar_app = AvatarApp(PLUGINS_DIR)
     config = read_config()
     avatar_renderer = config.get("avatar", {}).get("renderer")
@@ -180,9 +198,9 @@ def setup() -> None:
     # Done
     console.print(Panel(
         "[green]Setup complete![/green]\n\n"
-        "  Start:   [bold]uv run vibe start[/bold]\n"
-        "  Stop:    [bold]Ctrl+C[/bold] (or uv run vibe stop)\n"
-        "  Status:  [bold]uv run vibe status[/bold]\n\n"
-        "  Add languages later: [bold]uv run vibe download --language zh[/bold]",
+        "  Start:   [bold]uv run vape start[/bold]\n"
+        "  Stop:    [bold]Ctrl+C[/bold] (or uv run vape stop)\n"
+        "  Status:  [bold]uv run vape status[/bold]\n\n"
+        "  Add languages later: [bold]uv run vape download --language zh[/bold]",
         style="green",
     ))
