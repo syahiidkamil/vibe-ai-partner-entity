@@ -6,6 +6,7 @@
   "category": "avatar",
   "renderer": "live2d",
   "shell": "electron",
+  "distDir": ".",
   "order": 1,
   "models": [
     {
