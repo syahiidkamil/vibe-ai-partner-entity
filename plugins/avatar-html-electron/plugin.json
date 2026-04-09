@@ -1,11 +1,12 @@
 {
-  "name": "vanilla-html",
-  "displayName": "Vanilla HTML Avatar",
-  "description": "Lightweight HTML/CSS avatar — no WebGL required, works everywhere",
+  "name": "html-electron",
+  "displayName": "HTML Avatar (Electron)",
+  "description": "Lightweight HTML/CSS avatar in Electron — no WebGL required, works everywhere",
   "tag": "",
   "category": "avatar",
   "renderer": "html",
-  "distDir": "dist",
+  "shell": "electron",
+  "distDir": ".",
   "order": 4,
   "models": [],
   "interface": {

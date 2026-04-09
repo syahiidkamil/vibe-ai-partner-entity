@@ -6,6 +6,7 @@ Flow: text -> split sentences -> per-sentence: engine.generate() -> save WAV -> 
 
 from __future__ import annotations
 
+import asyncio
 import re
 import tempfile
 import wave
@@ -80,13 +81,16 @@ class TTSPipeline:
         for i, sentence in enumerate(sentences):
             is_last = (i == len(sentences) - 1)
 
-            chunks = engine.generate(sentence, voice=voice, speed=effective_speed)
-            if not chunks:
-                continue
+            # Run CPU-bound generation in thread to avoid blocking the event loop
+            def _generate_and_save():
+                chunks = engine.generate(sentence, voice=voice, speed=effective_speed)
+                if not chunks:
+                    return None
+                all_samples = np.concatenate([c.samples for c in chunks])
+                return _save_wav(all_samples, chunks[0].sample_rate)
 
-            # Concatenate all chunks for this sentence into one WAV
-            all_samples = np.concatenate([c.samples for c in chunks])
-            sample_rate = chunks[0].sample_rate
-            wav_path = _save_wav(all_samples, sample_rate)
+            wav_path = await asyncio.to_thread(_generate_and_save)
+            if not wav_path:
+                continue
 
             await self._on_audio(wav_path, sentence, is_last)
