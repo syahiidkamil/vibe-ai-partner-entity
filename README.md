@@ -1,4 +1,4 @@
-# Vibe AI Partner
+# VAPE — Vibe AI Partner Entity
 
 A Live2D avatar companion for Claude Code. The avatar reacts to your coding session — expressions change based on state, motions trigger from events, and lip sync drives from TTS audio.
 
@@ -9,7 +9,7 @@ A Live2D avatar companion for Claude Code. The avatar reacts to your coding sess
 
 ```bash
 # macOS
-brew install uv
+brew install uv node
 
 # or
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -18,64 +18,107 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 ## Setup
 
 ```bash
-# 1. Install Node dependencies + build
-npm install && npm run build
-
-# 2. Choose and install a TTS engine
-npm run setup
+uv run vape setup
 ```
 
-The setup command lets you pick a TTS engine:
+The setup wizard lets you:
+1. Choose a TTS engine
+2. Download model files
+3. Select language packs
+4. Choose an avatar plugin
 
 | Engine | Size | Best for |
 |--------|------|----------|
 | **Kokoro ONNX** (recommended) | ~300MB | Good quality, CPU-only, fast |
-| **Kokoro (PyTorch)** | ~2GB | Best quality, streaming, GPU optional |
-| **KittenTTS** | ~150MB | Lightest, CPU-only, 15M params |
+| **Kokoro (PyTorch)** | ~2GB | Best quality, GPU optional |
+| **KittenTTS** | ~150MB | Lightest, CPU-only |
 
 ## Run
 
 ```bash
-npm start
+uv run vape start
 ```
 
-This single command:
-1. Starts the TTS server on port 5111 (via `uv`)
-2. Starts the avatar app dev server on http://localhost:1420
-
-First run may take up to 2 minutes while the TTS model downloads. You'll see progress dots — don't interrupt.
+This starts the TTS server on port 5111 and launches the avatar desktop window.
 
 ```bash
-npm stop        # stop both
-npm run status  # check what's running
+uv run vape stop       # stop the server
+uv run vape status     # check what's running
 ```
 
 ## CLI Commands
 
+### Speech
+
 ```bash
-npm run speak "Hello world"    # speak with lip sync
-npm run feeling happy          # set avatar expression
-npm run action wave            # trigger a motion
+uv run vape speak "Hello world"                     # speak with lip sync
+uv run vape speak "Konnichiwa" --voice jf_alpha      # specific voice
+uv run vape speak "Faster speech" --speed 1.5        # adjust speed
 ```
 
-Available feelings: `happy`, `sad`, `frustrated`, `curious`, `proud`, `anxious`, `excited`, `calm`, `bored`, `guilty`, `angry`, `blushing`, `surprised`, `relieved`
+### Feelings (expressions)
 
-Available actions: `wave`, `nod`, `headTilt`, `laugh`, `giggle`, `surprisedGasp`, `think`, `celebrate`, `sweatDrop`, `bow`, `headShake`, `starryEyes`
+```bash
+uv run vape feeling happy
+```
+
+Available: `normal`, `happy`, `sad`, `angry`, `frustrated`, `curious`, `proud`, `anxious`, `excited`, `calm`, `bored`, `guilty`, `blushing`, `surprised`
+
+### Actions (motions)
+
+```bash
+uv run vape action wave
+```
+
+Available: `nod`, `headshake`, `headtilt`, `laugh`, `giggle`, `gasp`, `think`, `celebrate`, `sweat`, `wave`, `bow`, `starryeyes`
+
+## REST API
+
+For integrations (server must be running):
+
+```
+POST /api/speak     {"text": "Hello", "voice": "af_heart", "speed": 1.0}
+POST /api/feeling   {"name": "happy"}
+POST /api/action    {"name": "wave"}
+POST /api/stop
+POST /api/voice     {"voice": "bf_emma"}
+GET  /api/health
+GET  /api/voices
+GET  /api/avatar/interface
+```
+
+## WebSocket Protocol
+
+The avatar connects to the server via two WebSocket channels:
+
+**`/ws/status`** — control messages (feelings, actions)
+```json
+{"type": "feeling", "name": "happy"}
+{"type": "action", "name": "wave"}
+```
+
+**`/ws/audio`** — audio delivery (file paths to temp WAV files)
+```json
+{"type": "audio", "path": "/tmp/tts-abc123.wav", "text": "Hello world", "isLast": true}
+```
+
+The avatar plays audio natively via `new Audio(path)` with AnalyserNode-driven lip sync.
 
 ## Project Structure
 
 ```
-apps/
-  avatar-app/     Tauri 2 desktop app — renders Live2D avatar
-  tts-server/     Python FastAPI — TTS, state engine, WebSocket
-  cli/            CLI commands — start, stop, speak, feeling, action
+src/vape/
+  cli/              CLI commands — setup, start, stop, speak, feeling, action
+  server/           FastAPI server — REST + WebSocket
+  apps/
+    tts/            TTS pipeline — engine plugins, sentence splitting, WAV generation
+    avatar/         Avatar plugin discovery + interface contracts
 
-packages/
-  core/           Interfaces, state engine, event bus
-  shared/         Types, constants, protocol definitions
-  plugin-avatar/
-    live2d/       Live2D renderer plugin (PixiJS + pixi-live2d-display)
+plugins/
+  avatar-live2d-electron/   Live2D avatar + Electron shell (default)
+  tts-kokoro-onnx/          Kokoro ONNX engine plugin
+  tts-kokoro/               Kokoro PyTorch engine plugin
+  tts-kitten/               KittenTTS engine plugin
 
-models/
-  live2d/shizuku/ Shizuku model — expressions, motions, textures
+config.json         User configuration (engine, voice, avatar plugin)
 ```
