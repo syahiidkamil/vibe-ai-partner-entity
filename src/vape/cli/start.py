@@ -16,7 +16,7 @@ import typer
 from rich.console import Console
 
 from vape.cli._config import get_port, read_config
-from vape.cli._paths import PLUGINS_DIR
+from vape.cli._paths import PLUGINS_DIR, ROOT_DIR
 
 console = Console()
 
@@ -54,34 +54,34 @@ def _set_env_defaults() -> None:
 
 
 def _launch_shell(shell_name: str, port: int) -> subprocess.Popen | None:
-    """Launch the desktop shell (Electron/Tauri) pointing to the server."""
+    """Launch the desktop avatar (Electron) alongside the server."""
     import shutil
 
-    shell_dir = PLUGINS_DIR / f"shell-{shell_name}"
-    if not shell_dir.exists():
-        console.print(f"  [yellow]Shell '{shell_name}' not found[/yellow]")
+    avatar_dir = ROOT_DIR / "archives" / "live-ai-partner-avatar" / "desktop"
+    if not avatar_dir.exists():
+        console.print(f"  [yellow]Avatar app not found at {avatar_dir}[/yellow]")
         return None
 
     npm = shutil.which("npm")
     npx = shutil.which("npx")
 
+    if not npx:
+        console.print(f"  [yellow]npx not found — cannot launch avatar[/yellow]")
+        return None
+
     # Ensure node_modules
-    if npm and not (shell_dir / "node_modules").exists():
-        console.print(f"  Installing shell dependencies...")
-        subprocess.run([npm, "install"], cwd=str(shell_dir), capture_output=True, timeout=120)
+    if npm and not (avatar_dir / "node_modules").exists():
+        console.print(f"  Installing avatar dependencies...")
+        subprocess.run([npm, "install"], cwd=str(avatar_dir), capture_output=True, timeout=120)
 
-    if shell_name == "electron" and npx:
-        console.print(f"  Launching avatar desktop window...")
-        return subprocess.Popen(
-            [npx, "electron", str(shell_dir / "main.js"), "--port", str(port)],
-            cwd=str(shell_dir),
-            start_new_session=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
-
-    console.print(f"  [yellow]Shell '{shell_name}' not yet supported[/yellow]")
-    return None
+    console.print(f"  Launching avatar desktop window...")
+    return subprocess.Popen(
+        [npx, "electron", str(avatar_dir / "main.js")],
+        cwd=str(avatar_dir),
+        start_new_session=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def start(
