@@ -27,3 +27,6 @@ __pycache__/
 # Runtime
 .tts-server.pid
 .avatar-app.pid
+
+# Generated interface (rebuilt at startup)
+src/vape/apps/avatar/interface.json

@@ -1,16 +1,16 @@
 {
   "name": "three-js-vrm",
   "displayName": "Three.js VRM Avatar",
-  "description": "VRM humanoid avatar with Three.js — import any VRM model from VRoid Hub",
+  "description": "VRM humanoid avatar — import any VRM model from VRoid Hub",
   "tag": "",
   "category": "avatar",
   "renderer": "threejs-vrm",
   "distDir": "dist",
+  "order": 3,
   "models": [],
-  "features": {
-    "lipSync": true,
+  "interface": {
     "feelings": true,
-    "expressions": true,
+    "selfExpressions": true,
     "physics": true
   },
   "connection": {

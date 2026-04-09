@@ -114,6 +114,27 @@ def _select_languages(manifest: dict) -> list[dict]:
     return selected
 
 
+def _select_avatar(avatar_app, current: str | None) -> dict | None:
+    """Display avatar menu, return selected plugin dict."""
+    plugins = avatar_app.list_plugins_sorted()
+    if not plugins:
+        return None
+
+    console.print("\n  [bold]Select Avatar:[/bold]\n")
+    for i, p in enumerate(plugins, 1):
+        tag = f" [green]({p.get('tag', '')})[/green]" if p.get("tag") else ""
+        current_mark = " [yellow]<- current[/yellow]" if p["name"] == current else ""
+        ready = "" if p.get("ready") or p.get("hasSource") else " [dim](not available)[/dim]"
+        console.print(f"  [bold]{i}.[/bold] {p['displayName']}{tag}{current_mark}{ready}")
+        console.print(f"     {p['description']}")
+        console.print()
+
+    choice = IntPrompt.ask("  Enter choice", default=1)
+    if choice < 1 or choice > len(plugins):
+        choice = 1
+    return plugins[choice - 1]
+
+
 def _download_language_pack(lang: dict) -> None:
     """Download models and run postInstall for a language."""
     console.print(f"\n  Downloading {lang['name']} support...")
@@ -185,15 +206,20 @@ def setup() -> None:
     for lang in selected_langs:
         _download_language_pack(lang)
 
-    # Step 7: Build avatar
+    # Step 7: Avatar selection
     from vape.apps.avatar import AvatarApp
     avatar_app = AvatarApp(PLUGINS_DIR)
-    config = read_config()
-    avatar_renderer = config.get("avatar", {}).get("renderer")
-    avatar_app.build_active(avatar_renderer)
+    avatar_manifest = _select_avatar(avatar_app, read_config().get("avatar", {}).get("renderer"))
 
-    # Step 8: Save config
-    write_config({"tts": {"engine": manifest["name"]}})
+    # Step 8: Build avatar
+    if avatar_manifest:
+        avatar_app.build_plugin(avatar_manifest["name"])
+
+    # Step 9: Save config
+    write_config({
+        "tts": {"engine": manifest["name"]},
+        "avatar": {"renderer": avatar_manifest["name"] if avatar_manifest else "live2d"},
+    })
 
     # Done
     console.print(Panel(

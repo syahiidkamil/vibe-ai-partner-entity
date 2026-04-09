@@ -6,11 +6,11 @@
   "category": "avatar",
   "renderer": "threejs",
   "distDir": "dist",
+  "order": 2,
   "models": [],
-  "features": {
-    "lipSync": true,
+  "interface": {
     "feelings": true,
-    "expressions": true,
+    "selfExpressions": true,
     "physics": true
   },
   "connection": {

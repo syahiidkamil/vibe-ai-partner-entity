@@ -6,11 +6,11 @@
   "category": "avatar",
   "renderer": "html",
   "distDir": "dist",
+  "order": 4,
   "models": [],
-  "features": {
-    "lipSync": true,
+  "interface": {
     "feelings": true,
-    "expressions": false,
+    "selfExpressions": false,
     "physics": false
   },
   "connection": {
