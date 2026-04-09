@@ -100,3 +100,32 @@ class AudioPlayer:
 
         # Wait for sounddevice to finish
         sd.wait()
+
+    async def broadcast_amplitude(
+        self,
+        chunks: list[AudioChunk],
+        on_amplitude: Callable[[float], Awaitable[None]],
+    ) -> None:
+        """Compute and broadcast amplitude without local audio playback."""
+        self._stop_event.clear()
+
+        for chunk in chunks:
+            if self._stop_event.is_set():
+                break
+            frame_size = int(chunk.sample_rate * AMPLITUDE_INTERVAL_MS / 1000)
+            offset = 0
+            smoothed = 0.0
+            samples = chunk.samples
+            total = len(samples)
+
+            while offset < total and not self._stop_event.is_set():
+                end = min(offset + frame_size, total)
+                frame = samples[offset:end]
+                rms = float(np.sqrt(np.mean(frame ** 2)))
+                smoothed = EMA_ALPHA * rms + (1.0 - EMA_ALPHA) * smoothed
+                normalized = min(smoothed / RMS_CEILING, 1.0)
+                await on_amplitude(normalized)
+                await asyncio.sleep(AMPLITUDE_INTERVAL_MS / 1000)
+                offset = end
+
+        await on_amplitude(0.0)
