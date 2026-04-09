@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 280px; height: 400px; background: transparent; user-select: none; overflow: hidden; }
-    #container { width: 280px; height: 400px; position: relative; -webkit-app-region: drag; }
+    html, body { width: 200px; height: 280px; background: transparent; user-select: none; overflow: hidden; }
+    #container { width: 200px; height: 280px; position: relative; -webkit-app-region: drag; }
     canvas { display: block; position: absolute; top: 0; left: 0; }
     #bg-panel {
       position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 240px; height: 360px; background: rgba(128,128,128,0.12); border-radius: 20px 20px 10px 10px;
+      width: 170px; height: 250px; background: rgba(128,128,128,0.12); border-radius: 20px 20px 10px 10px;
     }
     #speech-bubble {
       position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
@@ -178,11 +178,11 @@
     addCircle(215, 105, 6, '#FF4D6D', 62, 4);
 
     // ─── Three.js scene ────────────────────────────
-    const W = 280, H = 400;
+    const W = 200, H = 280;
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 2000);
-    camera.position.set(0, 0, 600);
+    camera.position.set(0, 0, 850);
 
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(W, H);
