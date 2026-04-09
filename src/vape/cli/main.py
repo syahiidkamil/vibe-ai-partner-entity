@@ -18,13 +18,12 @@ def _register_commands() -> None:
     from vape.cli.speak import speak_cmd
     from vape.cli.feeling import feeling_cmd
     from vape.cli.action import action_cmd
-
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)
     app.command("stop", help="Stop the running server")(stop)
     app.command("status", help="Check server status")(status)
     app.command("download", help="Download language packs")(download)
-    app.command("speak", help="Speak text via TTS")(speak_cmd)
+    app.command("speak", help="Speak text via avatar")(speak_cmd)
     app.command("feeling", help="Set avatar feeling")(feeling_cmd)
     app.command("action", help="Trigger avatar action")(action_cmd)
 
