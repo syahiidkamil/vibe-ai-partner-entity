@@ -7,7 +7,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._config import get_port
+from vape.cli._config import get_port
 
 console = Console()
 
@@ -34,4 +34,4 @@ def speak_cmd(
         else:
             console.print(f"  [red]Error:[/red] {data.get('message', 'unknown')}")
     except httpx.ConnectError:
-        console.print("  [red]Server not running.[/red] Start with: uv run vibe start")
+        console.print("  [red]Server not running.[/red] Start with: uv run vape start")

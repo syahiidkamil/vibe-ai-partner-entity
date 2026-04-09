@@ -10,7 +10,7 @@ Mirrors the EngineRegistry pattern from the architecture doc:
 
 from __future__ import annotations
 
-from vibe.core import TTSEngineBase
+from vape.core import TTSEngineBase
 
 
 class EngineRegistry:

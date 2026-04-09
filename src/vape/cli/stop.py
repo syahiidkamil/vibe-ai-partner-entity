@@ -9,7 +9,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._config import get_port
+from vape.cli._config import get_port
 
 console = Console()
 
@@ -32,7 +32,7 @@ def stop(
         pass
 
     # Fallback: PID file
-    from vibe.cli._paths import cache_dir
+    from vape.cli._paths import cache_dir
     pid_file = cache_dir() / "server.pid"
     if pid_file.exists():
         try:

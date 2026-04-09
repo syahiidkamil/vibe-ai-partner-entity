@@ -10,7 +10,7 @@ from __future__ import annotations
 import numpy as np
 from kittentts import KittenTTS as KittenModel
 
-from vibe.core import AudioChunk, TTSEngineBase
+from vape.core import AudioChunk, TTSEngineBase
 
 KITTEN_MODEL = "KittenML/kitten-tts-nano-0.8-int8"
 

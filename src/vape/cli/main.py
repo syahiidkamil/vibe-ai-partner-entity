@@ -1,23 +1,23 @@
-"""Vibe AI Partner CLI — entry point."""
+"""VAPE — Vibe AI Partner Entity CLI."""
 
 import typer
 
 app = typer.Typer(
-    name="vibe",
-    help="Vibe AI Partner — TTS + Avatar CLI",
+    name="vape",
+    help="VAPE — Vibe AI Partner Entity",
     no_args_is_help=True,
 )
 
 
 def _register_commands() -> None:
-    from vibe.cli.setup import setup
-    from vibe.cli.start import start
-    from vibe.cli.stop import stop
-    from vibe.cli.status import status
-    from vibe.cli.download import download
-    from vibe.cli.speak import speak_cmd
-    from vibe.cli.feeling import feeling_cmd
-    from vibe.cli.action import action_cmd
+    from vape.cli.setup import setup
+    from vape.cli.start import start
+    from vape.cli.stop import stop
+    from vape.cli.status import status
+    from vape.cli.download import download
+    from vape.cli.speak import speak_cmd
+    from vape.cli.feeling import feeling_cmd
+    from vape.cli.action import action_cmd
 
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)

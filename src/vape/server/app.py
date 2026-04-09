@@ -21,10 +21,10 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from vibe.apps.tts import TTSApp
-from vibe.apps.avatar import AvatarApp
-from vibe.server.sentiment import analyze_sentiment
-from vibe.server.state_manager import StateManager
+from vape.apps.tts import TTSApp
+from vape.apps.avatar import AvatarApp
+from vape.server.sentiment import analyze_sentiment
+from vape.server.state_manager import StateManager
 
 
 # ═══════════════════════════════════════════════════════════════

@@ -7,7 +7,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._config import get_port
+from vape.cli._config import get_port
 
 console = Console()
 
@@ -28,4 +28,4 @@ def status(
         console.print(f"  Uptime: {data.get('uptime', 0)}s")
     except Exception:
         console.print(f"  [red]Server not running[/red] on port {port}")
-        console.print(f"  Start with: [bold]uv run vibe start[/bold]")
+        console.print(f"  Start with: [bold]uv run vape start[/bold]")

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from vibe.cli._paths import CONFIG_PATH
+from vape.cli._paths import CONFIG_PATH
 
 
 def read_config() -> dict:

@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from vibe.core import AudioChunk, TTSEngineBase
+from vape.core import AudioChunk, TTSEngineBase
 
 MODEL_REPO = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0"
 MODEL_FILE = "kokoro-v1.0.onnx"

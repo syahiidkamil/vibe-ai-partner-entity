@@ -18,7 +18,7 @@ from typing import Callable, Awaitable
 import numpy as np
 import sounddevice as sd
 
-from vibe.core import AudioChunk
+from vape.core import AudioChunk
 
 
 # Amplitude broadcast rate (~30Hz = every 33ms)

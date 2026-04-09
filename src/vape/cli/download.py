@@ -9,9 +9,9 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-from vibe.cli._paths import ROOT_DIR, PLUGINS_DIR
-from vibe.cli._config import get_engine
-from vibe.cli._progress import download_models
+from vape.cli._paths import ROOT_DIR, PLUGINS_DIR
+from vape.cli._config import get_engine
+from vape.cli._progress import download_models
 
 console = Console()
 
@@ -34,7 +34,7 @@ def download(
     """Download language packs or models for the current engine."""
     engine_name = engine or get_engine()
     if not engine_name:
-        console.print("  [red]No engine configured.[/red] Run [bold]uv run vibe setup[/bold] first.")
+        console.print("  [red]No engine configured.[/red] Run [bold]uv run vape setup[/bold] first.")
         raise typer.Exit(1)
 
     manifest = _load_manifest(engine_name)
@@ -80,4 +80,4 @@ def download(
             size += lang.get("postInstallSize_mb", 0)
             size_str = f" (+{size}MB)" if size > 0 else ""
             console.print(f"  {lang['code']:8s} {lang['name']:25s} {status}{size_str}")
-        console.print(f"\n  Download with: [bold]uv run vibe download --language <code>[/bold]")
+        console.print(f"\n  Download with: [bold]uv run vape download --language <code>[/bold]")

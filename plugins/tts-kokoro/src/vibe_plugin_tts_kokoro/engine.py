@@ -11,7 +11,7 @@ import threading
 import numpy as np
 from kokoro import KPipeline
 
-from vibe.core import AudioChunk, TTSEngineBase
+from vape.core import AudioChunk, TTSEngineBase
 
 VOICE_LANG_MAP: dict[str, str] = {
     "a": "a", "b": "b", "e": "e", "f": "f",

@@ -14,7 +14,7 @@ from __future__ import annotations
 import importlib
 from importlib.metadata import entry_points
 
-from vibe.core import TTSEngineBase
+from vape.core import TTSEngineBase
 
 # Known plugins for fallback discovery
 _KNOWN_PLUGINS = [
