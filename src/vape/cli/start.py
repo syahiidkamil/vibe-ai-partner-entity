@@ -1,4 +1,4 @@
-"""Start the Vibe AI Partner server."""
+"""Start VAPE — TTS server + desktop avatar."""
 
 from __future__ import annotations
 
@@ -7,19 +7,21 @@ import platform
 import socket
 import subprocess
 import sys
+import threading
+import time
 from pathlib import Path
 from typing import Annotated
 
 import typer
 from rich.console import Console
 
-from vape.cli._config import get_port
+from vape.cli._config import get_port, read_config
+from vape.cli._paths import PLUGINS_DIR
 
 console = Console()
 
 
 def _is_port_in_use(port: int) -> bool:
-    """Check if a port is already in use."""
     try:
         with socket.create_connection(("localhost", port), timeout=1):
             return True
@@ -27,15 +29,20 @@ def _is_port_in_use(port: int) -> bool:
         return False
 
 
+def _wait_for_server(port: int, timeout: int = 30) -> bool:
+    """Wait for the server to be ready."""
+    for _ in range(timeout * 2):
+        if _is_port_in_use(port):
+            return True
+        time.sleep(0.5)
+    return False
+
+
 def _set_env_defaults() -> None:
-    """Set platform-specific environment variables."""
-    # PyTorch MPS fallback for macOS (reads from tts.plugins.kokoro config)
-    from vape.cli._config import read_config
     kokoro_config = read_config().get("tts", {}).get("plugins", {}).get("kokoro", {})
     if kokoro_config.get("pytorchMpsFallback", True) and "PYTORCH_ENABLE_MPS_FALLBACK" not in os.environ:
         os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
-    # macOS: espeak-ng library path
     if platform.system() == "Darwin" and "PHONEMIZER_ESPEAK_LIBRARY" not in os.environ:
         for lib_path in [
             "/opt/homebrew/lib/libespeak-ng.dylib",
@@ -46,12 +53,43 @@ def _set_env_defaults() -> None:
                 break
 
 
+def _launch_shell(shell_name: str, port: int) -> subprocess.Popen | None:
+    """Launch the desktop shell (Electron/Tauri) pointing to the server."""
+    import shutil
+
+    shell_dir = PLUGINS_DIR / f"shell-{shell_name}"
+    if not shell_dir.exists():
+        console.print(f"  [yellow]Shell '{shell_name}' not found[/yellow]")
+        return None
+
+    npm = shutil.which("npm")
+    npx = shutil.which("npx")
+
+    # Ensure node_modules
+    if npm and not (shell_dir / "node_modules").exists():
+        console.print(f"  Installing shell dependencies...")
+        subprocess.run([npm, "install"], cwd=str(shell_dir), capture_output=True, timeout=120)
+
+    if shell_name == "electron" and npx:
+        console.print(f"  Launching avatar desktop window...")
+        return subprocess.Popen(
+            [npx, "electron", str(shell_dir / "main.js"), "--port", str(port)],
+            cwd=str(shell_dir),
+            start_new_session=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+    console.print(f"  [yellow]Shell '{shell_name}' not yet supported[/yellow]")
+    return None
+
+
 def start(
     port: Annotated[int, typer.Option(help="Server port")] = 0,
     host: Annotated[str, typer.Option(help="Bind address")] = "0.0.0.0",
     daemon: Annotated[bool, typer.Option("--daemon", help="Run in background")] = False,
 ) -> None:
-    """Start TTS server + avatar (foreground by default)."""
+    """Start TTS server + desktop avatar."""
     if port == 0:
         port = get_port()
 
@@ -62,6 +100,9 @@ def start(
 
     _set_env_defaults()
 
+    config = read_config()
+    avatar_shell = config.get("avatar", {}).get("shell", "electron")
+
     if daemon:
         console.print(f"  Starting server in background on port {port}...")
         proc = subprocess.Popen(
@@ -71,17 +112,34 @@ def start(
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
-        # Write PID for stop command
         from vape.cli._paths import cache_dir
         pid_file = cache_dir() / "server.pid"
         pid_file.write_text(str(proc.pid))
         console.print(f"  [green]Server started (PID {proc.pid})[/green]")
-        console.print(f"  Avatar: http://localhost:{port}")
+
+        if _wait_for_server(port):
+            _launch_shell(avatar_shell, port)
         return
 
     console.print(f"  Starting VAPE on port {port}...")
-    console.print(f"  Avatar: http://localhost:{port}")
+
+    # Start server in background thread, launch shell after server is ready
+    avatar_proc = None
+
+    def _start_shell_when_ready():
+        nonlocal avatar_proc
+        if _wait_for_server(port):
+            avatar_proc = _launch_shell(avatar_shell, port)
+
+    shell_thread = threading.Thread(target=_start_shell_when_ready, daemon=True)
+    shell_thread.start()
+
+    console.print(f"  TTS server: http://localhost:{port}")
     console.print(f"  Press [bold]Ctrl+C[/bold] to stop.\n")
 
-    import uvicorn
-    uvicorn.run("vape.server.app:app", host=host, port=port)
+    try:
+        import uvicorn
+        uvicorn.run("vape.server.app:app", host=host, port=port)
+    finally:
+        if avatar_proc and avatar_proc.poll() is None:
+            avatar_proc.terminate()

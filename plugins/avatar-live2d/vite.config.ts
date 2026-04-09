@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { resolve } from "path";
 
 export default defineConfig({
   clearScreen: false,
@@ -6,7 +7,14 @@ export default defineConfig({
     port: 1420,
     strictPort: true,
     fs: {
-      allow: ["../../"],  // Allow serving model files from project root
+      allow: ["../../"],
+    },
+  },
+  resolve: {
+    alias: {
+      "@vibe-ai-partner/plugin-avatar-live2d": resolve(__dirname, "packages/plugin-avatar-live2d/src"),
+      "@vibe-ai-partner/core": resolve(__dirname, "packages/core/src"),
+      "@vibe-ai-partner/shared": resolve(__dirname, "packages/shared/src"),
     },
   },
   envPrefix: ["VITE_"],

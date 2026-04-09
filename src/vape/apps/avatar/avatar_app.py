@@ -153,9 +153,9 @@ class AvatarApp:
     def get_plugin(self, name: str) -> AvatarPlugin | None:
         return self._plugins.get(name)
 
-    def get_active(self, config_renderer: str | None = None) -> AvatarPlugin | None:
-        if config_renderer and config_renderer in self._plugins:
-            plugin = self._plugins[config_renderer]
+    def get_active(self, config_plugin: str | None = None) -> AvatarPlugin | None:
+        if config_plugin and config_plugin in self._plugins:
+            plugin = self._plugins[config_plugin]
             if plugin.is_ready:
                 return plugin
         for plugin in self._plugins.values():
@@ -179,8 +179,8 @@ class AvatarApp:
             console.print(f"  [green]✓ {plugin.display_name} built[/green]")
         return success
 
-    def build_active(self, config_renderer: str | None = None) -> bool:
-        name = config_renderer or next(iter(self._plugins), None)
+    def build_active(self, config_plugin: str | None = None) -> bool:
+        name = config_plugin or next(iter(self._plugins), None)
         if not name:
             return False
         return self.build_plugin(name)
@@ -193,17 +193,17 @@ class AvatarApp:
         plugins = sorted(self._plugins.values(), key=lambda p: p.order)
         return [p.to_dict() for p in plugins]
 
-    def get_static_dir(self, config_renderer: str | None = None) -> Path | None:
-        plugin = self.get_active(config_renderer)
+    def get_static_dir(self, config_plugin: str | None = None) -> Path | None:
+        plugin = self.get_active(config_plugin)
         if plugin and plugin.is_ready:
             return plugin.dist_dir
         return None
 
     # ─── Interface Contract System ────────────────────────────
 
-    def generate_interface(self, config_renderer: str | None = None, model_id: str | None = None) -> dict | None:
+    def generate_interface(self, config_plugin: str | None = None, model_id: str | None = None) -> dict | None:
         """Generate merged interface from plugin.json + capabilities.json."""
-        plugin = self.get_active(config_renderer)
+        plugin = self.get_active(config_plugin)
         if not plugin:
             self._interface = None
             return None
@@ -263,3 +263,52 @@ class AvatarApp:
             return aliases[action_name]  # None means "can't do this"
 
         return action_name  # Not in alias map — pass through
+
+    # ─── Shell System ─────────────────────────────────────────
+
+    def discover_shells(self) -> list[dict]:
+        """Discover shell plugins (plugins/shell-*/)."""
+        shells = []
+        for shell_dir in sorted(self._plugins_dir.glob("shell-*")):
+            manifest_path = shell_dir / "plugin.json"
+            if not manifest_path.exists():
+                continue
+            try:
+                data = json.loads(manifest_path.read_text())
+                if data.get("category") != "shell":
+                    continue
+                data["_dir"] = str(shell_dir)
+                shells.append(data)
+            except (json.JSONDecodeError, KeyError):
+                pass
+        shells.sort(key=lambda s: s.get("order", 99))
+        return shells
+
+    def launch_shell(self, shell_name: str, avatar_dist: Path) -> subprocess.Popen | None:
+        """Launch a shell plugin with the given avatar dist path."""
+        shell_dir = self._plugins_dir / f"shell-{shell_name}"
+        manifest_path = shell_dir / "plugin.json"
+        if not manifest_path.exists():
+            console.print(f"  [yellow]Shell '{shell_name}' not found[/yellow]")
+            return None
+
+        npm = shutil.which("npm")
+        npx = shutil.which("npx")
+
+        # Ensure node_modules
+        if npm and not (shell_dir / "node_modules").exists():
+            console.print(f"  Installing shell dependencies...")
+            subprocess.run([npm, "install"], cwd=str(shell_dir), capture_output=True, timeout=120)
+
+        if shell_name == "electron" and npx:
+            console.print(f"  Launching avatar desktop window...")
+            return subprocess.Popen(
+                [npx, "electron", str(shell_dir / "main.js"), "--dist", str(avatar_dist)],
+                cwd=str(shell_dir),
+                start_new_session=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+
+        console.print(f"  [yellow]Shell '{shell_name}' not yet supported[/yellow]")
+        return None
