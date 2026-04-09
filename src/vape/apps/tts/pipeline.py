@@ -58,5 +58,5 @@ class TTSPipeline:
             data_b64 = base64.b64encode(pcm_int16.tobytes()).decode("ascii")
             await self._on_audio_chunk(data_b64, chunk.sample_rate, chunk.is_last)
 
-        # Play locally with amplitude broadcasting
-        await self._player.play_chunks(chunks, self._on_amplitude)
+        # Broadcast amplitude for lip sync (without local playback)
+        await self._player.broadcast_amplitude(chunks, self._on_amplitude)
