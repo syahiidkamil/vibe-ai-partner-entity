@@ -1,0 +1,8 @@
+{
+  "name": "electron",
+  "displayName": "Electron Shell",
+  "description": "Desktop window via Electron — transparent, always-on-top, works on macOS/Windows/Linux",
+  "tag": "Default",
+  "category": "shell",
+  "order": 1
+}

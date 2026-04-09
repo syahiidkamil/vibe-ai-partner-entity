@@ -24,6 +24,10 @@ __pycache__/
 *.pyc
 .venv/
 
+# Tauri build artifacts
+**/src-tauri/target/
+**/src-tauri/gen/
+
 # Runtime
 .tts-server.pid
 .avatar-app.pid

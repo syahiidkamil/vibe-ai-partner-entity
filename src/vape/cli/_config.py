@@ -40,9 +40,9 @@ def get_port() -> int:
     return read_config().get("server", {}).get("port", 5111)
 
 
-def get_avatar_renderer() -> str | None:
+def get_avatar_plugin() -> str | None:
     """Get the configured avatar renderer."""
-    return read_config().get("avatar", {}).get("renderer")
+    return read_config().get("avatar", {}).get("plugin")
 
 
 def get_vocal_mode() -> str:

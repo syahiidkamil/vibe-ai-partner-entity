@@ -183,19 +183,15 @@ async def lifespan(app: FastAPI):
 
     # Discover avatar plugins and mount the active one
     avatar = AvatarApp(ROOT_DIR / "plugins")
-    config_renderer = None
+    config_plugin = None
     try:
         config = json.loads((ROOT_DIR / "config.json").read_text())
-        config_renderer = config.get("avatar", {}).get("renderer")
+        config_plugin = config.get("avatar", {}).get("plugin")
     except (FileNotFoundError, json.JSONDecodeError):
         pass
 
     # Generate interface contract (expression aliases, capabilities)
-    avatar.generate_interface(config_renderer)
-
-    avatar_dir = avatar.get_static_dir(config_renderer)
-    if avatar_dir and avatar_dir.is_dir():
-        app.mount("/", StaticFiles(directory=str(avatar_dir), html=True), name="avatar")
+    avatar.generate_interface(config_plugin)
 
     yield
 
@@ -344,3 +340,20 @@ async def ws_audio(ws: WebSocket):
         manager.disconnect_audio(ws)
 
 
+# ═══════════════════════════════════════════════════════════════
+# Static Avatar Files (must be last — after all API/WS routes)
+# ═══════════════════════════════════════════════════════════════
+
+def _mount_avatar() -> None:
+    """Mount avatar static files at module load time."""
+    _avatar_app = AvatarApp(ROOT_DIR / "plugins")
+    try:
+        _config = json.loads((ROOT_DIR / "config.json").read_text())
+        _renderer = _config.get("avatar", {}).get("plugin")
+    except (FileNotFoundError, json.JSONDecodeError):
+        _renderer = None
+    _dir = _avatar_app.get_static_dir(_renderer)
+    if _dir and _dir.is_dir():
+        app.mount("/", StaticFiles(directory=str(_dir), html=True), name="avatar")
+
+_mount_avatar()

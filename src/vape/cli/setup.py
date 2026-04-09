@@ -135,6 +135,64 @@ def _select_avatar(avatar_app, current: str | None) -> dict | None:
     return plugins[choice - 1]
 
 
+def _select_shell(avatar_app, current: str | None) -> dict | None:
+    """Display shell menu, return selected shell dict."""
+    shells = avatar_app.discover_shells()
+    if not shells:
+        return None
+
+    console.print("\n  [bold]Select Desktop Shell:[/bold]\n")
+    for i, s in enumerate(shells, 1):
+        tag = f" [green]({s.get('tag', '')})[/green]" if s.get("tag") else ""
+        current_mark = " [yellow]<- current[/yellow]" if s["name"] == current else ""
+        console.print(f"  [bold]{i}.[/bold] {s['displayName']}{tag}{current_mark}")
+        console.print(f"     {s['description']}")
+        console.print()
+
+    choice = IntPrompt.ask("  Enter choice", default=1)
+    if choice < 1 or choice > len(shells):
+        choice = 1
+    return shells[choice - 1]
+
+
+def _build_tauri(avatar_name: str) -> None:
+    """Build the Tauri native binary for the avatar plugin."""
+    import shutil
+
+    plugin_dir = PLUGINS_DIR / f"avatar-{avatar_name}"
+    tauri_dir = plugin_dir / "src-tauri"
+    if not tauri_dir.exists():
+        return
+
+    # Check if already built
+    from vape.cli.start import _find_tauri_binary
+    if _find_tauri_binary(plugin_dir):
+        console.print("  [dim]✓ Avatar native binary already built[/dim]")
+        return
+
+    npx = shutil.which("npx")
+    if not npx:
+        console.print("  [yellow]npx not found — skipping native avatar build[/yellow]")
+        return
+
+    # Ensure node_modules
+    npm = shutil.which("npm")
+    if npm and not (plugin_dir / "node_modules").exists():
+        console.print("  Installing avatar dependencies...")
+        subprocess.run([npm, "install"], cwd=str(plugin_dir), capture_output=True, timeout=120)
+
+    console.print("  Building avatar native binary (compiling Rust — this takes a few minutes)...")
+    result = subprocess.run(
+        [npx, "tauri", "build"],
+        cwd=str(plugin_dir),
+        timeout=600,
+    )
+    if result.returncode == 0:
+        console.print("  [green]✓ Avatar native binary built[/green]")
+    else:
+        console.print("  [yellow]Avatar native build failed — will use dev mode instead[/yellow]")
+
+
 def _download_language_pack(lang: dict) -> None:
     """Download models and run postInstall for a language."""
     console.print(f"\n  Downloading {lang['name']} support...")
@@ -209,16 +267,22 @@ def setup() -> None:
     # Step 7: Avatar selection
     from vape.apps.avatar import AvatarApp
     avatar_app = AvatarApp(PLUGINS_DIR)
-    avatar_manifest = _select_avatar(avatar_app, read_config().get("avatar", {}).get("renderer"))
+    avatar_manifest = _select_avatar(avatar_app, read_config().get("avatar", {}).get("plugin"))
 
-    # Step 8: Build avatar
+    # Step 8: Shell selection
+    shell_manifest = _select_shell(avatar_app, read_config().get("avatar", {}).get("shell"))
+
+    # Step 9: Build avatar
     if avatar_manifest:
         avatar_app.build_plugin(avatar_manifest["name"])
 
-    # Step 9: Save config
+    # Step 10: Save config
     write_config({
         "tts": {"engine": manifest["name"]},
-        "avatar": {"renderer": avatar_manifest["name"] if avatar_manifest else "live2d"},
+        "avatar": {
+            "plugin": avatar_manifest["name"] if avatar_manifest else "live2d",
+            "shell": shell_manifest["name"] if shell_manifest else "electron",
+        },
     })
 
     # Done
