@@ -1,23 +1,24 @@
 {
   "name": "live2d",
   "displayName": "Live2D Avatar",
-  "description": "Anime-style Live2D Cubism avatar with PixiJS renderer — 13 feelings, 12 expressions",
+  "description": "Anime-style Live2D Cubism avatar with PixiJS — 13 feelings, 12 expressions, physics",
   "tag": "Default",
   "category": "avatar",
   "renderer": "live2d",
   "distDir": "dist",
+  "order": 1,
   "models": [
     {
       "id": "shizuku",
       "name": "Shizuku",
       "description": "Anime character with full expression set",
-      "path": "models/live2d/shizuku"
+      "path": "models/live2d/shizuku",
+      "default": true
     }
   ],
-  "features": {
-    "lipSync": true,
+  "interface": {
     "feelings": true,
-    "expressions": true,
+    "selfExpressions": true,
     "physics": true
   },
   "connection": {

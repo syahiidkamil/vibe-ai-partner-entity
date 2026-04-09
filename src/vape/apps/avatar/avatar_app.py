@@ -1,11 +1,13 @@
 """
 AvatarApp — Plugin-agnostic avatar facade.
 
-Discovers avatar plugins from plugins/avatar-*/ directories.
-Each plugin has source code (package.json + src/) that gets built
-automatically during setup via npm install && npm run build.
+Discovers avatar plugins, builds them via npm, generates a merged
+interface that the server uses for expression resolution.
 
-The user never runs npm commands — the CLI handles it.
+Three-layer interface contract:
+  Default:  lipSync (amplitude), ttsState (speaking/idle) — always available
+  Plugin:   what this renderer type supports (feelings, expressions, physics)
+  Model:    what this specific model can do (feeling list, expression aliases)
 """
 
 from __future__ import annotations
@@ -13,6 +15,7 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 from rich.console import Console
@@ -29,7 +32,8 @@ class AvatarPlugin:
         self.description: str = manifest["description"]
         self.tag: str = manifest.get("tag", "")
         self.renderer: str = manifest["renderer"]
-        self.features: dict = manifest.get("features", {})
+        self.order: int = manifest.get("order", 99)
+        self.interface: dict = manifest.get("interface") or manifest.get("features", {})
         self.models: list[dict] = manifest.get("models", [])
         self._plugin_dir = plugin_dir
         self._dist_dir_name = manifest.get("distDir", "dist")
@@ -40,54 +44,66 @@ class AvatarPlugin:
 
     @property
     def dist_dir(self) -> Path:
-        """Path to the built static files."""
         return self._plugin_dir / self._dist_dir_name
 
     @property
     def has_source(self) -> bool:
-        """Check if this plugin has buildable source code."""
         return (self._plugin_dir / "package.json").exists()
 
     @property
     def is_built(self) -> bool:
-        """Check if the plugin has been built (dist/index.html exists)."""
         return (self.dist_dir / "index.html").exists()
 
     @property
     def is_ready(self) -> bool:
-        """Check if the plugin can be served."""
         return self.is_built
 
+    @property
+    def default_model(self) -> dict | None:
+        for m in self.models:
+            if m.get("default"):
+                return m
+        return self.models[0] if self.models else None
+
+    def load_model_capabilities(self, model_id: str | None = None) -> dict | None:
+        """Load capabilities.json for a specific model (or default)."""
+        model = None
+        if model_id:
+            model = next((m for m in self.models if m["id"] == model_id), None)
+        if not model:
+            model = self.default_model
+        if not model:
+            return None
+
+        caps_path = self.dist_dir / model["path"] / "capabilities.json"
+        if not caps_path.exists():
+            return None
+        try:
+            return json.loads(caps_path.read_text())
+        except (json.JSONDecodeError, OSError):
+            return None
+
     def build(self) -> bool:
-        """Build this plugin via npm install && npm run build. Returns success."""
+        """Build this plugin via npm install && npm run build."""
         if not self.has_source:
             return False
 
-        node = shutil.which("node")
         npm = shutil.which("npm")
-        if not node or not npm:
+        if not npm:
             return False
 
         try:
-            # npm install
             result = subprocess.run(
-                [npm, "install"],
-                cwd=str(self._plugin_dir),
-                capture_output=True,
-                text=True,
-                timeout=120,
+                [npm, "install"], cwd=str(self._plugin_dir),
+                capture_output=True, text=True, timeout=120,
             )
             if result.returncode != 0:
                 console.print(f"  [red]npm install failed for {self.name}[/red]")
                 return False
 
-            # npm run build
             result = subprocess.run(
-                [npm, "run", "build"],
-                cwd=str(self._plugin_dir),
-                capture_output=True,
-                text=True,
-                timeout=120,
+                [npm, "run", "build"], cwd=str(self._plugin_dir),
+                capture_output=True, text=True, timeout=120,
             )
             if result.returncode != 0:
                 console.print(f"  [red]npm run build failed for {self.name}[/red]")
@@ -104,7 +120,7 @@ class AvatarPlugin:
             "displayName": self.display_name,
             "description": self.description,
             "renderer": self.renderer,
-            "features": self.features,
+            "interface": self.interface,
             "models": self.models,
             "ready": self.is_ready,
             "hasSource": self.has_source,
@@ -112,15 +128,15 @@ class AvatarPlugin:
 
 
 class AvatarApp:
-    """Plugin-agnostic avatar facade. Discovers and manages avatar plugins."""
+    """Plugin-agnostic avatar facade. Discovers, builds, and manages avatar plugins."""
 
     def __init__(self, plugins_dir: Path) -> None:
         self._plugins_dir = plugins_dir
         self._plugins: dict[str, AvatarPlugin] = {}
+        self._interface: dict | None = None
         self._discover()
 
     def _discover(self) -> None:
-        """Discover avatar plugins from plugins/avatar-*/ directories."""
         for plugin_dir in sorted(self._plugins_dir.glob("avatar-*")):
             manifest_path = plugin_dir / "plugin.json"
             if not manifest_path.exists():
@@ -135,24 +151,19 @@ class AvatarApp:
                 pass
 
     def get_plugin(self, name: str) -> AvatarPlugin | None:
-        """Get a specific avatar plugin by name."""
         return self._plugins.get(name)
 
     def get_active(self, config_renderer: str | None = None) -> AvatarPlugin | None:
-        """Get the active avatar plugin based on config. Falls back to first ready plugin."""
         if config_renderer and config_renderer in self._plugins:
             plugin = self._plugins[config_renderer]
             if plugin.is_ready:
                 return plugin
-
-        # Fallback: first ready plugin
         for plugin in self._plugins.values():
             if plugin.is_ready:
                 return plugin
         return None
 
     def build_plugin(self, name: str) -> bool:
-        """Build a specific avatar plugin. Returns success."""
         plugin = self._plugins.get(name)
         if not plugin:
             return False
@@ -169,19 +180,86 @@ class AvatarApp:
         return success
 
     def build_active(self, config_renderer: str | None = None) -> bool:
-        """Build the active avatar plugin if not already built."""
         name = config_renderer or next(iter(self._plugins), None)
         if not name:
             return False
         return self.build_plugin(name)
 
     def list_plugins(self) -> list[dict]:
-        """List all discovered avatar plugins."""
         return [p.to_dict() for p in self._plugins.values()]
 
+    def list_plugins_sorted(self) -> list[dict]:
+        """List plugins sorted by order field."""
+        plugins = sorted(self._plugins.values(), key=lambda p: p.order)
+        return [p.to_dict() for p in plugins]
+
     def get_static_dir(self, config_renderer: str | None = None) -> Path | None:
-        """Get the static files directory for the active avatar plugin."""
         plugin = self.get_active(config_renderer)
         if plugin and plugin.is_ready:
             return plugin.dist_dir
         return None
+
+    # ─── Interface Contract System ────────────────────────────
+
+    def generate_interface(self, config_renderer: str | None = None, model_id: str | None = None) -> dict | None:
+        """Generate merged interface from plugin.json + capabilities.json."""
+        plugin = self.get_active(config_renderer)
+        if not plugin:
+            self._interface = None
+            return None
+
+        model = None
+        if model_id:
+            model = next((m for m in plugin.models if m["id"] == model_id), None)
+        if not model:
+            model = plugin.default_model
+
+        caps = plugin.load_model_capabilities(model["id"] if model else None)
+
+        interface: dict = {
+            "version": "1.0",
+            "generatedAt": datetime.now(timezone.utc).isoformat(),
+            "default": {
+                "lipSync": {"method": "rms", "range": [0, 1]},
+                "ttsState": {"modes": ["speaking", "idle"]},
+            },
+            "plugin": {
+                "name": plugin.name,
+                "displayName": plugin.display_name,
+                "renderer": plugin.renderer,
+                "supports": plugin.interface,
+            },
+            "model": None,
+        }
+
+        if caps and model:
+            interface["model"] = {
+                "id": model["id"],
+                "name": model.get("name", model["id"]),
+                "feelings": [k for k, v in caps.get("feelings", {}).items() if v is not None],
+                "selfExpressions": list(caps.get("selfExpressions", {}).keys()),
+                "expressionAliases": caps.get("expressionAliases", {}),
+                "lipSync": caps.get("lipSync", {}),
+            }
+
+        self._interface = interface
+        return interface
+
+    def get_interface(self) -> dict | None:
+        """Return the current interface (generate if not yet done)."""
+        return self._interface
+
+    def resolve_action(self, action_name: str) -> str | None:
+        """Translate system expression trigger to model self-expression.
+
+        Returns model expression name, or None if unsupported.
+        Falls through to original name if no alias mapping exists.
+        """
+        if not self._interface or not self._interface.get("model"):
+            return action_name
+
+        aliases = self._interface["model"].get("expressionAliases", {})
+        if action_name in aliases:
+            return aliases[action_name]  # None means "can't do this"
+
+        return action_name  # Not in alias map — pass through

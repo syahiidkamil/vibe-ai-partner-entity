@@ -39,5 +39,22 @@
     "method": "rms",
     "parameter": "PARAM_MOUTH_OPEN_Y",
     "range": [0, 1]
+  },
+
+  "expressionAliases": {
+    "celebrate": "celebrate",
+    "cry": null,
+    "sigh": "sweatDrop",
+    "head-tilt": "headTilt",
+    "fist-pump": "starryEyes",
+    "tremble": null,
+    "bounce": "giggle",
+    "nod": "nod",
+    "yawn": null,
+    "facepalm": "sweatDrop",
+    "puff-cheeks": null,
+    "cover-face": null,
+    "gasp": "surprisedGasp",
+    "wave": "wave"
   }
 }

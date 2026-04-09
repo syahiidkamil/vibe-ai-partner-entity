@@ -166,6 +166,12 @@ async def _broadcast_amplitude(value: float) -> None:
 async def _broadcast_audio_chunk(data_b64: str, sample_rate: int, is_last: bool) -> None:
     await manager.broadcast_audio({"type": "audio_chunk", "data": data_b64, "sampleRate": sample_rate, "isLast": is_last})
 
+async def _broadcast_action(name: str) -> None:
+    """Resolve system expression trigger via avatar interface, then broadcast."""
+    resolved = avatar.resolve_action(name) if avatar else name
+    if resolved is not None:
+        await manager.broadcast_status({"type": "action", "name": resolved})
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -183,6 +189,9 @@ async def lifespan(app: FastAPI):
         config_renderer = config.get("avatar", {}).get("renderer")
     except (FileNotFoundError, json.JSONDecodeError):
         pass
+
+    # Generate interface contract (expression aliases, capabilities)
+    avatar.generate_interface(config_renderer)
 
     avatar_dir = avatar.get_static_dir(config_renderer)
     if avatar_dir and avatar_dir.is_dir():
@@ -217,14 +226,14 @@ async def feeling(req: FeelingRequest):
 
 @app.post("/api/action")
 async def action(req: ActionRequest):
-    await manager.broadcast_status({"type": "action", "name": req.name})
+    await _broadcast_action(req.name)
     return {"status": "ok"}
 
 @app.post("/api/state")
 async def adjust_state(req: StateAdjustRequest):
     result = state_mgr.adjust([(adj.state, adj.delta) for adj in req.adjustments])
     for expr in result["expressionsTriggered"]:
-        await manager.broadcast_status({"type": "action", "name": expr})
+        await _broadcast_action(expr)
     return result
 
 @app.post("/api/hook")
@@ -247,10 +256,10 @@ async def hook(event: HookEvent):
     result = state_mgr.adjust(adjustments)
 
     for expr in result["expressionsTriggered"]:
-        await manager.broadcast_status({"type": "action", "name": expr})
+        await _broadcast_action(expr)
 
     if name == "SessionStart":
-        await manager.broadcast_status({"type": "action", "name": "wave"})
+        await _broadcast_action("wave")
 
     if name == "Stop":
         sentiment = event.sentiment
@@ -261,10 +270,10 @@ async def hook(event: HookEvent):
             intensity = sentiment.get("intensity", 30)
             sent_result = state_mgr.apply_sentiment(feeling_name, intensity)
             for expr in sent_result["expressionsTriggered"]:
-                await manager.broadcast_status({"type": "action", "name": expr})
+                await _broadcast_action(expr)
             action_name = sentiment.get("action", "none")
             if action_name and action_name != "none":
-                await manager.broadcast_status({"type": "action", "name": action_name})
+                await _broadcast_action(action_name)
             if tts and _should_speak(sentiment):
                 asyncio.create_task(tts.speak(sentiment["speak"]))
             result = sent_result
@@ -297,6 +306,13 @@ async def health():
         "engine": tts.active_engine_name if tts else "none",
         "uptime": round(time.time() - start_time),
     }
+
+@app.get("/api/avatar/interface")
+async def avatar_interface():
+    if not avatar:
+        return {"error": "No avatar loaded"}
+    iface = avatar.get_interface()
+    return iface or {"error": "No interface available"}
 
 @app.get("/api/voices")
 async def voices():
