@@ -1,0 +1,78 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "shizuku.moc3",
+		"Textures": [
+			"shizuku.1024/texture_00.png",
+			"shizuku.1024/texture_01.png",
+			"shizuku.1024/texture_02.png",
+			"shizuku.1024/texture_03.png",
+			"shizuku.1024/texture_04.png"
+		],
+		"Physics": "shizuku.physics3.json",
+		"Pose": "shizuku.pose3.json",
+		"DisplayInfo": "shizuku.cdi3.json",
+		"Expressions": [
+			{ "Name": "Normal", "File": "internal-feeling/Normal.exp3.json" },
+			{ "Name": "Happy", "File": "internal-feeling/Happy.exp3.json" },
+			{ "Name": "Sad", "File": "internal-feeling/Sad.exp3.json" },
+			{ "Name": "Angry", "File": "internal-feeling/Angry.exp3.json" },
+			{ "Name": "Frustrated", "File": "internal-feeling/Frustrated.exp3.json" },
+			{ "Name": "Curious", "File": "internal-feeling/Curious.exp3.json" },
+			{ "Name": "Proud", "File": "internal-feeling/Proud.exp3.json" },
+			{ "Name": "Anxious", "File": "internal-feeling/Anxious.exp3.json" },
+			{ "Name": "Excited", "File": "internal-feeling/Excited.exp3.json" },
+			{ "Name": "Calm", "File": "internal-feeling/Calm.exp3.json" },
+			{ "Name": "Bored", "File": "internal-feeling/Bored.exp3.json" },
+			{ "Name": "Guilty", "File": "internal-feeling/Guilty.exp3.json" },
+			{ "Name": "Blushing", "File": "internal-feeling/Blushing.exp3.json" },
+			{ "Name": "Surprised", "File": "internal-feeling/Surprised.exp3.json" }
+		],
+		"Motions": {
+			"FlickUp": [
+				{ "File": "motion/01.motion3.json" }
+			],
+			"Tap": [
+				{ "File": "motion/02.motion3.json" }
+			],
+			"Flick3": [
+				{ "File": "motion/03.motion3.json" }
+			],
+			"Idle": [
+				{ "File": "motion/05.motion3.json" }
+			],
+			"SelfExpression": [
+				{ "File": "self-expression/Nodding.motion3.json" },
+				{ "File": "self-expression/HeadShake.motion3.json" },
+				{ "File": "self-expression/HeadTilt.motion3.json" },
+				{ "File": "self-expression/Laughing.motion3.json" },
+				{ "File": "self-expression/Giggling.motion3.json" },
+				{ "File": "self-expression/SurprisedGasp.motion3.json" },
+				{ "File": "self-expression/Thinking.motion3.json" },
+				{ "File": "self-expression/Celebrating.motion3.json" },
+				{ "File": "self-expression/SweatDrop.motion3.json" },
+				{ "File": "self-expression/Waving.motion3.json" },
+				{ "File": "self-expression/Bowing.motion3.json" },
+				{ "File": "self-expression/StarryEyes.motion3.json" }
+			]
+		}
+	},
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": [
+				"PARAM_EYE_L_OPEN",
+				"PARAM_EYE_R_OPEN"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"PARAM_MOUTH_OPEN_Y"
+			]
+		}
+	],
+	"HitAreas": []
+}
