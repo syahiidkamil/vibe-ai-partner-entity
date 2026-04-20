@@ -3,7 +3,7 @@
     "port": 5111
   },
   "tts": {
-    "engine": "kokoro-onnx",
+    "engine": "kokoro",
     "voice": "af_heart",
     "speed": 1,
     "plugins": {
@@ -13,7 +13,7 @@
     }
   },
   "avatar": {
-    "plugin": "threejs-electron",
+    "plugin": "live2d-electron",
     "plugins": {
       "live2d-electron": {
         "model": "shizuku"
