@@ -40,15 +40,16 @@ class TTSApp:
         for name, engine in engines.items():
             registry.register(name, engine)
 
-        # Read preferred engine from config
-        preferred = _read_preferred_engine(config_path)
+        # Read preferred engine + voice from config
+        preferred, voice = _read_tts_config(config_path)
         available = registry.list()
 
-        # Activate preferred or first available
+        # Activate preferred or first available, passing voice so engine can
+        # pre-warm the correct language pipeline during initialize()
         if preferred and preferred in available:
-            registry.switch(preferred)
+            registry.switch(preferred, voice=voice)
         elif available:
-            registry.switch(available[0])
+            registry.switch(available[0], voice=voice)
 
         return cls(registry, on_audio)
 
@@ -93,10 +94,11 @@ class TTSApp:
             active.stop()
 
 
-def _read_preferred_engine(config_path: Path) -> str | None:
-    """Read preferred TTS engine from config.json."""
+def _read_tts_config(config_path: Path) -> tuple[str | None, str | None]:
+    """Read preferred TTS engine and voice from config.json."""
     try:
         config = json.loads(config_path.read_text())
-        return config.get("tts", {}).get("engine")
+        tts = config.get("tts", {})
+        return tts.get("engine"), tts.get("voice")
     except (FileNotFoundError, json.JSONDecodeError):
-        return None
+        return None, None

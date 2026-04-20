@@ -131,6 +131,19 @@ class KokoroOnnxEngine(TTSEngineBase):
         voices_path = _download_if_missing(VOICES_FILE)
         self._kokoro = Kokoro(model_path, voices_path)
 
+        self._warmup()
+
+    def _warmup(self) -> None:
+        # First call to generate() pays for G2P import (misaki + espeak) plus
+        # the initial ONNX inference compile. Pay it once at startup so the
+        # first user-triggered speak is not delayed by ~5s.
+        try:
+            kokoro = self._get_kokoro(self._voice)
+            processed, is_phonemes = self._phonemize(".", self._voice)
+            kokoro.create(processed, voice=self._voice, speed=1.0, is_phonemes=is_phonemes)
+        except Exception:
+            pass
+
     def _get_kokoro(self, voice: str):
         """Return the correct Kokoro instance for the voice. Lazy-loads zh model."""
         if _lang_from_voice(voice) == "zh":

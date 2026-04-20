@@ -28,8 +28,12 @@ class EngineRegistry:
             return None
         return self._engines.get(self._active)
 
-    def switch(self, name: str) -> None:
-        """Switch the active engine. Raises KeyError if not registered."""
+    def switch(self, name: str, voice: str | None = None) -> None:
+        """Switch the active engine. Raises KeyError if not registered.
+
+        If voice is provided, it is set on the engine before initialize() so
+        warmup paths can use the correct language.
+        """
         if name not in self._engines:
             raise KeyError(f"Engine '{name}' not registered. Available: {list(self._engines.keys())}")
 
@@ -38,7 +42,10 @@ class EngineRegistry:
         if current:
             current.stop()
 
-        self._engines[name].initialize()
+        engine = self._engines[name]
+        if voice is not None:
+            engine.set_voice(voice)
+        engine.initialize()
         self._active = name
 
     def list(self) -> list[str]:
