@@ -37,3 +37,6 @@ src/vape/apps/avatar/interface.json
 
 # Entity state (changes at runtime)
 entity/state/current.json
+
+# User config (created by `vape setup`, varies per machine)
+config.json
