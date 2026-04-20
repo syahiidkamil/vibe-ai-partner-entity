@@ -11,8 +11,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import IntPrompt
 
-from vape.cli._paths import ROOT_DIR, PLUGINS_DIR
-from vape.cli._config import read_config, write_config
+from vape.cli._paths import ROOT_DIR, PLUGINS_DIR, CONFIG_PATH
+from vape.cli._config import read_config
 from vape.cli._prereqs import run_all_checks
 from vape.cli._progress import download_models
 
@@ -273,13 +273,17 @@ def setup() -> None:
     if avatar_manifest:
         avatar_app.build_plugin(avatar_manifest["name"])
 
-    # Step 9: Save config
-    write_config({
-        "tts": {"engine": manifest["name"]},
-        "avatar": {
-            "plugin": avatar_manifest["name"] if avatar_manifest else "live2d-electron",
-        },
-    })
+    # Step 9: Save config. Voice IDs are engine-specific, so clear the old
+    # voice when switching engines to avoid stale "voice X for engine Y" state.
+    cfg = read_config()
+    old_engine = cfg.get("tts", {}).get("engine")
+    cfg.setdefault("tts", {})["engine"] = manifest["name"]
+    if old_engine and old_engine != manifest["name"]:
+        cfg["tts"].pop("voice", None)
+    cfg.setdefault("avatar", {})["plugin"] = (
+        avatar_manifest["name"] if avatar_manifest else "live2d-electron"
+    )
+    CONFIG_PATH.write_text(json.dumps(cfg, indent=2) + "\n")
 
     # Done
     console.print(Panel(
