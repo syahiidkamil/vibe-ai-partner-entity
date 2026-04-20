@@ -39,6 +39,15 @@ class KittenEngine(TTSEngineBase):
     def initialize(self) -> None:
         if self._model is None:
             self._model = KittenModel(KITTEN_MODEL)
+        self._warmup()
+
+    def _warmup(self) -> None:
+        # First inference pays for ONNX session warmup. Pay it once at startup
+        # so the user's first speak is not delayed.
+        try:
+            self._model.generate(".", voice=self._voice)
+        except Exception:
+            pass
 
     def generate(self, text: str, voice: str | None = None, speed: float = 1.0) -> list[AudioChunk]:
         if self._model is None:

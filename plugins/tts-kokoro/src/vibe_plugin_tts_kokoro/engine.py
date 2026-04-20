@@ -99,7 +99,17 @@ class KokoroEngine(TTSEngineBase):
         self._stop_event = threading.Event()
 
     def initialize(self) -> None:
-        self._get_pipeline("a")
+        self._get_pipeline(self._lang_code_from_voice(self._voice))
+        self._warmup()
+
+    def _warmup(self) -> None:
+        # First generate() pays for PyTorch graph compile and any per-voice
+        # asset loading. Pay it once at startup so the user's first speak
+        # is not delayed.
+        try:
+            self.generate(".", voice=self._voice, speed=1.0)
+        except Exception:
+            pass
 
     def _get_pipeline(self, lang_code: str) -> KPipeline:
         with self._pipelines_lock:
