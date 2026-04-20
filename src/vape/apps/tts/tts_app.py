@@ -44,12 +44,21 @@ class TTSApp:
         preferred, voice = _read_tts_config(config_path)
         available = registry.list()
 
-        # Activate preferred or first available, passing voice so engine can
-        # pre-warm the correct language pipeline during initialize()
+        # Pick target engine. Voice from config only applies when the preferred
+        # engine is actually available AND the voice ID belongs to that engine.
         if preferred and preferred in available:
-            registry.switch(preferred, voice=voice)
+            valid_voice = _validate_voice(registry.get(preferred), voice, preferred)
+            registry.switch(preferred, voice=valid_voice)
         elif available:
-            registry.switch(available[0], voice=voice)
+            target = available[0]
+            if preferred:
+                print(
+                    f"[tts] WARNING: configured engine '{preferred}' is not installed; "
+                    f"falling back to '{target}'. Available: {available}"
+                )
+            registry.switch(target)
+        elif preferred:
+            print(f"[tts] WARNING: no TTS engine plugins installed (configured: '{preferred}')")
 
         return cls(registry, on_audio)
 
@@ -102,3 +111,17 @@ def _read_tts_config(config_path: Path) -> tuple[str | None, str | None]:
         return tts.get("engine"), tts.get("voice")
     except (FileNotFoundError, json.JSONDecodeError):
         return None, None
+
+
+def _validate_voice(engine, voice: str | None, engine_name: str) -> str | None:
+    """Return voice if it's a valid ID for the engine, else None (with warning)."""
+    if not voice or engine is None:
+        return None
+    voice_ids = {v["id"] for v in engine.get_voices()}
+    if voice in voice_ids:
+        return voice
+    print(
+        f"[tts] WARNING: configured voice '{voice}' is not available for engine "
+        f"'{engine_name}'; using engine default."
+    )
+    return None

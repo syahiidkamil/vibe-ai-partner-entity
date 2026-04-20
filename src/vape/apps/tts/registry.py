@@ -28,6 +28,10 @@ class EngineRegistry:
             return None
         return self._engines.get(self._active)
 
+    def get(self, name: str) -> TTSEngineBase | None:
+        """Return a registered engine by name without activating it."""
+        return self._engines.get(name)
+
     def switch(self, name: str, voice: str | None = None) -> None:
         """Switch the active engine. Raises KeyError if not registered.
 
