@@ -247,13 +247,15 @@
     avatarGroup.add(eyeGroup);
 
     // ─── Open mouth mesh (ellipse, hidden by default) ──
-    const openMouthShape = ellipseShape(140, 243, 10, 5);
+    // Center geometry at origin so scaling pivots from the mouth center
+    const openMouthShape = ellipseShape(0, 0, 10, 5);
     const openMouthGeo = new THREE.ExtrudeGeometry(openMouthShape, {
       depth: 1.5, bevelEnabled: true, bevelThickness: 0.3, bevelSize: 0.2, bevelSegments: 3, curveSegments: 24
     });
-    openMouthGeo.translate(offsetX, offsetY, 38);
+    openMouthGeo.translate(0, 0, 38);
     const openMouthMat = new THREE.MeshStandardMaterial({ color: 0xd4727e, roughness: 0.3, side: THREE.DoubleSide });
     const openMouthMesh = new THREE.Mesh(openMouthGeo, openMouthMat);
+    openMouthMesh.position.set(140 + offsetX, -243 + offsetY, 0);
     openMouthMesh.scale.y = 0.01;
     avatarGroup.add(openMouthMesh);
 
@@ -291,9 +293,8 @@
       for (const m of mouthMeshes) {
         m.visible = mouthOpenness < 0.05;
       }
-      // Only scale Y downward (open), keep X steady
       openMouthMesh.scale.y = Math.max(0.01, mouthOpenness * 1.2);
-      openMouthMesh.scale.x = 1;
+      openMouthMesh.scale.x = 1 + mouthOpenness * 0.15;
 
       renderer.render(scene, camera);
     }
