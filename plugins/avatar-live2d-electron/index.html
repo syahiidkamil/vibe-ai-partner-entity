@@ -124,6 +124,12 @@
     }
 
     // ─── Audio queue + lip sync via AnalyserNode ───────────
+    // Shizuku's idle motions keyframe PARAM_MOUTH_OPEN_Y, so writing the
+    // mouth value from a separate RAF loop loses the race — the motion
+    // overwrites it inside the model's update step. Instead, we compute
+    // smoothedMouth in RAF but apply it inside the 'beforeModelUpdate'
+    // event the library emits after motions/expressions/physics, just
+    // before the model renders. That's the only point where our value wins.
     let audioCtx = null;
     let analyser = null;
     let lipSyncActive = false;
@@ -152,9 +158,6 @@
         } else {
           smoothedMouth += (target - smoothedMouth) * 0.3;
         }
-        try {
-          model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
-        } catch {}
         requestAnimationFrame(update);
       }
       update();
@@ -163,9 +166,6 @@
     function stopLipSync() {
       lipSyncActive = false;
       smoothedMouth = 0;
-      if (model) {
-        try { model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', 0); } catch {}
-      }
     }
 
     function processQueue() {
@@ -267,6 +267,14 @@
         model.internalModel.eyeBlink = null;
         app.stage.addChild(model);
         model.motion('Idle', 0);
+
+        // Apply lipsync mouth value at the only point that wins the frame:
+        // after motions/expressions/physics have written params, just before
+        // the model is sent to render. Idle motions keyframe the mouth, so
+        // writing earlier loses the race.
+        model.internalModel.on('beforeModelUpdate', () => {
+          model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+        });
 
         connectStatusWS();
         connectAudioWS();
