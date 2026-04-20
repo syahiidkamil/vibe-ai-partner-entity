@@ -3,7 +3,7 @@
     "port": 5111
   },
   "tts": {
-    "engine": "kokoro",
+    "engine": "kitten",
     "voice": "af_heart",
     "speed": 1,
     "plugins": {
