@@ -48,6 +48,7 @@ function createWindow() {
     x,
     y,
     title: win.title || 'VAPE Avatar',
+    icon: path.join(__dirname, 'icon.png'),
     transparent: win.transparent !== false,
     frame: win.frame === true,
     alwaysOnTop: win.alwaysOnTop !== false,
@@ -114,6 +115,10 @@ function createTray() {
 }
 
 app.whenReady().then(() => {
+  // Dock icon for macOS dev runs (the window itself is frameless + skipTaskbar).
+  if (process.platform === 'darwin' && app.dock) {
+    app.dock.setIcon(path.join(__dirname, 'icon.png'));
+  }
   createWindow();
   createTray();
 });
