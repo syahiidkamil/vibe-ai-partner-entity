@@ -68,7 +68,11 @@ function createWindow() {
   // (drag strip + close button) via window.vapeShell.setIgnoreMouse(false).
   mainWindow.setIgnoreMouseEvents(true, { forward: true });
   mainWindow.loadURL(`http://localhost:${port}/`);
+  // Float above everything, including other apps in native fullscreen:
+  // `visibleOnFullScreen` adds the NSWindow FullScreenAuxiliary collection
+  // behavior, and the screen-saver level keeps us above fullscreen content.
   mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+  mainWindow.setAlwaysOnTop(true, 'screen-saver');
 
   // Force a clean repaint when the window loses focus, so a transparent
   // always-on-top window never shows a stale frame on macOS.
@@ -115,9 +119,12 @@ function createTray() {
 }
 
 app.whenReady().then(() => {
-  // Dock icon for macOS dev runs (the window itself is frameless + skipTaskbar).
-  if (process.platform === 'darwin' && app.dock) {
-    app.dock.setIcon(path.join(__dirname, 'icon.png'));
+  // Run as a Dock-less "agent" so the window can float over OTHER apps' native
+  // fullscreen Spaces (only agent apps are allowed to). Drops the Dock tile —
+  // expected for a desktop pet. (The BrowserWindow `icon` still applies on
+  // Windows/Linux.)
+  if (process.platform === 'darwin') {
+    app.setActivationPolicy('accessory');
   }
   createWindow();
   createTray();
