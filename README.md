@@ -140,24 +140,26 @@ run in any shell — Electron, Tauri, or a plain browser — with no Node access
 ## Project Structure
 
 ```
-src/vape/
-  cli/              CLI commands — setup, start, stop, speak, feeling, action
-  server/           FastAPI server — REST + WebSocket
-  apps/
-    tts/            TTS pipeline — engine plugins, sentence splitting, WAV generation
-    avatar/         Avatar plugin discovery + interface contracts
+vape/                       Project source root (import package: engine)
+  engine/                   Python package — `import engine`
+    cli/              CLI commands — setup, start, stop, speak, feeling, action
+    server/           FastAPI server — REST + WebSocket
+    apps/
+      tts/            TTS pipeline — engine plugins, sentence splitting, WAV generation
+      avatar/         Avatar plugin discovery + interface contracts
+  entity/                   The companion's persistent memory, soul, and runtime state
+  plugins/
+    renderers/              Avatar content (served as web pages)
+      avatar-live2d/        Live2D Cubism avatar (default)
+      avatar-threejs/       Three.js 3D chibi avatar
+      avatar-html/          Lightweight HTML/CSS avatar
+    shells/                 Native window hosts
+      electron/             Electron host (default)
+      tauri/                Tauri host (experimental, Rust)
+    tts-kokoro-onnx/        Kokoro ONNX engine plugin
+    tts-kokoro/             Kokoro PyTorch engine plugin
+    tts-kitten/             KittenTTS engine plugin
+  model-stocks/             Avatar model files (downloaded by setup, gitignored)
 
-plugins/
-  renderers/                Avatar content (served as web pages)
-    avatar-live2d/          Live2D Cubism avatar (default)
-    avatar-threejs/         Three.js 3D chibi avatar
-    avatar-html/            Lightweight HTML/CSS avatar
-  shells/                   Native window hosts
-    electron/               Electron host (default)
-    tauri/                  Tauri host (experimental, Rust)
-  tts-kokoro-onnx/          Kokoro ONNX engine plugin
-  tts-kokoro/               Kokoro PyTorch engine plugin
-  tts-kitten/               KittenTTS engine plugin
-
-config.json         User configuration (engine, voice, avatar renderer + shell)
+config.json                 User configuration (engine, voice, avatar renderer + shell)
 ```

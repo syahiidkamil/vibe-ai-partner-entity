@@ -1,8 +1,8 @@
 # Models (downloaded by setup, not stored in git)
-model-stocks/live2d/
-model-stocks/vrm/
-model-stocks/threejs/
-!model-stocks/README.md
+vape/model-stocks/live2d/
+vape/model-stocks/vrm/
+vape/model-stocks/threejs/
+!vape/model-stocks/README.md
 
 # Environment
 .env
@@ -33,10 +33,10 @@ __pycache__/
 .avatar-app.pid
 
 # Generated interface (rebuilt at startup)
-src/vape/apps/avatar/interface.json
+vape/engine/apps/avatar/interface.json
 
 # Entity state (changes at runtime)
-entity/state/current.json
+vape/entity/state/current.json
 
 # User config (created by `vape setup`, varies per machine)
 config.json
