@@ -1,0 +1,32 @@
+{
+  "name": "avatar-threejs",
+  "displayName": "Three.js Avatar",
+  "description": "3D chibi avatar with Three.js — feelings, lip sync, idle animation",
+  "tag": "",
+  "category": "avatar",
+  "renderer": "threejs",
+  "distDir": ".",
+  "order": 2,
+  "models": [],
+  "interface": {
+    "feelings": true,
+    "selfExpressions": false,
+    "physics": false
+  },
+  "window": {
+    "width": 200,
+    "height": 280,
+    "anchor": "bottom-right",
+    "margin": { "right": 20, "bottom": 20 },
+    "title": "VAPE Avatar (Three.js)",
+    "transparent": true,
+    "frame": false,
+    "alwaysOnTop": true,
+    "resizable": false
+  },
+  "connection": {
+    "wsStatus": "/ws/status",
+    "wsAudio": "/ws/audio",
+    "apiBase": "/api"
+  }
+}

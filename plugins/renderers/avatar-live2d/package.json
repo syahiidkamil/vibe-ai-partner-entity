@@ -1,0 +1,9 @@
+{
+  "name": "@vape/avatar-live2d",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "pixi.js": "^6.5.10",
+    "pixi-live2d-display": "^0.4.0"
+  }
+}

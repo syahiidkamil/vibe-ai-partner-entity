@@ -1,0 +1,32 @@
+{
+  "name": "avatar-html",
+  "displayName": "HTML Avatar",
+  "description": "Lightweight HTML/CSS avatar — no WebGL required, works everywhere",
+  "tag": "",
+  "category": "avatar",
+  "renderer": "html",
+  "distDir": ".",
+  "order": 4,
+  "models": [],
+  "interface": {
+    "feelings": true,
+    "selfExpressions": false,
+    "physics": false
+  },
+  "window": {
+    "width": 200,
+    "height": 260,
+    "anchor": "bottom-right",
+    "margin": { "right": 20, "bottom": 20 },
+    "title": "VAPE Avatar (HTML)",
+    "transparent": true,
+    "frame": false,
+    "alwaysOnTop": true,
+    "resizable": false
+  },
+  "connection": {
+    "wsStatus": "/ws/status",
+    "wsAudio": "/ws/audio",
+    "apiBase": "/api"
+  }
+}

@@ -40,9 +40,52 @@ def get_port() -> int:
     return read_config().get("server", {}).get("port", 5111)
 
 
+# Avatar selection — a running avatar is one renderer + one shell.
+DEFAULT_RENDERER = "avatar-live2d"
+DEFAULT_SHELL = "electron"
+
+# Every legacy avatar.plugin value setup.py ever wrote was "<renderer>-electron".
+LEGACY_PLUGIN_MAP = {
+    "live2d-electron": ("avatar-live2d", "electron"),
+    "threejs-electron": ("avatar-threejs", "electron"),
+    "html-electron": ("avatar-html", "electron"),
+}
+
+
+def get_avatar_selection() -> tuple[str, str]:
+    """Return (renderer, shell). New schema wins; legacy avatar.plugin is migrated in-memory."""
+    avatar = read_config().get("avatar", {})
+    renderer, shell = avatar.get("renderer"), avatar.get("shell")
+    if renderer:
+        return renderer, (shell or DEFAULT_SHELL)
+
+    legacy = avatar.get("plugin")  # e.g. "live2d-electron"
+    if legacy:
+        if legacy in LEGACY_PLUGIN_MAP:
+            return LEGACY_PLUGIN_MAP[legacy]
+        if "-" in legacy:
+            base, _, sh = legacy.rpartition("-")
+            renderer, shell = base, (sh or DEFAULT_SHELL)
+        else:
+            renderer, shell = legacy, DEFAULT_SHELL
+        return (renderer if renderer.startswith("avatar-") else f"avatar-{renderer}", shell)
+
+    return (DEFAULT_RENDERER, DEFAULT_SHELL)
+
+
+def get_avatar_renderer() -> str:
+    """Get the configured avatar renderer name (e.g. 'avatar-live2d')."""
+    return get_avatar_selection()[0]
+
+
+def get_avatar_shell() -> str:
+    """Get the configured shell name (e.g. 'electron')."""
+    return get_avatar_selection()[1]
+
+
 def get_avatar_plugin() -> str | None:
-    """Get the configured avatar renderer."""
-    return read_config().get("avatar", {}).get("plugin")
+    """Deprecated shim — returns the resolved renderer name."""
+    return get_avatar_selection()[0]
 
 
 def get_vocal_mode() -> str:

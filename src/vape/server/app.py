@@ -12,17 +12,20 @@ import json
 import os
 import signal
 import time
+import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from vape.apps.tts import TTSApp
 from vape.apps.avatar import AvatarApp
+from vape.cli._config import get_avatar_renderer
 from vape.server.sentiment import analyze_sentiment
 from vape.server.state_manager import StateManager
 
@@ -40,6 +43,8 @@ def _find_root() -> Path:
     return Path(__file__).resolve().parents[3]
 
 ROOT_DIR = _find_root()
+RENDERERS_DIR = ROOT_DIR / "plugins" / "renderers"
+SHELLS_DIR = ROOT_DIR / "plugins" / "shells"
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -160,8 +165,42 @@ avatar: AvatarApp | None = None
 start_time: float = 0.0
 
 
+# Audio is delivered over HTTP (not as a local file path) so any shell —
+# Electron, Tauri, or a plain browser — can play it same-origin. The TTS
+# pipeline writes a temp WAV; we register it under a token, broadcast the URL,
+# and serve + reap it here.
+# Generous TTL so a long multi-sentence utterance (clips play sequentially) is
+# never swept before the renderer reaches it in its play queue.
+_AUDIO_TTL = 600.0  # seconds before an unfetched clip is swept
+_audio_clips: dict[str, tuple[str, float]] = {}
+
+
+def _purge_audio_clips() -> None:
+    """Remove all registered temp WAVs (called on shutdown)."""
+    for path, _ in _audio_clips.values():
+        try:
+            os.remove(path)
+        except OSError:
+            pass
+    _audio_clips.clear()
+
+
+def _sweep_audio_clips() -> None:
+    now = time.time()
+    for name, (path, created) in list(_audio_clips.items()):
+        if now - created > _AUDIO_TTL:
+            _audio_clips.pop(name, None)
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+
+
 async def _broadcast_audio(wav_path: str, text: str, is_last: bool) -> None:
-    await manager.broadcast_audio({"type": "audio", "path": wav_path, "text": text, "isLast": is_last})
+    _sweep_audio_clips()
+    name = f"{uuid.uuid4().hex}.wav"
+    _audio_clips[name] = (wav_path, time.time())
+    await manager.broadcast_audio({"type": "audio", "url": f"/audio/{name}", "text": text, "isLast": is_last})
 
 async def _broadcast_action(name: str) -> None:
     """Resolve system expression trigger via avatar interface, then broadcast."""
@@ -178,23 +217,25 @@ async def lifespan(app: FastAPI):
     # Create TTS app via factory — discovers plugins, loads config, wires pipeline
     tts = TTSApp.create(ROOT_DIR / "config.json", _broadcast_audio)
 
-    # Discover avatar plugins and mount the active one
-    avatar = AvatarApp(ROOT_DIR / "plugins")
-    config_plugin = None
-    try:
-        config = json.loads((ROOT_DIR / "config.json").read_text())
-        config_plugin = config.get("avatar", {}).get("plugin")
-    except (FileNotFoundError, json.JSONDecodeError):
-        pass
+    # Discover avatar renderers + shells and resolve the active renderer
+    avatar = AvatarApp(RENDERERS_DIR, SHELLS_DIR)
+    config_renderer = get_avatar_renderer()
+    if avatar.get_active(config_renderer) is None:
+        print(
+            f"[avatar] configured renderer '{config_renderer}' is not available — "
+            f"interface/static serving disabled until it is built",
+            flush=True,
+        )
 
     # Generate interface contract (expression aliases, capabilities)
-    avatar.generate_interface(config_plugin)
+    avatar.generate_interface(config_renderer)
 
     yield
 
     # Cleanup
     if tts:
         tts.shutdown()
+    _purge_audio_clips()
 
 
 app = FastAPI(title="Vibe TTS Server", version="0.1.0", lifespan=lifespan)
@@ -312,6 +353,16 @@ async def voices():
         return {"voices": []}
     return {"voices": tts.get_voices()}
 
+@app.get("/audio/{name}")
+async def audio_clip(name: str):
+    """Serve a TTS clip by token (broadcast over /ws/audio as a URL)."""
+    entry = _audio_clips.get(name)
+    if not entry or not os.path.exists(entry[0]):
+        return Response(status_code=404)
+    # Refresh TTL on access so an actively-playing clip isn't swept mid-queue.
+    _audio_clips[name] = (entry[0], time.time())
+    return FileResponse(entry[0], media_type="audio/wav")
+
 
 # ═══════════════════════════════════════════════════════════════
 # WebSocket Endpoints
@@ -341,15 +392,17 @@ async def ws_audio(ws: WebSocket):
 # ═══════════════════════════════════════════════════════════════
 
 def _mount_avatar() -> None:
-    """Mount avatar static files at module load time."""
-    _avatar_app = AvatarApp(ROOT_DIR / "plugins")
-    try:
-        _config = json.loads((ROOT_DIR / "config.json").read_text())
-        _renderer = _config.get("avatar", {}).get("plugin")
-    except (FileNotFoundError, json.JSONDecodeError):
-        _renderer = None
+    """Serve the active renderer at / so any shell can load it over HTTP."""
+    _avatar_app = AvatarApp(RENDERERS_DIR)
+    _renderer = get_avatar_renderer()
     _dir = _avatar_app.get_static_dir(_renderer)
     if _dir and _dir.is_dir():
         app.mount("/", StaticFiles(directory=str(_dir), html=True), name="avatar")
+    else:
+        print(
+            f"[avatar] renderer '{_renderer}' not found under {RENDERERS_DIR} — "
+            f"the avatar window will have nothing to load",
+            flush=True,
+        )
 
 _mount_avatar()

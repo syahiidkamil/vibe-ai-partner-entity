@@ -11,10 +11,10 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.prompt import IntPrompt
 
-from vape.cli._paths import ROOT_DIR, PLUGINS_DIR, CONFIG_PATH
-from vape.cli._config import read_config
+from vape.cli._paths import ROOT_DIR, PLUGINS_DIR, RENDERERS_DIR, SHELLS_DIR, CONFIG_PATH
+from vape.cli._config import read_config, get_avatar_renderer, get_avatar_shell
 from vape.cli._prereqs import run_all_checks
-from vape.cli._progress import download_models
+from vape.cli._progress import download_models, download_file, is_cached
 
 console = Console()
 
@@ -155,42 +155,78 @@ def _select_shell(avatar_app, current: str | None) -> dict | None:
     return shells[choice - 1]
 
 
-def _build_tauri(avatar_name: str) -> None:
-    """Build the Tauri native binary for the avatar plugin."""
+# The Live2D Cubism Core is proprietary and not redistributable via git
+# (.gitignore excludes it), so we fetch it from Live2D's official CDN on setup.
+LIVE2D_CORE_URL = "https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"
+
+
+def _ensure_live2d_core() -> None:
+    """Download the Live2D Cubism Core into the live2d renderer if missing."""
+    dest = RENDERERS_DIR / "avatar-live2d" / "lib" / "live2dcubismcore.min.js"
+    if is_cached(dest):
+        console.print("  [dim]✓ Live2D Cubism Core present[/dim]")
+        return
+    console.print("\n  Downloading Live2D Cubism Core...")
+    try:
+        download_file(LIVE2D_CORE_URL, dest, label="live2dcubismcore.min.js")
+        console.print("  [green]✓ Live2D Cubism Core ready[/green]")
+    except Exception as exc:  # network/offline — fail loud with instructions
+        console.print(
+            f"  [yellow]Could not download the Live2D Cubism Core ({exc}).[/yellow]\n"
+            f"  [dim]Download it manually from {LIVE2D_CORE_URL}\n"
+            f"  and save it to {dest}[/dim]"
+        )
+
+
+def _ensure_shell_deps(shell_name: str) -> None:
+    """Install a shell's node deps (e.g. Electron) so first `vape start` is instant."""
     import shutil
 
-    plugin_dir = PLUGINS_DIR / f"avatar-{avatar_name}"
-    tauri_dir = plugin_dir / "src-tauri"
-    if not tauri_dir.exists():
+    shell_dir = SHELLS_DIR / shell_name
+    if not (shell_dir / "package.json").exists() or (shell_dir / "node_modules").exists():
+        return
+    npm = shutil.which("npm")
+    if not npm:
+        console.print(f"  [yellow]npm not found — {shell_name} shell deps not installed.[/yellow]")
+        return
+    console.print(f"\n  Installing {shell_name} shell dependencies...")
+    result = subprocess.run([npm, "install"], cwd=str(shell_dir), timeout=180)
+    if result.returncode == 0:
+        console.print(f"  [green]✓ {shell_name} shell ready[/green]")
+    else:
+        console.print(f"  [yellow]{shell_name} shell dependency install failed.[/yellow]")
+
+
+def _build_tauri() -> None:
+    """Build the Tauri shell binary (compiles Rust — only when Tauri is chosen)."""
+    import shutil
+
+    shell_dir = SHELLS_DIR / "tauri"
+    if not (shell_dir / "src-tauri").exists():
+        console.print("  [yellow]Tauri shell scaffold not found — skipping.[/yellow]")
         return
 
-    # Check if already built
     from vape.cli.start import _find_tauri_binary
-    if _find_tauri_binary(plugin_dir):
-        console.print("  [dim]✓ Avatar native binary already built[/dim]")
+    if _find_tauri_binary(shell_dir):
+        console.print("  [dim]✓ Tauri shell already built[/dim]")
         return
 
     npx = shutil.which("npx")
     if not npx:
-        console.print("  [yellow]npx not found — skipping native avatar build[/yellow]")
+        console.print("  [yellow]npx not found — skipping Tauri build.[/yellow]")
         return
 
-    # Ensure node_modules
     npm = shutil.which("npm")
-    if npm and not (plugin_dir / "node_modules").exists():
-        console.print("  Installing avatar dependencies...")
-        subprocess.run([npm, "install"], cwd=str(plugin_dir), capture_output=True, timeout=120)
+    if npm and not (shell_dir / "node_modules").exists():
+        console.print("  Installing Tauri CLI...")
+        subprocess.run([npm, "install"], cwd=str(shell_dir), capture_output=True, timeout=180)
 
-    console.print("  Building avatar native binary (compiling Rust — this takes a few minutes)...")
-    result = subprocess.run(
-        [npx, "tauri", "build"],
-        cwd=str(plugin_dir),
-        timeout=600,
-    )
+    console.print("  Building Tauri shell (compiling Rust — this takes a few minutes)...")
+    result = subprocess.run([npx, "tauri", "build"], cwd=str(shell_dir), timeout=900)
     if result.returncode == 0:
-        console.print("  [green]✓ Avatar native binary built[/green]")
+        console.print("  [green]✓ Tauri shell built[/green]")
     else:
-        console.print("  [yellow]Avatar native build failed — will use dev mode instead[/yellow]")
+        console.print("  [yellow]Tauri build failed — Electron remains available as the default shell.[/yellow]")
 
 
 def _download_language_pack(lang: dict) -> None:
@@ -264,14 +300,22 @@ def setup() -> None:
     for lang in selected_langs:
         _download_language_pack(lang)
 
-    # Step 7: Avatar selection
+    # Step 7: Avatar — pick a renderer (content) and a shell (window host)
     from vape.apps.avatar import AvatarApp
-    avatar_app = AvatarApp(PLUGINS_DIR)
-    avatar_manifest = _select_avatar(avatar_app, read_config().get("avatar", {}).get("plugin"))
+    avatar_app = AvatarApp(RENDERERS_DIR, SHELLS_DIR)
+    avatar_manifest = _select_avatar(avatar_app, get_avatar_renderer())
+    shell_manifest = _select_shell(avatar_app, get_avatar_shell())
 
-    # Step 8: Build avatar
+    # Step 8: Install renderer deps + assets; prepare the chosen shell
     if avatar_manifest:
         avatar_app.build_plugin(avatar_manifest["name"])
+        if avatar_manifest["name"] == "avatar-live2d":
+            _ensure_live2d_core()
+    if shell_manifest:
+        if shell_manifest["name"] == "tauri":
+            _build_tauri()
+        else:
+            _ensure_shell_deps(shell_manifest["name"])
 
     # Step 9: Save config. Voice IDs are engine-specific, so clear the old
     # voice when switching engines to avoid stale "voice X for engine Y" state.
@@ -280,9 +324,15 @@ def setup() -> None:
     cfg.setdefault("tts", {})["engine"] = manifest["name"]
     if old_engine and old_engine != manifest["name"]:
         cfg["tts"].pop("voice", None)
-    cfg.setdefault("avatar", {})["plugin"] = (
-        avatar_manifest["name"] if avatar_manifest else "live2d-electron"
-    )
+
+    avatar_cfg = cfg.setdefault("avatar", {})
+    avatar_cfg["renderer"] = avatar_manifest["name"] if avatar_manifest else "avatar-live2d"
+    avatar_cfg["shell"] = shell_manifest["name"] if shell_manifest else "electron"
+    # Migrate away from the legacy single-key schema.
+    legacy_plugin = avatar_cfg.pop("plugin", None)
+    plugins = avatar_cfg.get("plugins")
+    if isinstance(plugins, dict) and legacy_plugin and legacy_plugin in plugins:
+        plugins.setdefault(avatar_cfg["renderer"], plugins.pop(legacy_plugin))
     CONFIG_PATH.write_text(json.dumps(cfg, indent=2) + "\n")
 
     # Done

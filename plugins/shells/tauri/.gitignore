@@ -1,0 +1,8 @@
+# The repo-root .gitignore ignores all `dist/` directories. Our dist/ is not a
+# build artifact — it's a committed placeholder required by tauri.conf.json's
+# frontendDist ("../dist") so `tauri build` can package. Un-ignore it here.
+!dist/
+!dist/index.html
+
+# Node deps for the Tauri CLI are reinstalled via `npm install`.
+node_modules/

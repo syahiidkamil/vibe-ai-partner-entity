@@ -1,0 +1,9 @@
+{
+  "category": "shell",
+  "name": "electron",
+  "displayName": "Electron",
+  "description": "Cross-platform desktop window via Electron — the default, works with every renderer",
+  "status": "stable",
+  "order": 1,
+  "runtime": "node"
+}

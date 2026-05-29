@@ -19,7 +19,8 @@ def _find_root() -> Path:
 ROOT_DIR = _find_root()
 CONFIG_PATH = ROOT_DIR / "config.json"
 PLUGINS_DIR = ROOT_DIR / "plugins"
-AVATAR_DIR = ROOT_DIR / "src" / "vibe" / "apps" / "avatar"
+RENDERERS_DIR = PLUGINS_DIR / "renderers"
+SHELLS_DIR = PLUGINS_DIR / "shells"
 
 
 def cache_dir() -> Path:

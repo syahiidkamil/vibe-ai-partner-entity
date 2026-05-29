@@ -1,0 +1,8 @@
+{
+  "name": "@vape/avatar-threejs",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "three": "^0.170.0"
+  }
+}

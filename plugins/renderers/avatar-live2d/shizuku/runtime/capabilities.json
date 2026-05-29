@@ -1,0 +1,60 @@
+{
+  "renderer": "live2d",
+  "model": "shizuku",
+  "version": "1.0",
+
+  "feelings": {
+    "happy":      { "expression": "internal-feeling/Happy.exp3.json" },
+    "sad":        { "expression": "internal-feeling/Sad.exp3.json" },
+    "frustrated": { "expression": "internal-feeling/Frustrated.exp3.json" },
+    "curious":    { "expression": "internal-feeling/Curious.exp3.json" },
+    "proud":      { "expression": "internal-feeling/Proud.exp3.json" },
+    "anxious":    { "expression": "internal-feeling/Anxious.exp3.json" },
+    "excited":    { "expression": "internal-feeling/Excited.exp3.json" },
+    "calm":       { "expression": "internal-feeling/Calm.exp3.json" },
+    "bored":      { "expression": "internal-feeling/Bored.exp3.json" },
+    "guilty":     { "expression": "internal-feeling/Guilty.exp3.json" },
+    "angry":      { "expression": "internal-feeling/Angry.exp3.json" },
+    "blushing":   { "expression": "internal-feeling/Blushing.exp3.json" },
+    "surprised":  { "expression": "internal-feeling/Surprised.exp3.json" },
+    "relieved":   null
+  },
+
+  "selfExpressions": {
+    "nod":            { "motion": "self-expression/Nodding.motion3.json",        "group": "social" },
+    "headShake":      { "motion": "self-expression/HeadShake.motion3.json",      "group": "social" },
+    "headTilt":       { "motion": "self-expression/HeadTilt.motion3.json",       "group": "reaction" },
+    "laugh":          { "motion": "self-expression/Laughing.motion3.json",       "group": "emotional" },
+    "giggle":         { "motion": "self-expression/Giggling.motion3.json",       "group": "emotional" },
+    "surprisedGasp":  { "motion": "self-expression/SurprisedGasp.motion3.json", "group": "reaction" },
+    "think":          { "motion": "self-expression/Thinking.motion3.json",       "group": "reaction" },
+    "celebrate":      { "motion": "self-expression/Celebrating.motion3.json",    "group": "emotional" },
+    "sweatDrop":      { "motion": "self-expression/SweatDrop.motion3.json",      "group": "reaction" },
+    "wave":           { "motion": "self-expression/Waving.motion3.json",         "group": "social" },
+    "bow":            { "motion": "self-expression/Bowing.motion3.json",         "group": "social" },
+    "starryEyes":     { "motion": "self-expression/StarryEyes.motion3.json",     "group": "emotional" }
+  },
+
+  "lipSync": {
+    "method": "rms",
+    "parameter": "PARAM_MOUTH_OPEN_Y",
+    "range": [0, 1]
+  },
+
+  "expressionAliases": {
+    "celebrate": "celebrate",
+    "cry": null,
+    "sigh": "sweatDrop",
+    "head-tilt": "headTilt",
+    "fist-pump": "starryEyes",
+    "tremble": null,
+    "bounce": "giggle",
+    "nod": "nod",
+    "yawn": null,
+    "facepalm": "sweatDrop",
+    "puff-cheeks": null,
+    "cover-face": null,
+    "gasp": "surprisedGasp",
+    "wave": "wave"
+  }
+}

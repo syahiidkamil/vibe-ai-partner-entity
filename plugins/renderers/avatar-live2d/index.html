@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 420px;
+      height: 400px;
+      overflow: visible;
+      background: transparent;
+      user-select: none;
+    }
+    #container {
+      position: relative;
+      width: 420px;
+      height: 400px;
+      -webkit-app-region: drag;
+    }
+    #avatar-bg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 400px;
+      background: rgba(128, 128, 128, 0.15);
+    }
+    #canvas {
+      width: 280px;
+      height: 400px;
+      display: block;
+      margin: 0 auto;
+    }
+    #speech-bubble {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      border: 2px solid #333;
+      border-radius: 12px;
+      padding: 6px 12px;
+      font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+      font-size: 12px;
+      max-width: 380px;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 10;
+      pointer-events: none;
+      display: -webkit-box;
+      line-clamp: 5;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    #speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid #333;
+    }
+    #speech-bubble.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="avatar-bg"></div>
+    <div id="speech-bubble"></div>
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <script src="lib/live2dcubismcore.min.js"></script>
+  <script src="node_modules/pixi.js/dist/browser/pixi.min.js"></script>
+  <script src="node_modules/pixi-live2d-display/dist/cubism4.min.js"></script>
+
+  <script>
+    const Live2DModel = PIXI.live2d.Live2DModel;
+    const MotionPreloadStrategy = PIXI.live2d.MotionPreloadStrategy;
+
+    const speechBubble = document.getElementById('speech-bubble');
+    const canvas = document.getElementById('canvas');
+
+    // Served same-origin by the VAPE server; fall back to ?port= for dev.
+    const params = new URLSearchParams(window.location.search);
+    const WS_HOST = window.location.host || `localhost:${params.get('port') || '5111'}`;
+    const WS_BASE = `ws://${WS_HOST}`;
+
+    let model = null;
+
+    // ─── Expression map ────────────────────────────────────
+    const EXPRESSION_MAP = {
+      normal: 'Normal', happy: 'Happy', sad: 'Sad', angry: 'Angry',
+      frustrated: 'Frustrated', curious: 'Curious', proud: 'Proud',
+      anxious: 'Anxious', excited: 'Excited', calm: 'Calm',
+      bored: 'Bored', guilty: 'Guilty', blushing: 'Blushing',
+      surprised: 'Surprised',
+    };
+
+    const SELF_EXPRESSION_MAP = {
+      nod: 0, headshake: 1, headtilt: 2, laugh: 3, giggle: 4,
+      gasp: 5, think: 6, celebrate: 7, sweat: 8, wave: 9,
+      bow: 10, starryeyes: 11,
+    };
+
+    function setExpression(name) {
+      if (!model) return;
+      const exprName = EXPRESSION_MAP[name];
+      if (!exprName) return;
+      const em = model.internalModel.motionManager.expressionManager;
+      const idx = em?.definitions?.findIndex(d => d.Name === exprName);
+      if (idx >= 0) model.expression(idx);
+    }
+
+    function playSelfExpression(name) {
+      if (!model) return;
+      const idx = SELF_EXPRESSION_MAP[name];
+      if (idx === undefined) return;
+      model.motion('SelfExpression', idx, 3);
+    }
+
+    // ─── Audio queue + lip sync via AnalyserNode ───────────
+    // Shizuku's idle motions keyframe PARAM_MOUTH_OPEN_Y, so writing the
+    // mouth value from a separate RAF loop loses the race — the motion
+    // overwrites it inside the model's update step. Instead, we compute
+    // smoothedMouth in RAF but apply it inside the 'beforeModelUpdate'
+    // event the library emits after motions/expressions/physics, just
+    // before the model renders. That's the only point where our value wins.
+    let audioCtx = null;
+    let analyser = null;
+    let lipSyncActive = false;
+    let smoothedMouth = 0;
+    let playQueue = [];
+    let isPlaying = false;
+
+    function startLipSync() {
+      if (lipSyncActive) return;
+      lipSyncActive = true;
+      const dataArray = new Uint8Array(analyser.fftSize);
+
+      function update() {
+        if (!lipSyncActive || !model) return;
+        analyser.getByteTimeDomainData(dataArray);
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) {
+          const v = (dataArray[i] - 128) / 128;
+          sum += v * v;
+        }
+        const rms = Math.sqrt(sum / dataArray.length);
+        const gated = rms < 0.02 ? 0 : rms;
+        const target = Math.min(Math.sqrt(gated * 8) * 1.2, 1);
+        if (target > smoothedMouth) {
+          smoothedMouth += (target - smoothedMouth) * 0.8;
+        } else {
+          smoothedMouth += (target - smoothedMouth) * 0.3;
+        }
+        requestAnimationFrame(update);
+      }
+      update();
+    }
+
+    function stopLipSync() {
+      lipSyncActive = false;
+      smoothedMouth = 0;
+    }
+
+    async function processQueue() {
+      if (playQueue.length === 0) {
+        isPlaying = false;
+        stopLipSync();
+        setTimeout(() => {
+          if (!isPlaying) speechBubble.classList.remove('visible');
+        }, 500);
+        return;
+      }
+
+      isPlaying = true;
+      const { url, text } = playQueue.shift();
+
+      if (!audioCtx) {
+        audioCtx = new AudioContext();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.connect(audioCtx.destination);
+      }
+      // Some webviews start the AudioContext suspended; resume before playing
+      // or the analyser reads silence and the mouth never moves.
+      if (audioCtx.state === 'suspended') {
+        try { await audioCtx.resume(); } catch {}
+      }
+
+      if (text) {
+        speechBubble.textContent = text;
+        speechBubble.classList.add('visible');
+      }
+
+      const audio = new Audio(url);
+      const source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+
+      startLipSync();
+
+      audio.addEventListener('ended', processQueue);
+      audio.addEventListener('error', processQueue);
+      audio.play().catch(processQueue);
+    }
+
+    function queueAudio(url, text) {
+      playQueue.push({ url, text });
+      if (!isPlaying) processQueue();
+    }
+
+    // ─── WebSocket connections ──────────────────────────────
+    function connectStatusWS() {
+      const ws = new WebSocket(`${WS_BASE}/ws/status`);
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'feeling') setExpression(msg.name);
+        else if (msg.type === 'action') playSelfExpression(msg.name);
+      };
+      ws.onclose = () => setTimeout(connectStatusWS, 2000);
+      ws.onerror = () => ws.close();
+    }
+
+    function connectAudioWS() {
+      const ws = new WebSocket(`${WS_BASE}/ws/audio`);
+      ws.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'audio') queueAudio(msg.url, msg.text);
+      };
+      ws.onclose = () => setTimeout(connectAudioWS, 2000);
+      ws.onerror = () => ws.close();
+    }
+
+    // ─── Initialize Live2D ─────────────────────────────────
+    async function init() {
+      const app = new PIXI.Application({
+        view: canvas,
+        transparent: true,
+        width: 280,
+        height: 400,
+        resolution: window.devicePixelRatio || 1,
+        autoDensity: true,
+      });
+
+      try {
+        model = await Live2DModel.from('shizuku/runtime/shizuku.model3.json', {
+          motionPreload: MotionPreloadStrategy.ALL,
+        });
+
+        const scale = Math.min(280 / model.width, 400 / model.height) * 0.95;
+        model.scale.set(scale);
+        model.anchor.set(0.5, 0.5);
+        model.x = 280 / 2;
+        model.y = 400 / 2 - 20;
+
+        model.internalModel.eyeBlink = null;
+        app.stage.addChild(model);
+        model.motion('Idle', 0);
+
+        // Apply lipsync mouth value at the only point that wins the frame:
+        // after motions/expressions/physics have written params, just before
+        // the model is sent to render. Idle motions keyframe the mouth, so
+        // writing earlier loses the race.
+        model.internalModel.on('beforeModelUpdate', () => {
+          model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+        });
+
+        connectStatusWS();
+        connectAudioWS();
+      } catch (err) {
+        document.body.innerHTML = `<div style="color:red;padding:20px;font-size:14px;">
+          Failed to load model:<br>${err.message}
+        </div>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
