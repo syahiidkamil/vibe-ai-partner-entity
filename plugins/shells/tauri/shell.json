@@ -1,0 +1,10 @@
+{
+  "category": "shell",
+  "name": "tauri",
+  "displayName": "Tauri",
+  "description": "Lightweight native window via Tauri (Rust) — smaller + faster than Electron, experimental",
+  "tag": "Experimental",
+  "status": "experimental",
+  "order": 2,
+  "runtime": "rust"
+}

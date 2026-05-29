@@ -1,0 +1,40 @@
+{
+  "name": "avatar-live2d",
+  "displayName": "Live2D Avatar",
+  "description": "Anime-style Live2D Cubism avatar — 13 feelings, 12 expressions, lip sync, physics",
+  "tag": "Default",
+  "category": "avatar",
+  "renderer": "live2d",
+  "distDir": ".",
+  "order": 1,
+  "models": [
+    {
+      "id": "shizuku",
+      "name": "Shizuku",
+      "description": "Anime character with full expression set",
+      "path": "shizuku/runtime",
+      "default": true
+    }
+  ],
+  "interface": {
+    "feelings": true,
+    "selfExpressions": true,
+    "physics": true
+  },
+  "window": {
+    "width": 420,
+    "height": 400,
+    "anchor": "bottom-right",
+    "margin": { "right": 20, "bottom": 20 },
+    "title": "VAPE Avatar (Live2D)",
+    "transparent": true,
+    "frame": false,
+    "alwaysOnTop": true,
+    "resizable": false
+  },
+  "connection": {
+    "wsStatus": "/ws/status",
+    "wsAudio": "/ws/audio",
+    "apiBase": "/api"
+  }
+}
