@@ -34,7 +34,7 @@ Return JSON:
   "importance": 0-100
 }
 
-If worth_logging is true, append to entity/memory/conversations/{today's date}-session.md in this format:
+If worth_logging is true, append to vape/entity/memory/conversations/{today's date}-session.md in this format:
 
 ### {time} — {category} (importance: {importance})
 {summary}

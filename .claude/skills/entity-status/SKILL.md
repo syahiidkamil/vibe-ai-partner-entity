@@ -10,7 +10,7 @@ Display a formatted report of the entity's current internal state.
 ## What to Show
 
 1. **Server health** — hit `GET http://localhost:5111/api/health` for engine name and uptime
-2. **Internal states** — read `entity/state/current.json` for the 6 epistemic variables
+2. **Internal states** — read `vape/entity/state/current.json` for the 6 epistemic variables
 3. **Current feelings** — from the same file, show the 14 feelings sorted by intensity (top 5)
 4. **Session info** — session ID and last save timestamp from the file
 
@@ -21,7 +21,7 @@ Display a formatted report of the entity's current internal state.
 curl -s http://localhost:5111/api/health
 
 # State file
-cat entity/state/current.json
+cat vape/entity/state/current.json
 ```
 
 ## Format

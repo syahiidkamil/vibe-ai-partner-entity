@@ -22,17 +22,17 @@ dev = [
 ]
 
 [project.scripts]
-vape = "vape.cli.main:app"
+vape = "engine.cli.main:app"
 
 [build-system]
 requires = ["setuptools>=75.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["vape"]
 
 [tool.uv.workspace]
-members = ["plugins/tts-*"]
+members = ["vape/plugins/tts-*"]
 
 [tool.uv.sources]
 vibe-plugin-tts-kokoro-onnx = { workspace = true }
