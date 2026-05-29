@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="VAPE — heart with wordmark">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4E3CCB"/>
+      <stop offset="0.55" stop-color="#7B2FE0"/>
+      <stop offset="1" stop-color="#A436C9"/>
+    </linearGradient>
+    <linearGradient id="love" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF8FB6"/>
+      <stop offset="1" stop-color="#FF3D6E"/>
+    </linearGradient>
+    <filter id="lift" x="-25%" y="-25%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#220A3A" flood-opacity="0.40"/>
+    </filter>
+  </defs>
+
+  <rect width="512" height="512" rx="116" fill="url(#abg)"/>
+
+  <g filter="url(#lift)" transform="translate(0 14)">
+    <!-- the heart (love = AI partner) -->
+    <g transform="translate(139.2 87.7) scale(7.3)">
+      <path d="M16 29 C16 29 4 20.5 4 12.5 C4 7.5 8 4.5 12 5.5 C14 6 15 7.5 16 9.5
+               C17 7.5 18 6 20 5.5 C24 4.5 28 7.5 28 12.5 C28 20.5 16 29 16 29 Z"
+            fill="url(#love)"/>
+    </g>
+    <!-- gloss -->
+    <ellipse cx="212" cy="170" rx="20" ry="26" fill="#FFFFFF" opacity="0.28"
+             transform="rotate(-22 212 170)"/>
+
+    <!-- wordmark -->
+    <text x="256" y="392" text-anchor="middle"
+          font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+          font-size="58" font-weight="600" letter-spacing="6"
+          fill="#FFFFFF" opacity="0.96">vape</text>
+  </g>
+</svg>
