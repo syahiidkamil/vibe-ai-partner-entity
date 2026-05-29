@@ -9,7 +9,8 @@
 //   --port <n>        server port (default 5111)
 //   --window '<json>' renderer window prefs {width,height,anchor,margin,title,...}
 
-const { app, BrowserWindow, Tray, Menu, screen, nativeImage } = require('electron');
+const { app, BrowserWindow, Tray, Menu, screen, nativeImage, ipcMain } = require('electron');
+const path = require('path');
 
 function argOf(flag, fallback) {
   const i = process.argv.indexOf(flag);
@@ -56,13 +57,24 @@ function createWindow() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  mainWindow.setIgnoreMouseEvents(false);
+  // Desktop-pet behaviour: clicks pass THROUGH the window to whatever is behind
+  // it (your editor, etc). `forward: true` still delivers mousemove to the page
+  // so hover works and the renderer can re-enable interaction over its chrome
+  // (drag strip + close button) via window.vapeShell.setIgnoreMouse(false).
+  mainWindow.setIgnoreMouseEvents(true, { forward: true });
   mainWindow.loadURL(`http://localhost:${port}/`);
   mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
 }
+
+ipcMain.on('vape:set-ignore-mouse', (_event, ignore) => {
+  if (mainWindow) {
+    mainWindow.setIgnoreMouseEvents(ignore, { forward: true });
+  }
+});
 
 function createTray() {
   tray = new Tray(nativeImage.createEmpty());

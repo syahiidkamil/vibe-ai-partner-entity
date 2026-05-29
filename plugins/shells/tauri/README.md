@@ -42,8 +42,15 @@ server), they run in Tauri's sandboxed webview:
 | `avatar-threejs`| ✅        | ✅ (three loaded as a served ES module) |
 
 The Tauri window size matches the chosen renderer (forwarded from its
-`plugin.json` "window" block via `VAPE_WIDTH`/`VAPE_HEIGHT`). Two things are
-currently Electron-only: precise bottom-right **placement** (the Tauri window
-opens at the OS default position), and dragging the window by the avatar body
-(`-webkit-app-region: drag` is a Chromium/Electron feature the system webview
-ignores).
+`plugin.json` "window" block via `VAPE_WIDTH`/`VAPE_HEIGHT`).
+
+**Click-through ("desktop pet").** Clicks pass through the avatar to whatever is
+behind it; only the top drag strip and the close button capture the mouse. Tauri
+(unlike Electron) can't forward mouse-move while ignoring the cursor, so the
+renderer reports its interactive rectangles via the `vape_set_zones` command and
+the shell polls the global cursor, toggling `set_ignore_cursor_events` itself.
+Drag (top strip) and close (✕) work via `data-tauri-drag-region` + the window
+close API.
+
+Still Electron-only: precise bottom-right **placement** (the Tauri window opens
+at the OS default position).

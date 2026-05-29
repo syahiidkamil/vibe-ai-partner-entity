@@ -272,6 +272,29 @@
     }
     document.getElementById('close-btn').addEventListener('click', closeApp);
 
+    // Click-through everywhere except the chrome: the avatar body lets mouse
+    // events pass to whatever is behind the window; the drag strip + close
+    // button re-enable interaction while hovered. No-op outside Electron.
+    document.querySelectorAll('.titlebar, #close-btn').forEach((el) => {
+      el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
+      el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
+    });
+
+    // Tauri can't forward mouse moves while click-through, so the renderer
+    // reports its interactive rects and the shell hit-tests the cursor itself.
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      const reportZones = () => {
+        const zones = [...document.querySelectorAll('.titlebar, #close-btn')].map((el) => {
+          const r = el.getBoundingClientRect();
+          return [r.left, r.top, r.width, r.height];
+        });
+        window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
+      };
+      reportZones();
+      setTimeout(reportZones, 500);
+      window.addEventListener('resize', reportZones);
+    }
+
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
       const app = new PIXI.Application({
