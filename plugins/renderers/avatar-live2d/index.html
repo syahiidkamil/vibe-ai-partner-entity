@@ -15,8 +15,23 @@
       position: relative;
       width: 420px;
       height: 400px;
+    }
+    /* Draggable top strip + close button (shared across renderers) */
+    .titlebar {
+      position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
     }
+    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
+    .close-btn {
+      /* anchored to the 280px-wide avatar panel (centered), not the window edge */
+      position: fixed; top: 6px; right: calc(50% - 134px); width: 18px; height: 18px; padding: 0;
+      border: none; border-radius: 50%; background: rgba(0,0,0,0.3); color: #fff;
+      font-size: 11px; line-height: 18px; text-align: center; cursor: pointer;
+      z-index: 101; -webkit-app-region: no-drag; opacity: 0;
+      transition: opacity .2s, background .2s;
+    }
+    body:hover .close-btn { opacity: 1; }
+    .close-btn:hover { background: #ff5470; }
     #avatar-bg {
       position: absolute;
       top: 0;
@@ -69,6 +84,8 @@
   </style>
 </head>
 <body>
+  <div class="titlebar" data-tauri-drag-region></div>
+  <button id="close-btn" class="close-btn" title="Close VAPE">✕</button>
   <div id="container">
     <div id="avatar-bg"></div>
     <div id="speech-bubble"></div>
@@ -236,6 +253,24 @@
       ws.onclose = () => setTimeout(connectAudioWS, 2000);
       ws.onerror = () => ws.close();
     }
+
+    // ─── Close button ──────────────────────────────────────
+    function closeApp() {
+      // Stop the server, then close the window (works in Electron, Tauri, browser).
+      fetch('/api/shutdown', { method: 'POST' }).catch(() => {}).finally(closeWindow);
+    }
+    function closeWindow() {
+      try {
+        const t = window.__TAURI__;
+        if (t) {
+          const api = t.window || t.webviewWindow;
+          const cur = api && (api.getCurrentWindow ? api.getCurrentWindow() : (api.getCurrent ? api.getCurrent() : null));
+          if (cur && cur.close) { cur.close(); return; }
+        }
+      } catch (e) {}
+      window.close();
+    }
+    document.getElementById('close-btn').addEventListener('click', closeApp);
 
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
