@@ -68,12 +68,37 @@ function createWindow() {
   mainWindow.setIgnoreMouseEvents(true, { forward: true });
   mainWindow.loadURL(`http://localhost:${port}/`);
   mainWindow.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true });
+
+  // Force a clean repaint when the window loses focus, so a transparent
+  // always-on-top window never shows a stale frame on macOS.
+  mainWindow.on('blur', () => mainWindow.webContents.invalidate());
 }
 
 ipcMain.on('vape:set-ignore-mouse', (_event, ignore) => {
   if (mainWindow) {
     mainWindow.setIgnoreMouseEvents(ignore, { forward: true });
   }
+});
+
+// Resize from the renderer's −/+ controls. The renderer re-renders its content
+// at the new size; we just size the OS window to match. The window's bottom-
+// right corner is pinned so the avatar grows/shrinks toward its anchor instead
+// of crawling across the screen (and never marches off-screen when shrinking).
+// resizable is toggled on around setSize because a frameless resizable:false
+// window ignores programmatic resizes on some platforms. invalidate() forces a
+// clean repaint of the transparent backing store after the resize.
+ipcMain.on('vape:resize', (_event, { w, h }) => {
+  if (!mainWindow) return;
+  const nw = Math.round(w);
+  const nh = Math.round(h);
+  const [cx, cy] = mainWindow.getPosition();
+  const [cw, ch] = mainWindow.getSize();
+  const wasResizable = mainWindow.isResizable();
+  if (!wasResizable) mainWindow.setResizable(true);
+  mainWindow.setSize(nw, nh);
+  mainWindow.setPosition(cx + cw - nw, cy + ch - nh);
+  if (!wasResizable) mainWindow.setResizable(false);
+  mainWindow.webContents.invalidate();
 });
 
 function createTray() {

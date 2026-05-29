@@ -17,6 +17,26 @@ fn vape_set_zones(zones: Vec<[f64; 4]>, state: tauri::State<'_, Zones>) {
     }
 }
 
+/// Resize the avatar window to (width, height) logical px, pinning the window's
+/// bottom-right corner so it grows/shrinks toward its anchor (matching Electron).
+/// The renderer scales its content with a CSS transform; this only sizes the OS
+/// window. Called by the renderer's −/+ controls via window.__TAURI__.core.invoke.
+#[tauri::command]
+fn vape_resize(width: f64, height: f64, window: tauri::WebviewWindow) {
+    let sf = window.scale_factor().unwrap_or(1.0);
+    if let (Ok(pos), Ok(size)) = (window.outer_position(), window.outer_size()) {
+        let left = pos.x as f64 / sf;
+        let top = pos.y as f64 / sf;
+        let old_w = size.width as f64 / sf;
+        let old_h = size.height as f64 / sf;
+        let _ = window.set_position(tauri::LogicalPosition::new(
+            left + old_w - width,
+            top + old_h - height,
+        ));
+    }
+    let _ = window.set_size(tauri::LogicalSize::new(width, height));
+}
+
 /// Native window host for the VAPE avatar server.
 ///
 /// There is no bundled frontend: the window navigates to the FastAPI server's
@@ -39,7 +59,7 @@ pub fn run() {
 
     tauri::Builder::default()
         .manage(Zones(Mutex::new(Vec::new())))
-        .invoke_handler(tauri::generate_handler![vape_set_zones])
+        .invoke_handler(tauri::generate_handler![vape_set_zones, vape_resize])
         .setup(move |app| {
             WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url.parse().unwrap()))
                 .title(&title)
