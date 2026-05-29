@@ -4,28 +4,35 @@
   <meta charset="UTF-8">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 200px; height: 280px; background: transparent; user-select: none; overflow: hidden; }
-    #container { width: 200px; height: 280px; position: relative; }
+    html, body { width: 100%; height: 100%; background: transparent; user-select: none; overflow: hidden; }
+    #container { width: 100%; height: 100%; position: relative; }
     canvas { display: block; position: absolute; top: 0; left: 0; }
-    /* Draggable top strip + close button (shared across renderers) */
+    /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
       position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
     }
     .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
-    .close-btn {
-      /* anchored to the 170px-wide panel (centered, starts ~30px down), not the window edge */
-      position: fixed; top: 35px; right: calc(50% - 79px); width: 18px; height: 18px; padding: 0;
-      border: none; border-radius: 50%; background: rgba(0,0,0,0.3); color: #fff;
-      font-size: 11px; line-height: 18px; text-align: center; cursor: pointer;
-      z-index: 101; -webkit-app-region: no-drag; opacity: 0;
+    .controls {
+      /* glued to the panel's right edge with % offsets so it tracks the panel at
+         any window size without a CSS transform (panel = 170/200 wide, centered →
+         right edge sits 7.5% in from the window's right edge; ~30px ≈ 12.5% down) */
+      position: fixed; top: 12.5%; right: calc(7.5% + 2px);
+      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+    }
+    .ctrl-btn {
+      width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
+      background: rgba(0,0,0,0.3); color: #fff; font: 12px/18px sans-serif;
+      text-align: center; cursor: pointer; opacity: 0;
       transition: opacity .2s, background .2s;
     }
-    body:hover .close-btn { opacity: 1; }
+    body:hover .ctrl-btn { opacity: 1; }
+    .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* % of the window so the scene scales with the window — no CSS transform. */
     #bg-panel {
       position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 170px; height: 250px; background: rgba(128,128,128,0.12); border-radius: 20px 20px 10px 10px;
+      width: 85%; height: 89.3%; background: rgba(128,128,128,0.12); border-radius: 20px 20px 10px 10px;
     }
     #speech-bubble {
       position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
@@ -44,7 +51,11 @@
 </head>
 <body>
   <div class="titlebar" data-tauri-drag-region></div>
-  <button id="close-btn" class="close-btn" title="Close VAPE">✕</button>
+  <div class="controls">
+    <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
+    <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
+    <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+  </div>
   <div id="container">
     <div id="bg-panel"></div>
     <div id="speech-bubble"></div>
@@ -207,6 +218,20 @@
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 0);
+
+    // Resize the WebGL renderer to fill the window whenever the shell resizes it
+    // (the −/+ controls). The perspective camera keeps a fixed vertical FOV, so
+    // the avatar scales with the window height; aspect is kept in sync to avoid
+    // horizontal distortion. No CSS transform on the canvas — that ghosts on an
+    // unfocused transparent window and offsets click-through hit-testing.
+    function fitRenderer() {
+      const w = window.innerWidth, h = window.innerHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    fitRenderer();
+    window.addEventListener('resize', fitRenderer);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.85));
     const dirLight = new THREE.DirectionalLight(0xffffff, 0.5);
@@ -416,9 +441,36 @@
     }
     document.getElementById('close-btn').addEventListener('click', closeApp);
 
-    // Click-through everywhere except the chrome (drag strip + close button).
+    // ─── Resize (−/+) ──────────────────────────────────────
+    // The shell resizes the OS window; the renderer re-renders at the new pixel
+    // size (see fitRenderer). No CSS transform on the WebGL canvas — that ghosts
+    // on an unfocused transparent window and offsets click-through hit-testing.
+    // The chosen scale is remembered across restarts via localStorage (per-origin,
+    // shared by both shells on http://localhost:<port>).
+    const DESIGN_W = 200, DESIGN_H = 280;
+    const SCALE_MIN = 0.6, SCALE_MAX = 1.8, SCALE_STEP = 0.15;
+    let uiScale = parseFloat(localStorage.getItem('vape-scale'));
+    if (!(uiScale >= SCALE_MIN && uiScale <= SCALE_MAX)) uiScale = 1;
+
+    function applyScale() {
+      const w = Math.round(DESIGN_W * uiScale);
+      const h = Math.round(DESIGN_H * uiScale);
+      if (window.vapeShell && window.vapeShell.resize) window.vapeShell.resize(w, h);
+      else if (window.__TAURI__ && window.__TAURI__.core)
+        window.__TAURI__.core.invoke('vape_resize', { width: w, height: h }).catch(() => {});
+    }
+    function setScale(next) {
+      uiScale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, Math.round(next * 100) / 100));
+      localStorage.setItem('vape-scale', String(uiScale));
+      applyScale();
+    }
+    document.getElementById('zoom-in').addEventListener('click', () => setScale(uiScale + SCALE_STEP));
+    document.getElementById('zoom-out').addEventListener('click', () => setScale(uiScale - SCALE_STEP));
+    applyScale(); // restore the remembered window size on launch
+
+    // Click-through everywhere except the chrome (drag strip + controls).
     // No-op outside Electron (window.vapeShell absent in a browser / Tauri).
-    document.querySelectorAll('.titlebar, #close-btn').forEach((el) => {
+    document.querySelectorAll('.titlebar, .controls').forEach((el) => {
       el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
       el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
     });
@@ -427,7 +479,7 @@
     // reports its interactive rects and the shell hit-tests the cursor itself.
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, #close-btn')].map((el) => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls')].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });

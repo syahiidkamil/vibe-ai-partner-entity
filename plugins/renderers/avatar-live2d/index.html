@@ -5,47 +5,57 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
-      width: 420px;
-      height: 400px;
-      overflow: visible;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: transparent;
       user-select: none;
     }
     #container {
       position: relative;
-      width: 420px;
-      height: 400px;
+      width: 100%;
+      height: 100%;
     }
-    /* Draggable top strip + close button (shared across renderers) */
+    /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
       position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
     }
     .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
-    .close-btn {
-      /* anchored to the 280px-wide avatar panel (centered), not the window edge */
-      position: fixed; top: 6px; right: calc(50% - 134px); width: 18px; height: 18px; padding: 0;
-      border: none; border-radius: 50%; background: rgba(0,0,0,0.3); color: #fff;
-      font-size: 11px; line-height: 18px; text-align: center; cursor: pointer;
-      z-index: 101; -webkit-app-region: no-drag; opacity: 0;
+    .controls {
+      /* glued to the avatar panel's right edge with a % offset, so it tracks the
+         panel at any window size without a CSS transform (panel = 280/420 wide,
+         centered → its right edge sits 16.667% in from the window's right edge) */
+      position: fixed; top: 6px; right: calc(16.667% + 4px);
+      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+    }
+    .ctrl-btn {
+      width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
+      background: rgba(0,0,0,0.3); color: #fff; font: 12px/18px sans-serif;
+      text-align: center; cursor: pointer; opacity: 0;
       transition: opacity .2s, background .2s;
     }
-    body:hover .close-btn { opacity: 1; }
+    body:hover .ctrl-btn { opacity: 1; }
+    .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* The avatar fills the window proportionally (panel = 66.667% wide, centered),
+       so the −/+ controls just resize the OS window and Live2D refits — no scaling
+       transform on the WebGL canvas (which ghosts on an unfocused transparent
+       window and breaks click-through hit-testing). */
     #avatar-bg {
       position: absolute;
       top: 0;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 280px;
-      height: 400px;
+      width: 66.667%;
       background: rgba(128, 128, 128, 0.15);
     }
     #canvas {
-      width: 280px;
-      height: 400px;
+      position: absolute;
+      top: 0;
+      left: 0;
       display: block;
-      margin: 0 auto;
     }
     #speech-bubble {
       position: absolute;
@@ -85,7 +95,11 @@
 </head>
 <body>
   <div class="titlebar" data-tauri-drag-region></div>
-  <button id="close-btn" class="close-btn" title="Close VAPE">✕</button>
+  <div class="controls">
+    <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
+    <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
+    <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+  </div>
   <div id="container">
     <div id="avatar-bg"></div>
     <div id="speech-bubble"></div>
@@ -109,6 +123,25 @@
     const WS_BASE = `ws://${WS_HOST}`;
 
     let model = null;
+    let app = null;
+    let baseW = 0, baseH = 0;       // intrinsic model size (scale 1), captured after load
+    const PANEL_FRAC = 280 / 420;   // avatar panel width as a fraction of the window
+
+    // Re-render Live2D at the current window size. Runs on launch and on every
+    // window resize (the −/+ controls just resize the OS window). The model keeps
+    // its aspect ratio and the canvas backing store is resized, so it stays crisp
+    // at any size — no CSS transform on the WebGL canvas.
+    function fitModel() {
+      if (!app) return;
+      const w = window.innerWidth, h = window.innerHeight;
+      app.renderer.resize(w, h);
+      if (!model || !baseW) return;
+      const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95;
+      model.scale.set(s);
+      model.x = w / 2;
+      model.y = h * 0.45;
+    }
+    window.addEventListener('resize', fitModel);
 
     // ─── Expression map ────────────────────────────────────
     const EXPRESSION_MAP = {
@@ -272,10 +305,37 @@
     }
     document.getElementById('close-btn').addEventListener('click', closeApp);
 
+    // ─── Resize (−/+) ──────────────────────────────────────
+    // The shell resizes the OS window; the renderer re-renders Live2D at the new
+    // pixel size (see fitModel). No CSS transform on the WebGL canvas — that
+    // ghosts on an unfocused transparent window and offsets click-through
+    // hit-testing. The chosen scale is remembered across restarts via localStorage
+    // (per-origin, shared by both shells on http://localhost:<port>).
+    const DESIGN_W = 420, DESIGN_H = 400;
+    const SCALE_MIN = 0.6, SCALE_MAX = 1.8, SCALE_STEP = 0.15;
+    let uiScale = parseFloat(localStorage.getItem('vape-scale'));
+    if (!(uiScale >= SCALE_MIN && uiScale <= SCALE_MAX)) uiScale = 1;
+
+    function applyScale() {
+      const w = Math.round(DESIGN_W * uiScale);
+      const h = Math.round(DESIGN_H * uiScale);
+      if (window.vapeShell && window.vapeShell.resize) window.vapeShell.resize(w, h);
+      else if (window.__TAURI__ && window.__TAURI__.core)
+        window.__TAURI__.core.invoke('vape_resize', { width: w, height: h }).catch(() => {});
+    }
+    function setScale(next) {
+      uiScale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, Math.round(next * 100) / 100));
+      localStorage.setItem('vape-scale', String(uiScale));
+      applyScale();
+    }
+    document.getElementById('zoom-in').addEventListener('click', () => setScale(uiScale + SCALE_STEP));
+    document.getElementById('zoom-out').addEventListener('click', () => setScale(uiScale - SCALE_STEP));
+    applyScale(); // restore the remembered window size on launch (fitModel follows on resize)
+
     // Click-through everywhere except the chrome: the avatar body lets mouse
-    // events pass to whatever is behind the window; the drag strip + close
-    // button re-enable interaction while hovered. No-op outside Electron.
-    document.querySelectorAll('.titlebar, #close-btn').forEach((el) => {
+    // events pass to whatever is behind the window; the drag strip + controls
+    // re-enable interaction while hovered. No-op outside Electron.
+    document.querySelectorAll('.titlebar, .controls').forEach((el) => {
       el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
       el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
     });
@@ -284,7 +344,7 @@
     // reports its interactive rects and the shell hit-tests the cursor itself.
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, #close-btn')].map((el) => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls')].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });
@@ -297,11 +357,11 @@
 
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
-      const app = new PIXI.Application({
+      app = new PIXI.Application({
         view: canvas,
         transparent: true,
-        width: 280,
-        height: 400,
+        width: window.innerWidth,
+        height: window.innerHeight,
         resolution: window.devicePixelRatio || 1,
         autoDensity: true,
       });
@@ -311,15 +371,14 @@
           motionPreload: MotionPreloadStrategy.ALL,
         });
 
-        const scale = Math.min(280 / model.width, 400 / model.height) * 0.95;
-        model.scale.set(scale);
         model.anchor.set(0.5, 0.5);
-        model.x = 280 / 2;
-        model.y = 400 / 2 - 20;
+        baseW = model.width;   // intrinsic size at scale 1, before we refit
+        baseH = model.height;
 
         model.internalModel.eyeBlink = null;
         app.stage.addChild(model);
         model.motion('Idle', 0);
+        fitModel(); // size the model + canvas to the current window
 
         // Apply lipsync mouth value at the only point that wins the frame:
         // after motions/expressions/physics have written params, just before
