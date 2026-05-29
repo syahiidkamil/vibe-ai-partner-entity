@@ -25,3 +25,8 @@ serde = { version = "1.0", features = ["derive"] }
 # macos-private-api is required because tauri.conf.json sets app.macOSPrivateApi
 # = true (needed for transparent windows on macOS).
 tauri = { version = "2.11.2", features = ["macos-private-api"] }
+
+# AppKit access (objc messaging) so the window can float over other apps' native
+# fullscreen Spaces — see float_over_fullscreen() in lib.rs.
+[target.'cfg(target_os = "macos")'.dependencies]
+objc = "0.2"

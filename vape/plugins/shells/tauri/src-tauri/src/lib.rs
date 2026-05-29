@@ -37,6 +37,41 @@ fn vape_resize(width: f64, height: f64, window: tauri::WebviewWindow) {
     let _ = window.set_size(tauri::LogicalSize::new(width, height));
 }
 
+/// On macOS, make the avatar window float above EVERYTHING — including other
+/// apps in native (green-button) fullscreen, which each get their own Space.
+///
+/// Tauri's `always_on_top` only sets `NSFloatingWindowLevel` and joins the
+/// *current* Space, so a fullscreen app hides the avatar. We drop to AppKit and:
+///   • raise the window level above fullscreen content, and
+///   • set the collection behavior to `CanJoinAllSpaces | Stationary |
+///     FullScreenAuxiliary` so the window rides into every Space, fullscreen
+///     ones included.
+/// The level is intentionally high (screen-saver); lower it if the pet floats
+/// over UI you'd rather it stayed under.
+#[cfg(target_os = "macos")]
+fn float_over_fullscreen(window: &tauri::WebviewWindow) {
+    use objc::runtime::Object;
+    use objc::{msg_send, sel, sel_impl};
+
+    // AppKit constants (AppKit/NSWindow.h)
+    const NS_SCREEN_SAVER_WINDOW_LEVEL: i64 = 1000;
+    const CAN_JOIN_ALL_SPACES: u64 = 1 << 0; //   1
+    const STATIONARY: u64 = 1 << 4; //           16
+    const FULLSCREEN_AUXILIARY: u64 = 1 << 8; // 256
+
+    if let Ok(ptr) = window.ns_window() {
+        let ns_window = ptr as *mut Object;
+        let behavior = CAN_JOIN_ALL_SPACES | STATIONARY | FULLSCREEN_AUXILIARY;
+        unsafe {
+            let _: () = msg_send![ns_window, setLevel: NS_SCREEN_SAVER_WINDOW_LEVEL];
+            let _: () = msg_send![ns_window, setCollectionBehavior: behavior];
+        }
+    }
+}
+
+#[cfg(not(target_os = "macos"))]
+fn float_over_fullscreen(_window: &tauri::WebviewWindow) {}
+
 /// Native window host for the VAPE avatar server.
 ///
 /// There is no bundled frontend: the window navigates to the FastAPI server's
@@ -61,7 +96,13 @@ pub fn run() {
         .manage(Zones(Mutex::new(Vec::new())))
         .invoke_handler(tauri::generate_handler![vape_set_zones, vape_resize])
         .setup(move |app| {
-            WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url.parse().unwrap()))
+            // Run as a Dock-less "agent": macOS only allows agent apps to float
+            // their windows over OTHER apps' native fullscreen Spaces. This drops
+            // the Dock tile while running — expected for a desktop pet.
+            #[cfg(target_os = "macos")]
+            app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+            let main_window = WebviewWindowBuilder::new(app, "main", WebviewUrl::External(url.parse().unwrap()))
                 .title(&title)
                 .transparent(true)
                 .decorations(false)
@@ -70,6 +111,10 @@ pub fn run() {
                 .skip_taskbar(true)
                 .inner_size(width, height)
                 .build()?;
+
+            // Keep the avatar visible even over apps in native (green-button)
+            // fullscreen, which live in their own Space.
+            float_over_fullscreen(&main_window);
 
             // Poll the global cursor and toggle click-through. The window starts
             // interactive (the safe default): if this thread ever dies, the
