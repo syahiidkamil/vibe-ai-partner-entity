@@ -419,6 +419,28 @@
       window.close();
     }
     document.getElementById('close-btn').addEventListener('click', closeApp);
+
+    // Click-through everywhere except the chrome (drag strip + close button).
+    // No-op outside Electron (window.vapeShell absent in a browser / Tauri).
+    document.querySelectorAll('.titlebar, #close-btn').forEach((el) => {
+      el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
+      el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
+    });
+
+    // Tauri can't forward mouse moves while click-through, so the renderer
+    // reports its interactive rects and the shell hit-tests the cursor itself.
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      const reportZones = () => {
+        const zones = [...document.querySelectorAll('.titlebar, #close-btn')].map((el) => {
+          const r = el.getBoundingClientRect();
+          return [r.left, r.top, r.width, r.height];
+        });
+        window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
+      };
+      reportZones();
+      setTimeout(reportZones, 500);
+      window.addEventListener('resize', reportZones);
+    }
   </script>
 </body>
 </html>
