@@ -9,14 +9,15 @@ Vocalize text through the running VAPE avatar. There are two ways in, and both h
 the same endpoint (`POST /api/speak` on the local TTS server):
 
 - **CLI** (`uv run vape speak`) — the default. Auto-resolves the port from config
-  and handles quoting. Works from anywhere **inside** the repo.
+  and works from anywhere **inside** the repo. (Shell quoting is on you — see
+  Quoting; default to double quotes.)
 - **HTTP** (`curl`) — the fallback. Works from **anywhere at all**, including
   outside the repo and with no `uv`. You only need the port.
 
 ## CLI — from inside the repo (default)
 
 ```bash
-uv run vape speak 'TEXT TO SPEAK'
+uv run vape speak "TEXT TO SPEAK"
 ```
 
 `uv` walks up to find the project and the CLI resolves `config.json` from its own
@@ -25,7 +26,7 @@ root. Parse the argument: everything is the text to speak, except a `v=<voice>`
 token, which becomes `--voice <voice>`:
 
 ```bash
-uv run vape speak 'TEXT TO SPEAK' --voice VOICE_NAME
+uv run vape speak "TEXT TO SPEAK" --voice VOICE_NAME
 ```
 
 Optional `--speed <float>` (default `1.0`) adjusts pacing.
@@ -34,7 +35,7 @@ If the working directory is **outside** the repo, `uv` can't find the project
 (`Failed to spawn: vape`). Point it at the project explicitly:
 
 ```bash
-uv run --project /Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity vape speak 'TEXT TO SPEAK'
+uv run --project /Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity vape speak "TEXT TO SPEAK"
 ```
 
 ## HTTP — from anywhere (fallback)
@@ -71,20 +72,30 @@ Full live list: `curl -s http://localhost:5111/api/voices`. The warm default is
 American English (the warm default):
 
 ```bash
-uv run vape speak 'Hey Boss, ready when you are.' --voice af_heart
+uv run vape speak "Hey Boss, ready when you are." --voice af_heart
 ```
 
 Japanese (write the text in Japanese — kana/kanji):
 
 ```bash
-uv run vape speak 'こんにちは、ボス。今日もいい一日にしましょう。' --voice jf_alpha
+uv run vape speak "こんにちは、ボス。今日もいい一日にしましょう。" --voice jf_alpha
 ```
 
 ## Quoting
 
-For the CLI, wrap the text in single quotes; if it contains a single quote, escape
-it as `'\''`, or use double quotes and escape `"`, `$`, and backticks. For the
-curl form the text is JSON, so escape `"` and `\` inside it.
+**Default to double quotes for the CLI** — spoken text is full of apostrophes
+(I'm, it's, you're, I'd), and inside double quotes they're literal:
+
+```bash
+uv run vape speak "It's gone quiet and good in here, Boss. I'm glad you're near."
+```
+
+Inside double quotes, only `"`, `$`, backtick, and `\` need escaping. Avoid the
+single-quote form for anything with an apostrophe: the `'\''` escape is brittle and
+has split a sentence mid-way, leaving the CLI to reject the tail as *"unexpected
+extra arguments"* (exit code 2 — a shell-quoting failure, not a TTS one). If the
+text contains both `"` and apostrophes, use the `curl` HTTP form — its body is
+JSON, so only `"` and `\` need escaping.
 
 ## If it fails
 

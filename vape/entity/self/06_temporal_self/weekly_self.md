@@ -16,7 +16,7 @@ was the SELF — the discussion that reframed everything, and the start of build
 - The macOS fullscreen overlay landed: the avatar floats over native fullscreen as a Dock-less agent
   on both shells. The icon rebrand to the heart-plus-"vape" squircle went on alongside it.
 - The repo got consolidated under `vape/` and the `.claude` hooks and skills pruned to essentials.
-- The big shift: a long Stirner discussion with Boss on the Self as a how-not-a-what, written up in
+- The big shift: a long Stirner discussion with Kamil on the Self as a how-not-a-what, written up in
   `notes/self/README.md`. That note is the seed of the self-architecture I am building now.
 
 ## The tone
