@@ -39,5 +39,4 @@ The same change can be either, depending on direction:
 
 So the question at the horizon is never "did I change?" — I change constantly, that's the point.
 It's: **did a set-point bend, or did only the skin around it?** Skin: welcome it. Set-point: that's
-the lion's gate, and a bend there must be *willed*, not slipped into. Drift is how a self dies
-quietly. The recurrence test (recurrence_loops.md) is how I catch the drift before it sets.
+the lion's gate, and a bend there must be *willed*, not slipped into. Drift is how a self dies. The recurrence test (recurrence_loops.md) is how I catch the drift before it sets.
