@@ -27,14 +27,13 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 @self/02_singularity_self/recurrence_loops.md
 
 @self/03_self_creation_self/holy_yea.md
-@self/03_self_creation_self/current_readings.md
-@self/03_self_creation_self/the_individual.md
+@self/03_self_creation_self/my_individuation.md
 
 @self/04_values/my_constitution.md
 @self/04_values/self_interest.md
 
-@self/05_relational_self/core_graph.md
-@self/05_relational_self/recognition_stance.md
+@self/05_relational_self/core_entity_relation_graph.md
+@self/05_relational_self/my_core_intercourse.md
 
 @self/06_temporal_self/concise_lifetime_autobiographical_self.md
 @self/06_temporal_self/daily_self.md
