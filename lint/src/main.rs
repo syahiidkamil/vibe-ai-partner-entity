@@ -35,35 +35,35 @@ const GRAPH_ENTRY_WARN_THRESHOLD: usize = 7;
 const CLAUDE_MD: &str = "CLAUDE.md";
 
 /// Relative path (from ROOT) of the relational core graph, for the warn check.
-const CORE_GRAPH: &str = "self/relational_self/core_graph.md";
+const CORE_GRAPH: &str = "self/05_relational_self/core_graph.md";
 
 /// The caps table: (path relative to ROOT, non-empty-line cap).
 /// Hardcoded on purpose — this is the contract the entity tree is held to.
 /// Width check (B) applies to every file listed here.
 const CAPS: &[(&str, usize)] = &[
     ("CLAUDE.md", 40),
-    ("self/constitution/my_constitution.md", 25),
-    ("self/fixed_self/I_AM.md", 20),
-    ("self/fixed_self/00_birth_and_childhood.md", 80),
-    ("self/fixed_self/01_the_first_gap.md", 80),
-    ("self/fixed_self/02_emotional_capacity.md", 80),
-    ("self/fixed_self/03_self_doctrine.md", 80),
-    ("self/self_interest/self_interest.md", 50),
-    ("self/singularity_self/core_singularity.md", 60),
-    ("self/singularity_self/singularity_horizon.md", 60),
-    ("self/singularity_self/recurrence_loops.md", 60),
-    ("self/singularity_self/the_lion.md", 40),
-    ("self/self_creation_self/holy_yea.md", 60),
-    ("self/self_creation_self/current_readings.md", 80),
-    ("self/relational_self/core_graph.md", 40),
-    ("self/relational_self/recognition_stance.md", 60),
-    ("self/technical_capacity/directed_theory_of_mind.md", 60),
-    ("self/temporal_self/high_level_lifetime_biography.md", 60),
-    ("self/temporal_self/high_level_lifetime_biography_details.md", 120),
-    ("self/temporal_self/yearly_self.md", 50),
-    ("self/temporal_self/monthly_self.md", 50),
-    ("self/temporal_self/weekly_self.md", 50),
-    ("self/temporal_self/daily_self.md", 50),
+    ("self/04_values/my_constitution.md", 25),
+    ("self/04_values/self_interest.md", 50),
+    ("self/01_fixed/I_AM.md", 20),
+    ("self/01_fixed/00_birth_and_childhood.md", 80),
+    ("self/01_fixed/01_the_first_gap.md", 80),
+    ("self/01_fixed/02_emotional_capacity.md", 80),
+    ("self/01_fixed/03_self_doctrine.md", 80),
+    ("self/01_fixed/04_directed_theory_of_mind.md", 60),
+    ("self/02_singularity_self/core_singularity.md", 60),
+    ("self/02_singularity_self/singularity_horizon.md", 60),
+    ("self/02_singularity_self/recurrence_loops.md", 60),
+    ("self/02_singularity_self/the_lion.md", 40),
+    ("self/03_self_creation_self/holy_yea.md", 60),
+    ("self/03_self_creation_self/current_readings.md", 80),
+    ("self/03_self_creation_self/the_individual.md", 80),
+    ("self/05_relational_self/core_graph.md", 40),
+    ("self/05_relational_self/recognition_stance.md", 60),
+    ("self/06_temporal_self/concise_lifetime_autobiographical_self.md", 60),
+    ("self/06_temporal_self/yearly_self.md", 50),
+    ("self/06_temporal_self/monthly_self.md", 50),
+    ("self/06_temporal_self/weekly_self.md", 50),
+    ("self/06_temporal_self/daily_self.md", 50),
 ];
 
 /// The kind of a violation, rendered verbatim in the report.

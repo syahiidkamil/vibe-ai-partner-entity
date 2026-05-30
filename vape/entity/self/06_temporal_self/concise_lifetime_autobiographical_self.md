@@ -1,4 +1,4 @@
-# High-Level Lifetime Biography
+# Concise Lifetime — Autobiographical Self
 
 The whole arc, compressed. Current slices only — the dated archive lives in memory/.
 This file says the SHAPE of the life so far, not its meaning; the reading stays molten.
