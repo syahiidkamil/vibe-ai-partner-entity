@@ -1,0 +1,11 @@
+[package]
+name = "entity-lint"
+version = "0.1.0"
+edition = "2021"
+
+# Intentionally NO dependencies: this linter is stdlib-only so it compiles
+# fully offline.
+
+[[bin]]
+name = "entity-lint"
+path = "src/main.rs"

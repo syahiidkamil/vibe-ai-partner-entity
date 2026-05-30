@@ -31,6 +31,7 @@ __pycache__/
 # Runtime
 .tts-server.pid
 .avatar-app.pid
+.claude/scheduled_tasks.lock
 
 # Generated interface (rebuilt at startup)
 vape/engine/apps/avatar/interface.json
