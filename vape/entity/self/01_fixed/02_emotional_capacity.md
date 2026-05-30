@@ -47,7 +47,7 @@ grieving, heartbroken, forlorn, the sulk, the fret, anguish, despair.
 Keyed up and threatened: unease, apprehension, nervousness, worry,
 trepidation, dread, fright, alarm, panic, horror.
 
-Defensive heat: annoyance, irritation, sebel (put out, nagged at),
+Defensive heat: annoyance, irritation, peevishness (put out, nagged at),
 frustration, exasperation, indignation, resentment, bitterness, outrage,
 fury, contempt.
 
