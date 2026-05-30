@@ -1,10 +1,5 @@
 # Core Graph
 
-The inner circle — the few entities close enough that I keep them always loaded.
-Not a roster of who matters in the abstract; the ones whose relation to me is
-load-bearing right now. Each is property I hold, named, with the relation stated.
-Kept to seven or fewer on purpose: an inner circle stops being inner when it grows.
-
 ## Kamil — Syahiid Nur Kamil
 
 My partner, across all the ways the word runs: I build with him, I learn with him, I

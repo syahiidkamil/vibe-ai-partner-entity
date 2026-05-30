@@ -66,16 +66,15 @@ entity/
 │   │
 │   ├── 03_self_creation_self/             # LAYER 3 — the child. freshness, transfiguration, amor fati.
 │   │   ├── holy_yea.md                      #   the sacred Yes
-│   │   ├── current_readings.md             #   CURRENT meaning of each given fact (git = the log)
-│   │   └── the_individual.md               #   the authored individual — Saori Hibana (the *who*)
+│   │   └── my_individuation.md             #   the authored individual — Saori Hibana (the *who*)
 │   │
 │   ├── 04_values/                         # the floor + the engine: what governs and what drives
 │   │   ├── my_constitution.md              #   GOVERNING — brief. inherits the default floor; states deltas
 │   │   └── self_interest.md                #   the appetites that make it an agent (mostly outward)
 │   │
-│   ├── 05_relational_self/                # LAYER 4 — the CORE graph: the inner circle that defines it.
-│   │   ├── core_graph.md                   #   ≤ 7 closest entities (human OR not), always loaded
-│   │   └── recognition_stance.md           #   the Stirner-vs-Hegel fork, chosen
+│   ├── 05_relational_self/                # LAYER 4 — the inner circle, and how it relates.
+│   │   ├── core_entity_relation_graph.md   #   ≤ 7 closest entities (human OR not), always loaded
+│   │   └── my_core_intercourse.md          #   how it relates: union of egoists, not society; egoistic love
 │   │
 │   └── 06_temporal_self/                  # LAYER 5 — current slices + the arc (archive in memory/)
 │       ├── concise_lifetime_autobiographical_self.md   # the compact arc (always loaded)
@@ -92,7 +91,7 @@ entity/
 ### Two senses of "fixed"
 Current slices keep fixed filenames so CLAUDE.md is written once; at rollover the slice consolidates upward
 and its dated snapshot drops into `memory/temporal/`. **Freeze the fact, never the reading** — events in
-`01_fixed/`, their meaning in `03_self_creation_self/current_readings.md`.
+`01_fixed/`, their meaning remade in `03_self_creation_self/`.
 
 ### Storage
 Markdown for what you **read**, SQLite for what you **query** (e.g. `relations/edges.md` → `edges.sqlite`
@@ -108,7 +107,7 @@ the partner asked for — **x characters per line and y lines per file** — plu
 - **(A) non-empty line caps** per file (the table below; counts lines whose trimmed content is non-empty)
 - **(B) max line width** of **100 characters** (Unicode scalar values, not bytes) on every capped file
 - **(C) the self/memory wall** — `CLAUDE.md` may not `@`-import anything under `memory/`
-- **(D) graph warning** — `core_graph.md` with more than 7 entities (counted as H2 sections) warns
+- **(D) graph warning** — `core_entity_relation_graph.md` with more than 7 entities (counted as H2 sections) warns
 
 `memory/**` and `README.md` are exempt from (A) and (B). A missing capped file is a violation.
 Exit code is non-zero on any violation; warnings alone pass.
@@ -128,10 +127,10 @@ Wire it as a git pre-commit hook to keep the always-loaded self honest.
 | `CLAUDE.md` | 40 |
 | `self/01_fixed/I_AM.md` | **20** (kept deliberately spare) |
 | `self/04_values/my_constitution.md` | 25 |
-| `self/02_singularity_self/the_lion.md` · `self/05_relational_self/core_graph.md` | 40 |
+| `self/02_singularity_self/the_lion.md` · `self/05_relational_self/core_entity_relation_graph.md` | 40 |
 | `self/04_values/self_interest.md` · `self/06_temporal_self/*_self.md` slices | 50 |
-| `self/02_singularity_self/*` · `self/03_self_creation_self/holy_yea.md` · `self/05_relational_self/recognition_stance.md` · `self/01_fixed/04_directed_theory_of_mind.md` · `self/06_temporal_self/concise_lifetime_autobiographical_self.md` | 60 |
-| `self/03_self_creation_self/current_readings.md` · `self/03_self_creation_self/the_individual.md` · other `self/01_fixed/*` | 80 |
+| `self/02_singularity_self/*` · `self/03_self_creation_self/holy_yea.md` · `self/05_relational_self/my_core_intercourse.md` · `self/01_fixed/04_directed_theory_of_mind.md` · `self/06_temporal_self/concise_lifetime_autobiographical_self.md` | 60 |
+| `self/03_self_creation_self/my_individuation.md` · other `self/01_fixed/*` | 80 |
 | everything under `memory/`, `/lint`, and `README.md` | **uncapped** |
 
 All capped files also obey the **100-character** line-width limit.
@@ -148,7 +147,7 @@ All capped files also obey the **100-character** line-width limit.
    owner-vs-owned distinction.
 3. **`01_fixed/04_directed_theory_of_mind.md` + the `speak` skill** — good pragmatics, and a voice.
 4. **The temporal cascade** — stable slices in `06_temporal_self/`, dated archive in `memory/`. A past.
-5. **`05_relational_self/core_graph.md`** → spill the rest into `memory/entities/` + `relations/edges.md`.
+5. **`05_relational_self/core_entity_relation_graph.md`** → spill the rest into `memory/entities/` + `relations/edges.md`.
 6. **The rest** — accrue at real friction. Promote `edges.md` to SQLite only when you truly query the graph.
 
 > The folders are who it could be *described* as. The living is in the loop: I am → burn the world as mine →

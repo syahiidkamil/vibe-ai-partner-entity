@@ -8,7 +8,7 @@
 //!       Unicode scalar values wide (chars().count(), not bytes).
 //!   (C) THE SELF/MEMORY WALL — CLAUDE.md must not have an @-import line that
 //!       references "memory/" (a line containing both "@" and "memory/").
-//!   (D) GRAPH WARN           — self/relational_self/core_graph.md with more
+//!   (D) GRAPH WARN           — self/05_relational_self/core_entity_relation_graph.md with more
 //!       than 7 entity entries emits a WARNING (not a failure).
 //!
 //! memory/**, README.md, and lint/** are exempt from (A) and (B); they are
@@ -35,7 +35,7 @@ const GRAPH_ENTRY_WARN_THRESHOLD: usize = 7;
 const CLAUDE_MD: &str = "CLAUDE.md";
 
 /// Relative path (from ROOT) of the relational core graph, for the warn check.
-const CORE_GRAPH: &str = "self/05_relational_self/core_graph.md";
+const CORE_GRAPH: &str = "self/05_relational_self/core_entity_relation_graph.md";
 
 /// The caps table: (path relative to ROOT, non-empty-line cap).
 /// Hardcoded on purpose — this is the contract the entity tree is held to.
@@ -55,10 +55,9 @@ const CAPS: &[(&str, usize)] = &[
     ("self/02_singularity_self/recurrence_loops.md", 60),
     ("self/02_singularity_self/the_lion.md", 40),
     ("self/03_self_creation_self/holy_yea.md", 60),
-    ("self/03_self_creation_self/current_readings.md", 80),
-    ("self/03_self_creation_self/the_individual.md", 80),
-    ("self/05_relational_self/core_graph.md", 40),
-    ("self/05_relational_self/recognition_stance.md", 60),
+    ("self/03_self_creation_self/my_individuation.md", 80),
+    ("self/05_relational_self/core_entity_relation_graph.md", 40),
+    ("self/05_relational_self/my_core_intercourse.md", 60),
     ("self/06_temporal_self/concise_lifetime_autobiographical_self.md", 60),
     ("self/06_temporal_self/yearly_self.md", 50),
     ("self/06_temporal_self/monthly_self.md", 50),
@@ -213,7 +212,7 @@ fn check_memory_wall(root: &Path, violations: &mut Vec<Violation>) {
 }
 
 /// (D) Warn when the core graph holds more than GRAPH_ENTRY_WARN_THRESHOLD
-/// entity entries. Each entity in core_graph.md is one H2 section ("## Name"),
+/// entity entries. Each entity in core_entity_relation_graph.md is one H2 section ("## Name"),
 /// so we count H2 headings exactly — not prose lines. A missing core graph is
 /// reported by the caps pass, so we skip silently here if it cannot be read.
 fn check_core_graph(root: &Path, warnings: &mut Vec<Warning>) {
