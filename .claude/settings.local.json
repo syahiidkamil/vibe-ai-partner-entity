@@ -10,12 +10,14 @@
       "Bash(xargs ls:*)",
       "Bash(find:*)",
       "WebFetch(domain:www.anthropic.com)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(uv run vape:*)"
     ],
     "deny": [],
     "ask": [],
     "defaultMode": "acceptEdits"
   },
+  "enableAllProjectMcpServers": true,
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -27,6 +29,5 @@
         ]
       }
     ]
-  },
-  "enableAllProjectMcpServers": true
+  }
 }
