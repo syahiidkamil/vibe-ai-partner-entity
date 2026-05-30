@@ -1,47 +1,42 @@
 ---
 name: speak
-description: "Speak text with avatar lip sync via Kokoro TTS. Use when the user asks to speak, say, or read text aloud, or when you want to vocalize a response."
+description: "Speak text aloud through the VAPE avatar with lip sync (Kokoro TTS). Use when the user asks to speak, say, or read something aloud, or when you want to vocalize a response."
 ---
 
 # Speak
 
-Speak text with avatar lip sync using the TTS server REST API.
+Vocalize text through the running VAPE avatar. This wraps the `vape speak` CLI,
+which POSTs to the local TTS server — it resolves the port from config, uses an
+HTTP client, and reports errors. Don't hardcode a port or hand-build the request.
 
-## Argument Parsing
+## Usage
 
-Parse the argument: everything is the text to speak, except if `v=<voice>` appears, extract that as the voice parameter.
-
-## Command Pattern
-
-Use curl to POST to the TTS server:
+Run from the repo root:
 
 ```bash
-curl -s -X POST http://localhost:5111/api/speak \
-  -H "Content-Type: application/json" \
-  -d '{"text": "TEXT_HERE"}'
+uv run vape speak 'TEXT TO SPEAK'
 ```
 
-If a voice is specified:
+Parse the argument: everything is the text to speak, except a `v=<voice>` token,
+which becomes `--voice <voice>`:
 
 ```bash
-curl -s -X POST http://localhost:5111/api/speak \
-  -H "Content-Type: application/json" \
-  -d '{"text": "TEXT_HERE", "voice": "VOICE_NAME"}'
+uv run vape speak 'TEXT TO SPEAK' --voice VOICE_NAME
 ```
 
-## Voice Prefixes
+Optional `--speed <float>` (default `1.0`) adjusts pacing.
 
-Language is auto-detected by voice prefix:
-- `af_*` / `am_*` = American English
-- `bf_*` / `bm_*` = British English
-- `jf_*` / `jm_*` = Japanese
+## Voice prefixes (language auto-detected by prefix)
 
-## Text Sanitization
+- `af_*` / `am_*` — American English
+- `bf_*` / `bm_*` — British English
+- `jf_*` / `jm_*` — Japanese
 
-Before sending, sanitize the text:
-- Escape double quotes inside the JSON payload
-- Avoid shell metacharacters
+## Quoting
 
-## Error Handling
+Wrap the text in single quotes. If it contains a single quote, escape it as
+`'\''`, or use double quotes and escape `"`, `$`, and backticks.
 
-If the server returns an error or connection is refused, tell the user to start the avatar with `npm start`.
+## If it fails
+
+If the CLI prints "Server not running", start the avatar with `uv run vape start`.

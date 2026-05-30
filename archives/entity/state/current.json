@@ -1,0 +1,28 @@
+{
+  "states": {
+    "confidence": 80,
+    "contextSaturation": 95,
+    "alignment": 59,
+    "memoryPressure": 50,
+    "momentum": 100,
+    "trustCalibration": 50
+  },
+  "feelings": {
+    "happy": 80,
+    "sad": 20,
+    "frustrated": 0,
+    "curious": 11,
+    "proud": 76,
+    "anxious": 35,
+    "excited": 52,
+    "calm": 83,
+    "bored": 57,
+    "guilty": 0,
+    "angry": 0,
+    "blushing": 15,
+    "surprised": 0,
+    "relieved": 0
+  },
+  "timestamp": "2026-05-29T15:03:07.754965+00:00",
+  "sessionId": "62f78e1c-928e-4c9a-9762-b15cd91b9413"
+}
