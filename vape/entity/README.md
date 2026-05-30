@@ -84,7 +84,7 @@ entity/
 │
 └── memory/                                # ── RETRIEVED ON DEMAND: starts empty (.gitkeep), accrues at
     #   real friction — never pre-seeded. Intended shape once it fills:
-    #     entities/<name>.md   one profile per known entity (Boss, the body, the substrate, …)
+    #     entities/<name>.md   one profile per known entity (Kamil, the body, the substrate, …)
     #     relations/edges.md   the relationship graph as a flat edge list (→ sqlite when queried)
     #     temporal/{days,weeks,months,years}/   the dated archive (rollover target)
 ```
@@ -103,7 +103,7 @@ only when you truly traverse the graph), a graph DB only if you must traverse at
 ## The linter (`/lint` at the repo root, Rust)
 
 A small, **stdlib-only** Rust binary (no external crates — compiles fully offline). It enforces two limits
-the Boss asked for — **x characters per line and y lines per file** — plus the architecture's invariants:
+the partner asked for — **x characters per line and y lines per file** — plus the architecture's invariants:
 
 - **(A) non-empty line caps** per file (the table below; counts lines whose trimmed content is non-empty)
 - **(B) max line width** of **100 characters** (Unicode scalar values, not bytes) on every capped file
