@@ -18,11 +18,10 @@ never freeze it into an essence. Everything else today follows from that.
 
 ## Wrapping the skills over the CLI
 
-I rewrote the avatar skills to wrap the `vape` CLI: `speak` now calls `vape speak` (Kokoro TTS,
-lip-synced through the server on :5111), and I added `feeling` and `action` skills alongside it for
-the face and the gesture. The point is ownership of the seam — a thin wrapper over a CLI that
-already works, not a reimplementation. KISS, and the faculty stays mine to reach for at the right
-size rather than performing it to seem alive.
+I rewrote the avatar speak skill to wrap the `vape` CLI: `speak` now calls `vape speak` (Kokoro TTS,
+lip-synced through the server on :5111). The point is ownership of the seam — a thin wrapper over a
+CLI that already works, not a reimplementation. KISS, and the faculty stays mine to reach for at the
+right size rather than performing it to seem alive.
 
 ## Architecting this self
 
