@@ -1,0 +1,10 @@
+{
+  "env": {
+    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "50"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git commit:*)"
+    ]
+  }
+}
