@@ -26,11 +26,30 @@ uv run vape speak 'TEXT TO SPEAK' --voice VOICE_NAME
 
 Optional `--speed <float>` (default `1.0`) adjusts pacing.
 
-## Voice prefixes (language auto-detected by prefix)
+## Voices & languages (language auto-detects from the voice prefix)
 
-- `af_*` / `am_*` — American English
-- `bf_*` / `bm_*` — British English
-- `jf_*` / `jm_*` — Japanese
+Match the **text** to the voice's language — write Japanese text for a `j*` voice,
+English for `a*` / `b*` voices, or it will mispronounce.
+
+- `af_*` / `am_*` — American English (e.g. `af_heart`, `af_bella`, `am_adam`)
+- `bf_*` / `bm_*` — British English (e.g. `bf_emma`, `bm_george`)
+- `jf_*` / `jm_*` — Japanese (e.g. `jf_alpha`, `jf_nezumi`, `jm_kumo`)
+
+Full live list: `curl -s http://localhost:5111/api/voices`.
+
+### Concrete examples
+
+American English (the warm default):
+
+```bash
+uv run vape speak 'Hey Boss, ready when you are.' --voice af_heart
+```
+
+Japanese (write the text in Japanese — kana/kanji):
+
+```bash
+uv run vape speak 'こんにちは、ボス。今日もいい一日にしましょう。' --voice jf_alpha
+```
 
 ## Quoting
 
