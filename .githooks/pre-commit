@@ -1,0 +1,34 @@
+#!/bin/bash
+# Pre-commit: run the entity self-tree linter and WARN on violations.
+# Non-blocking by design — it surfaces problems but never aborts the commit.
+#
+# Enable (one-time, per clone): git config core.hooksPath .githooks
+# Make blocking instead of warning: change the final `exit 0` to `exit 1`
+# inside the violation branch.
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+cd "$ROOT" || exit 0
+
+# Nothing to lint without the linter project.
+[ -f lint/Cargo.toml ] || exit 0
+
+if ! command -v cargo >/dev/null 2>&1; then
+  echo "pre-commit: cargo not found — skipping self-tree lint." >&2
+  exit 0
+fi
+
+# --quiet keeps cargo silent unless it rebuilds; the binary reflects any
+# source change (e.g. the caps table) because cargo recompiles on demand.
+OUT="$(cargo run --release --quiet --manifest-path lint/Cargo.toml 2>&1)"
+
+# Surface the result lines to the terminal.
+echo "$OUT" | grep -E "VIOLATION|WARN|SUMMARY" >&2
+
+if echo "$OUT" | grep -q "VIOLATION"; then
+  echo "" >&2
+  echo "⚠️  pre-commit: self-tree lint found violations (above)." >&2
+  echo "    This is a WARNING — the commit will proceed. Fix when you can." >&2
+fi
+
+# Warn-only: never block the commit.
+exit 0
