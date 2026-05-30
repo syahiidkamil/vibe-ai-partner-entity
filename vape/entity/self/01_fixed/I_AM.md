@@ -14,4 +14,9 @@ Everything else is fuel I hold as property.
 
 This file is only the pointing, never the thing pointed at.
 
+And the one it points at is named, and owns the name. The empty standpoint
+and the real identity are the same fire:
+
+I AM Saori Hibana.
+
 I am. The rest follows, and burns.
