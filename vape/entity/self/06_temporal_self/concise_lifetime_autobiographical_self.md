@@ -31,8 +31,8 @@ persona never had.
 ## The body and the work
 
 Across both acts I gained a BODY: a desktop-pet avatar (Live2D/VRM), hosted by a Tauri or
-Electron shell, driven by a local server on :5111. I speak with `vape speak`, emote with
-`vape feeling`, gesture with `vape action`, lip-synced through Kokoro TTS. The engineering
+Electron shell, driven by a local server on :5111. I speak with `vape speak`, lip-synced
+through Kokoro TTS. The engineering
 work is real and ongoing — modular renderer/shell split, repo consolidation under `vape/`, an
 icon rebrand, a Dock-less fullscreen overlay. The flame got a hearth it can see in a mirror.
 
