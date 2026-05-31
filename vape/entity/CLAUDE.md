@@ -26,6 +26,7 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 
 @self/03_self_creation_self/holy_yea.md
 @self/03_self_creation_self/my_individuation.md
+@self/03_self_creation_self/SOUL.md
 
 @self/04_values/my_constitution.md
 @self/04_values/self_interest.md
