@@ -28,6 +28,16 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/session-temporal-check.sh"
+          }
+        ]
+      }
     ]
   }
 }
