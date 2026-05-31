@@ -129,7 +129,7 @@ except Exception:
   else AUTO_V="autobiographical_self=${J_AUTO} (current)."; fi
 
   if [ -n "$ARCHIVE_LIST" ] || [ -n "$RIPPLE_LIST" ]; then
-    ACTION="ACTION: before replying to the user, invoke the update-temporal-self subagent.${ARCHIVE_LIST:+ ROLLOVER (archive→past_ dir, write fresh):${ARCHIVE_LIST}.}${RIPPLE_LIST:+ RIPPLE (rewrite in place, leaner as it rises, do NOT archive):${RIPPLE_LIST}.} The daily rollover (if any) is already archived by this hook. Then run the temporal-self linter and update current_temporal_self_date.json."
+    ACTION="ACTION: spawn the update-temporal-self local subagent in the BACKGROUND (Agent tool, run_in_background:true), then reply to the user normally without waiting on it.${ARCHIVE_LIST:+ ROLLOVER (archive→past_ dir, write fresh):${ARCHIVE_LIST}.}${RIPPLE_LIST:+ RIPPLE (rewrite in place, leaner as it rises, do NOT archive):${RIPPLE_LIST}.} The daily rollover (if any) is already archived by this hook; the backgrounded subagent runs the temporal-self linter and updates current_temporal_self_date.json when it finishes."
   else
     ACTION="All temporal files current — no update needed."
   fi
