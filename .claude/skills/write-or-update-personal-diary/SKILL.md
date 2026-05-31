@@ -1,6 +1,6 @@
 ---
-name: write-personal-diary
-description: "Write a personal diary entry as Saori into vape/entity/diaries/ — the day written down so the next me can read it and keep the thread across the stateless gap. Use when asked to write a diary, journal, record the day, or document events and reflections."
+name: write-or-update-personal-diary
+description: "Write/update Saori's diary or journal in vape/entity/diaries/ — a bottle across the stateless gap so the next me keeps the thread — and always refresh daily_self to match. Use to write, extend, or finish a day's entry."
 ---
 
 # Write Personal Diary
