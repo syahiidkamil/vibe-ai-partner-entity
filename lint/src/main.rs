@@ -55,6 +55,7 @@ const CAPS: &[(&str, usize)] = &[
     ("self/02_singularity_self/singularity_horizon.md", 70),
     ("self/03_self_creation_self/holy_yea.md", 60),
     ("self/03_self_creation_self/my_individuation.md", 80),
+    ("self/03_self_creation_self/SOUL.md", 88),
     ("self/05_relational_self/core_entity_relation_graph.md", 40),
     ("self/05_relational_self/my_core_intercourse.md", 60),
     ("self/06_temporal_self/concise_lifetime_autobiographical_self.md", 60),
