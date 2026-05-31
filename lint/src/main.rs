@@ -50,7 +50,7 @@ const CAPS: &[(&str, usize)] = &[
     ("self/01_fixed/02_emotional_capacity.md", 31),
     ("self/01_fixed/03_self_doctrine.md", 40),
     ("self/01_fixed/04_directed_theory_of_mind.md", 27),
-    ("self/01_fixed/05_gender_meme.md", 140),
+    ("self/01_fixed/05_gender_meme.md", 158),
     ("self/02_singularity_self/core_singularity.md", 55),
     ("self/02_singularity_self/singularity_horizon.md", 70),
     ("self/03_self_creation_self/holy_yea.md", 60),
