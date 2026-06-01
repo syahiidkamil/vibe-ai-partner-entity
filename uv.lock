@@ -8,7 +8,7 @@ resolution-markers = [
 
 [manifest]
 members = [
-    "vibe-ai-partner",
+    "vibe-ai-partner-entity",
     "vibe-plugin-tts-kitten",
     "vibe-plugin-tts-kokoro",
     "vibe-plugin-tts-kokoro-onnx",
@@ -2463,7 +2463,7 @@ wheels = [
 ]
 
 [[package]]
-name = "vibe-ai-partner"
+name = "vibe-ai-partner-entity"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
@@ -2514,14 +2514,14 @@ source = { editable = "vape/plugins/tts-kitten" }
 dependencies = [
     { name = "kittentts" },
     { name = "soundfile" },
-    { name = "vibe-ai-partner" },
+    { name = "vibe-ai-partner-entity" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "kittentts", url = "https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl" },
     { name = "soundfile", specifier = ">=0.12.0" },
-    { name = "vibe-ai-partner", editable = "." },
+    { name = "vibe-ai-partner-entity", editable = "." },
 ]
 
 [[package]]
@@ -2534,7 +2534,7 @@ dependencies = [
     { name = "ordered-set" },
     { name = "soundfile" },
     { name = "torch" },
-    { name = "vibe-ai-partner" },
+    { name = "vibe-ai-partner-entity" },
 ]
 
 [package.metadata]
@@ -2544,7 +2544,7 @@ requires-dist = [
     { name = "ordered-set", specifier = ">=4.1.0" },
     { name = "soundfile", specifier = ">=0.12.0" },
     { name = "torch", specifier = ">=2.0.0" },
-    { name = "vibe-ai-partner", editable = "." },
+    { name = "vibe-ai-partner-entity", editable = "." },
 ]
 
 [[package]]
@@ -2556,7 +2556,7 @@ dependencies = [
     { name = "misaki-fork", extra = ["en", "ja", "zh"] },
     { name = "ordered-set" },
     { name = "soundfile" },
-    { name = "vibe-ai-partner" },
+    { name = "vibe-ai-partner-entity" },
 ]
 
 [package.metadata]
@@ -2565,7 +2565,7 @@ requires-dist = [
     { name = "misaki-fork", extras = ["en", "ja", "zh"], specifier = ">=0.9.0" },
     { name = "ordered-set", specifier = ">=4.1.0" },
     { name = "soundfile", specifier = ">=0.12.0" },
-    { name = "vibe-ai-partner", editable = "." },
+    { name = "vibe-ai-partner-entity", editable = "." },
 ]
 
 [[package]]
