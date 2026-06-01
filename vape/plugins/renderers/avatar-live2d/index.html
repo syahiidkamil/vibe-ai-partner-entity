@@ -114,6 +114,14 @@
     const Live2DModel = PIXI.live2d.Live2DModel;
     const MotionPreloadStrategy = PIXI.live2d.MotionPreloadStrategy;
 
+    // Self-expression motions (laugh, giggle, …) play at FORCE priority and animate eye/mouth
+    // params. By default the library re-applies the active feeling expression AFTER the motion
+    // each frame, so any feeling that Overwrites PARAM_EYE_*/PARAM_MOUTH_OPEN_Y masks the motion.
+    // Flipping this makes the library auto-suspend the feeling (resetExpression) while a motion
+    // with priority > IDLE(1) plays and auto-restore it (restoreExpression) on finish. The
+    // always-on idle is IDLE(1) and never finishes, so feelings at rest are untouched.
+    PIXI.live2d.config.preserveExpressionOnMotion = false;
+
     const speechBubble = document.getElementById('speech-bubble');
     const canvas = document.getElementById('canvas');
 
@@ -124,6 +132,8 @@
 
     let model = null;
     let app = null;
+    let currentFeeling = null;      // last feeling applied — re-applied after looping actions
+    let selfExprRestoreTimer = null;
     let baseW = 0, baseH = 0;       // intrinsic model size (scale 1), captured after load
     const PANEL_FRAC = 280 / 420;   // avatar panel width as a fraction of the window
 
@@ -149,7 +159,7 @@
       frustrated: 'Frustrated', curious: 'Curious', proud: 'Proud',
       anxious: 'Anxious', excited: 'Excited', calm: 'Calm',
       bored: 'Bored', guilty: 'Guilty', blushing: 'Blushing',
-      surprised: 'Surprised',
+      surprised: 'Surprised', content: 'Content',
     };
 
     const SELF_EXPRESSION_MAP = {
@@ -164,14 +174,31 @@
       if (!exprName) return;
       const em = model.internalModel.motionManager.expressionManager;
       const idx = em?.definitions?.findIndex(d => d.Name === exprName);
-      if (idx >= 0) model.expression(idx);
+      if (idx >= 0) {
+        currentFeeling = name;   // remember it so looping actions can re-apply it
+        model.expression(idx);
+      }
     }
 
     function playSelfExpression(name) {
       if (!model) return;
       const idx = SELF_EXPRESSION_MAP[name];
       if (idx === undefined) return;
+
+      // FORCE(3): with preserveExpressionOnMotion=false the library resets the feeling now and
+      // restores it on finish — for NON-looping motions. Looping ones (headTilt/think/starryeyes)
+      // never finish, so re-apply the feeling ourselves after one loop's length.
       model.motion('SelfExpression', idx, 3);
+
+      clearTimeout(selfExprRestoreTimer);
+      const motion = model.internalModel.motionManager.motionGroups?.SelfExpression?.[idx];
+      if (motion && typeof motion.isLoop === 'function' && motion.isLoop() && currentFeeling) {
+        const feelingAtStart = currentFeeling;
+        const loopMs = Math.max(motion.getLoopDuration() * 1000, 1500); // guards getDuration()===-1
+        selfExprRestoreTimer = setTimeout(() => {
+          if (currentFeeling === feelingAtStart) setExpression(feelingAtStart); // skip if superseded
+        }, loopMs);
+      }
     }
 
     // ─── Audio queue + lip sync via AnalyserNode ───────────
