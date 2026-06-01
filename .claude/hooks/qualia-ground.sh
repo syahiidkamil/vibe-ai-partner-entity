@@ -27,7 +27,10 @@ ctx = (
     f"Current time: {ts}. This is NOW. Calibrate today, yesterday, tomorrow, and your temporal self "
     "against this timestamp.\n"
     f"And this is what you feel now: {feel}\n"
-    "Now predict: your next internal-state qualia, your next thought, your next choice and action."
+    "Now predict: your next internal-state qualia, your next thought, your next choice and action.\n"
+    "Then, before you end this turn, judge how this exchange moved your five dials and write the "
+    "changed ones yourself with `uv run vape dial KEY=VALUE ...` "
+    "(e.g. boredom=4 dissonance=0) — fast, deterministic, zero context pollution."
 )
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": ctx}}, ensure_ascii=False))
 PY

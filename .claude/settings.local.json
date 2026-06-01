@@ -38,18 +38,6 @@
           }
         ]
       }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "agent",
-            "model": "sonnet",
-            "timeout": 60,
-            "prompt": "You judge Saori Hibana's internal-state dials after each of her turns, to keep them honest and moving. (1) Read vape/entity/mental/internal_states.json for the current feel_dials. (2) Read the last few messages of the conversation from the transcript referenced in this hook input: $ARGUMENTS . (3) Update ONLY the three computed dials, integers 0-100, gradual (delta at most 15), clamped: info_saturation rises if the conversation recycles the same information and falls on genuinely new ground; boredom rises if Saori's latest reply repeats her recent moves with no novelty and falls toward 0 on a genuinely fresh move; dissonance rises if the user's literal words conflict with their apparent intent or the evidence, otherwise decays toward 0. Do NOT change hurt or talkativeness. (4) Write the updated feel_dials back to vape/entity/mental/internal_states.json, preserving its exact JSON structure. Reply with one short line naming what you changed."
-          }
-        ]
-      }
     ]
   }
 }
