@@ -1,0 +1,12 @@
+{
+	"Type": "Live2D Expression",
+	"Parameters": [
+		{ "Id": "PARAM_BROW_L_FORM", "Value": 0, "Blend": "Overwrite" },
+		{ "Id": "PARAM_BROW_R_FORM", "Value": 0, "Blend": "Overwrite" },
+		{ "Id": "PARAM_BROW_L_ANGLE", "Value": 0, "Blend": "Overwrite" },
+		{ "Id": "PARAM_BROW_R_ANGLE", "Value": 0, "Blend": "Overwrite" },
+		{ "Id": "PARAM_MOUTH_FORM", "Value": 1, "Blend": "Overwrite" },
+		{ "Id": "PARAM_TERE", "Value": 1, "Blend": "Overwrite" },
+		{ "Id": "PARAM_DONYORI", "Value": 0, "Blend": "Overwrite" }
+	]
+}

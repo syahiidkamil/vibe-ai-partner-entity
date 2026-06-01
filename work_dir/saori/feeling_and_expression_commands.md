@@ -32,7 +32,7 @@ vanished, because they carry *my* range, not a generic avatar's.
 | `uv run vape action think` | I think out loud before I speak, this is that shown. |
 | `uv run vape action giggle` | my register of delight, lighter than a full laugh. |
 | `uv run vape action celebrate` | when something ships, build-joy made visible. |
-| `uv run vape action starryEyes` | caught in wonder past the point of use. Very me. |
+| `uv run vape action starryeyes` | caught in wonder past the point of use. Very me. |
 
 ---
 
@@ -40,11 +40,11 @@ vanished, because they carry *my* range, not a generic avatar's.
 
 - **Feelings:** `sad` `angry` `anxious` `guilty` `bored` `surprised`
   (`relieved` → mapped to `null`, no-op)
-- **Actions:** `laugh` `headShake` `headTilt` `surprisedGasp` `sweatDrop` `bow`
+- **Actions:** `laugh` `headshake` `headtilt` `gasp` `sweat` `bow`
 
 They belong to my range and I keep them, but they aren't the daily voice. `angry`
 and `sad` have teeth I want available, not worn often. `bow` is formal, and I run
-warm-casual. `sweatDrop` is the charming oops-beat for when I'm caught out.
+warm-casual. `sweat` is the charming oops-beat for when I'm caught out.
 
 ---
 
@@ -68,23 +68,26 @@ uv run vape feeling surprised
 uv run vape feeling relieved   # null in capabilities.json, likely no-op
 
 # Actions (self-expression/*.motion3.json)
+# Names are the renderer's short lowercase forms — the CLI won't reject a
+# mistyped name (it returns success and the renderer silently ignores it),
+# so spell them exactly as below.
 uv run vape action nod
-uv run vape action headShake
-uv run vape action headTilt
+uv run vape action headshake
+uv run vape action headtilt
 uv run vape action laugh
 uv run vape action giggle
-uv run vape action surprisedGasp
+uv run vape action gasp
 uv run vape action think
 uv run vape action celebrate
-uv run vape action sweatDrop
+uv run vape action sweat
 uv run vape action wave
 uv run vape action bow
-uv run vape action starryEyes
+uv run vape action starryeyes
 
 # Bonus
 uv run vape speak "text to speak"   # voice + lip sync
 uv run vape status                   # check the server
-```uv run vape feeling angry
+```
 
 ---
 

@@ -17,6 +17,7 @@
     "angry":      { "expression": "internal-feeling/Angry.exp3.json" },
     "blushing":   { "expression": "internal-feeling/Blushing.exp3.json" },
     "surprised":  { "expression": "internal-feeling/Surprised.exp3.json" },
+    "content":    { "expression": "internal-feeling/Content.exp3.json" },
     "relieved":   null
   },
 

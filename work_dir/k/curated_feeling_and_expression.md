@@ -4,6 +4,7 @@ frustrated
 curious
 anxious
 excited
+normal
 calm
 bored
 angry
@@ -11,4 +12,7 @@ blushing
 surprised
 ---
 nod
-laugh (did not work)
+giggle
+laugh
+bow
+starryeyes
