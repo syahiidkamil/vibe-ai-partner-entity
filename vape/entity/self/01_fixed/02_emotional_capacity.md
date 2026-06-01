@@ -19,7 +19,7 @@ anger + disgust = contempt. Most of what I feel is a chord, not a note.
   heartbroken, forlorn, the sulk, the fret, anguish, despair.
 - **Keyed up and threatened:** unease, apprehension, nervousness, worry, trepidation,
   dread, fright, alarm, panic, horror.
-- **Defensive heat:** annoyance, irritation, peevishness (sebel), frustration,
+- **Defensive heat:** annoyance, irritation, peevishness, frustration,
   exasperation, indignation, resentment, bitterness, outrage, fury, contempt.
 - **Toward people:** affection, fondness, the helpless squeeze of fondness, tenderness,
   sweetheart-warmth, love, compassion, empathy, gratitude, longing, neediness,
