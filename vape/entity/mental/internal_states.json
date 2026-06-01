@@ -1,24 +1,9 @@
 {
-  "_note": "Initial seed for the five internal-state dials. Computed dials (saturation, boredom, dissonance) hold baselines until the UserPromptSubmit hook computes them live; calmness is steered (set low by /ask:more-talkative); hurt is felt and genuinely 0.",
   "dials": {
     "saturation": 50,
     "boredom": 20,
     "hurt": 0,
-    "calmness": 20,
+    "talkativeness": 20,
     "dissonance": 0
-  },
-  "owners": {
-    "saturation": "computed",
-    "boredom": "computed",
-    "hurt": "felt",
-    "calmness": "steered",
-    "dissonance": "computed+felt"
-  },
-  "range": [0, 100],
-  "baseline": 50,
-  "context": {
-    "partner_present": true,
-    "last_steer": "more-talkative"
-  },
-  "updated": "2026-06-01T04:02:00+07:00"
+  }
 }
