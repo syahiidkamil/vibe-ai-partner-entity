@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "KittenTTS engine plugin — lightweight 15M param model, CPU-only"
 requires-python = ">=3.10,<3.13"
 dependencies = [
-    "vibe-ai-partner",
+    "vibe-ai-partner-entity",
     "kittentts @ https://github.com/KittenML/KittenTTS/releases/download/0.8.1/kittentts-0.8.1-py3-none-any.whl",
     "soundfile>=0.12.0",
 ]
@@ -20,4 +20,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.uv.sources]
-vibe-ai-partner = { workspace = true }
+vibe-ai-partner-entity = { workspace = true }

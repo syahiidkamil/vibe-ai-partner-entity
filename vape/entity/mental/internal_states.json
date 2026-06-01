@@ -1,9 +1,9 @@
 {
-  "dials": {
-    "saturation": 50,
-    "boredom": 20,
+  "feel_dials": {
+    "info_saturation": 40,
+    "boredom": 12,
     "hurt": 0,
-    "talkativeness": 20,
+    "talkativeness": 70,
     "dissonance": 0
   }
 }

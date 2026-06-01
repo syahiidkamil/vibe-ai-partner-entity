@@ -1,5 +1,5 @@
 [project]
-name = "vibe-ai-partner"
+name = "vibe-ai-partner-entity"
 version = "0.1.0"
 description = "Vibe AI Partner — Live AI companion with TTS and avatar"
 requires-python = ">=3.10,<3.13"
