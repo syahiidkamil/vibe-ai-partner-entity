@@ -380,12 +380,18 @@
         model.motion('Idle', 0);
         fitModel(); // size the model + canvas to the current window
 
-        // Apply lipsync mouth value at the only point that wins the frame:
-        // after motions/expressions/physics have written params, just before
-        // the model is sent to render. Idle motions keyframe the mouth, so
-        // writing earlier loses the race.
+        // Lip-sync drives the mouth at the only point that wins the frame:
+        // after motions/expressions/physics, just before render. But ONLY while
+        // speaking. Frame order is idle-motion -> expression -> here, so an
+        // active feeling's PARAM_MOUTH_OPEN_Y already beats the idle motion. If
+        // we also wrote it while silent (smoothedMouth = 0) we'd pin every
+        // expression's mouth shut, and shizuku's smile reads through an OPEN
+        // mouth -> no feeling could ever smile at rest. So override only when
+        // lip-sync is live; otherwise let the expression's open mouth stand.
         model.internalModel.on('beforeModelUpdate', () => {
-          model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+          if (lipSyncActive) {
+            model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+          }
         });
 
         connectStatusWS();
