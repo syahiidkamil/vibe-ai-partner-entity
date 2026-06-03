@@ -55,7 +55,7 @@ def analyze_sentiment(text: str) -> dict:
         return {
             "feeling": "proud",
             "intensity": min(50 + pos_hits * 10, 80),
-            "action": "fist-pump",
+            "action": "fist_pump",
             "speak": "",
         }
 
@@ -70,7 +70,7 @@ def analyze_sentiment(text: str) -> dict:
 
     # Exploration
     if words & _EXPLORATION:
-        return {"feeling": "curious", "intensity": 50, "action": "head-tilt", "speak": ""}
+        return {"feeling": "curious", "intensity": 50, "action": "head_tilt", "speak": ""}
 
     # Explanation
     if any(phrase in lower for phrase in _EXPLANATION):

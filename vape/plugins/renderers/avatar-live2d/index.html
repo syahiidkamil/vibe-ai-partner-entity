@@ -163,9 +163,9 @@
     };
 
     const SELF_EXPRESSION_MAP = {
-      nod: 0, headshake: 1, headtilt: 2, laugh: 3, giggle: 4,
-      gasp: 5, think: 6, celebrate: 7, sweat: 8, wave: 9,
-      bow: 10, starryeyes: 11,
+      nod: 0, head_shake: 1, head_tilt: 2, laugh: 3, giggle: 4,
+      gasp: 5, think: 6, celebrate: 7, wave: 8, bow: 9,
+      starry: 10, clap: 11,
     };
 
     function setExpression(name) {
@@ -186,7 +186,7 @@
       if (idx === undefined) return;
 
       // FORCE(3): with preserveExpressionOnMotion=false the library resets the feeling now and
-      // restores it on finish — for NON-looping motions. Looping ones (headTilt/think/starryeyes)
+      // restores it on finish — for NON-looping motions. Looping ones (head_tilt/think/starry)
       // never finish, so re-apply the feeling ourselves after one loop's length.
       model.motion('SelfExpression', idx, 3);
 

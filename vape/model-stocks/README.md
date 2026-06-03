@@ -73,9 +73,9 @@ Your model can support any subset. Set unsupported feelings to `null`.
 
 Self-expressions are categorized into groups:
 
-- **emotional** — Laughing, Giggling, Celebrating, StarryEyes
-- **social** — Nodding, HeadShake, Waving, Bowing
-- **reaction** — HeadTilt, SurprisedGasp, Thinking, SweatDrop
+- **emotional** — laugh, giggle, celebrate, starry, clap
+- **social** — nod, head_shake, wave, bow
+- **reaction** — head_tilt, gasp, think, sweat
 - **combo** — Combined feeling + motion sequences (advanced)
 
 ## Directory Structure Reference
