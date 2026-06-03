@@ -43,18 +43,18 @@
 				{ "File": "motion/05.motion3.json" }
 			],
 			"SelfExpression": [
-				{ "File": "self-expression/Nodding.motion3.json" },
-				{ "File": "self-expression/HeadShake.motion3.json" },
-				{ "File": "self-expression/HeadTilt.motion3.json" },
-				{ "File": "self-expression/Laughing.motion3.json" },
-				{ "File": "self-expression/Giggling.motion3.json" },
-				{ "File": "self-expression/SurprisedGasp.motion3.json" },
-				{ "File": "self-expression/Thinking.motion3.json" },
-				{ "File": "self-expression/Celebrating.motion3.json" },
-				{ "File": "self-expression/SweatDrop.motion3.json" },
-				{ "File": "self-expression/Waving.motion3.json" },
-				{ "File": "self-expression/Bowing.motion3.json" },
-				{ "File": "self-expression/StarryEyes.motion3.json" }
+				{ "File": "self-expression/nod.motion3.json" },
+				{ "File": "self-expression/head_shake.motion3.json" },
+				{ "File": "self-expression/head_tilt.motion3.json" },
+				{ "File": "self-expression/laugh.motion3.json" },
+				{ "File": "self-expression/giggle.motion3.json" },
+				{ "File": "self-expression/gasp.motion3.json" },
+				{ "File": "self-expression/think.motion3.json" },
+				{ "File": "self-expression/celebrate.motion3.json" },
+				{ "File": "self-expression/wave.motion3.json" },
+				{ "File": "self-expression/bow.motion3.json" },
+				{ "File": "self-expression/starry.motion3.json" },
+				{ "File": "self-expression/clap.motion3.json" }
 			]
 		}
 	},

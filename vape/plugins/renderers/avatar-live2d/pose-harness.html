@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #f0f0f0; }
+    #canvas { display: block; }
+    #ready { position: fixed; top: 4px; left: 4px; font: 11px monospace; color: #0a0; }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <div id="ready"></div>
+  <script src="lib/live2dcubismcore.min.js"></script>
+  <script src="node_modules/pixi.js/dist/browser/pixi.min.js"></script>
+  <script src="node_modules/pixi-live2d-display/dist/cubism4.min.js"></script>
+  <script>
+    // Pose-render harness for headless verification. Loads Shizuku, FREEZES idle /
+    // breath / physics / eye-blink, forces a static set of values, renders, and sets
+    // window.__ready when painted. Two modes:
+    //
+    //   POSE mode (raw values you type):
+    //     ?p=PARAM_ARM_02_R_01:0.8,PARAM_ARM_02_R_02:1     (parameters)
+    //     &o=PARTS_01_ARM_R_02:1,PARTS_01_ARM_R_01:0       (part opacities)
+    //
+    //   MOTION mode (evaluate an actual .motion3.json at a time, frame-accurate):
+    //     ?motion=self-expression/Thinking.motion3.json&t=1.5
+    //
+    //   Framing (both modes): &w=512&h=512&zoom=1&yoff=0.42
+    const Live2DModel = PIXI.live2d.Live2DModel;
+    const qp = new URLSearchParams(location.search);
+
+    function parsePairs(s) {
+      const out = [];
+      if (!s) return out;
+      for (const tok of s.split(',')) {
+        const [k, v] = tok.split(':');
+        if (k) out.push([k.trim(), parseFloat(v)]);
+      }
+      return out;
+    }
+    const PARAMS = parsePairs(qp.get('p'));
+    const OPACITIES = parsePairs(qp.get('o'));
+    const MOTION = qp.get('motion');
+    const T = parseFloat(qp.get('t') || '0');
+    const W = parseInt(qp.get('w') || '512');
+    const H = parseInt(qp.get('h') || '512');
+    const ZOOM = parseFloat(qp.get('zoom') || '1');
+    const YOFF = parseFloat(qp.get('yoff') || '0.42');
+
+    // Evaluate a Cubism motion3.json curve's value at time t. Supports segment
+    // types 0=Linear, 1=Bezier (sampled), 2=Stepped, 3=InverseStepped.
+    function evalCurve(segs, t) {
+      let i = 0;
+      let t0 = segs[i++], v0 = segs[i++];
+      if (t <= t0) return v0;
+      while (i < segs.length) {
+        const type = segs[i++];
+        if (type === 1) { // bezier: t1,v1,t2,v2,t3,v3
+          const t1 = segs[i++], v1 = segs[i++], t2 = segs[i++], v2 = segs[i++], t3 = segs[i++], v3 = segs[i++];
+          if (t <= t3) {
+            // sample the cubic bezier in t-space by binary search on the parameter
+            let lo = 0, hi = 1;
+            for (let k = 0; k < 24; k++) {
+              const m = (lo + hi) / 2, mt = 1 - m;
+              const bt = mt*mt*mt*t0 + 3*mt*mt*m*t1 + 3*mt*m*m*t2 + m*m*m*t3;
+              if (bt < t) lo = m; else hi = m;
+            }
+            const m = (lo + hi) / 2, mt = 1 - m;
+            return mt*mt*mt*v0 + 3*mt*mt*m*v1 + 3*mt*m*m*v2 + m*m*m*v3;
+          }
+          t0 = t3; v0 = v3;
+        } else { // 0 linear, 2 stepped, 3 inverse-stepped: t,v
+          const t1 = segs[i++], v1 = segs[i++];
+          if (t <= t1) {
+            if (type === 2) return v0;          // stepped
+            if (type === 3) return v1;          // inverse-stepped
+            const a = (t - t0) / (t1 - t0 || 1); // linear
+            return v0 + (v1 - v0) * a;
+          }
+          t0 = t1; v0 = v1;
+        }
+      }
+      return v0;
+    }
+
+    const canvas = document.getElementById('canvas');
+    canvas.width = W; canvas.height = H;
+
+    async function init() {
+      const app = new PIXI.Application({
+        view: canvas, width: W, height: H,
+        backgroundColor: 0xf0f0f0, antialias: true,
+      });
+      const model = await Live2DModel.from('shizuku/runtime/shizuku.model3.json');
+      app.stage.addChild(model);
+      model.anchor.set(0.5, 0.5);
+      const s = Math.min(W / model.width, H / model.height) * 0.95 * ZOOM;
+      model.scale.set(s);
+      model.x = W / 2;
+      model.y = H * YOFF;
+
+      const core = model.internalModel.coreModel;
+      model.internalModel.eyeBlink = null;
+      model.internalModel.motionManager.stopAllMotions();
+      if (model.internalModel.breath) model.internalModel.breath.setParameters([]);
+      model.internalModel.physics = null;
+
+      // In MOTION mode, fetch + pre-evaluate every curve at time T.
+      let motionParams = [], motionOpac = [];
+      if (MOTION) {
+        const j = await (await fetch('shizuku/runtime/' + MOTION)).json();
+        for (const c of j.Curves) {
+          const val = evalCurve(c.Segments, T);
+          if (c.Target === 'PartOpacity') motionOpac.push([c.Id, val]);
+          else motionParams.push([c.Id, val]);
+        }
+      }
+
+      model.internalModel.on('beforeModelUpdate', () => {
+        for (const [id, val] of PARAMS) core.setParameterValueById(id, val);
+        for (const [id, val] of motionParams) core.setParameterValueById(id, val);
+        const setOpac = (id, val) => { if (typeof core.setPartOpacityById === 'function') core.setPartOpacityById(id, val); };
+        for (const [id, val] of OPACITIES) setOpac(id, val);
+        for (const [id, val] of motionOpac) setOpac(id, val);
+      });
+
+      let n = 0;
+      app.ticker.add(() => { if (++n === 8) document.getElementById('ready').textContent = MOTION ? `READY t=${T}` : 'READY'; });
+      setTimeout(() => { window.__ready = true; }, 600);
+    }
+    init().catch(e => { document.getElementById('ready').textContent = 'ERR: ' + e.message; window.__ready = true; });
+  </script>
+</body>
+</html>
