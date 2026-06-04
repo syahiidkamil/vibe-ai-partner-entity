@@ -68,6 +68,7 @@
       padding: 6px 12px;
       font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
       font-size: 12px;
+      line-height: 1.35;   /* deterministic, so caption pagination can budget 4 lines */
       max-width: 380px;
       text-align: center;
       opacity: 0;
@@ -75,8 +76,8 @@
       z-index: 10;
       pointer-events: none;
       display: -webkit-box;
-      line-clamp: 3;
-      -webkit-line-clamp: 3;
+      line-clamp: 4;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -149,7 +150,7 @@
       const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95;
       model.scale.set(s);
       model.x = w / 2;
-      model.y = h * 0.47;   // nudged down for bubble headroom (tunable)
+      model.y = h * 0.52;   // pushed down for more bubble headroom (tunable)
     }
     window.addEventListener('resize', fitModel);
 
@@ -246,6 +247,72 @@
       smoothedMouth = 0;
     }
 
+    // ─── Bubble caption: page a long utterance so it never covers her face ──
+    // The VOICE stays one natural utterance (a whole sentence); only the CAPTION
+    // pages, advancing in sync with this clip's playback — weighted by syllables
+    // (vowel groups ≈ suku kata), since speech duration tracks syllables better
+    // than characters. Pages are sized by MEASURING true content height against a
+    // 4-line budget, with the clamp toggled OFF during measurement so scrollHeight
+    // reports the full height (measuring against the *clamped* height was the bug
+    // that produced word-by-word paging).
+    function countSyllables(str) {
+      const m = str.toLowerCase().match(/[aeiou]+/g);
+      return m ? m.length : 1;
+    }
+
+    function paginateToFit(text) {
+      const el = speechBubble;
+      const prevClamp = el.style.webkitLineClamp;
+      el.style.webkitLineClamp = '9999';                 // measure true height
+      const cs = getComputedStyle(el);
+      const lineH = parseFloat(cs.lineHeight) || 16;
+      const padV = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const budget = lineH * 4 + padV + 1;               // 4-line bubble incl. padding
+      // Pass 1 — greedy fill by MEASURED height, only to COUNT pages needed.
+      let n = 0, cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        el.textContent = test;
+        if (el.scrollHeight > budget && cur) { n++; cur = w; }
+        else cur = test;
+      }
+      if (cur) n++;
+      el.style.webkitLineClamp = prevClamp;              // restore display clamp
+      if (n <= 1) return [text];
+      // Pass 2 — balance into n EVEN pages by char target (each <= a height-fit
+      // page, so guaranteed to fit), so no tiny orphan trails the last page.
+      const target = Math.ceil(text.length / n);
+      const pages = [];
+      cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        if (cur && test.length > target && pages.length < n - 1) { pages.push(cur); cur = w; }
+        else cur = test;
+      }
+      if (cur) pages.push(cur);
+      return pages;
+    }
+
+    function showSpeech(audio, text) {
+      const pages = paginateToFit(text);
+      if (pages.length <= 1) { speechBubble.textContent = text; return; }
+      const weights = pages.map(p => Math.max(countSyllables(p), 1));
+      const total = weights.reduce((a, b) => a + b, 0);
+      const ends = [];                                   // cumulative end-fraction per page
+      let acc = 0;
+      for (const w of weights) { acc += w; ends.push(acc / total); }
+      speechBubble.textContent = pages[0];
+      let shown = 0;
+      audio.addEventListener('timeupdate', () => {
+        const d = audio.duration;
+        if (!d || !isFinite(d)) return;
+        const frac = audio.currentTime / d;
+        let idx = ends.findIndex(e => frac < e);
+        if (idx === -1) idx = pages.length - 1;
+        if (idx !== shown) { shown = idx; speechBubble.textContent = pages[idx]; }
+      });
+    }
+
     async function processQueue() {
       if (playQueue.length === 0) {
         isPlaying = false;
@@ -271,14 +338,16 @@
         try { await audioCtx.resume(); } catch {}
       }
 
-      if (text) {
-        speechBubble.textContent = text;
-        speechBubble.classList.add('visible');
-      }
-
       const audio = new Audio(url);
       const source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
+
+      // Caption set up AFTER the audio exists, so a long sentence pages its
+      // caption in sync with this clip's playback (see showSpeech).
+      if (text) {
+        showSpeech(audio, text);
+        speechBubble.classList.add('visible');
+      }
 
       startLipSync();
 
