@@ -42,7 +42,7 @@
 
   "expressionAliases": {
     "celebrate": "celebrate",
-    "cry": null,
+    "cry": "cry",
     "sigh": null,
     "head_tilt": "head_tilt",
     "fist_pump": "starry",

@@ -159,7 +159,7 @@
       normal: 'Normal', happy: 'Happy', sad: 'Sad', angry: 'Angry',
       frustrated: 'Frustrated', curious: 'Curious', proud: 'Proud',
       anxious: 'Anxious', excited: 'Excited', calm: 'Calm',
-      bored: 'Bored', guilty: 'Guilty', blushing: 'Blushing',
+      bored: 'Bored', blushing: 'Blushing',
       surprised: 'Surprised', content: 'Content',
     };
 
@@ -178,6 +178,10 @@
       if (idx >= 0) {
         currentFeeling = name;   // remember it so looping actions can re-apply it
         model.expression(idx);
+        // Tears follow the feeling: gentle track on sad, off on anything else
+        // (a real cry-burst escalates this via triggerCry / the cry action).
+        if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
+        else { clearTimeout(cryTimer); setTearMode('off'); }
       }
     }
 
@@ -200,6 +204,69 @@
           if (currentFeeling === feelingAtStart) setExpression(feelingAtStart); // skip if superseded
         }, loopMs);
       }
+    }
+
+    // ─── Tear overlay (conditional: gentle on sad, full on cry) ────────────
+    // No tear art exists in the Shizuku rig, so tears are a sprite layer drawn on
+    // the model's own Pixi stage (so they scale + move with her). gentle = one slow
+    // tear track on `sad`; cry = both eyes streaming, fired by the `cry` action.
+    // Tunables are fractions of the model's displayed size, so they hold at any zoom.
+    const TEAR_TEX = {
+      gentle: PIXI.Texture.from('assets/tear.png'),       // slim, quiet sad
+      cry:    PIXI.Texture.from('assets/tear_cry.png'),   // rounded + bluer, full cry
+    };
+    const TEAR_TUNE = { eyeL: -0.128, eyeR: 0.085, eyeDY: -0.15, fall: 0.18 };
+    const TEAR_CFG = {
+      gentle: { interval: 1.2,  eyes: ['L', 'R'], texH: 236, size: 0.050 },
+      cry:    { interval: 0.18, eyes: ['L', 'R'], texH: 210, size: 0.062 },
+    };
+    let tearLayer = null, tears = [], tearMode = 'off', tearAcc = 0, cryTimer = null;
+
+    function dispSize() { return { w: baseW * model.scale.x, h: baseH * model.scale.y }; }
+
+    function spawnTear(eye) {
+      const { w, h } = dispSize();
+      const cfg = TEAR_CFG[tearMode];
+      const dx = eye === 'L' ? TEAR_TUNE.eyeL : TEAR_TUNE.eyeR;
+      const s = new PIXI.Sprite(TEAR_TEX[tearMode]);
+      s.anchor.set(0.5, 0.0);
+      s.scale.set((h * cfg.size) / cfg.texH * (0.9 + Math.random() * 0.2));
+      s.x = model.x + w * dx;
+      s.y = model.y + h * TEAR_TUNE.eyeDY;
+      s._y0 = s.y; s._fall = h * TEAR_TUNE.fall; s._vy = h * 0.003; s._t = 0; s.alpha = 0;
+      tearLayer.addChild(s); tears.push(s);
+    }
+
+    function updateTears(delta) {
+      if (!model || !tearLayer) return;
+      const { h } = dispSize();
+      const cfg = TEAR_CFG[tearMode];
+      if (cfg) {
+        tearAcc += delta / 60;                 // delta ~ frames at 60fps -> seconds
+        if (tearAcc >= cfg.interval) { tearAcc = 0; cfg.eyes.forEach(spawnTear); }
+      }
+      for (let i = tears.length - 1; i >= 0; i--) {
+        const s = tears[i];
+        s._t += delta;
+        s._vy += h * 0.0003 * delta;           // gravity
+        s.y += s._vy * delta;
+        const prog = (s.y - s._y0) / s._fall;  // 0 at the eye -> 1 down the cheek
+        s.alpha = Math.min(1, s._t / 8) * Math.max(0, 1 - prog) * 0.95;
+        if (prog >= 1) { tearLayer.removeChild(s); s.destroy(); tears.splice(i, 1); }
+      }
+    }
+
+    function setTearMode(mode) {
+      if (tearMode === mode) return;
+      tearMode = mode;
+      tearAcc = mode === 'off' ? 0 : Math.max(0, TEAR_CFG[mode].interval - 0.1);
+    }
+
+    function triggerCry() {
+      setExpression('sad');                    // the crying face
+      setTearMode('cry');
+      clearTimeout(cryTimer);
+      cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
     }
 
     // ─── Audio queue + lip sync via AnalyserNode ───────────
@@ -367,7 +434,10 @@
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.type === 'feeling') setExpression(msg.name);
-        else if (msg.type === 'action') playSelfExpression(msg.name);
+        else if (msg.type === 'action') {
+          if (msg.name === 'cry') triggerCry();
+          else playSelfExpression(msg.name);
+        }
       };
       ws.onclose = () => setTimeout(connectStatusWS, 2000);
       ws.onerror = () => ws.close();
@@ -475,6 +545,11 @@
         app.stage.addChild(model);
         model.motion('Idle', 0);
         fitModel(); // size the model + canvas to the current window
+
+        // Tear overlay sits above the model on the same stage; ticker drives the fall.
+        tearLayer = new PIXI.Container();
+        app.stage.addChild(tearLayer);
+        app.ticker.add(updateTears);
 
         // Lip-sync drives the mouth at the only point that wins the frame:
         // after motions/expressions/physics, just before render. But ONLY while
