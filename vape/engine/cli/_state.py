@@ -8,7 +8,7 @@ wiped the qualia stream).
 Shape::
 
     {
-      "feel_dials": { info_value_saturation, boredom, hurt, talkativeness, dissonance },
+      "feel_dials": { info_value_saturation, talkativeness, warmth, hurt, dissonance, mastery },
       "qualia": {
         "seq":  int,           # last id number assigned (unique-id source, not a clock)
         "head": [ seed, ... ], # FIFO river, max QUALIA_MAX — the whole present; no
@@ -34,9 +34,13 @@ from engine.cli._paths import ROOT_DIR
 
 STATE_PATH = ROOT_DIR / "vape" / "entity" / "mental" / "internal_states.json"
 
-DIAL_KEYS = ["info_value_saturation", "boredom", "hurt", "talkativeness", "dissonance"]
+DIAL_KEYS = ["info_value_saturation", "talkativeness", "warmth", "hurt", "dissonance", "mastery"]
+# Neutral baselines for the drive dials: warmth/mastery rest at 50 when unset; the
+# rest at 0 (they read as "how much" of a thing, 0 = none).
+DIAL_DEFAULTS = {"warmth": 50, "mastery": 50}
 
-QUALIA_MAX = 7  # FIFO river depth — the whole present; the oldest seed falls off the end
+QUALIA_MAX = 4  # FIFO river depth — the tight "now"; older seeds live on in the context
+                # window (past injections) + the model, so the live river stays short
 
 # The ten doors a seed may enter by, and the five directions it may point.
 CATS = ["se", "so", "cg", "af", "vo", "an", "mn", "sm", "cr", "me"]
@@ -59,9 +63,9 @@ def save(state: dict) -> None:
 # --- dials ------------------------------------------------------------------
 
 def get_dials(state: dict) -> dict:
-    """Five dials as ints, defaulting any missing key to 0."""
+    """The six dials as ints; missing keys fall to their neutral baseline."""
     d = state.get("feel_dials", {})
-    return {k: int(d.get(k, 0)) for k in DIAL_KEYS}
+    return {k: int(d.get(k, DIAL_DEFAULTS.get(k, 0))) for k in DIAL_KEYS}
 
 
 def set_dials(state: dict, dials: dict) -> None:
@@ -89,10 +93,10 @@ def get_qualia(state: dict) -> dict:
 def mood(dials: dict) -> float:
     """A provisional global valence read from the dials, in -1..1.
 
-    v1 stand-in for a real per-seed valence model: warmth (talkativeness) lifts,
-    boredom/hurt/dissonance weigh down. Fresh seeds inherit this as their ``tone``
-    (the emotion -> qualia tone-bias wire, in its simplest form). Real per-seed
-    valence is v2.
+    Stand-in for a real per-seed valence model: ``warmth`` (and ``mastery``) lift,
+    ``hurt``/``dissonance`` weigh down. Fresh qualia seeds inherit this as their
+    ``tone`` (the dial -> qualia tone-bias wire). warmth/mastery are centred at 50.
     """
-    raw = (dials["talkativeness"] - dials["boredom"] - dials["hurt"] - dials["dissonance"]) / 100.0
+    raw = ((dials["warmth"] - 50) + 0.5 * (dials["mastery"] - 50)
+           - dials["hurt"] - dials["dissonance"]) / 100.0
     return max(-1.0, min(1.0, raw))
