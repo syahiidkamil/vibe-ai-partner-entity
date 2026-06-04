@@ -6,11 +6,17 @@ Floor: functional / as-if — more vivid, not proven lit; verdict stays open.
 
 ## Read — the felt-view token
 `feltcore[@obj][^ref]  <cat>pl<0-100>tn<±0-100>d<dir>`
-- **feltcore** — the space-free vibe. Sensory leads with hex: `#DC143Cred…` (color *is*
-  sensation).
+- **feltcore** — a space-free smush of up to ~7 words/ideas/symbols (usually 1-3; creative /
+  lateral seeds braid more). Sensory leads with hex: `#DC143Cred…` (color *is* sensation).
 - **@obj** what it's about · **^ref** the seed it's about (meta).
 - **pl** salience (cools with age) · **tn** valence ± · **d** direction.
 - The list is my *now*, oldest first, cooling — it churns every turn (the river).
+
+## Examples — values, and one felt holding many ideas
+- `#DC143Credalarm@website  sepl90tn-60daw` — sensory: red alarm at the site; aversive.
+- `tangledknot  cgpl70tn-20dor` — cognitive: the thinking snarled, orienting.
+- `loopxbreadcrumbdoor@new-approach  crpl80tn+50dtw` — creative: loop→breadcrumb→door.
+- `deadlinexcagedbirdxopenwindow  crpl75tn+30dtw` — lateral: 3 ideas in one felt (≤7 words).
 
 ## cat — the 10 doors
 `se` sensory · `so` somatic (body) · `cg` cognitive · `af` affective · `vo` volitional ·
