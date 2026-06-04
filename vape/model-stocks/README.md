@@ -63,11 +63,9 @@ Your model can support any subset. Set unsupported feelings to `null`.
 | excited     | High energy, anticipation                |
 | calm        | Peace, equilibrium                       |
 | bored       | Lack of stimulation                      |
-| guilty      | Regret, responsibility for error         |
 | angry       | Strong displeasure                       |
 | blushing    | Embarrassment, flattery                  |
 | surprised   | Unexpected event                         |
-| relieved    | Tension release, problem resolved        |
 
 ## Expression Groups
 

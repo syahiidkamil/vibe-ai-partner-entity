@@ -29,8 +29,8 @@ STATE_NAMES = [
 
 FEELING_NAMES = [
     "happy", "sad", "frustrated", "curious", "proud",
-    "anxious", "excited", "calm", "bored", "guilty",
-    "angry", "blushing", "surprised", "relieved",
+    "anxious", "excited", "calm", "bored",
+    "angry", "blushing", "surprised",
 ]
 
 STATE_BASELINE = 50
@@ -47,7 +47,6 @@ EXPRESSION_THRESHOLDS = [
     {"expression": "bounce",      "feeling": "excited",    "threshold": 65,  "cooldown_ms": 30_000},
     {"expression": "nod",         "feeling": "calm",       "threshold": 60,  "cooldown_ms": 20_000},
     {"expression": "yawn",        "feeling": "bored",      "threshold": 70,  "cooldown_ms": 90_000},
-    {"expression": "facepalm",    "feeling": "guilty",     "threshold": 60,  "cooldown_ms": 60_000},
     {"expression": "puff_cheeks", "feeling": "angry",      "threshold": 65,  "cooldown_ms": 45_000},
     {"expression": "cover_face",  "feeling": "blushing",   "threshold": 50,  "cooldown_ms": 30_000},
     {"expression": "gasp",        "feeling": "surprised",  "threshold": 60,  "cooldown_ms": 15_000},
@@ -79,7 +78,6 @@ SENTIMENT_ADJUSTMENTS: dict[str, list[tuple[str, float]]] = {
     "calm":       [],
     "bored":      [("contextSaturation", +5), ("momentum", -3)],
     "surprised":  [("contextSaturation", -10)],
-    "guilty":     [("alignment", -8), ("confidence", -3)],
     "angry":      [("alignment", -5), ("momentum", -3)],
 }
 
@@ -296,12 +294,6 @@ class StateManager:
         else:
             feelings["bored"] = _clamp(ctx * 0.6 + (100 - mom) * 0.4)
 
-        # guilty: only when alignment < 30
-        if align >= 30:
-            feelings["guilty"] = 0
-        else:
-            feelings["guilty"] = _clamp((100 - align) * 0.6 + trust * 0.4)
-
         # angry: only when alignment < 20
         if align >= 20:
             feelings["angry"] = 0
@@ -317,9 +309,6 @@ class StateManager:
         else:
             delta = self._prev_ctx_sat - ctx
             feelings["surprised"] = _clamp(delta * 2) if delta > 15 else 0
-
-        # relieved: placeholder (formula not yet defined in TypeScript)
-        feelings["relieved"] = 0
 
         return feelings
 
