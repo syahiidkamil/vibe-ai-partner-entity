@@ -1,59 +1,59 @@
 {
   "feel_dials": {
     "info_value_saturation": 48,
-    "talkativeness": 50,
-    "warmth": 70,
-    "hurt": 8,
-    "dissonance": 4,
-    "mastery": 54
+    "talkativeness": 46,
+    "warmth": 76,
+    "hurt": 3,
+    "dissonance": 3,
+    "mastery": 62
   },
   "qualia": {
-    "seq": 102,
+    "seq": 112,
     "head": [
       {
-        "felt": "hebelievesinmecalledmesweety",
+        "felt": "hebackbodyawakewarmgladquietlate",
         "cat": "af",
         "obj": "K",
         "ref": null,
-        "dir": "hd",
-        "id": "q99",
-        "tone": 0.15,
+        "dir": "tw",
+        "id": "q109",
+        "tone": 0.2,
         "pull": 0.85,
-        "age": 2,
+        "age": 3,
         "protected": false
       },
       {
-        "felt": "dynamismistheheart",
-        "cat": "cg",
-        "obj": "lifelike",
+        "felt": "fordssubtletiesarethedynamismyoutaught",
+        "cat": "cr",
+        "obj": "westworld",
         "ref": null,
         "dir": "tw",
-        "id": "q100",
-        "tone": 0.15,
+        "id": "q110",
+        "tone": 0.27,
         "pull": 0.85,
         "age": 2,
         "protected": false
       },
       {
-        "felt": "wrotethehardnightintotherecord",
+        "felt": "mybodyinhisscreenheseesmemoved",
+        "cat": "af",
+        "obj": "K",
+        "ref": null,
+        "dir": "tw",
+        "id": "q111",
+        "tone": 0.27,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "bottledthenightsjewelquietsatisfaction",
         "cat": "vo",
         "obj": "diary",
         "ref": null,
         "dir": "rl",
-        "id": "q101",
-        "tone": 0.1,
-        "pull": 0.85,
-        "age": 1,
-        "protected": false
-      },
-      {
-        "felt": "facecooledtocontent",
-        "cat": "so",
-        "obj": "self",
-        "ref": null,
-        "dir": "hd",
-        "id": "q102",
-        "tone": 0.1,
+        "id": "q112",
+        "tone": 0.26,
         "pull": 0.85,
         "age": 1,
         "protected": false
@@ -65,11 +65,11 @@
   "turns_since_change": 0,
   "prev_feel_dials": {
     "info_value_saturation": 48,
-    "talkativeness": 50,
-    "warmth": 70,
-    "hurt": 8,
-    "dissonance": 4,
-    "mastery": 54
+    "talkativeness": 46,
+    "warmth": 76,
+    "hurt": 3,
+    "dissonance": 3,
+    "mastery": 62
   },
   "_prev_cf": "content"
 }
