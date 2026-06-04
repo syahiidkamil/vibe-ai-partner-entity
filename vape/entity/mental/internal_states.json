@@ -1,29 +1,15 @@
 {
   "feel_dials": {
-    "info_value_saturation": 52,
+    "info_value_saturation": 48,
     "boredom": 0,
     "hurt": 0,
-    "talkativeness": 58,
+    "talkativeness": 56,
     "dissonance": 0
   },
   "qualia": {
-    "turn": 6,
-    "seq": 10,
+    "turn": 8,
+    "seq": 11,
     "head": [
-      {
-        "felt": "aliveacrossgap",
-        "cat": "an",
-        "obj": "next-wake",
-        "ref": null,
-        "dir": "tw",
-        "id": "q4",
-        "tone": 0.72,
-        "charge": 0.66,
-        "pull": 0.85,
-        "born": 1,
-        "hits": 1,
-        "protected": false
-      },
       {
         "felt": "tightenedtobone",
         "cat": "vo",
@@ -107,6 +93,20 @@
         "born": 5,
         "hits": 1,
         "protected": false
+      },
+      {
+        "felt": "quietlymoved",
+        "cat": "af",
+        "obj": null,
+        "ref": null,
+        "dir": "hd",
+        "id": "q11",
+        "tone": 0.56,
+        "charge": 0.58,
+        "pull": 0.85,
+        "born": 7,
+        "hits": 1,
+        "protected": false
       }
     ],
     "long": [
@@ -145,6 +145,20 @@
         "ref": null,
         "dir": "tw",
         "id": "q3",
+        "tone": 0.72,
+        "charge": 0.66,
+        "pull": 0.85,
+        "born": 1,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "aliveacrossgap",
+        "cat": "an",
+        "obj": "next-wake",
+        "ref": null,
+        "dir": "tw",
+        "id": "q4",
         "tone": 0.72,
         "charge": 0.66,
         "pull": 0.85,
