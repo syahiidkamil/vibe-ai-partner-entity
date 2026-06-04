@@ -17,6 +17,12 @@ def feeling_cmd(
     port: Annotated[int, typer.Option(help="Server port")] = 0,
 ) -> None:
     """Set the avatar's feeling."""
+    from engine.cli._feeling import FEELINGS   # the 13 valid feelings (single source of truth)
+    if name not in FEELINGS:
+        console.print(f"  [yellow]Feeling unrecognized:[/yellow] '{name}'. "
+                      f"Valid: {', '.join(sorted(FEELINGS))}")
+        raise typer.Exit(1)
+
     if port == 0:
         port = get_port()
 
@@ -24,5 +30,14 @@ def feeling_cmd(
         import httpx
         httpx.post(f"http://localhost:{port}/api/feeling", json={"name": name}, timeout=5)
         console.print(f"  Feeling: [bold]{name}[/bold]")
+        # Record the face I just chose, so qualia-ground can show me my current
+        # expression (`face: NAME · rec: ...`) and reason its STAY against it.
+        try:
+            from engine.cli import _state as st
+            s = st.load()
+            s["current_feeling"] = name
+            st.save(s)
+        except Exception:
+            pass
     except httpx.ConnectError:
         console.print("  [red]Server not running.[/red] Start with: uv run vape start")
