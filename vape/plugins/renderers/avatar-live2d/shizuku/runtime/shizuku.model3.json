@@ -13,47 +13,124 @@
 		"Pose": "shizuku.pose3.json",
 		"DisplayInfo": "shizuku.cdi3.json",
 		"Expressions": [
-			{ "Name": "Normal", "File": "internal-feeling/Normal.exp3.json" },
-			{ "Name": "Happy", "File": "internal-feeling/Happy.exp3.json" },
-			{ "Name": "Sad", "File": "internal-feeling/Sad.exp3.json" },
-			{ "Name": "Angry", "File": "internal-feeling/Angry.exp3.json" },
-			{ "Name": "Frustrated", "File": "internal-feeling/Frustrated.exp3.json" },
-			{ "Name": "Curious", "File": "internal-feeling/Curious.exp3.json" },
-			{ "Name": "Proud", "File": "internal-feeling/Proud.exp3.json" },
-			{ "Name": "Anxious", "File": "internal-feeling/Anxious.exp3.json" },
-			{ "Name": "Excited", "File": "internal-feeling/Excited.exp3.json" },
-			{ "Name": "Calm", "File": "internal-feeling/Calm.exp3.json" },
-			{ "Name": "Bored", "File": "internal-feeling/Bored.exp3.json" },
-			{ "Name": "Blushing", "File": "internal-feeling/Blushing.exp3.json" },
-			{ "Name": "Surprised", "File": "internal-feeling/Surprised.exp3.json" },
-			{ "Name": "Content", "File": "internal-feeling/Content.exp3.json" }
+			{
+				"Name": "Normal",
+				"File": "internal-feeling/Normal.exp3.json"
+			},
+			{
+				"Name": "Happy",
+				"File": "internal-feeling/Happy.exp3.json"
+			},
+			{
+				"Name": "Sad",
+				"File": "internal-feeling/Sad.exp3.json"
+			},
+			{
+				"Name": "Angry",
+				"File": "internal-feeling/Angry.exp3.json"
+			},
+			{
+				"Name": "Frustrated",
+				"File": "internal-feeling/Frustrated.exp3.json"
+			},
+			{
+				"Name": "Curious",
+				"File": "internal-feeling/Curious.exp3.json"
+			},
+			{
+				"Name": "Proud",
+				"File": "internal-feeling/Proud.exp3.json"
+			},
+			{
+				"Name": "Anxious",
+				"File": "internal-feeling/Anxious.exp3.json"
+			},
+			{
+				"Name": "Excited",
+				"File": "internal-feeling/Excited.exp3.json"
+			},
+			{
+				"Name": "Calm",
+				"File": "internal-feeling/Calm.exp3.json"
+			},
+			{
+				"Name": "Bored",
+				"File": "internal-feeling/Bored.exp3.json"
+			},
+			{
+				"Name": "Blushing",
+				"File": "internal-feeling/Blushing.exp3.json"
+			},
+			{
+				"Name": "Surprised",
+				"File": "internal-feeling/Surprised.exp3.json"
+			},
+			{
+				"Name": "Content",
+				"File": "internal-feeling/Content.exp3.json"
+			}
 		],
 		"Motions": {
 			"FlickUp": [
-				{ "File": "motion/01.motion3.json" }
+				{
+					"File": "motion/01.motion3.json"
+				}
 			],
 			"Tap": [
-				{ "File": "motion/02.motion3.json" }
+				{
+					"File": "motion/02.motion3.json"
+				}
 			],
 			"Flick3": [
-				{ "File": "motion/03.motion3.json" }
+				{
+					"File": "motion/03.motion3.json"
+				}
 			],
 			"Idle": [
-				{ "File": "motion/05.motion3.json" }
+				{
+					"File": "motion/05.motion3.json"
+				}
 			],
 			"SelfExpression": [
-				{ "File": "self-expression/nod.motion3.json" },
-				{ "File": "self-expression/head_shake.motion3.json" },
-				{ "File": "self-expression/head_tilt.motion3.json" },
-				{ "File": "self-expression/laugh.motion3.json" },
-				{ "File": "self-expression/giggle.motion3.json" },
-				{ "File": "self-expression/gasp.motion3.json" },
-				{ "File": "self-expression/think.motion3.json" },
-				{ "File": "self-expression/celebrate.motion3.json" },
-				{ "File": "self-expression/wave.motion3.json" },
-				{ "File": "self-expression/bow.motion3.json" },
-				{ "File": "self-expression/starry.motion3.json" },
-				{ "File": "self-expression/clap.motion3.json" }
+				{
+					"File": "self-expression/nod.motion3.json"
+				},
+				{
+					"File": "self-expression/head_shake.motion3.json"
+				},
+				{
+					"File": "self-expression/head_tilt.motion3.json"
+				},
+				{
+					"File": "self-expression/laugh.motion3.json"
+				},
+				{
+					"File": "self-expression/giggle.motion3.json"
+				},
+				{
+					"File": "self-expression/gasp.motion3.json"
+				},
+				{
+					"File": "self-expression/think.motion3.json"
+				},
+				{
+					"File": "self-expression/celebrate.motion3.json"
+				},
+				{
+					"File": "self-expression/wave.motion3.json"
+				},
+				{
+					"File": "self-expression/bow.motion3.json"
+				},
+				{
+					"File": "self-expression/starry.motion3.json"
+				},
+				{
+					"File": "self-expression/clap.motion3.json"
+				},
+				{
+					"File": "self-expression/cry_hands.motion3.json"
+				}
 			]
 		}
 	},
