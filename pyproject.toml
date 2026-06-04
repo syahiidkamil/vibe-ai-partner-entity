@@ -38,3 +38,8 @@ members = ["vape/plugins/tts-*"]
 vibe-plugin-tts-kokoro-onnx = { workspace = true }
 vibe-plugin-tts-kokoro = { workspace = true }
 vibe-plugin-tts-kitten = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

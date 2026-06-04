@@ -2491,6 +2491,11 @@ tts-kokoro-onnx = [
     { name = "vibe-plugin-tts-kokoro-onnx" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115.0" },
@@ -2506,6 +2511,9 @@ requires-dist = [
     { name = "vibe-plugin-tts-kokoro-onnx", marker = "extra == 'tts-kokoro-onnx'", editable = "vape/plugins/tts-kokoro-onnx" },
 ]
 provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "dev"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=9.0.3" }]
 
 [[package]]
 name = "vibe-plugin-tts-kitten"
