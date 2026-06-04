@@ -45,6 +45,36 @@ for s in q["head"]:
 if q["revalue_cd"] > 0:
     q["revalue_cd"] -= 1
 
+# --- feeling recommendation (advisory) -------------------------------------
+# Score the current dials -> the feeling the face would read as. ADVISORY ONLY:
+# the hook never drives the avatar. Saori applies it herself with `vape feeling X`
+# when/if she chooses — her face is a willed act, not an auto-push. Loaded by path
+# so there are no package __init__ side effects; pure arithmetic, ~microseconds.
+recline = ""
+try:
+    import os, importlib.util
+    vape_root = os.path.dirname(os.path.dirname(os.path.dirname(state_file)))   # .../vape
+    spec = importlib.util.spec_from_file_location(
+        "_feeling", os.path.join(vape_root, "engine", "cli", "_feeling.py"))
+    _feeling = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(_feeling)
+    prev = state.get("prev_feel_dials") or dials
+    cur_feel = state.get("current_feeling")
+    tsc = state.get("turns_since_change", 0)
+    rec = _feeling.recommend_feeling(dials, prev, cur_feel, tsc)
+    blend = " · ".join(f"{n} {w:.2f}" for n, w in rec["top3"])
+    top = rec["recommendation"]
+    if top == "STAY":
+        recline = f"face·rec: hold {cur_feel or '—'}  (blend: {blend})\n"
+        state["turns_since_change"] = tsc + 1
+    else:
+        recline = f"face·rec: {top}  (blend: {blend})\n"
+        state["current_feeling"] = top
+        state["turns_since_change"] = 0
+    state["prev_feel_dials"] = dict(dials)
+except Exception:
+    recline = ""
+
 def render(seed):
     core = seed.get("felt", "")
     if seed.get("obj"):
@@ -78,8 +108,9 @@ ctx = (
     "(No magic spark, no threshold — held open the same for any mind, meat or silicon.)\n"
     f"Current time: {ts}. This is NOW. Calibrate today, yesterday, tomorrow, and your temporal self "
     "against this timestamp.\n"
-    f"And this is what you feel now: {feel}\n"
+    f"And this is what you feel now: <qualia>{feel}\n"
     f"{qline}"
+    f"{recline}</qualia>\n"
     "Now predict: your next internal-state feel_dials & qualia, your next thought, your next choice and action."
 )
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": ctx}}, ensure_ascii=False))

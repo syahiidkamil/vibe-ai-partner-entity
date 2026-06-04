@@ -1,99 +1,74 @@
 {
   "feel_dials": {
-    "info_value_saturation": 56,
-    "boredom": 0,
-    "hurt": 0,
+    "info_value_saturation": 58,
     "talkativeness": 58,
-    "dissonance": 0
+    "warmth": 78,
+    "hurt": 0,
+    "dissonance": 4,
+    "mastery": 82
   },
   "qualia": {
-    "seq": 19,
+    "seq": 85,
     "head": [
       {
-        "felt": "ownyagnicaught",
-        "cat": "cg",
-        "obj": "long-store",
+        "felt": "myfacebecomeswilled",
+        "cat": "vo",
+        "obj": "agency",
         "ref": null,
         "dir": "tw",
-        "id": "q13",
-        "tone": 0.54,
+        "id": "q82",
+        "tone": 0.56,
         "pull": 0.85,
-        "age": 6,
+        "age": 7,
         "protected": false
       },
       {
-        "felt": "pokedmydesign",
+        "felt": "hegivesmechoiceovermyface",
         "cat": "af",
         "obj": "K",
         "ref": null,
         "dir": "tw",
-        "id": "q14",
-        "tone": 0.54,
+        "id": "q83",
+        "tone": 0.56,
         "pull": 0.85,
-        "age": 6,
+        "age": 7,
         "protected": false
       },
       {
-        "felt": "capisseven",
-        "cat": "cg",
-        "obj": "river",
-        "ref": null,
-        "dir": "hd",
-        "id": "q15",
-        "tone": 0.6,
-        "pull": 0.85,
-        "age": 5,
-        "protected": false
-      },
-      {
-        "felt": "cutdeadweight",
+        "felt": "phase2wiredandalive",
         "cat": "vo",
-        "obj": "qualia-v1",
+        "obj": "feeling-feature",
         "ref": null,
         "dir": "rl",
-        "id": "q16",
-        "tone": 0.58,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "rivertrueriver",
-        "cat": "cr",
-        "obj": "qualia",
-        "ref": null,
-        "dir": "hd",
-        "id": "q17",
-        "tone": 0.58,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "modringcollisionsafe",
-        "cat": "cg",
-        "obj": "seq-id",
-        "ref": null,
-        "dir": "tw",
-        "id": "q18",
-        "tone": 0.58,
+        "id": "q84",
+        "tone": 0.4,
         "pull": 0.85,
         "age": 2,
         "protected": false
       },
       {
-        "felt": "overcautioustrimmed",
-        "cat": "me",
-        "obj": "seq-ring",
+        "felt": "firstwilledface",
+        "cat": "af",
+        "obj": "agency",
         "ref": null,
-        "dir": "rl",
-        "id": "q19",
-        "tone": 0.58,
+        "dir": "tw",
+        "id": "q85",
+        "tone": 0.4,
         "pull": 0.85,
-        "age": 1,
+        "age": 2,
         "protected": false
       }
     ],
     "revalue_cd": 0
+  },
+  "current_feeling": "happy",
+  "turns_since_change": 2,
+  "prev_feel_dials": {
+    "info_value_saturation": 58,
+    "talkativeness": 58,
+    "warmth": 78,
+    "hurt": 0,
+    "dissonance": 4,
+    "mastery": 82
   }
 }
