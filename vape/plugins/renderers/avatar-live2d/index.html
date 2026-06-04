@@ -75,8 +75,8 @@
       z-index: 10;
       pointer-events: none;
       display: -webkit-box;
-      line-clamp: 5;
-      -webkit-line-clamp: 5;
+      line-clamp: 3;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -149,7 +149,7 @@
       const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95;
       model.scale.set(s);
       model.x = w / 2;
-      model.y = h * 0.45;
+      model.y = h * 0.47;   // nudged down for bubble headroom (tunable)
     }
     window.addEventListener('resize', fitModel);
 
