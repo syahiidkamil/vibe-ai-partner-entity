@@ -166,7 +166,7 @@
     const SELF_EXPRESSION_MAP = {
       nod: 0, head_shake: 1, head_tilt: 2, laugh: 3, giggle: 4,
       gasp: 5, think: 6, celebrate: 7, wave: 8, bow: 9,
-      starry: 10, clap: 11,
+      starry: 10, clap: 11, cry_hands: 12,
     };
 
     function setExpression(name) {
@@ -222,6 +222,15 @@
     };
     let tearLayer = null, tears = [], tearMode = 'off', tearAcc = 0, cryTimer = null;
 
+    // Sad face (Sad.exp3.json values), forced every frame during a cry so the arm
+    // motion's expression-suspend can't leave her default smile showing.
+    const SAD_FACE = {
+      PARAM_EYE_L_OPEN: 0.5, PARAM_EYE_R_OPEN: 0.5, PARAM_EYE_BALL_Y: 0.4,
+      PARAM_BROW_L_Y: 0.2, PARAM_BROW_R_Y: 0.2, PARAM_BROW_L_ANGLE: 0.5, PARAM_BROW_R_ANGLE: 0.5,
+      PARAM_BROW_L_FORM: -0.7, PARAM_BROW_R_FORM: -0.7, PARAM_MOUTH_FORM: -0.4, PARAM_MOUTH_OPEN_Y: 0.0,
+      PARAM_TERE: 0.3, PARAM_DONYORI: 0.5,
+    };
+
     function dispSize() { return { w: baseW * model.scale.x, h: baseH * model.scale.y }; }
 
     function spawnTear(eye) {
@@ -265,6 +274,7 @@
     function triggerCry() {
       setExpression('sad');                    // the crying face
       setTearMode('cry');
+      playSelfExpression('cry_hands');         // celebrate's clean arm-raise, but with the sad face
       clearTimeout(cryTimer);
       cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
     }
@@ -560,8 +570,14 @@
         // mouth -> no feeling could ever smile at rest. So override only when
         // lip-sync is live; otherwise let the expression's open mouth stand.
         model.internalModel.on('beforeModelUpdate', () => {
+          const cm = model.internalModel.coreModel;
+          // While crying, pin the sad face every frame (the arm motion suspends the
+          // feeling expression, which would otherwise let her default smile show).
+          if (tearMode === 'cry') {
+            for (const id in SAD_FACE) cm.setParameterValueById(id, SAD_FACE[id]);
+          }
           if (lipSyncActive) {
-            model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+            cm.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
           }
         });
 
