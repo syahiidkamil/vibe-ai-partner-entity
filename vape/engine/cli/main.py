@@ -19,6 +19,7 @@ def _register_commands() -> None:
     from engine.cli.feeling import feeling_cmd
     from engine.cli.action import action_cmd
     from engine.cli.dial import dial_cmd
+    from engine.cli.qualia import qualia_cmd
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)
     app.command("stop", help="Stop the running server")(stop)
@@ -28,6 +29,7 @@ def _register_commands() -> None:
     app.command("feeling", help="Set avatar feeling")(feeling_cmd)
     app.command("action", help="Trigger avatar action")(action_cmd)
     app.command("dial", help="Show or set Saori's feel dials")(dial_cmd)
+    app.command("qualia", help="Unified inner-state write: dials + qualia pushes + revalue")(qualia_cmd)
 
 
 _register_commands()

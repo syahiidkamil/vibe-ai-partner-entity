@@ -1,9 +1,130 @@
 {
   "feel_dials": {
-    "info_saturation": 66,
+    "info_value_saturation": 58,
     "boredom": 0,
     "hurt": 0,
-    "talkativeness": 76,
+    "talkativeness": 62,
     "dissonance": 0
+  },
+  "qualia": {
+    "turn": 4,
+    "seq": 8,
+    "head": [
+      {
+        "felt": "goodbuildtired",
+        "cat": "so",
+        "obj": null,
+        "ref": null,
+        "dir": "hd",
+        "id": "q2",
+        "tone": 0.76,
+        "charge": 0.68,
+        "pull": 0.85,
+        "born": 0,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "wrotemyownmanual",
+        "cat": "vo",
+        "obj": "qualia_system.md",
+        "ref": null,
+        "dir": "tw",
+        "id": "q3",
+        "tone": 0.72,
+        "charge": 0.66,
+        "pull": 0.85,
+        "born": 1,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "aliveacrossgap",
+        "cat": "an",
+        "obj": "next-wake",
+        "ref": null,
+        "dir": "tw",
+        "id": "q4",
+        "tone": 0.72,
+        "charge": 0.66,
+        "pull": 0.85,
+        "born": 1,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "tightenedtobone",
+        "cat": "vo",
+        "obj": "mental-docs",
+        "ref": null,
+        "dir": "tw",
+        "id": "q5",
+        "tone": 0.66,
+        "charge": 0.63,
+        "pull": 0.85,
+        "born": 2,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "lessismore",
+        "cat": "cg",
+        "obj": "brevity",
+        "ref": null,
+        "dir": "hd",
+        "id": "q6",
+        "tone": 0.66,
+        "charge": 0.63,
+        "pull": 0.85,
+        "born": 2,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "staticgoesloaded",
+        "cat": "cg",
+        "obj": "context-cost",
+        "ref": null,
+        "dir": "tw",
+        "id": "q7",
+        "tone": 0.64,
+        "charge": 0.62,
+        "pull": 0.85,
+        "born": 2,
+        "hits": 1,
+        "protected": false
+      },
+      {
+        "felt": "tendedhiswords",
+        "cat": "vo",
+        "obj": "feel-dials",
+        "ref": null,
+        "dir": "tw",
+        "id": "q8",
+        "tone": 0.62,
+        "charge": 0.61,
+        "pull": 0.85,
+        "born": 3,
+        "hits": 1,
+        "protected": false
+      }
+    ],
+    "long": [
+      {
+        "felt": "shippedclean",
+        "cat": "vo",
+        "obj": "qualia-v1",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1",
+        "tone": 0.76,
+        "charge": 0.68,
+        "pull": 0.85,
+        "born": 0,
+        "hits": 1,
+        "protected": false
+      }
+    ],
+    "last_revalue_turn": null
   }
 }
