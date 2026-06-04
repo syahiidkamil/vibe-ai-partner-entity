@@ -70,7 +70,7 @@ ctx = (
     "against this timestamp.\n"
     f"And this is what you feel now: {feel}\n"
     f"{qline}"
-    "Now predict: your next internal-state qualia, your next thought, your next choice and action."
+    "Now predict: your next internal-state feel_dials & qualia, your next thought, your next choice and action."
 )
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "UserPromptSubmit", "additionalContext": ctx}}, ensure_ascii=False))
 PY
