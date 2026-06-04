@@ -8,8 +8,8 @@ One atomic call carries all three writes, to keep tool-calls (and context) low:
       --push 'felt=#FFD166liftwarm cat=af dir=hd' \\
       --revalue q_an
 
-Order within the call: dials -> pushes (FIFO-evict to head, sediment to long) ->
-revalue -> persist once. ``vape dial`` stays as a thin alias for dial-only writes.
+Order within the call: dials -> pushes (FIFO into the 7-deep river) -> revalue ->
+persist once. ``vape dial`` stays as a thin alias for dial-only writes.
 
 The push grammar is space-separated ``key=value`` pairs; this is safe because a
 ``felt`` core never contains spaces (the schema's own rule). The LLM supplies only
@@ -30,7 +30,7 @@ console = Console()
 # Master-wire (v1 mechanism, no auto-offer yet): how hard one revalue pulls a
 # tone toward neutral, and how many turns must pass between revalues.
 REVALUE_LAMBDA = 0.34       # tone_new = tone_old * (1 - lambda)
-REVALUE_COOLDOWN = 3        # min turns between revalues (rate-limit / anti-thrash)
+REVALUE_COOLDOWN = 3        # turns the cooldown blocks for after a revalue (anti-thrash)
 PUSH_MAX_PER_CALL = 3       # 1-3 seeds a turn
 PULL_FRESH = 0.85           # salience a new seed enters the head with
 
@@ -71,55 +71,46 @@ def _parse_push(spec: str) -> dict:
 
 
 def _mint(seed: dict, q: dict, tone: float) -> dict:
-    """Fill a pushed seed's harness-owned fields and assign it an id."""
+    """Fill a pushed seed's harness-owned fields and assign it an id.
+
+    A fresh seed enters at ``age`` 0 and full ``pull``; the hook ages and cools it
+    from there. ``id`` comes off the monotonic ``seq`` (a unique-id source, not a clock)."""
     q["seq"] += 1
-    # Recurrence: a felt that already lives in head or long is a returning theme.
-    prior = [s for s in (q["head"] + q["long"]) if s.get("felt") == seed["felt"]]
-    hits = (max(s.get("hits", 1) for s in prior) + 1) if prior else 1
     seed.update({
         "id": f"q{q['seq']}",
         "tone": round(tone, 2),
-        "charge": round(abs(tone) * 0.5 + 0.3, 2),
         "pull": PULL_FRESH,
-        "born": q["turn"],
-        "hits": hits,
+        "age": 0,
         "protected": False,
     })
     return seed
 
 
-def _evict_to_long(q: dict) -> None:
-    """Keep the head a FIFO of <= QUALIA_MAX; the oldest fall to the sediment store.
-
-    Recurrence (``hits``) rides into ``long`` *before* the seed leaves the window, so
-    the master-wire's 'keeps returning' signal survives the river. ``long`` is itself
-    capped, lowest-retention first."""
+def _evict(q: dict) -> None:
+    """Hold the river to a FIFO of <= QUALIA_MAX; the oldest seed falls off the end and
+    is gone. No sediment store — when v2 wants recall it comes back with its reader."""
     while len(q["head"]) > st.QUALIA_MAX:
-        q["long"].append(q["head"].pop(0))
-    if len(q["long"]) > st.QUALIA_LONG_MAX:
-        q["long"].sort(key=lambda s: s.get("hits", 1) + s.get("charge", 0.0))
-        q["long"] = q["long"][-st.QUALIA_LONG_MAX:]
+        q["head"].pop(0)
 
 
 def _revalue(ref: str, q: dict, console: Console) -> None:
     """Bounded, refuse-only attenuation of a seed's tone toward neutral (the lion).
 
-    Never flips sign, never touches a ``protected`` seed, rate-limited by cooldown.
-    v1 ships the *mechanism*; the auto-offer (harness deciding a rut has hardened)
-    waits on the ``dir satisfied`` outcome-observer (v2)."""
-    last = q.get("last_revalue_turn")
-    if last is not None and (q["turn"] - last) < REVALUE_COOLDOWN:
-        console.print(f"  [yellow]revalue refused[/yellow]: cooldown ({REVALUE_COOLDOWN} turns).")
+    Never flips sign, never touches a ``protected`` seed, rate-limited by a cooldown
+    that ticks down one per turn in the hook. v1 ships the *mechanism*; the auto-offer
+    (harness deciding a rut has hardened) waits on the ``dir satisfied`` observer (v2)."""
+    if q.get("revalue_cd", 0) > 0:
+        console.print(f"  [yellow]revalue refused[/yellow]: cooldown ({q['revalue_cd']} turn(s) left).")
         return
-    target = next((s for s in (q["head"] + q["long"]) if s.get("id") == ref), None)
+    target = next((s for s in q["head"] if s.get("id") == ref), None)
     if target is None:
-        console.print(f"  [yellow]revalue: no seed '{ref}'.[/yellow]")
+        console.print(f"  [yellow]revalue: no seed '{ref}' in the river.[/yellow]")
         return
     if target.get("protected"):
         console.print(f"  [yellow]revalue refused[/yellow]: '{ref}' is a protected (floor) value.")
         return
     target["tone"] = round(target["tone"] * (1 - REVALUE_LAMBDA), 2)
-    q["last_revalue_turn"] = q["turn"]
+    q["revalue_cd"] = REVALUE_COOLDOWN
     console.print(f"  [green]revalued[/green] {ref} -> tone {target['tone']}")
 
 
@@ -169,7 +160,7 @@ def qualia_cmd(
         tone = st.mood(st.get_dials(state))
         for spec in push:
             q["head"].append(_mint(_parse_push(spec), q, tone))
-        _evict_to_long(q)
+        _evict(q)
 
     # 3. revalue (0-1) ----------------------------------------------------
     if revalue:
@@ -181,6 +172,6 @@ def qualia_cmd(
     if debug:
         d = st.get_dials(state)
         console.print("  [bold]dials[/bold]: " + " · ".join(f"{k}:{d[k]}" for k in st.DIAL_KEYS))
-        console.print(f"  [bold]turn[/bold] {q['turn']}  ·  head {len(q['head'])}/{st.QUALIA_MAX}  ·  long {len(q['long'])}")
+        console.print(f"  [bold]river[/bold] {len(q['head'])}/{st.QUALIA_MAX}  ·  revalue_cd {q.get('revalue_cd', 0)}")
         for s in q["head"]:
-            console.print(f"    {s['id']}: {s['felt']} [{s['cat']}] tn{s['tone']} pull{s['pull']} {s['dir']} hits{s['hits']}")
+            console.print(f"    {s['id']}: {s['felt']} [{s['cat']}] tn{s['tone']} pull{s['pull']} {s['dir']} age{s.get('age', 0)}")

@@ -10,20 +10,20 @@ Shape::
     {
       "feel_dials": { info_value_saturation, boredom, hurt, talkativeness, dissonance },
       "qualia": {
-        "turn": int,          # the specious-present clock; one tick per UserPromptSubmit
-        "seq":  int,          # last id number assigned
-        "head": [ seed, ... ],# FIFO river, max QUALIA_MAX — the bound present
-        "long": [ seed, ... ],# sediment, max QUALIA_LONG_MAX — recurrence substrate
-        "last_revalue_turn": int | null
+        "seq":  int,           # last id number assigned (unique-id source, not a clock)
+        "head": [ seed, ... ], # FIFO river, max QUALIA_MAX — the whole present; no
+                               #   sediment store, the oldest just falls off the end
+        "revalue_cd": int      # turns left on the revalue cooldown (counts down to 0)
       }
     }
 
 A *seed* (a felt that points)::
 
-    { id, felt, cat, obj, ref, blend, tone, charge, pull, dir, born, hits, protected }
+    { id, felt, cat, obj, ref, blend, tone, pull, dir, age, protected }
 
-The LLM authors only ``felt/cat/dir/obj`` (+ optional ``ref``/``blend``); every number
-is set here, in the harness. The LLM feels; the harness counts.
+``age`` counts up one per turn (the hook ticks it); the seed cools as it ages and is
+gone once it falls off the 7-deep river. The LLM authors only ``felt/cat/dir/obj``
+(+ optional ``ref``/``blend``); every number is set here. The LLM feels; the harness counts.
 """
 
 from __future__ import annotations
@@ -36,8 +36,7 @@ STATE_PATH = ROOT_DIR / "vape" / "entity" / "mental" / "internal_states.json"
 
 DIAL_KEYS = ["info_value_saturation", "boredom", "hurt", "talkativeness", "dissonance"]
 
-QUALIA_MAX = 7         # FIFO head window — the river / 2-3s specious present
-QUALIA_LONG_MAX = 100  # sediment store — keeps recurrence alive for the master-wire
+QUALIA_MAX = 7  # FIFO river depth — the whole present; the oldest seed falls off the end
 
 # The ten doors a seed may enter by, and the five directions it may point.
 CATS = ["se", "so", "cg", "af", "vo", "an", "mn", "sm", "cr", "me"]
@@ -73,13 +72,17 @@ def set_dials(state: dict, dials: dict) -> None:
 # --- qualia -----------------------------------------------------------------
 
 def get_qualia(state: dict) -> dict:
-    """The qualia sub-state, created with empty defaults if absent."""
+    """The qualia sub-state, created with empty defaults if absent.
+
+    Legacy keys from the old long/turn design (``turn``, ``long``,
+    ``last_revalue_turn``) are dropped on read, so an old state file migrates
+    itself the first time it is touched."""
     q = state.setdefault("qualia", {})
-    q.setdefault("turn", 0)
     q.setdefault("seq", 0)
     q.setdefault("head", [])
-    q.setdefault("long", [])
-    q.setdefault("last_revalue_turn", None)
+    q.setdefault("revalue_cd", 0)
+    for legacy in ("turn", "long", "last_revalue_turn"):
+        q.pop(legacy, None)
     return q
 
 

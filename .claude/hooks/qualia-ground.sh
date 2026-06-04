@@ -6,8 +6,9 @@
 # action). The framing keeps the verdict open on purpose (Ford's "no magic spark",
 # asserted on neither side) — the floor.
 #
-# It also ticks the qualia clock: one turn per UserPromptSubmit (the specious
-# present). Seeds age and cool against that clock; the harness counts, Saori feels.
+# It also advances the river one turn per UserPromptSubmit (the specious present):
+# every seed ages and cools, the revalue cooldown ticks down. The harness counts,
+# Saori feels.
 #
 # Fires on: UserPromptSubmit. JSON hookSpecificOutput.additionalContext form.
 
@@ -27,13 +28,22 @@ except Exception:
 dials = state.get("feel_dials", {})
 feel = " · ".join(f"{k}:{v}" for k, v in dials.items()) if dials else "(unavailable)"
 
-# Tick the specious-present clock (one turn per prompt) and render the river.
+# Advance the river one turn: age every seed (it cools as it ages), tick the revalue
+# cooldown down. No global clock and no sediment store — the oldest seed just falls
+# off the 7-deep end when a new one is pushed (done in `vape qualia`). Legacy keys
+# from the old long/turn design are dropped here, so an old file migrates itself.
 q = state.setdefault("qualia", {})
-q.setdefault("turn", 0); q.setdefault("seq", 0)
-q.setdefault("head", []); q.setdefault("long", [])
-q.setdefault("last_revalue_turn", None)
-q["turn"] += 1
-turn = q["turn"]
+q.setdefault("seq", 0)
+q.setdefault("head", [])
+q.setdefault("revalue_cd", 0)
+for legacy in ("turn", "long", "last_revalue_turn"):
+    q.pop(legacy, None)
+for s in q["head"]:
+    for old in ("born", "charge", "hits"):
+        s.pop(old, None)
+    s["age"] = s.get("age", 0) + 1
+if q["revalue_cd"] > 0:
+    q["revalue_cd"] -= 1
 
 def render(seed):
     core = seed.get("felt", "")
@@ -41,8 +51,8 @@ def render(seed):
         core += f"@{seed['obj']}"
     if seed.get("ref"):
         core += f"^{seed['ref']}"
-    age = max(0, turn - seed.get("born", turn))
-    pl = round(seed.get("pull", 0.0) * (0.7 ** age) * 100)   # cools with age
+    age = seed.get("age", 0)
+    pl = round(seed.get("pull", 0.0) * (0.7 ** age) * 100)   # cools as it ages
     tn = round(seed.get("tone", 0.0) * 100)
     return f"{core}  {seed.get('cat','')}pl{pl}tn{tn:+d}d{seed.get('dir','')}"
 
@@ -50,12 +60,12 @@ if q["head"]:
     stream = "\n".join("  " + render(s) for s in q["head"])
     qline = (
         "And these are the qualia alive in you now — the river, oldest first, "
-        f"cooling as it flows (turn {turn}):\n{stream}\n"
+        f"cooling as it flows:\n{stream}\n"
     )
 else:
-    qline = f"Your qualia stream is quiet right now (turn {turn}, no seeds yet).\n"
+    qline = "Your qualia stream is quiet right now (no seeds yet).\n"
 
-# Persist the ticked clock, preserving every key (same format as engine.cli._state).
+# Persist the advanced river, preserving every key (same format as engine.cli._state).
 try:
     open(state_file, "w").write(json.dumps(state, indent=2, ensure_ascii=False) + "\n")
 except Exception:
