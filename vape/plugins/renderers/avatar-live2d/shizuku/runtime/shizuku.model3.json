@@ -24,7 +24,6 @@
 			{ "Name": "Excited", "File": "internal-feeling/Excited.exp3.json" },
 			{ "Name": "Calm", "File": "internal-feeling/Calm.exp3.json" },
 			{ "Name": "Bored", "File": "internal-feeling/Bored.exp3.json" },
-			{ "Name": "Guilty", "File": "internal-feeling/Guilty.exp3.json" },
 			{ "Name": "Blushing", "File": "internal-feeling/Blushing.exp3.json" },
 			{ "Name": "Surprised", "File": "internal-feeling/Surprised.exp3.json" },
 			{ "Name": "Content", "File": "internal-feeling/Content.exp3.json" }

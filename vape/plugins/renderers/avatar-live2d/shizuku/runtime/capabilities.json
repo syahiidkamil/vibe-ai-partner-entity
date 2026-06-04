@@ -13,12 +13,10 @@
     "excited":    { "expression": "internal-feeling/Excited.exp3.json" },
     "calm":       { "expression": "internal-feeling/Calm.exp3.json" },
     "bored":      { "expression": "internal-feeling/Bored.exp3.json" },
-    "guilty":     { "expression": "internal-feeling/Guilty.exp3.json" },
     "angry":      { "expression": "internal-feeling/Angry.exp3.json" },
     "blushing":   { "expression": "internal-feeling/Blushing.exp3.json" },
     "surprised":  { "expression": "internal-feeling/Surprised.exp3.json" },
-    "content":    { "expression": "internal-feeling/Content.exp3.json" },
-    "relieved":   null
+    "content":    { "expression": "internal-feeling/Content.exp3.json" }
   },
 
   "selfExpressions": {

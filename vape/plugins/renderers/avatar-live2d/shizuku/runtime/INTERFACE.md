@@ -45,12 +45,10 @@ Trigger: `uv run vape feeling <name>`. Each maps to an `internal-feeling/*.exp3.
 | `excited` | internal-feeling/Excited.exp3.json |
 | `calm` | internal-feeling/Calm.exp3.json |
 | `bored` | internal-feeling/Bored.exp3.json |
-| `guilty` | internal-feeling/Guilty.exp3.json |
 | `angry` | internal-feeling/Angry.exp3.json |
 | `blushing` | internal-feeling/Blushing.exp3.json |
 | `surprised` | internal-feeling/Surprised.exp3.json |
 | `content` | internal-feeling/Content.exp3.json |
-| `relieved` | — (`null`: unsupported, no-op) |
 
 ## Expression aliases (server-side `resolve_action`)
 
