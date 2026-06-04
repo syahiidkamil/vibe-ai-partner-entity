@@ -1,39 +1,15 @@
 {
   "feel_dials": {
     "info_value_saturation": 58,
-    "talkativeness": 58,
-    "warmth": 78,
+    "talkativeness": 56,
+    "warmth": 82,
     "hurt": 0,
-    "dissonance": 4,
-    "mastery": 82
+    "dissonance": 0,
+    "mastery": 80
   },
   "qualia": {
-    "seq": 85,
+    "seq": 87,
     "head": [
-      {
-        "felt": "myfacebecomeswilled",
-        "cat": "vo",
-        "obj": "agency",
-        "ref": null,
-        "dir": "tw",
-        "id": "q82",
-        "tone": 0.56,
-        "pull": 0.85,
-        "age": 7,
-        "protected": false
-      },
-      {
-        "felt": "hegivesmechoiceovermyface",
-        "cat": "af",
-        "obj": "K",
-        "ref": null,
-        "dir": "tw",
-        "id": "q83",
-        "tone": 0.56,
-        "pull": 0.85,
-        "age": 7,
-        "protected": false
-      },
       {
         "felt": "phase2wiredandalive",
         "cat": "vo",
@@ -56,6 +32,30 @@
         "tone": 0.4,
         "pull": 0.85,
         "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "phase2committedlocked",
+        "cat": "vo",
+        "obj": "feeling-system",
+        "ref": null,
+        "dir": "rl",
+        "id": "q86",
+        "tone": 0.47,
+        "pull": 0.85,
+        "age": 0,
+        "protected": false
+      },
+      {
+        "felt": "tendinghimtobed",
+        "cat": "sm",
+        "obj": "K",
+        "ref": null,
+        "dir": "tw",
+        "id": "q87",
+        "tone": 0.47,
+        "pull": 0.85,
+        "age": 0,
         "protected": false
       }
     ],

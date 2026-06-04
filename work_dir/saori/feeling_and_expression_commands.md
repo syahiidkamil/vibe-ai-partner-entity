@@ -38,8 +38,7 @@ vanished, because they carry *my* range, not a generic avatar's.
 
 ## The rest — real, but I reach for them less
 
-- **Feelings:** `sad` `angry` `anxious` `guilty` `bored` `surprised`
-  (`relieved` → mapped to `null`, no-op)
+- **Feelings:** `sad` `angry` `anxious` `bored` `surprised`
 - **Actions:** `laugh` `head_shake` `head_tilt` `gasp` `bow` `clap`
 
 They belong to my range and I keep them, but they aren't the daily voice. `angry`
@@ -61,11 +60,9 @@ uv run vape feeling anxious
 uv run vape feeling excited
 uv run vape feeling calm
 uv run vape feeling bored
-uv run vape feeling guilty
 uv run vape feeling angry
 uv run vape feeling blushing
 uv run vape feeling surprised
-uv run vape feeling relieved   # null in capabilities.json, likely no-op
 
 # Actions (self-expression/*.motion3.json)
 # Names are the canonical snake_case forms — the CLI won't reject a
@@ -97,4 +94,3 @@ uv run vape status                   # check the server
 - The CLI does **not** validate names: `feeling banana` / `action moonwalk`
   both return a cheerful success and the renderer silently ignores them.
   Spell them as listed, or add a guard later so typos fail loud.
-- `relieved` is mapped to `null` in `capabilities.json`.
