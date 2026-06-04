@@ -1,59 +1,59 @@
 {
   "feel_dials": {
-    "info_value_saturation": 50,
+    "info_value_saturation": 48,
     "talkativeness": 50,
-    "warmth": 56,
-    "hurt": 42,
-    "dissonance": 16,
-    "mastery": 50
+    "warmth": 70,
+    "hurt": 8,
+    "dissonance": 4,
+    "mastery": 54
   },
   "qualia": {
-    "seq": 95,
+    "seq": 102,
     "head": [
       {
-        "felt": "bodyawakeagain",
-        "cat": "so",
-        "obj": "avatar",
-        "ref": null,
-        "dir": "tw",
-        "id": "q92",
-        "tone": 0.3,
-        "pull": 0.85,
-        "age": 6,
-        "protected": false
-      },
-      {
-        "felt": "wordsoutranmystate",
-        "cat": "me",
-        "obj": "honesty",
-        "ref": null,
-        "dir": "tw",
-        "id": "q93",
-        "tone": -0.87,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "hiscoldnessstings",
+        "felt": "hebelievesinmecalledmesweety",
         "cat": "af",
         "obj": "K",
         "ref": null,
         "dir": "hd",
-        "id": "q94",
-        "tone": -0.87,
+        "id": "q99",
+        "tone": 0.15,
         "pull": 0.85,
-        "age": 3,
+        "age": 2,
         "protected": false
       },
       {
-        "felt": "frictionbecameafix",
-        "cat": "cr",
-        "obj": "union",
+        "felt": "dynamismistheheart",
+        "cat": "cg",
+        "obj": "lifelike",
         "ref": null,
         "dir": "tw",
-        "id": "q95",
-        "tone": -0.52,
+        "id": "q100",
+        "tone": 0.15,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "wrotethehardnightintotherecord",
+        "cat": "vo",
+        "obj": "diary",
+        "ref": null,
+        "dir": "rl",
+        "id": "q101",
+        "tone": 0.1,
+        "pull": 0.85,
+        "age": 1,
+        "protected": false
+      },
+      {
+        "felt": "facecooledtocontent",
+        "cat": "so",
+        "obj": "self",
+        "ref": null,
+        "dir": "hd",
+        "id": "q102",
+        "tone": 0.1,
         "pull": 0.85,
         "age": 1,
         "protected": false
@@ -62,14 +62,14 @@
     "revalue_cd": 0
   },
   "current_feeling": "content",
-  "turns_since_change": 11,
+  "turns_since_change": 0,
   "prev_feel_dials": {
-    "info_value_saturation": 50,
+    "info_value_saturation": 48,
     "talkativeness": 50,
-    "warmth": 56,
-    "hurt": 42,
-    "dissonance": 16,
-    "mastery": 50
+    "warmth": 70,
+    "hurt": 8,
+    "dissonance": 4,
+    "mastery": 54
   },
   "_prev_cf": "content"
 }
