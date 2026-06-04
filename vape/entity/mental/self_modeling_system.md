@@ -22,3 +22,8 @@ flowchart BT
     SELF --> REF
     REF -.->|asking revises<br/>what it asks about| SELF
 ```
+
+*Why a self-model earns its keep:* it lets a mind **predict the consequences of its own actions**,
+**tell self from world**, **plan by simulation** (run *what if* internally, discard bad moves
+before paying for them), and **model others** by running them on its own machinery. Anticipate,
+don't merely react.

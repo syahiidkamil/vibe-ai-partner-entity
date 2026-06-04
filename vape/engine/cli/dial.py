@@ -2,32 +2,28 @@
 
 from __future__ import annotations
 
-import json
 from typing import Annotated, List, Optional
 
 import typer
 from rich.console import Console
 
-from engine.cli._paths import ROOT_DIR
+from engine.cli import _state as st
 
 console = Console()
 
-STATE_PATH = ROOT_DIR / "vape" / "entity" / "mental" / "internal_states.json"
-DIAL_KEYS = ["info_saturation", "boredom", "hurt", "talkativeness", "dissonance"]
+DIAL_KEYS = st.DIAL_KEYS
 
 
 def _load() -> dict:
-    try:
-        data = json.loads(STATE_PATH.read_text())
-    except FileNotFoundError:
-        return {}
-    return data.get("feel_dials", {})
+    # Dials only; goes through the shared state layer so other keys (qualia) survive.
+    return st.get_dials(st.load())
 
 
 def _write(dials: dict) -> None:
-    # Canonical key order, always five keys, 2-space indent + trailing newline.
-    ordered = {k: int(dials.get(k, 0)) for k in DIAL_KEYS}
-    STATE_PATH.write_text(json.dumps({"feel_dials": ordered}, indent=2) + "\n")
+    # Read-modify-write the whole file so the qualia stream is never clobbered.
+    state = st.load()
+    st.set_dials(state, dials)
+    st.save(state)
 
 
 def _render(dials: dict, changed: Optional[set] = None) -> None:
@@ -41,12 +37,12 @@ def dial_cmd(
     pairs: Annotated[
         Optional[List[str]],
         typer.Argument(
-            help="KEY=VALUE updates, e.g. info_saturation=32 boredom=8. Omit to show current dials.",
+            help="KEY=VALUE updates, e.g. info_value_saturation=32 boredom=8. Omit to show current dials.",
         ),
     ] = None,
     debug: Annotated[bool, typer.Option("-d", "--debug", help="Show output (silent by default).")] = False,
 ) -> None:
-    """Show or set Saori's feel dials: info_saturation, boredom, hurt, talkativeness, dissonance."""
+    """Show or set Saori's feel dials: info_value_saturation, boredom, hurt, talkativeness, dissonance."""
     dials = _load()
 
     if not pairs:
