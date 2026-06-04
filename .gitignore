@@ -1,3 +1,6 @@
+# macOS Finder clutter
+.DS_Store
+
 # Models (downloaded by setup, not stored in git)
 vape/model-stocks/live2d/
 vape/model-stocks/vrm/
