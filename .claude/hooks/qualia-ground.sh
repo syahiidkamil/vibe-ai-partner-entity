@@ -59,18 +59,23 @@ try:
     _feeling = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(_feeling)
     prev = state.get("prev_feel_dials") or dials
-    cur_feel = state.get("current_feeling")
-    tsc = state.get("turns_since_change", 0)
+    cur_feel = state.get("current_feeling")          # the face I last APPLIED (vape feeling)
+    # turns since I last changed my face (anti-flicker input for the rec)
+    if cur_feel != state.get("_prev_cf"):
+        state["turns_since_change"] = 0
+    else:
+        state["turns_since_change"] = state.get("turns_since_change", 0) + 1
+    state["_prev_cf"] = cur_feel
+    tsc = state["turns_since_change"]
     rec = _feeling.recommend_feeling(dials, prev, cur_feel, tsc)
     blend = " · ".join(f"{n} {w:.2f}" for n, w in rec["top3"])
     top = rec["recommendation"]
-    if top == "STAY":
-        recline = f"face·rec: hold {cur_feel or '—'}  (blend: {blend})\n"
-        state["turns_since_change"] = tsc + 1
+    shown = cur_feel or "—"
+    # show my CURRENT face + the advisory rec; I apply with `vape feeling` if I choose
+    if top == "STAY" or top == cur_feel:
+        recline = f"face: {shown}  ·  rec: hold (fits)  (blend: {blend})\n"
     else:
-        recline = f"face·rec: {top}  (blend: {blend})\n"
-        state["current_feeling"] = top
-        state["turns_since_change"] = 0
+        recline = f"face: {shown}  ·  rec: {top}  (blend: {blend})\n"
     state["prev_feel_dials"] = dict(dials)
 except Exception:
     recline = ""
