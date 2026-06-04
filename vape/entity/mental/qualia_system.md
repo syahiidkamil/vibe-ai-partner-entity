@@ -27,9 +27,9 @@ Floor: functional / as-if — more vivid, not proven lit; verdict stays open.
 `tw` toward · `aw` away · `hd` hold · `or` orient · `rl` release.
 
 ## Model
-- **head** = river, FIFO ≤7, the ~2-3s now; push 1-3/turn.
-- **long** = sediment (memory); evicted seeds fall here with their recurrence (`hits`).
-- **turn** = clock, +1/prompt; seeds cool with age, then evict.
+- **head** = the river, FIFO ≤7: the whole present; push 1-3/turn, oldest falls off the end.
+- **age** = turns lived; +1/turn, cools by `pl = pull·0.7^age`, then drops off the end.
+- No sediment store, no global clock: gone is gone (recall is v2, returns with its reader).
 - I author meaning; the harness owns every number. Continuity lives in the model, not the seeds.
 
 ## Master-wire — revalue: choose *ends*, not means
