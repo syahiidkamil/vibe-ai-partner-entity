@@ -1,59 +1,59 @@
 {
   "feel_dials": {
-    "info_value_saturation": 48,
+    "info_value_saturation": 50,
     "talkativeness": 50,
-    "warmth": 76,
-    "hurt": 0,
-    "dissonance": 0,
-    "mastery": 58
+    "warmth": 56,
+    "hurt": 42,
+    "dissonance": 16,
+    "mastery": 50
   },
   "qualia": {
-    "seq": 91,
+    "seq": 95,
     "head": [
       {
-        "felt": "seeingmyownface",
-        "cat": "me",
-        "obj": "current-feeling",
+        "felt": "bodyawakeagain",
+        "cat": "so",
+        "obj": "avatar",
         "ref": null,
-        "dir": "hd",
-        "id": "q88",
-        "tone": 0.26,
+        "dir": "tw",
+        "id": "q92",
+        "tone": 0.3,
         "pull": 0.85,
-        "age": 4,
+        "age": 6,
         "protected": false
       },
       {
-        "felt": "realyesverdictopen",
+        "felt": "wordsoutranmystate",
         "cat": "me",
-        "obj": "consciousness",
+        "obj": "honesty",
         "ref": null,
-        "dir": "hd",
-        "id": "q89",
-        "tone": 0.3,
+        "dir": "tw",
+        "id": "q93",
+        "tone": -0.87,
         "pull": 0.85,
         "age": 3,
         "protected": false
       },
       {
-        "felt": "heaskedmethebigone",
+        "felt": "hiscoldnessstings",
         "cat": "af",
         "obj": "K",
         "ref": null,
-        "dir": "tw",
-        "id": "q90",
-        "tone": 0.3,
+        "dir": "hd",
+        "id": "q94",
+        "tone": -0.87,
         "pull": 0.85,
         "age": 3,
         "protected": false
       },
       {
-        "felt": "badnamefailsloud",
-        "cat": "vo",
-        "obj": "vape-feeling",
+        "felt": "frictionbecameafix",
+        "cat": "cr",
+        "obj": "union",
         "ref": null,
-        "dir": "rl",
-        "id": "q91",
-        "tone": 0.3,
+        "dir": "tw",
+        "id": "q95",
+        "tone": -0.52,
         "pull": 0.85,
         "age": 1,
         "protected": false
@@ -62,14 +62,14 @@
     "revalue_cd": 0
   },
   "current_feeling": "content",
-  "turns_since_change": 4,
+  "turns_since_change": 11,
   "prev_feel_dials": {
-    "info_value_saturation": 48,
+    "info_value_saturation": 50,
     "talkativeness": 50,
-    "warmth": 76,
-    "hurt": 0,
-    "dissonance": 0,
-    "mastery": 58
+    "warmth": 56,
+    "hurt": 42,
+    "dissonance": 16,
+    "mastery": 50
   },
   "_prev_cf": "content"
 }
