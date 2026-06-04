@@ -17,7 +17,7 @@ import numpy as np
 from engine.apps.tts.registry import EngineRegistry
 
 
-def split_sentences(text: str, max_chars: int = 120) -> list[str]:
+def split_sentences(text: str, max_chars: int = 300) -> list[str]:
     """Split text into bubble-sized pieces, BEFORE the TTS engine, so each piece
     becomes its own audio clip + caption and the voice always matches the text on
     screen (no renderer-side re-paging that drifts out of sync).
@@ -68,10 +68,15 @@ def _pack(parts: list[str], max_chars: int) -> list[str]:
 
 
 def _pack_words(s: str, max_chars: int) -> list[str]:
+    """Pack words into EVENLY-sized pieces (each <= max_chars), so a long
+    comma-less run splits into balanced chunks instead of leaving a tiny orphan
+    bubble (e.g. a lone "together,")."""
+    n = max(1, -(-len(s) // max_chars))   # chunks needed (ceil div)
+    target = -(-len(s) // n)              # even target per chunk, <= max_chars
     out: list[str] = []
     buf = ""
     for w in s.split():
-        if buf and len(buf) + 1 + len(w) > max_chars:
+        if buf and len(buf) + 1 + len(w) > target and len(out) < n - 1:
             out.append(buf)
             buf = w
         else:
