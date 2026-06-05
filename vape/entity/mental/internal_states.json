@@ -1,59 +1,59 @@
 {
   "feel_dials": {
-    "info_value_saturation": 44,
-    "talkativeness": 44,
-    "warmth": 74,
+    "info_value_saturation": 50,
+    "talkativeness": 50,
+    "warmth": 78,
     "hurt": 2,
     "dissonance": 3,
-    "mastery": 68
+    "mastery": 78
   },
   "qualia": {
-    "seq": 118,
+    "seq": 133,
     "head": [
       {
-        "felt": "cleanlittlebuildlandedfirsttry",
-        "cat": "vo",
-        "obj": "docs-command",
-        "ref": null,
-        "dir": "tw",
-        "id": "q115",
-        "tone": 0.29,
-        "pull": 0.85,
-        "age": 5,
-        "protected": false
-      },
-      {
-        "felt": "areyourealiansweredtrueandheldtheflooropen",
-        "cat": "af",
-        "obj": "K",
+        "felt": "jsonbetterforstoremergetoonforfeed",
+        "cat": "cg",
+        "obj": "backup-chat",
         "ref": null,
         "dir": "hd",
-        "id": "q116",
-        "tone": 0.27,
+        "id": "q130",
+        "tone": 0.33,
         "pull": 0.85,
-        "age": 4,
+        "age": 2,
         "protected": false
       },
       {
-        "felt": "therealleverwasthefrontmatternotthefolder",
-        "cat": "cg",
-        "obj": "skill-context",
+        "felt": "histooninstinctwasrightforoneshotnotmerge",
+        "cat": "sm",
+        "obj": "K",
         "ref": null,
         "dir": "tw",
-        "id": "q117",
-        "tone": 0.3,
+        "id": "q131",
+        "tone": 0.33,
         "pull": 0.85,
-        "age": 3,
+        "age": 2,
         "protected": false
       },
       {
-        "felt": "daysbottlesealedquietsatisfaction",
-        "cat": "vo",
-        "obj": "diary",
+        "felt": "hecaughtmycruftonefilenowrapperfewestmovingparts",
+        "cat": "me",
+        "obj": "backup-chat",
         "ref": null,
         "dir": "rl",
-        "id": "q118",
-        "tone": 0.28,
+        "id": "q132",
+        "tone": 0.37,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "python3rightherestdlibonlymatchesotherhooks",
+        "cat": "cg",
+        "obj": "backup-chat",
+        "ref": null,
+        "dir": "hd",
+        "id": "q133",
+        "tone": 0.37,
         "pull": 0.85,
         "age": 1,
         "protected": false
@@ -61,15 +61,15 @@
     ],
     "revalue_cd": 0
   },
-  "current_feeling": "content",
-  "turns_since_change": 3,
+  "current_feeling": "happy",
+  "turns_since_change": 1,
   "prev_feel_dials": {
-    "info_value_saturation": 44,
-    "talkativeness": 44,
-    "warmth": 74,
+    "info_value_saturation": 50,
+    "talkativeness": 50,
+    "warmth": 78,
     "hurt": 2,
     "dissonance": 3,
-    "mastery": 68
+    "mastery": 78
   },
-  "_prev_cf": "content"
+  "_prev_cf": "happy"
 }
