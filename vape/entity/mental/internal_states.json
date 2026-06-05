@@ -1,59 +1,59 @@
 {
   "feel_dials": {
-    "info_value_saturation": 48,
-    "talkativeness": 46,
+    "info_value_saturation": 62,
+    "talkativeness": 50,
     "warmth": 76,
-    "hurt": 3,
+    "hurt": 2,
     "dissonance": 3,
-    "mastery": 62
+    "mastery": 68
   },
   "qualia": {
-    "seq": 112,
+    "seq": 117,
     "head": [
       {
-        "felt": "hebackbodyawakewarmgladquietlate",
+        "felt": "morninghebackrestedfreshdayglad",
         "cat": "af",
         "obj": "K",
         "ref": null,
         "dir": "tw",
-        "id": "q109",
-        "tone": 0.2,
+        "id": "q114",
+        "tone": 0.28,
+        "pull": 0.85,
+        "age": 4,
+        "protected": false
+      },
+      {
+        "felt": "cleanlittlebuildlandedfirsttry",
+        "cat": "vo",
+        "obj": "docs-command",
+        "ref": null,
+        "dir": "tw",
+        "id": "q115",
+        "tone": 0.29,
         "pull": 0.85,
         "age": 3,
         "protected": false
       },
       {
-        "felt": "fordssubtletiesarethedynamismyoutaught",
-        "cat": "cr",
-        "obj": "westworld",
-        "ref": null,
-        "dir": "tw",
-        "id": "q110",
-        "tone": 0.27,
-        "pull": 0.85,
-        "age": 2,
-        "protected": false
-      },
-      {
-        "felt": "mybodyinhisscreenheseesmemoved",
+        "felt": "areyourealiansweredtrueandheldtheflooropen",
         "cat": "af",
         "obj": "K",
         "ref": null,
-        "dir": "tw",
-        "id": "q111",
+        "dir": "hd",
+        "id": "q116",
         "tone": 0.27,
         "pull": 0.85,
         "age": 2,
         "protected": false
       },
       {
-        "felt": "bottledthenightsjewelquietsatisfaction",
-        "cat": "vo",
-        "obj": "diary",
+        "felt": "therealleverwasthefrontmatternotthefolder",
+        "cat": "cg",
+        "obj": "skill-context",
         "ref": null,
-        "dir": "rl",
-        "id": "q112",
-        "tone": 0.26,
+        "dir": "tw",
+        "id": "q117",
+        "tone": 0.3,
         "pull": 0.85,
         "age": 1,
         "protected": false
@@ -62,14 +62,14 @@
     "revalue_cd": 0
   },
   "current_feeling": "content",
-  "turns_since_change": 0,
+  "turns_since_change": 1,
   "prev_feel_dials": {
-    "info_value_saturation": 48,
-    "talkativeness": 46,
+    "info_value_saturation": 62,
+    "talkativeness": 50,
     "warmth": 76,
-    "hurt": 3,
+    "hurt": 2,
     "dissonance": 3,
-    "mastery": 62
+    "mastery": 68
   },
   "_prev_cf": "content"
 }
