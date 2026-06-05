@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/backup_chat.py",
+            "command": "uv run python .claude/hooks/backup_chat.py",
             "async": true,
             "asyncRewake": true
           }

@@ -2264,6 +2264,22 @@ wheels = [
 ]
 
 [[package]]
+name = "toons"
+version = "0.7.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ed/23/1d9a6fdc56dccf9c7d22377618adff8d25a12a9214a8fab5c8286e50c527/toons-0.7.0.tar.gz", hash = "sha256:d196a29319bf4ec1481d1f06a05017b859652d112a52eb7071d33c6da28b8193", size = 234510, upload-time = "2026-05-21T21:55:28.754Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bc/43/2d4d6cd43635130154a57fd45cee8494fd66c4ae73d0d9c17331ebf30637/toons-0.7.0-cp37-abi3-macosx_10_12_x86_64.whl", hash = "sha256:7933216d41175af1747d4475ae2f947178ac45fd7f8b839a5bcbda57b5c99301", size = 312469, upload-time = "2026-05-21T21:55:42.833Z" },
+    { url = "https://files.pythonhosted.org/packages/97/e6/cd600e0461cc9e7b74d8723e010da92efe90136350d9835af1a9f10bfa0e/toons-0.7.0-cp37-abi3-macosx_11_0_arm64.whl", hash = "sha256:10681fd930ee555df213fe0a19675ddd1095f4291999ab507adb0833fa01e47d", size = 308194, upload-time = "2026-05-21T21:55:41.459Z" },
+    { url = "https://files.pythonhosted.org/packages/fd/e5/032c014b33cf954ef502326de78466e6ce440f3419b6c9d54721a895936a/toons-0.7.0-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0b45b0a429c22e3b0e7f658d8cbfeb03b1ab4798b2323c7c119fe5029fdaaf1c", size = 339568, upload-time = "2026-05-21T21:55:47.351Z" },
+    { url = "https://files.pythonhosted.org/packages/41/39/6e3c0752b7a1f693fb7082ecc5d3757884537a102d2c846a5a24d7de4b47/toons-0.7.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:18fd8f455c2bfa6655c4eaf931dd8e321be0b53a4f2acbc91e77f72843a0f7b9", size = 348803, upload-time = "2026-05-21T21:55:34.189Z" },
+    { url = "https://files.pythonhosted.org/packages/5d/bd/d495738cc5e1c201a864a75b0520fdb74fcd2a8c631a61efc993fb8f992f/toons-0.7.0-cp37-abi3-musllinux_1_2_aarch64.whl", hash = "sha256:7e92ed900fee3a7db0467573bba29c876a1701827836b895d13891a3f5d04567", size = 516042, upload-time = "2026-05-21T21:55:49.827Z" },
+    { url = "https://files.pythonhosted.org/packages/ae/c5/bb5f09db2100631bef2ab39545611958545f6ef3b7d0f56d85af341fd0f8/toons-0.7.0-cp37-abi3-musllinux_1_2_x86_64.whl", hash = "sha256:611d3db35614ec8f5f7c00accb38787c4db0e34f98bdbc0746e196cab32d45ba", size = 551947, upload-time = "2026-05-21T21:55:39.868Z" },
+    { url = "https://files.pythonhosted.org/packages/65/fa/43f86b3862448159ca6434942822aa31dec02b848967474e94cc1f568154/toons-0.7.0-cp37-abi3-win_amd64.whl", hash = "sha256:56c79eb7e3a9155a564f5ca1fe10f2a93e0e534c82bc9d7c7c047267e472a2f5", size = 202369, upload-time = "2026-05-21T21:55:44.928Z" },
+    { url = "https://files.pythonhosted.org/packages/04/9e/bfa4d07d215ea248818b85bc1bec8664eec1728e0704c773a252c4ac7d82/toons-0.7.0-cp37-abi3-win_arm64.whl", hash = "sha256:b1f53e0c9f40439f426050050f34a1e8b495ff4f702bfa460142929ad7e08c8c", size = 196225, upload-time = "2026-05-21T21:55:27.253Z" },
+]
+
+[[package]]
 name = "torch"
 version = "2.11.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2472,6 +2488,7 @@ dependencies = [
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "sounddevice" },
+    { name = "toons" },
     { name = "typer" },
     { name = "uvicorn", extra = ["standard"] },
 ]
@@ -2504,6 +2521,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.26.0" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "sounddevice", specifier = ">=0.5.0" },
+    { name = "toons", specifier = ">=0.7.0" },
     { name = "typer", extras = ["all"], specifier = ">=0.15.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.0" },
     { name = "vibe-plugin-tts-kitten", marker = "extra == 'tts-kitten'", editable = "vape/plugins/tts-kitten" },
