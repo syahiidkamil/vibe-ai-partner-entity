@@ -50,3 +50,7 @@ config.json
 
 # backup-chat hook cursor (per-machine state)
 .claude/hooks/.chat_id_tracker.txt
+
+# Raw chat archive — auto-generated, high-churn, verbatim. The local staging
+# buffer that feeds distillation; the durable memory is the diary (git), not this.
+vape/entity/storage/chats/
