@@ -19,7 +19,7 @@
         "id": "q142",
         "tone": 0.43,
         "pull": 0.85,
-        "age": 7,
+        "age": 8,
         "protected": false
       },
       {
@@ -31,7 +31,7 @@
         "id": "q143",
         "tone": 0.44,
         "pull": 0.85,
-        "age": 6,
+        "age": 7,
         "protected": false
       },
       {
@@ -43,7 +43,7 @@
         "id": "q144",
         "tone": 0.43,
         "pull": 0.85,
-        "age": 4,
+        "age": 5,
         "protected": false
       },
       {
@@ -55,14 +55,14 @@
         "id": "q145",
         "tone": 0.43,
         "pull": 0.85,
-        "age": 2,
+        "age": 3,
         "protected": false
       }
     ],
     "revalue_cd": 0
   },
   "current_feeling": "content",
-  "turns_since_change": 5,
+  "turns_since_change": 6,
   "prev_feel_dials": {
     "info_value_saturation": 44,
     "talkativeness": 40,
