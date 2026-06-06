@@ -106,6 +106,13 @@ pub fn run() {
                 .title(&title)
                 .transparent(true)
                 .decorations(false)
+                // No window shadow: macOS draws a shadow around the avatar's opaque
+                // silhouette, and on a transparent window the idle motion shifts that
+                // silhouette while the shadow goes stale — the mismatch reads as a
+                // light edge-fringe that only clears when focus/drag forces macOS to
+                // recompute it. Dropping the shadow removes the fringe for good while
+                // keeping full transparency + click-through.
+                .shadow(false)
                 .always_on_top(true)
                 .resizable(false)
                 .skip_taskbar(true)
