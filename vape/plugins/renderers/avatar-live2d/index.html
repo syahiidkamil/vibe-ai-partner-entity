@@ -18,7 +18,11 @@
     }
     /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
+      /* width matches the avatar panel (66.667%, centered) so the drag strip and
+         its hover gradient don't overflow the card into the transparent margins;
+         translate3d also promotes it to a clean GPU layer during a drag. */
+      position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
+      width: 66.667%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
     }
     .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
@@ -42,12 +46,18 @@
        so the −/+ controls just resize the OS window and Live2D refits — no scaling
        transform on the WebGL canvas (which ghosts on an unfocused transparent
        window and breaks click-through hit-testing). */
+    /* The avatar panel is a translucent layer BEHIND the canvas. It must stay its
+       OWN layer (not merged into the canvas) — when it shared the canvas layer
+       with the model, the opaque body punched a body-shaped transparent gap
+       through it during idle motion. The translate3d promotes it to a GPU
+       compositing layer so it moves cleanly with the frameless transparent macOS
+       window during a drag instead of smearing into vertical bands. */
     #avatar-bg {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate3d(-50%, 0, 0);   /* GPU layer → no smear-trails on window drag */
       width: 66.667%;
       background: rgba(128, 128, 128, 0.15);
     }
@@ -395,7 +405,15 @@
         isPlaying = false;
         stopLipSync();
         setTimeout(() => {
-          if (!isPlaying) speechBubble.classList.remove('visible');
+          if (!isPlaying) {
+            speechBubble.classList.remove('visible');
+            // After the 0.3s opacity fade, drop the element entirely so the
+            // transparent window can't retain a stale composited copy of it —
+            // the empty "ghost bubble". Re-shown via display='' next utterance.
+            setTimeout(() => {
+              if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+            }, 350);
+          }
         }, 500);
         return;
       }
@@ -422,7 +440,9 @@
       // Caption set up AFTER the audio exists, so a long sentence pages its
       // caption in sync with this clip's playback (see showSpeech).
       if (text) {
-        showSpeech(audio, text);
+        speechBubble.style.display = '';   // restore (CSS: -webkit-box) — display:none'd on hide to kill the ghost
+        showSpeech(audio, text);           // measures scrollHeight, so must run while displayed
+        void speechBubble.offsetHeight;    // reflow so the opacity fade-in plays from 0
         speechBubble.classList.add('visible');
       }
 
