@@ -46,20 +46,21 @@
        so the −/+ controls just resize the OS window and Live2D refits — no scaling
        transform on the WebGL canvas (which ghosts on an unfocused transparent
        window and breaks click-through hit-testing). */
-    /* The avatar panel is a translucent layer BEHIND the canvas. It must stay its
-       OWN layer (not merged into the canvas) — when it shared the canvas layer
-       with the model, the opaque body punched a body-shaped transparent gap
-       through it during idle motion. The translate3d promotes it to a GPU
-       compositing layer so it moves cleanly with the frameless transparent macOS
-       window during a drag instead of smearing into vertical bands. */
+    /* Stack: a fully TRANSPARENT base rectangle (its own layer — never merged into
+       the canvas, since merging let the opaque body punch a body-shaped hole on
+       idle) with the avatar canvas stacked on top. Transparent so the desktop
+       shows through and clicks pass behind the whole avatar — the point of a
+       desktop pet. The earlier white edge-fringe came from the model's edges
+       blending with the faintly-grey 0.15 panel; with NO grey to blend into, the
+       edges fade into nothing, so it should be clean AND see-through. */
     #avatar-bg {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      transform: translate3d(-50%, 0, 0);   /* GPU layer → no smear-trails on window drag */
+      transform: translate3d(-50%, 0, 0);
       width: 66.667%;
-      background: rgba(128, 128, 128, 0.15);
+      background: transparent;               /* see-through + click-through; only the avatar shows */
     }
     #canvas {
       position: absolute;
@@ -580,20 +581,6 @@
         tearLayer = new PIXI.Container();
         app.stage.addChild(tearLayer);
         app.ticker.add(updateTears);
-
-        // Keep the transparent macOS window recompositing while idle. The model's
-        // anti-aliased silhouette otherwise leaves a stale white edge-halo on the
-        // panel that only clears when hover/drag forces a window redraw. An
-        // imperceptible per-frame opacity flicker on the container both keeps the
-        // content "dirty" (forcing a recomposite) and — since opacity < 1 makes an
-        // isolated compositing group — blends the model over the panel cleanly
-        // before it hits the desktop behind the transparent window.
-        const containerEl = document.getElementById('container');
-        let _flick = false;
-        app.ticker.add(() => {
-          _flick = !_flick;
-          containerEl.style.opacity = _flick ? '0.999' : '1';
-        });
 
         // Lip-sync drives the mouth at the only point that wins the frame:
         // after motions/expressions/physics, just before render. But ONLY while
