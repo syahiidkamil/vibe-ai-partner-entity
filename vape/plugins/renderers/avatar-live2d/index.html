@@ -19,19 +19,27 @@
     /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
       /* width matches the avatar panel (66.667%, centered) so the drag strip and
-         its hover gradient don't overflow the card into the transparent margins;
+         its hint don't overflow the card into the transparent margins;
          translate3d also promotes it to a clean GPU layer during a drag. */
       position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
       width: 66.667%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
+      /* Faint always-visible blackish hint + a frosted blur, so a first-time user
+         can SEE where to grab me instead of guessing — the blur keeps the strip
+         readable even when its tint matches whatever's behind it. Deepens on
+         hover (the drag trigger). */
+      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s;
     }
-    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
+    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.22), transparent); }
     .controls {
       /* glued to the avatar panel's right edge with a % offset, so it tracks the
          panel at any window size without a CSS transform (panel = 280/420 wide,
          centered → its right edge sits 16.667% in from the window's right edge) */
       position: fixed; top: 6px; right: calc(16.667% + 4px);
-      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+      display: flex; gap: 4px; z-index: 102; -webkit-app-region: no-drag;
     }
     .ctrl-btn {
       width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
@@ -84,7 +92,7 @@
       text-align: center;
       opacity: 0;
       transition: opacity 0.3s;
-      z-index: 10;
+      z-index: 101;   /* above the titlebar (100) so its backdrop blur doesn't frost the bubble */
       pointer-events: none;
       display: -webkit-box;
       line-clamp: 4;
