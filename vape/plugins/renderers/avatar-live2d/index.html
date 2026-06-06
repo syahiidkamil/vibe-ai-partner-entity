@@ -581,6 +581,20 @@
         app.stage.addChild(tearLayer);
         app.ticker.add(updateTears);
 
+        // Keep the transparent macOS window recompositing while idle. The model's
+        // anti-aliased silhouette otherwise leaves a stale white edge-halo on the
+        // panel that only clears when hover/drag forces a window redraw. An
+        // imperceptible per-frame opacity flicker on the container both keeps the
+        // content "dirty" (forcing a recomposite) and — since opacity < 1 makes an
+        // isolated compositing group — blends the model over the panel cleanly
+        // before it hits the desktop behind the transparent window.
+        const containerEl = document.getElementById('container');
+        let _flick = false;
+        app.ticker.add(() => {
+          _flick = !_flick;
+          containerEl.style.opacity = _flick ? '0.999' : '1';
+        });
+
         // Lip-sync drives the mouth at the only point that wins the frame:
         // after motions/expressions/physics, just before render. But ONLY while
         // speaking. Frame order is idle-motion -> expression -> here, so an
