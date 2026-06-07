@@ -64,6 +64,6 @@ vape/entity/storage/chats/
 # identity-adjacent memory (HOT.md, soul.json, MEMORY.md, reveries.json, the
 # active_bubble register) stays TRACKED and diffable; only the live buffers below
 # are ignored: the spike-store, the dream cursor, and the light-dream breadcrumb.
-memory_wiki/bookmarks.jsonl
-memory_wiki/dream_state.json
-memory_wiki/last_thread.md
+vape/entity/memory_wiki/bookmarks.jsonl
+vape/entity/memory_wiki/dream_state.json
+vape/entity/memory_wiki/last_thread.md

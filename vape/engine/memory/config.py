@@ -35,7 +35,7 @@ EMBED_DIM = 3072  # native output dimension — verified live; the schema depend
 # Warm tier = the wiki (markdown + git, identity-adjacent, diffable). Bubbles, the
 # bookmark spike-store, reveries, and the active-bubble register all hang off here so
 # no downstream module hardcodes a path. All absolute, anchored at the repo ROOT_DIR.
-MEMORY_WIKI_DIR = ROOT_DIR / "memory_wiki"
+MEMORY_WIKI_DIR = ROOT_DIR / "vape" / "entity" / "memory_wiki"
 BUBBLES_DIR = MEMORY_WIKI_DIR / "bubbles"
 MEMORY_INDEX_PATH = MEMORY_WIKI_DIR / "MEMORY.md"          # the Tree-of-Knowledge root
 BOOKMARKS_PATH = MEMORY_WIKI_DIR / "bookmarks.jsonl"       # durable spike store (plugs the river-leak)
