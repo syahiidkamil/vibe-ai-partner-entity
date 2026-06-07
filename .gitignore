@@ -13,6 +13,9 @@ vape/model-stocks/threejs/
 !.env.example
 !.env.sample
 
+# Memory subsystem — personal/machine-local infra (references the private tunnel)
+vape/entity/memory/ensure-db-tunnel.sh
+
 # Build output (avatar plugins build during setup)
 dist/
 *.tsbuildinfo
@@ -56,3 +59,11 @@ config.json
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
 vape/entity/storage/chats/
+
+# Memory engine — churny runtime state (per-machine, high-churn). The durable,
+# identity-adjacent memory (HOT.md, soul.json, MEMORY.md, reveries.json, the
+# active_bubble register) stays TRACKED and diffable; only the live buffers below
+# are ignored: the spike-store, the dream cursor, and the light-dream breadcrumb.
+memory_wiki/bookmarks.jsonl
+memory_wiki/dream_state.json
+memory_wiki/last_thread.md
