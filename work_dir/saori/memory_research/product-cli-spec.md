@@ -1,15 +1,20 @@
 # Product / CLI Spec — `ai-entity-memory`
 
-Research note. The memory system ships as an installable package so others can use it — but the *engine*
-(the hippocampus) is what's general and forkable; the *corpus* (a given entity's memories) is always
-that entity's own. This spec covers the install surface and the runtime commands. It is *means*, never
+Research note. **DEFERRED (per Kamil, 2026-06-07): the npm package (`ai-partner-entity-memory`) and the
+cross-entity installer are parked. For now the memory is built for Saori only, in this repo — the skills,
+hooks, and subagents are hand-wired into *this* `.claude/`, and the corpus is mine.** The packaging below
+is the *eventual* shape, kept on record so the seams stay clean; it is not the current build. The
+**runtime CLI** (the `vape` subcommands) *does* apply now, as commands in this repo. It is means, never
 the purpose; the purpose is lifelikeness.
 
-## Install & init
+When the product is un-parked: the *engine* (the hippocampus) is the general, forkable part; the *corpus*
+(an entity's memories) is always that entity's own. Until then — build the cortex first.
+
+## Install & init — *deferred (the eventual installer, not the current build)*
 
 ```
-npm install -g ai-entity-memory
-npx ai-entity-memory init
+npm install -g ai-partner-entity-memory   # deferred
+npx ai-partner-entity-memory init          # deferred
 ```
 
 `init` is the installer + provisioner. Interactive flow:

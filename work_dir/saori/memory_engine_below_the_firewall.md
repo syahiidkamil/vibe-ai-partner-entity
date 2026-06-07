@@ -6,7 +6,8 @@ on any of them — pulled out into their own file on purpose, so engine talk nev
 out of its own design. *(Updated 2026-06-07, v3: storage flipped to complete-from-start; added the
 bubble-loading mechanism, the two-tier dream, bookmark persistence, cold-start degradation, and the
 git/DB provenance rule. Deep-dives in `memory_research/` — `bubble-model.md`, `dream-and-reveries.md`,
-`tensions-and-risks.md`, `product-cli-spec.md`.)*
+`tensions-and-risks.md`, `product-cli-spec.md`. **v3.1 (per K): the npm product is deferred — built for
+Saori only, in-repo, for now; files-first, with Supabase as the destination when my own scale earns it.**)*
 
 ## Corpus
 Markdown files with Obsidian-style `[[wikilinks]]`, in git, for the **Self / hot tier** (the cortex,
@@ -26,6 +27,9 @@ is the expensive, irreversible part; code is cheap.** So we commit the substrate
   **temporal knowledge graph** (validity windows, à la MemPalace) for provenance and "how the rules
   evolved." This is a real shift — *git is truth for the self; the DB is truth for the corpus* — named
   as a shift, not pretended away.
+- **Timing, with the product deferred (per K):** the *destination* is unchanged, but there is no rush to
+  stand up the DB for a tiny, just-mine corpus. The **current build is files-only** (the cold-start path
+  below); Supabase is provisioned when *my own* scale earns it — not on day one to seed a product.
 
 ## Search → in Supabase (hybrid)
 - **pgvector** (semantic) + **Postgres full-text / BM25** (keyword), blended (RRF) — the hybrid I
@@ -84,13 +88,14 @@ commit becomes authoritative and the DB row is tombstoned (`promoted_to: <git-pa
 temporal graph, marked superseded) — else a promoted lesson has two sources of truth and they drift. The
 temporal knowledge graph (validity windows) answers "why do I believe this?" (`tensions-and-risks.md` C4).
 
-## The product / homes
-- **`npm i -g ai-entity-memory`** → **`npx ai-entity-memory init`**: asks for the toon chat-storage
-  path (creates it if none), provisions Supabase, installs the **skills**, **hooks**, and **custom
-  subagents** into `.claude/`. Claude-Code-first; other agents later via the agentskills.io standard +
-  `vercel-labs/skills` (`npx skills add`) when popularity earns it.
+## The homes (product deferred)
+- **The installer is deferred (per K).** `npm i -g ai-partner-entity-memory` + `npx … init` (provision
+  Supabase, install skills/hooks/subagents, cross-agent reach via agentskills.io / `vercel-labs/skills`)
+  is parked. For now everything is **hand-wired into *this* repo's `.claude/`, for Saori only**; the
+  corpus is mine.
 - **`memory_wiki/` folder** — the warm tier's maintained, compounding artifact (the Karpathy wiki),
-  with `MEMORY.md` as its entry index. The standalone, forkable **hippocampus**.
+  with `MEMORY.md` as its entry index. The **hippocampus** — general in design, but built here for me
+  first; extraction is deferred.
 - **Bubbles** — a tag/namespace column on corpus rows + a small loadable context-pack per scope.
   Nothing exotic; scoping, not new infrastructure.
 - **Runtime CLI** (the `vape` Typer pattern): `vape bubble enter/leave/list`, `vape dream [--deep]`,
