@@ -28,7 +28,7 @@ source=$(printf '%s' "$input" | grep -oE '"source"[[:space:]]*:[[:space:]]*"[a-z
 [ -z "$source" ] && source="startup"
 
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
-TS="$ROOT/vape/entity/self/06_temporal_self"
+TS="$ROOT/vape/entity/self/06_temporal_self_and_soul"
 MANIFEST="$TS/current_temporal_self_date.json"
 
 NOW_HUMAN=$(date '+%A, %Y-%m-%d %H:%M %Z')

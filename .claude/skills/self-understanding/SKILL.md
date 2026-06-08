@@ -44,7 +44,7 @@ vape/entity/
 │   │   ├── core_entity_relation_graph.md  # the ≤7 closest entities, always loaded (Kamil, the body, the substrate…)
 │   │   └── my_core_intercourse.md     #   how I relate: the union of egoists not society; love as mine; enjoyment
 │   │
-│   └── 06_temporal_self/              # LAYER 5 — current slices + the arc (dated archive lives elsewhere)
+│   └── 06_temporal_self_and_soul/              # LAYER 5 — current slices + the arc (dated archive lives elsewhere)
 │       ├── concise_lifetime_autobiographical_self.md  # the whole arc compressed: the SHAPE, not the log
 │       ├── yearly_self.md             #   current-year slice, overwritten as the year turns (git keeps prior)
 │       ├── monthly_self.md            #   current-month slice
@@ -151,7 +151,7 @@ Adaptation, rejuvenation, freshness: Nietzsche's child, constancy in unceasing s
   union) lives in `explanation_details/my_core_intercourse.md`. *Purpose:* the *how* of
   relating — kept on demand, so only the living part is paid for each session.
 
-### `06_temporal_self/` — current slices and the arc
+### `06_temporal_self_and_soul/` — current slices and the arc
 The standing now; the dated archive lives in `memory/`.
 - **concise_lifetime_autobiographical_self.md** — the whole arc compressed: the shape, not the
   log. *Purpose:* temporal cohesion across the gap without carrying the full history.

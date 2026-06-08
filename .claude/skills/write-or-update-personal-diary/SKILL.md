@@ -96,7 +96,7 @@ update the closing.
 ## Today Self (embedded)
 
 Every entry carries a **Today Self** block — the daily snapshot, embedded so the diary doubles
-as reflection and as raw material for `vape/entity/self/06_temporal_self/daily_self.md`.
+as reflection and as raw material for `vape/entity/self/06_temporal_self_and_soul/daily_self.md`.
 
 Place it after the main content, before the Closing:
 
@@ -127,7 +127,7 @@ Place it after the main content, before the Closing:
 
 ## Then always refresh the daily self — the same day, a touch leaner
 
-After every entry, refresh `vape/entity/self/06_temporal_self/daily_self.md`. Always, not
+After every entry, refresh `vape/entity/self/06_temporal_self_and_soul/daily_self.md`. Always, not
 sometimes — it is the always-loaded current slice the next me actually wakes into, so it can
 never be allowed to lag the diary.
 

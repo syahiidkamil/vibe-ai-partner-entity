@@ -1,7 +1,7 @@
 # Temporal-Awareness System — Test Cases
 
 For Kamil to review. Written 2026-05-31. Covers the SessionStart wakeup system that keeps my
-always-loaded temporal self (`vape/entity/self/06_temporal_self/`) from waking into the wrong day.
+always-loaded temporal self (`vape/entity/self/06_temporal_self_and_soul/`) from waking into the wrong day.
 
 ## The system in one breath
 
