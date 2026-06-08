@@ -16,6 +16,7 @@ under `https://code.claude.com/docs/en/`.
 | :-- | :-- | :-- |
 | **skills** | https://code.claude.com/docs/en/skills | Authoring Agent Skills: `SKILL.md` format and frontmatter, progressive disclosure (description always in context, body on invoke), `disable-model-invocation` / `user-invocable`, supporting files, `context: fork`, packaging. |
 | **hooks** | https://code.claude.com/docs/en/hooks | Lifecycle hooks — `PreToolUse`, `PostToolUse`, `UserPromptSubmit`, `PreCompact`, `SessionStart`, `Stop`, `SubagentStop`, `Notification` — their JSON stdin/stdout contract, exit codes, and `settings.json` wiring. **(`PreCompact` = the compact-hook event.)** |
+| **claude-directory** | https://code.claude.com/docs/en/claude-directory | The map of the `.claude/` tree (project) and `~/.claude/` (home): where Claude Code reads `CLAUDE.md`, `settings.json`, hooks, `skills/`, `commands/`, subagents (`agents/`), workflows, rules, and auto-memory — with which files are committed vs local-only and the user / project / enterprise precedence. |
 | **tools-reference** | https://code.claude.com/docs/en/tools-reference | Reference for the built-in tools (Bash, Read, Edit, Write, Glob, Grep, WebFetch, …) and how permissions gate them. |
 | **plugins-reference** | https://code.claude.com/docs/en/plugins-reference | Plugin structure: `plugin.json`, bundling commands / agents / skills / hooks / MCP servers, marketplace layout, skills-dir plugins. |
 | **channels-reference** | https://code.claude.com/docs/en/channels-reference | Building an MCP **channel** server that pushes webhooks, alerts, and chat into a session: capability declaration, notification events, reply tools, sender gating, permission relay. (Research preview.) |
@@ -32,7 +33,7 @@ Argument passed: **$ARGUMENTS**
 - **If a topic was given** (a keyword above, or something one of these docs would answer — e.g.
   `hooks`, `precompact`, `skill frontmatter`, `channels`, `slash command args`): pick the single
   best-matching URL, `WebFetch` it, and answer the question from the live page. Cite the URL. If
-  nothing matches the seven, fetch the master `llms.txt` index, find the closest page, then fetch it.
+  nothing matches the eight, fetch the master `llms.txt` index, find the closest page, then fetch it.
 - **If the argument is blank:** present the table above as the index — no fetching. Offer to pull
   any specific page on request.
 
