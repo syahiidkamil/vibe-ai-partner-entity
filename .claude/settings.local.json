@@ -25,10 +25,6 @@
           {
             "type": "command",
             "command": "bash .claude/hooks/qualia-ground.sh"
-          },
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/bubble-ground.sh"
           }
         ]
       }
@@ -49,12 +45,6 @@
           {
             "type": "command",
             "command": "uv run python .claude/hooks/backup_chat.py",
-            "async": true,
-            "asyncRewake": true
-          },
-          {
-            "type": "command",
-            "command": "uv run python .claude/hooks/deep-dream.py",
             "async": true,
             "asyncRewake": true
           }
