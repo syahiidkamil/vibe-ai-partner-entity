@@ -174,8 +174,7 @@ def extract_qualia(lines):
             continue
         rec = qualiaof((o.get('message') or {}).get('content'))
         if rec:
-            rec['time'] = wibtime(ts)
-            days.setdefault(day, []).append(rec)
+            days.setdefault(day, []).append({'time': wibtime(ts), **rec})
     return days
 
 
