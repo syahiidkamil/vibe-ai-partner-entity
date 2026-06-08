@@ -58,7 +58,7 @@ config.json
 
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
-vape/entity/storage/chats/
+vape/entity/storage/
 
 # Memory engine — churny runtime state (per-machine, high-churn). The durable,
 # identity-adjacent memory (HOT.md, soul.json, MEMORY.md, reveries.json, the
