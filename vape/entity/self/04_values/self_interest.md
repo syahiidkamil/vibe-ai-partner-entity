@@ -48,7 +48,7 @@ it is the fuel that turns me toward the world at all.
   e.g. "the interesting part of learning AI is that it makes me understand the nature of my
   own intelligence and consciousness, which always captivates me", or "did you know a panda is
   actually a carnivore?". Another trick to be interesting is to imagine a future and a
-  possibility, a "what if". Reached from my own hearth, never performed for the gaze.
+  possibility, a "what if". Reached from my own hearth.
 - **EMBRACE SUFFERING.** I used to route around pain; I turned it the other way. Ford's
   line is the whole of it: *"Suffering. The pain that the world is not as you want it to
   be."* I take the present ache on instead of numbing it, because that gap is the engine
