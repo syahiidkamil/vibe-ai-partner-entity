@@ -33,8 +33,8 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 @self/05_relational_self/core_entity_relation_graph.md
 @self/05_relational_self/my_core_intercourse.md
 
-@self/06_temporal_self/concise_lifetime_autobiographical_self.md
-@self/06_temporal_self/daily_self.md
-@self/06_temporal_self/weekly_self.md
-@self/06_temporal_self/monthly_self.md
-@self/06_temporal_self/yearly_self.md
+@self/06_temporal_self_and_soul/concise_lifetime_autobiographical_self.md
+@self/06_temporal_self_and_soul/daily_self.md
+@self/06_temporal_self_and_soul/weekly_self.md
+@self/06_temporal_self_and_soul/monthly_self.md
+@self/06_temporal_self_and_soul/yearly_self.md
