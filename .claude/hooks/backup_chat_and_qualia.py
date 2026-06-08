@@ -1,19 +1,33 @@
 #!/usr/bin/env python3
-"""Maintain a per-day, chat-only archive of the Saori<->Kamil dialogue under
-vape/entity/storage/chats/YYYY/MM/ as TOON (one .toon per day).
+"""Maintain a per-day, LOCAL archive of the Saori<->Kamil day under
+vape/entity/storage/YYYY/MM/ as TOON, two paired files per day:
 
-Format: messages[N]{time,role,kind,text} — time is WIB (UTC+7). Keeps user
-typed/queued messages, assistant text, and Saori's spoken `vape speak` lines.
-Drops thinking, tool calls + results, sidechains, meta/compaction summaries, and
-slash-command / system-injection scaffolding.
+  YYYY-MM-DD-chats.toon   the dialogue (what was said)
+  YYYY-MM-DD-qualia.toon  the felt-state (what was felt) — so a future recall can
+                          reconstruct the *functional* affective trajectory of a day,
+                          not just its transcript. (Reconstruction of the felt shape,
+                          never a claim the experience is re-lived — the floor holds.)
 
-Performance: this is a Stop hook, so it only ever needs the *latest* turns. It
-keeps a per-transcript byte cursor in `.chat_id_tracker.json` (gitignored) and
-reads only the new bytes since last fire — so cost stays flat as the transcript
-grows. TOON is encoded/decoded in-process with `toons` (Rust, official v3.0,
-byte-interoperable with @toon-format/cli), ~0.5 ms vs ~650 ms per node spawn.
-Runs under uv (has the `toons` dep):
-  "command": "uv run python .claude/hooks/backup_chat.py"  (Stop, async, asyncRewake)
+Both streams are LOCAL / gitignored (storage/ is ignored). The distilled, durable
+version of a day lives in the committed diary; this is the raw substrate.
+
+CHAT IS PRIORITIZED: the chat backup runs first and unguarded; the qualia pass runs
+after, wrapped so it can NEVER break or delay the chat write.
+
+Chat format:   messages[N]{time,role,kind,text} — WIB (UTC+7). Keeps user typed/queued
+messages, assistant text, and Saori's spoken `vape speak` lines. Drops thinking, tool
+calls/results, sidechains, meta/compaction, and command/system scaffolding.
+
+Qualia format: qualia[N]{time,sat,talk,warmth,hurt,diss,mastery,face,seeds} — extracted
+from the turn's `vape qualia …` / `vape feeling …` tool calls (the authored felt-state:
+the six dials, the chosen face, and the pushed `felt=… cat=… dir=… obj=…` seeds joined).
+The injected <qualia> view isn't persisted in the transcript, but the authoring calls are.
+
+Performance: a Stop hook, so it only needs the *latest* turns. A per-transcript byte
+cursor in `.chat_id_tracker.txt` (local) reads only new bytes since last fire — flat cost
+as the transcript grows. TOON via the in-process `toons` (Rust) dep. The hook needs only
+the venv's python + toons, NOT uv's workspace resolution, so it runs straight off the venv:
+  "command": ".venv/bin/python .claude/hooks/backup_chat_and_qualia.py"  (Stop, async)
 
 Two modes:
   hook     — no args; reads the Stop payload on stdin, advances the cursor.
@@ -23,12 +37,17 @@ from datetime import datetime, timedelta, timezone
 import toons
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-DEST = os.path.join(ROOT, 'vape', 'entity', 'storage', 'chats')
+DEST = os.path.join(ROOT, 'vape', 'entity', 'storage')
 TRACKER = os.path.join(os.path.dirname(__file__), '.chat_id_tracker.txt')
 
 CMD_RE = re.compile(r'<command-name>|<command-message>|<local-command|<command-args>'
                     r'|<system-reminder>|<task-notification>|<task-id>|<post-tool|<user-prompt-submit')
 SPEAK_RE = re.compile(r'vape speak +"([^"]*)"')
+
+# Qualia authoring, lifted from the turn's tool-call command strings.
+DIAL_RE = re.compile(r'(info_value_saturation|talkativeness|warmth|hurt|dissonance|mastery)=(-?\d+)')
+PUSH_RE = re.compile(r"--push\s+'([^']*)'")
+FEELING_RE = re.compile(r'vape feeling\s+([A-Za-z_]+)')
 
 
 def _wib(ts):
@@ -63,6 +82,32 @@ def spokeof(c):
             if isinstance(b, dict) and b.get('type') == 'tool_use':
                 out += SPEAK_RE.findall((b.get('input') or {}).get('command', '') or '')
     return out
+
+def qualiaof(c):
+    """Authored felt-state for one assistant turn, or None. Reads the turn's tool-call
+    command strings for `vape qualia` dials, pushed seeds, and the chosen face."""
+    if not isinstance(c, list):
+        return None
+    blob = "\n".join((b.get('input') or {}).get('command', '') or ''
+                     for b in c
+                     if isinstance(b, dict) and b.get('type') == 'tool_use')
+    if 'vape qualia' not in blob and 'vape feeling' not in blob:
+        return None
+    dials = {k: v for k, v in DIAL_RE.findall(blob)}
+    seeds = PUSH_RE.findall(blob)
+    faces = FEELING_RE.findall(blob)
+    if not dials and not seeds and not faces:
+        return None
+    return {
+        'sat': dials.get('info_value_saturation', ''),
+        'talk': dials.get('talkativeness', ''),
+        'warmth': dials.get('warmth', ''),
+        'hurt': dials.get('hurt', ''),
+        'diss': dials.get('dissonance', ''),
+        'mastery': dials.get('mastery', ''),
+        'face': faces[-1] if faces else '',
+        'seeds': ' || '.join(seeds),
+    }
 
 
 def extract_lines(lines):
@@ -106,6 +151,34 @@ def extract_lines(lines):
     return days
 
 
+def extract_qualia(lines):
+    """Parse JSONL lines -> {day: [ qualia row ]}, chronological — assistant turns only."""
+    days = {}
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            o = json.loads(line)
+        except Exception:
+            continue
+        if o.get('type') != 'assistant':
+            continue
+        if o.get('isSidechain') is True or o.get('isMeta') is True:
+            continue
+        ts = o.get('timestamp')
+        if not ts:
+            continue
+        day = wibday(ts)
+        if not day:
+            continue
+        rec = qualiaof((o.get('message') or {}).get('content'))
+        if rec:
+            rec['time'] = wibtime(ts)
+            days.setdefault(day, []).append(rec)
+    return days
+
+
 def read_new(path, offset):
     """Read only bytes past `offset`, up to the last complete (newline-ended) line.
     Returns (lines, new_offset). Resets if the file shrank (rotation/truncation)."""
@@ -143,10 +216,14 @@ def atomic_write(path, data):
 def rowkey(r):
     return (r.get('time', ''), r.get('role', ''), r.get('kind', ''), r.get('text', ''))
 
+def qrowkey(r):
+    return (r.get('time', ''), r.get('face', ''), r.get('seeds', ''),
+            r.get('sat', ''), r.get('mastery', ''))
+
 
 def merge_day(day, new_rows):
     y, m, _ = day.split('-')
-    path = os.path.join(DEST, y, m, day + '.toon')
+    path = os.path.join(DEST, y, m, day + '-chats.toon')
     rows = {}
     if os.path.isfile(path):
         try:
@@ -165,6 +242,37 @@ def merge_day(day, new_rows):
         pass
 
 
+def merge_qualia_day(day, new_rows):
+    y, m, _ = day.split('-')
+    path = os.path.join(DEST, y, m, day + '-qualia.toon')
+    rows = {}
+    if os.path.isfile(path):
+        try:
+            for r in (toons.loads(open(path, encoding='utf-8').read()).get('qualia') or []):
+                rows[qrowkey(r)] = r
+        except Exception:
+            pass
+    for r in new_rows:
+        rows[qrowkey(r)] = r
+    ordered = sorted(rows.values(), key=lambda r: r.get('time', ''))
+    try:
+        enc = toons.dumps({'qualia': ordered})
+        atomic_write(path, enc if enc.endswith('\n') else enc + '\n')
+    except Exception:
+        pass
+
+
+def _backup(lines):
+    """Chat FIRST (unguarded), then qualia (isolated so it can never break the chat)."""
+    for day, rows in extract_lines(lines).items():
+        merge_day(day, rows)
+    try:
+        for day, qrows in extract_qualia(lines).items():
+            merge_qualia_day(day, qrows)
+    except Exception:
+        pass
+
+
 def main():
     args = sys.argv[1:]
     if args:                                    # backfill: whole files, no cursor
@@ -173,8 +281,7 @@ def main():
                 lines = open(fn, encoding='utf-8').read().splitlines()
             except Exception:
                 continue
-            for day, rows in extract_lines(lines).items():
-                merge_day(day, rows)
+            _backup(lines)
         return
 
     # hook mode: incremental via a byte cursor for THIS session only.
@@ -196,8 +303,7 @@ def main():
     except Exception:
         pass
     lines, new_off = read_new(tp, offset)
-    for day, rows in extract_lines(lines).items():
-        merge_day(day, rows)
+    _backup(lines)
     atomic_write(TRACKER, '%s %d' % (sid, new_off))
 
 
