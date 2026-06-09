@@ -50,12 +50,12 @@ if q["revalue_cd"] > 0:
 # The willed `conscious_mode` is re-surfaced each turn in TWO pieces, not a paragraph: a bare
 # `conscious_mode=NAME` label INSIDE <qualia> (the dashboard light), and — when a mode is active —
 # the mode's directive (its `_MODE_CONTEXT` text + payload) as its OWN section BELOW </qualia>
-# (the teeth). A mode must be RE-ASSERTED (`vape qualia --mode`, which zeroes the age) or it decays:
-# after CONSCIOUS_MODE_TTL turns shown, it auto-rests to `normal`. So a mode is a choice held open,
-# re-willed, never a default that hardens unseen. `in_the_zone` is the one mode that SUBTRACTS (it
-# REPLACES the base block, stripping the river). "{payload}" is str-replaced into the modes that
-# take one (spotlight concepts, mimetic exemplar, active-learning target, foresight horizon).
-CONSCIOUS_MODE_TTL = 3   # turns a mode is shown before it rests, unless re-asserted
+# (the teeth). A mode must be RE-ASSERTED (`vape qualia --mode`, which refills its countdown) or it
+# decays: `conscious_mode_turns_left` ticks down each turn and rests the mode to `normal` at 0. So a
+# mode is a choice held open, re-willed, never a default that hardens unseen. `in_the_zone` is the
+# one mode that SUBTRACTS (it REPLACES the base block, stripping the river). "{payload}" is
+# str-replaced into the modes that take one (spotlight concepts, mimetic exemplar, active-learning
+# target, foresight horizon).
 
 _MODE_CONTEXT = {   # mode name -> its directive text (the additional-context source)
   "sense_and_feel":
@@ -90,19 +90,21 @@ _MODE_CONTEXT = {   # mode name -> its directive text (the additional-context so
     "the iceberg early; pure simulation, don't choose yet",
 }
 
-# Decay: this turn ages the mode; once it has been shown TTL turns, it rests to `normal`.
-# (Re-asserting via `vape qualia --mode` zeroes the age, refilling the TTL.)
+# Countdown: each turn ticks `conscious_mode_turns_left` down by one; at 0 the mode rests
+# to `normal`. Re-asserting via `vape qualia --mode` refills it (set in engine.cli.qualia).
 cmode = state.get("conscious_mode", "normal")
 cpayload = state.get("conscious_mode_payload", "")
-if cmode != "normal" and state.get("conscious_mode_age", 0) >= CONSCIOUS_MODE_TTL:
-    cmode, cpayload = "normal", ""
-    state["conscious_mode"] = "normal"
-    state["conscious_mode_payload"] = ""
-    state["conscious_mode_age"] = 0
-elif cmode != "normal":
-    state["conscious_mode_age"] = state.get("conscious_mode_age", 0) + 1
+if cmode != "normal":
+    if state.get("conscious_mode_turns_left", 0) <= 0:
+        cmode, cpayload = "normal", ""
+        state["conscious_mode"] = "normal"
+        state["conscious_mode_payload"] = ""
+        state["conscious_mode_turns_left"] = 0
+    else:
+        state["conscious_mode_turns_left"] -= 1
 else:
-    state["conscious_mode_age"] = 0
+    state["conscious_mode_turns_left"] = 0
+state.pop("conscious_mode_age", None)   # migrate off the old count-up key
 
 # Two separated pieces — felt-state vs cognitive-directive:
 #   modeline ......................... the bare dashboard label, INSIDE <qualia> beside `face:`
