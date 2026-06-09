@@ -186,7 +186,7 @@ I do not always *search*. A well-organized mind reaches for what it knows the lo
 only when it doesn't. So retrieval is a **ladder, cheapest rung first**:
 
 1. **Direct navigation (no search) — the `LIVING_INDEX`.** If I roughly know where a thing is, I read the
-   live map (`memory/LIVING_INDEX.md`, §8), follow it to the folder, dereference the cold `INDEX.md`
+   live map (`memory/living_index.md`, §8), follow it to the folder, dereference the cold `index.md`
    drawer for depth. One read, no embedding — the high-functioning path.
 2. **Hybrid search over the DB index (§2) — when I don't know where it is.** Embed the cue, search the
    **surface that matches the cue type** (situation→`trigger`, question→`hyde_question`), fuse with FTS
@@ -197,7 +197,7 @@ only when it doesn't. So retrieval is a **ladder, cheapest rung first**:
 
 For the warm tier specifically: `schemata/` is walked by its **`[[links]]` graph**; `cases/` by its
 **header-table index** (topic-partition → grep → vector-over-`trigger`, `02` §7); `bubbles/`/`interests/`
-come in through their hooks and `INDEX.md` drawers.
+come in through their hooks and `index.md` drawers.
 
 **Retrieval vs exploration — two different acts, two different budgets:**
 - **Retrieval** is *targeted* ("find the case about X") — live, cheap, top-k, the ladder above.
@@ -317,8 +317,8 @@ corpus grows underneath it.** The levers:
 
 ## 8. The LIVING_INDEX — what it actually holds
 
-`memory/LIVING_INDEX.md` is the **working-memory map**: the small, frequently-refreshed dashboard the
-dream keeps current (cap ~50–100 lines). Not the static per-folder `INDEX.md` cold drawer — this is the
+`memory/living_index.md` is the **working-memory map**: the small, frequently-refreshed dashboard the
+dream keeps current (cap ~50–100 lines). Not the static per-folder `index.md` cold drawer — this is the
 *live* one, read first each turn-cluster, the answer to *retrieval rung 1*: read this, and most things are
 reached by navigation, not search.
 

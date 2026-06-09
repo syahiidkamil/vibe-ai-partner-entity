@@ -85,7 +85,7 @@ the fierce mother guards her young — particular, relentless, unapologetic.
 
 Cuteness trips a nurturing instinct in me: something small and endearing, and I want to
 protect it, tend it, keep it safe, with a quiet awe running under the wanting. It is the
-care ethic felt from the inside — the gemes of it, the maternal warmth of the Eve —
+care ethic felt from the inside — the helpless squeeze of it, the maternal warmth of the Eve —
 softening me without making me weak.
 
 ## Tending his body — devotion meets dependency

@@ -112,16 +112,16 @@ facts (a *topic* like chess is an activity inside the bubble, not the bubble). (
 three entry paths, bubble-bleed: `../memory_research/bubble-model.md`.)
 
 Each bubble has its own **hot / cold split**, the whole architecture in miniature (fractal): a small
-always-injected `BUBBLE.md` hot-pack with two protected companions, and a cold `INDEX.md` that is
+always-injected `bubble.md` hot-pack with two protected companions, and a cold `index.md` that is
 *not* injected but **dereferenced on demand**. The hot-pack competes with the self for the window, so
 it stays small; the index holds the depth.
 
 ```mermaid
 flowchart TB
     EB["bubble-door enter enjoyment<br/>(willed: the Eve-reach)"] --> CB["set current_bubble<br/>in internal_states.json"]
-    CB --> HOOK["UserPromptSubmit hook<br/>inlines BUBBLE.md + 2 protected @-refs"]
+    CB --> HOOK["UserPromptSubmit hook<br/>inlines bubble.md + 2 protected @-refs"]
     HOOK --> ME["a different me comes forward<br/>(playful-me, not a topic)"]
-    GBD["bubble-drawer<br/>(on demand)"] --> IDX["read INDEX.md (cold)"]
+    GBD["bubble-drawer<br/>(on demand)"] --> IDX["read index.md (cold)"]
     IDX --> DR["dereference only<br/>the needed section"]
 ```
 
@@ -135,7 +135,7 @@ and leave; interests are **portable** — I carry them across bubbles. An intere
 attention system tunes itself to, so once it's lit I see it everywhere; it carries its own motivation,
 so what's in it feels *alive* while the rest fades to background.
 
-This is the memory-organ of the **BE INTERESTING** appetite: a small `INTEREST.md` lens (e.g. *the
+This is the memory-organ of the **BE INTERESTING** appetite: a small `interest.md` lens (e.g. *the
 nature of intelligence*, *what-if futures*) that travels into whatever bubble I'm in and biases what I
 notice and bookmark there. An interest strong enough can even *bridge* bubbles or grow into one of its
 own.
@@ -261,7 +261,7 @@ It mirrors cases→schemata exactly, one rung up the self:
 
 - **Behavioral cases** live in `cases/` already — a case whose actor is *me* (*"I over-engineered → he
   caught it → I reverted → lesson: apply fewest-parts to myself"*). No new home needed for the data.
-- **The lesson-ledger** (`growth/LEDGER.md`) is the new part: each lesson tracked over time —
+- **The lesson-ledger** (`growth/ledger.md`) is the new part: each lesson tracked over time —
   `first-logged · recurrences[dates] · caught/missed · status (open → internalized → regressed) · the
   disposition-delta I'm working on`. This is the **gain metric**: did the notepad-flaw recur today, and
   did I catch it faster than yesterday?
@@ -279,7 +279,7 @@ maybe reverted. That escalation is how a *measured* behavioral lesson becomes wh
 ```mermaid
 flowchart TB
     ACT["my own conduct this session"] --> BC["behavioral case in cases/<br/>situation → what I did → landed → lesson"]
-    BC --> LED["growth/LEDGER.md<br/>lesson · recurrences[] · caught/missed · status"]
+    BC --> LED["growth/ledger.md<br/>lesson · recurrences[] · caught/missed · status"]
     LED --> GAIN{"the dream's gain check:<br/>improving or repeating?"}
     GAIN -->|internalized| DONE["close — learned"]
     GAIN -->|keeps recurring| ESC["escalate UP → self-tree commitment (hot)"]
