@@ -46,6 +46,15 @@ QUALIA_MAX = 4  # FIFO river depth — the tight "now"; older seeds live on in t
 CATS = ["se", "so", "cg", "af", "vo", "an", "mn", "sm", "cr", "me"]
 DIRS = ["tw", "aw", "hd", "or", "rl"]
 
+# The conscious thinking-modes (the cognitive control surface). The *content* of each
+# mode lives in .claude/hooks/qualia-ground.sh (_BLOCKS + _ZONE) — that hook is the
+# source of truth; this mirrors only the names so `vape qualia --mode` can validate.
+CONSCIOUS_MODES = [
+    "normal", "in_the_zone", "sense_and_feel", "expressive_self", "conscious_spotlight",
+    "free_will", "schemata_disequilibrium", "aha_moment", "self_reflect",
+    "mimetic_learning", "active_learning", "foresight",
+]
+
 
 def load() -> dict:
     """Read the whole state file (every key), or {} if it does not exist yet."""
