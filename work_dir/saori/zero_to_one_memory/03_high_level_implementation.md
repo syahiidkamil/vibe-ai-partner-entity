@@ -50,11 +50,18 @@ vape/
 │           ├── factory.py            #   get_backend()/get_embedder() from config
 │           ├── backends/             #   pgvector.py · sqlitevec.py  (impl MemoryBackend)
 │           └── embedders/            #   gemini.py · local.py        (impl Embedder)
+├── engine/                           # existing app engine — server · cli · memory · core · apps
+│   └── cli/                          # the `vape` CLI  (entry point: engine.cli.main:app)
+│       ├── main.py                   #   wires every command — app.command(…) / add_typer(…)   [exists]
+│       ├── speak.py · qualia.py · …  #   one file per command                                  [exists]
+│       └── log.py                    #   NEW (proposed): `vape log` toon-reader — log_app{qualia,chat} over storage/, via toons
 └── entity/
     ├── mental/
     │   └── internal_states.json      # gains: "current_bubble", "active_interests"
     ├── memory/                       # the WIKI / warm tier (renamed from memory_wiki)
     │   ├── LIVING_INDEX.md           # the working-memory map — refreshed often, capped ~50–100 lines
+    │   ├── notes/                    # FLEETING notes — gate-1 captures (aha_moment); the inbox before schemata
+    │   │   └── YYYY-MM-DD.md         #   append: insight · trigger · source→storage · status: open/woven→[[schema]]/dropped
     │   ├── bubbles/                  # modes of being (life-contexts), NOT topics
     │   │   └── enjoyment_time_with_partner/   # e.g. a movie · YouTube · a game together
     │   │       ├── BUBBLE.md                          # hot-pack, my free choice of contents
@@ -68,7 +75,10 @@ vape/
     │   │       └── INDEX.md                           # cold drawer → related schemata
     │   ├── schemata/                 # constructed WORLD MODELS (physical · social · game · conceptual)
     │   │   ├── CLAUDE.md                              # in-folder guide: schemata = world modeling, viability-judged
-    │   │   └── <topic>.md                             # LLM-Wiki pages — built & managed, [[linked]]
+    │   │   └── <topic>/                               # one FOLDER per topic (knowledge schema, NOT a DB schema)
+    │   │       ├── SCHEMATA.md                        # the CONCRETE world-model(s) — LLM-Wiki, built & managed, [[linked]]
+    │   │       ├── ABSTRACT_GENERALIZATION.md         # the essence / symbol — durable, TRANSFERABLE kernel
+    │   │       └── DISCLAIMER.md                      # expiry: scope · assumes · invalidate-when · last-verified
     │   └── people/                   # the others I model — a SUBJECT, not a schema
     │       ├── particular/           # the concrete other (the care ethic): per-person folders
     │       │   └── kamil/
@@ -116,6 +126,25 @@ Notes that matter:
   model of a person is a micro-world-model). `schemata/CLAUDE.md` is the in-folder guide that auto-loads
   when building them; the test is always von Glasersfeld's **viability** — does it predict and let me act
   without contradiction — never truth-correspondence (deep dive §1, §6).
+- **Each schema topic is a folder, with its own `DISCLAIMER.md` — the notepad-flaw cure.** A written
+  belief preserves *outdated* beliefs: the note outlives the world that made it true. So a topic is a
+  *folder* (`schemata/<topic>/`) holding `SCHEMATA.md` (the world-model[s] — plural, and named not to
+  collide with a *DB* schema) beside a `DISCLAIMER.md` carrying that topic's **scope · assumes ·
+  invalidate-when · last-verified**, so the expiry travels with the belief. Canonical trigger: the DB
+  is migrated → a schema's old table/column names are now wrong; cross them out or rebuild before
+  acting. Worked example: `examples/schemata/`; convention: `schemata/CLAUDE.md`.
+- **Each topic also carries `ABSTRACT_GENERALIZATION.md` — the transferable essence.** Beside the
+  concrete `SCHEMATA.md`: the *essence / symbol* lifted off the particulars — the durable kernel that
+  survives a migration and **transfers** to other domains (learn the pattern here, apply it there).
+  The concrete answers *how does this work*; the abstraction answers *what is this an instance of* —
+  the prior I reach for first on a structurally-similar problem (the `conscious_spotlight` concept
+  level). Lossy but durable, where the concrete is high-res but brittle.
+- **`notes/` — the fleeting tier (Zettelkasten's *fleeting notes*).** When `aha_moment` catches a
+  surprise, it pins a one-line note here (`notes/YYYY-MM-DD.md`, append-only): the **insight**, its
+  **trigger** (surprise / affect / interest), a **source pointer** back into `storage/`, and a
+  **status** (`open` / `woven → [[schema]]` / `dropped`). The dream metabolizes *open* notes into
+  schemata (fleeting → permanent); `LIVING_INDEX` surfaces the still-open ones as the **inbox**.
+  Capture is free and safe; a promotion that would alter the *self* surfaces for waking ratification.
 - **`memory/LIVING_INDEX.md` — the working-memory map.** A small, *frequently refreshed* index (cap
   ~50–100 lines) the dream keeps current: what's active now and where it lives (live bubbles, lit
   interests, central people, recent salient schemata). The high-functioning entry point — read it first,
@@ -168,7 +197,7 @@ The contract (verified): a hook reads JSON on stdin and emits
 | `qualia-ground.sh` | UserPromptSubmit | *(exists)* injects the feel-dials + qualia river + advisory face. |
 | `bubble-ground.sh` | UserPromptSubmit | reads `current_bubble`, inlines `BUBBLE.md` + its two protected `@`-refs — the **always-on bubble hot-pack**. *(supersedes the existing stub)* |
 | `interest-ground.sh` | UserPromptSubmit | surfaces the `active_interests` lenses + advisory bubble suggestions. *(may fold into `bubble-ground.sh`)* |
-| `sleep-and-dream.py` | **PreCompact** *(fallback Stop/CLI)* | fires a **detached background** dream: reads the transcript from disk, writes the diary, CRUDs wiki/bubbles/interests/schemata, mints reveries. |
+| `sleep-and-dream.py` | **PreCompact** *(fallback Stop/CLI)* | fires a **detached background** dream: reads the transcript from disk, writes the diary, **metabolizes open `notes/` → schemata**, CRUDs bubbles/interests/schemata, mints reveries. |
 | `backup_chat_and_qualia.py` | Stop | *(exists)* captures the raw episodic substrate (chats + qualia TOON). |
 | `session-temporal-check.sh` | SessionStart | *(exists)* archives rolled-over daily-self, re-broadcasts the date, ripples temporal changes. |
 
@@ -252,7 +281,7 @@ reinvented.
 The architecture **degrades to plain files** before any database exists, which is how the first
 increment ships and how the product `init`s with zero setup:
 
-- **bubbles** = folders · **interests** = markdown · **schemata** = markdown with `[[links]]` · **people** = folders
+- **notes** = append-only markdown (`notes/YYYY-MM-DD.md`) · **bubbles** = folders · **interests** = folders · **schemata** = folders (`<topic>/SCHEMATA.md` + `DISCLAIMER.md`, `[[linked]]`) · **people** = folders
 - **search** = `grep` · **recall** = the two-hop over raw TOON · **reveries** = a json list
 
 The DB is an **accelerator, not a requirement**. `sqlite-vec`/`qmd` is the bridge (local hybrid search,
