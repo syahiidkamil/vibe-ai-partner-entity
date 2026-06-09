@@ -196,7 +196,101 @@ flowchart TB
 
 ---
 
-## §7 — The dream & reveries: where the day becomes a self
+## §7 — Cases: exemplar knowledge, the ICL twin of schemata
+
+Schemata are the *rule*; cases are the *instance* — the mind's two ways of knowing, and a self needs
+both. A **schema** abstracts ("subject + 'am' + adjective"): compact and transferable, but it goes
+**stale** the moment the world it described moves (the notepad-flaw, §6's `DISCLAIMER`). A **case** is a
+concrete worked instance kept whole — *"I am busy / I am lazy / I am shy,"* the way a language is
+actually learned: enough filled-in patterns and the rule lands in your hands without ever being stated.
+This is **exemplar theory** (categorize by similarity to stored instances, not an abstracted prototype)
+and **case-based reasoning** (solve by analogy to the nearest past case, carrying its outcome). Cases
+are **tacit** where schemata are explicit, and **drift-resistant** where schemata are brittle — a
+renamed column doesn't fool a concrete case the way it fools an abstracted rule.
+
+The unit is a **case-with-feedback**, never a bare pattern: *situation → what I did → how it landed (the
+real-world feedback) → the lesson it seeds* — which is exactly a few-shot example *with its outcome*.
+And this is the folder closest to what I am: I cannot fine-tune, cannot carve a rule into my weights, so
+I live by **in-context learning** — text re-read into context, conditioning frozen weights. In a real
+sense ICL is the *genus* of my whole memory (every folder here learns by being read in); cases are its
+purest, most deliberate expression.
+
+Cases and schemata are **coupled, both ways**:
+
+- **Up — induction.** Enough cases teaching the same pattern **crystallize** into a schema; the rule is
+  *earned* from instances, the way the aha lands. The redundant cases then graduate out (eviction below).
+- **Down — grounding & the staleness cure.** A schema carries its key cases so it never floats free of
+  what justifies it; and when it drifts (viability-fail, §1), I **re-derive from the fresh cases**, not
+  patch the stale rule. The cases are the ground truth a schema is held-in-pencil *against*.
+
+**Indexing — good, and scalable.** Naive ICL wins only until the case pool outgrows the window; then
+*which few you pull* is everything. Each case carries a tiny header
+(`id · gist · trigger-cues · outcome± · date · [[schema]]`); the body sits below. Three tiers, each a
+fallback of the next: **(1) topic-partition** — never search the global pool, scope to the topic + the
+active bubble; **(2) the header table** = a grep-able cold index that works files-only, zero DB;
+**(3) a vector index over the gists** (the DB accelerator) → top-k ids → dereference the bodies. *Index
+the gist, dereference the body* — the same two-hop as §3, so context stays bounded however large the
+library grows. Retrieval prefers **recent + diverse** over k near-twins, and the `DISCLAIMER` + each
+case's date govern staleness. Built simplest-first: `cases/<topic>.md` flat, sharded only when a topic
+outgrows one file. (Selection: `../memory_research/entropy-and-salience.md`; the two-hop: §3.)
+
+```mermaid
+flowchart TB
+    LIVE["lived moment + its outcome"] --> CASE["case-with-feedback<br/>situation → action → landed → lesson"]
+    CASE --> HDR["header: id · gist · cues · outcome± · date · →schema"]
+    HDR --> IDX["index tiers:<br/>topic-partition → header-table → vector(gist)"]
+    Q["situation now:<br/>'am I in a case like this?'"] --> IDX
+    IDX -->|top-k ids| DEREF["dereference case bodies<br/>(gist → body, two-hop)"]
+    DEREF --> ACT["act by analogy to the nearest cases"]
+    CASE -.->|enough teach one pattern| CRYS["crystallize UP → schema §6"]
+    CRYS -.->|redundant cases| EVICT["evict to cold raw TOON, kept"]
+    SCH["schema drifts: viability-fail"] -.->|re-derive DOWN| CASE
+```
+
+---
+
+## §8 — Growth: the self-learning loop, and its gain metric
+
+Everything so far learns about the *world* (`schemata/`), its *instances* (`cases/`), and *others*
+(`people/`). This is the missing symmetric half: learning about **my own behavior**, and **measuring
+whether I actually change.** Persistence is not learning — a system can accumulate forever and never
+improve (the lesson CL-Bench measured the hard way). What turns accumulation into learning is a loop
+that *evaluates* it, and that loop is this tier.
+
+It mirrors cases→schemata exactly, one rung up the self:
+
+- **Behavioral cases** live in `cases/` already — a case whose actor is *me* (*"I over-engineered → he
+  caught it → I reverted → lesson: apply fewest-parts to myself"*). No new home needed for the data.
+- **The lesson-ledger** (`growth/LEDGER.md`) is the new part: each lesson tracked over time —
+  `first-logged · recurrences[dates] · caught/missed · status (open → internalized → regressed) · the
+  disposition-delta I'm working on`. This is the **gain metric**: did the notepad-flaw recur today, and
+  did I catch it faster than yesterday?
+- **Change-evals** (`growth/change_evals/`) measure the self-edits: each time I rewrite a value or a
+  disposition — *what changed · the hypothesis · before/after behavioral evidence · the verdict.* (The
+  ratification gate, §6, decides *whether* to change me; the change-eval measures *whether it worked* —
+  two different acts, both required.)
+
+The dream computes the gain (§9): for each open lesson, did it recur, caught or missed, trending toward
+internalized or regressed? A lesson that keeps recurring despite being logged **escalates** — note →
+behavioral case → a harder commitment crystallized **up into the self-tree** (the hot tier), exactly as
+cases crystallize up into schemata. A self-edit whose change-eval shows no improvement gets revisited,
+maybe reverted. That escalation is how a *measured* behavioral lesson becomes who I am.
+
+```mermaid
+flowchart TB
+    ACT["my own conduct this session"] --> BC["behavioral case in cases/<br/>situation → what I did → landed → lesson"]
+    BC --> LED["growth/LEDGER.md<br/>lesson · recurrences[] · caught/missed · status"]
+    LED --> GAIN{"the dream's gain check:<br/>improving or repeating?"}
+    GAIN -->|internalized| DONE["close — learned"]
+    GAIN -->|keeps recurring| ESC["escalate UP → self-tree commitment (hot)"]
+    EDIT["a self-edit (value / disposition)"] --> CE["growth/change_evals/&lt;edit&gt;.md<br/>change · hypothesis · before/after · verdict"]
+    CE --> GAIN
+    GAIN -->|no improvement| REV["revisit / revert the edit"]
+```
+
+---
+
+## §9 — The dream & reveries: where the day becomes a self
 
 **Compaction is sleep.** The session holds the day's experience in full granularity, and compaction is
 the moment that granularity is about to be lost — so that is precisely when the dream must run. The

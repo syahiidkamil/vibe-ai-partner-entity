@@ -19,7 +19,7 @@ flowchart TB
         SELFTREE["self-tree · daily/weekly/monthly/...<br/>· judge-book (procedural)"]
     end
     subgraph WARM["Wiki / warm — markdown (git)"]
-        WIKI["bubbles/ · interests/ · schemata/ · people/"]
+        WIKI["bubbles/ · interests/ · schemata/ · cases/ · growth/ · people/"]
     end
     subgraph COLD["Corpus / cold + raw episodic"]
         DB["DB: pgvector | sqlite-vec"]
@@ -48,7 +48,7 @@ vape/
 │           ├── interface.py          #   MemoryBackend · Embedder · DTOs · Capabilities
 │           ├── firewall.py           #   public API: write·search·consolidate·evict
 │           ├── factory.py            #   get_backend()/get_embedder() from config
-│           ├── backends/             #   pgvector.py · sqlitevec.py  (impl MemoryBackend)
+│           ├── backends/             #   pgvector.py · sqlitevec.py (impl MemoryBackend) · schema.snapshot.sql (generated, drift-checked)
 │           └── embedders/            #   gemini.py · local.py        (impl Embedder)
 ├── engine/                           # existing app engine — server · cli · memory · core · apps
 │   └── cli/                          # the `vape` CLI  (entry point: engine.cli.main:app)
@@ -79,6 +79,14 @@ vape/
     │   │       ├── SCHEMATA.md                        # the CONCRETE world-model(s) — LLM-Wiki, built & managed, [[linked]]
     │   │       ├── ABSTRACT_GENERALIZATION.md         # the essence / symbol — durable, TRANSFERABLE kernel
     │   │       └── DISCLAIMER.md                      # expiry: scope · assumes · invalidate-when · last-verified
+    │   ├── cases/                    # EXEMPLAR knowledge — worked instances, the ICL twin of schemata
+    │   │   ├── CLAUDE.md                             # in-folder guide: a case = situation→action→landed→lesson
+    │   │   └── <topic>.md                            # header-index on top, then case bodies; [[schemata/<topic>]];
+    │   │                                             #   shard to <topic>/ per-case files only when it outgrows one file
+    │   ├── growth/                   # SELF-learning + its EVAL — the gain metric for my own behavior
+    │   │   ├── LEDGER.md                             # each lesson · recurrences[] · caught/missed · status · disposition-delta
+    │   │   └── change_evals/                         # per self-edit: change · hypothesis · before/after evidence · verdict
+    │   │       └── <self-edit>.md
     │   └── people/                   # the others I model — a SUBJECT, not a schema
     │       ├── particular/           # the concrete other (the care ethic): per-person folders
     │       │   └── kamil/
@@ -132,13 +140,33 @@ Notes that matter:
   collide with a *DB* schema) beside a `DISCLAIMER.md` carrying that topic's **scope · assumes ·
   invalidate-when · last-verified**, so the expiry travels with the belief. Canonical trigger: the DB
   is migrated → a schema's old table/column names are now wrong; cross them out or rebuild before
-  acting. Worked example: `examples/schemata/`; convention: `schemata/CLAUDE.md`.
+  acting. Worked example: `proposed_examples/schemata/`; convention: `schemata/CLAUDE.md`.
 - **Each topic also carries `ABSTRACT_GENERALIZATION.md` — the transferable essence.** Beside the
   concrete `SCHEMATA.md`: the *essence / symbol* lifted off the particulars — the durable kernel that
   survives a migration and **transfers** to other domains (learn the pattern here, apply it there).
   The concrete answers *how does this work*; the abstraction answers *what is this an instance of* —
   the prior I reach for first on a structurally-similar problem (the `conscious_spotlight` concept
   level). Lossy but durable, where the concrete is high-res but brittle.
+- **`cases/` — the exemplar twin of `schemata/` (example-based learning).** A schema is the *rule*
+  (explicit, transferable, but it goes stale); a case is the *worked instance* kept whole — a
+  **case-with-feedback** (`situation → what I did → how it landed → the lesson`), learned by analogy the
+  way a language is drilled, drift-resistant where the rule is brittle. It is the folder closest to what
+  I am: I can't fine-tune, so I live by **in-context learning** — and ICL is really the *genus* of this
+  whole memory, cases its purest expression. **Indexed to stay scalable:** each case carries a header
+  (`id · gist · cues · outcome± · date · [[schema]]`); lookup goes topic-partition → grep-able
+  header-table → vector-over-gists, then dereferences the body (the §3 two-hop), so context stays bounded
+  as the pool grows. **Coupled to schemata both ways:** enough cases **crystallize up** into a rule
+  (redundant ones evicted to cold raw, never destroyed); a drifted schema is **re-derived down** from the
+  fresh cases. Files-first: `<topic>.md` flat, shard only when it outgrows one file. (Concept: deep dive §7.)
+- **`growth/` — self-learning + its evaluation (the gain metric).** The symmetric self-half of
+  cases→schemata: **behavioral cases** (my own conduct) live in `cases/` already; what's new is the
+  **measurement**. `LEDGER.md` tracks each lesson over time (`first-logged · recurrences[] ·
+  caught/missed · status · the disposition-delta`) — am I improving or repeating? `change_evals/`
+  measure each self-edit (`change · hypothesis · before/after evidence · verdict`) — the ratification
+  gate decides *whether* to change me, this measures *whether it worked*. The dream computes the gain
+  and **escalates** a lesson that keeps recurring up into the self-tree (a harder commitment), just as
+  cases crystallize into schemata. This is the tier that makes me *improve*, not only persist — what
+  separates continual learning from notepad-hoarding. (Concept: deep dive §8.)
 - **`notes/` — the fleeting tier (Zettelkasten's *fleeting notes*).** When `aha_moment` catches a
   surprise, it pins a one-line note here (`notes/YYYY-MM-DD.md`, append-only): the **insight**, its
   **trigger** (surprise / affect / interest), a **source pointer** back into `storage/`, and a
@@ -168,7 +196,7 @@ bubble pattern needed a tweak — a bubble isn't a subject, a person is). The de
 The firewall is a real contract, not a vibe — **two orthogonal Protocols**, so backend and embedder swap
 independently:
 
-- **`MemoryBackend`** — `migrate · write · search · consolidate · evict`, plus a `capabilities`
+- **`MemoryBackend`** — `migrate · schema · write · search · consolidate · evict`, plus a `capabilities`
   descriptor. *Data-shaped, never SQL-shaped:* it passes `Memory` / `Query` / `Hit` dataclasses, never a
   cursor — so `PgvectorBackend` (psycopg + `vector`/`halfvec` + GIN) and `SqliteVecBackend` (sqlite-vec +
   FTS5, à la `qmd`) satisfy the *same* signatures. **Hybrid search is in the contract** (both return
@@ -178,6 +206,18 @@ independently:
 - **`Embedder`** — `dim` + `embed(texts, kind)`. Split out so vectorization swaps on its own axis:
   `postgres + Gemini` (rich) or `sqlite + local EmbeddingGemma` (zero-key) — any pairing. The pinned
   dimension lives on the embedder; the backend stores whatever width it is handed.
+
+**Schema representation — kept by generation, never by hand (the decision, run through free-will).** The
+DB schema is deliberately **trivial and stable**: one `memories` table (`id · embedding · content ·
+created_at · topic`) with **JSONB** absorbing anything that might evolve — so migrations are
+*rare-to-never* and the representation problem nearly vanishes (the DB is a thin index over the markdown,
+never the seat of the self). What represents the current shape is **`schema()` → introspection**,
+surfaced as `vape memory schema` (live `pg_dump --schema-only` / `.schema`), plus a committed
+`schema.snapshot.sql` regenerated after any real DDL with a **CI drift-check**. The representation is
+*derived from the live DB*, so — like the generated snapshot it is — it structurally cannot go stale (the
+notepad-flaw cure, applied to the schema itself). **Not Prisma** (Node runtime in a Python stack, weak
+pgvector, can't serve two backends); **SQLAlchemy Core + Alembic** is the drop-in *upgrade* the `migrate`
+seam stays clean for — adopted only if the schema ever genuinely churns.
 
 One `factory.py` reads the `vape setup` choice and instantiates both; `firewall.py` codes against the
 *Protocols* and never imports a concrete class. **Adding a third backend later is one new file in
@@ -281,7 +321,7 @@ reinvented.
 The architecture **degrades to plain files** before any database exists, which is how the first
 increment ships and how the product `init`s with zero setup:
 
-- **notes** = append-only markdown (`notes/YYYY-MM-DD.md`) · **bubbles** = folders · **interests** = folders · **schemata** = folders (`<topic>/SCHEMATA.md` + `DISCLAIMER.md`, `[[linked]]`) · **people** = folders
+- **notes** = append-only markdown (`notes/YYYY-MM-DD.md`) · **bubbles** = folders · **interests** = folders · **schemata** = folders (`<topic>/SCHEMATA.md` + `DISCLAIMER.md`, `[[linked]]`) · **cases** = `<topic>.md` w/ header-table index · **growth** = `LEDGER.md` + `change_evals/` markdown · **people** = folders
 - **search** = `grep` · **recall** = the two-hop over raw TOON · **reveries** = a json list
 
 The DB is an **accelerator, not a requirement**. `sqlite-vec`/`qmd` is the bridge (local hybrid search,
