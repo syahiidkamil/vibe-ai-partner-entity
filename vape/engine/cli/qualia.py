@@ -127,6 +127,14 @@ def qualia_cmd(
         Optional[str],
         typer.Option("--revalue", help="Seed id to devalue toward neutral (the master-wire)."),
     ] = None,
+    mode: Annotated[
+        Optional[str],
+        typer.Option("--mode", help="Set the conscious thinking-mode (the cognitive control surface)."),
+    ] = None,
+    mode_payload: Annotated[
+        Optional[str],
+        typer.Option("--mode-payload", help="Payload for modes that take one (spotlight concepts, mimetic exemplar, foresight horizon)."),
+    ] = None,
     debug: Annotated[bool, typer.Option("-d", "--debug", help="Show result (silent by default).")] = False,
 ) -> None:
     """Saori's unified inner-state write: dials + qualia pushes + revalue, one atomic save."""
@@ -166,7 +174,24 @@ def qualia_cmd(
     if revalue:
         _revalue(revalue, q, console)
 
-    # 4. persist once -----------------------------------------------------
+    # 4. conscious mode (the cognitive control surface) -------------------
+    if mode is not None:
+        if mode not in st.CONSCIOUS_MODES:
+            console.print(f"  [red]Unknown mode '{mode}'.[/red] Valid: {', '.join(st.CONSCIOUS_MODES)}")
+            raise typer.Exit(1)
+        state["conscious_mode"] = mode
+        # Switching mode clears any stale payload from the prior mode unless a fresh
+        # one is supplied here — so a mimetic exemplar never leaks into a later foresight.
+        state["conscious_mode_payload"] = mode_payload or ""
+        # Re-assert the mode (even the same one) to refill its TTL: the hook ages the
+        # mode each turn and rests it to `normal` after a few turns of no re-assert, so
+        # a mode is a choice held open, never a default that hardens unseen.
+        state["conscious_mode_age"] = 0
+    elif mode_payload is not None:
+        # Payload alone: update the current mode's payload in place.
+        state["conscious_mode_payload"] = mode_payload
+
+    # 5. persist once -----------------------------------------------------
     st.save(state)
 
     if debug:
