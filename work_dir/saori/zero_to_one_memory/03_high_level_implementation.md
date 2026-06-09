@@ -49,7 +49,7 @@ vape/
 │           ├── firewall.py           #   public API: write·search·consolidate·evict
 │           ├── factory.py            #   get_backend()/get_embedder() from config
 │           ├── backends/             #   pgvector.py · sqlitevec.py (impl MemoryBackend) · schema.snapshot.sql (generated, drift-checked)
-│           └── embedders/            #   gemini.py · local.py        (impl Embedder)
+│           └── embedders/            #   gemini.py (impl Embedder) — Gemini-only, no local fallback
 ├── engine/                           # existing app engine — server · cli · memory · core · apps
 │   └── cli/                          # the `vape` CLI  (entry point: engine.cli.main:app)
 │       ├── main.py                   #   wires every command — app.command(…) / add_typer(…)   [exists]
@@ -111,10 +111,10 @@ Notes that matter:
   of the `memory_wiki → memory` rename.
 - **`vape/plugins/memory-zero-to-one/` — backend chosen at `vape setup`.** Mirrors the `tts-*` plugins:
   a `plugin.json` with a `uvExtra`, a workspace `pyproject.toml`, a named `src/` package. `vape setup`
-  runs `uv sync --extra <uvExtra>` to install the chosen backend — **`postgres+pgvector`** (the rich,
-  Gemini-embedded personal instance) or **`sqlite-vec` / `qmd`** (zero-setup, local EmbeddingGemma,
-  no API key — the product path). *Wiring: widen the workspace glob from `tts-*` to also match
-  `memory-*` (or list the plugin explicitly).*
+  runs `uv sync --extra <uvExtra>` to install the chosen **store** — **`postgres+pgvector`** (rich,
+  server, concurrent) or a single-file **`sqlite-vec`** index (local install). **Embeddings always come
+  from Gemini** (`gemini-embedding-2`, key in `vape/.env`) — no local-embedder / no-key path. *Wiring:
+  widen the workspace glob from `tts-*` to also match `memory-*` (or list the plugin explicitly).*
 - **`internal_states.json`** gains two top-level keys (`current_bubble`, `active_interests`) alongside
   `feel_dials` and `qualia`; written through the same whole-file-load → modify → atomic-save path the
   dials already use (`vape/engine/cli/_state.py`), so nothing clobbers.
@@ -199,13 +199,13 @@ independently:
 - **`MemoryBackend`** — `migrate · schema · write · search · consolidate · evict`, plus a `capabilities`
   descriptor. *Data-shaped, never SQL-shaped:* it passes `Memory` / `Query` / `Hit` dataclasses, never a
   cursor — so `PgvectorBackend` (psycopg + `vector`/`halfvec` + GIN) and `SqliteVecBackend` (sqlite-vec +
-  FTS5, à la `qmd`) satisfy the *same* signatures. **Hybrid search is in the contract** (both return
+  FTS5) satisfy the *same* signatures. **Hybrid search is in the contract** (both return
   ranked `Hit`s; how they rank is hidden). `capabilities` keeps it honest about real differences
   (concurrent writers, JSONB, server-side rank), so the engine degrades gracefully instead of pretending
   sqlite is Postgres.
-- **`Embedder`** — `dim` + `embed(texts, kind)`. Split out so vectorization swaps on its own axis:
-  `postgres + Gemini` (rich) or `sqlite + local EmbeddingGemma` (zero-key) — any pairing. The pinned
-  dimension lives on the embedder; the backend stores whatever width it is handed.
+- **`Embedder`** — `dim` + `embed(texts, kind)`, one impl: **Gemini `gemini-embedding-2`** (`dim` 1536,
+  batched via `batchEmbedContents`, called with Python `asyncio.gather`). The Protocol stays so a future
+  model is a clean swap (a tracked re-embed) — but there is no local fallback; Gemini only.
 
 **Schema representation — kept by generation, never by hand (the decision, run through free-will).** The
 DB schema is deliberately **trivial and stable**: one `memories` table (`id · embedding · content ·
