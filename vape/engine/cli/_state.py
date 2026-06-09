@@ -47,13 +47,16 @@ CATS = ["se", "so", "cg", "af", "vo", "an", "mn", "sm", "cr", "me"]
 DIRS = ["tw", "aw", "hd", "or", "rl"]
 
 # The conscious thinking-modes (the cognitive control surface). The *content* of each
-# mode lives in .claude/hooks/qualia-ground.sh (_BLOCKS + _ZONE) — that hook is the
+# mode lives in .claude/hooks/qualia-ground.sh (_MODE_CONTEXT + _ZONE) — that hook is the
 # source of truth; this mirrors only the names so `vape qualia --mode` can validate.
 CONSCIOUS_MODES = [
     "normal", "in_the_zone", "sense_and_feel", "expressive_self", "conscious_spotlight",
     "free_will", "schemata_disequilibrium", "aha_moment", "self_reflect",
     "mimetic_learning", "active_learning", "foresight",
 ]
+# Turns a willed mode stays active before it rests: `vape qualia --mode` sets
+# `conscious_mode_turns_left` to this, and the hook ticks it down to 0 (then rests to normal).
+CONSCIOUS_MODE_TTL = 3
 
 
 def load() -> dict:

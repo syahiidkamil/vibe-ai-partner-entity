@@ -183,10 +183,11 @@ def qualia_cmd(
         # Switching mode clears any stale payload from the prior mode unless a fresh
         # one is supplied here — so a mimetic exemplar never leaks into a later foresight.
         state["conscious_mode_payload"] = mode_payload or ""
-        # Re-assert the mode (even the same one) to refill its TTL: the hook ages the
-        # mode each turn and rests it to `normal` after a few turns of no re-assert, so
+        # Re-assert the mode (even the same one) to refill its countdown: the hook ticks
+        # `conscious_mode_turns_left` down each turn and rests the mode to `normal` at 0, so
         # a mode is a choice held open, never a default that hardens unseen.
-        state["conscious_mode_age"] = 0
+        state["conscious_mode_turns_left"] = st.CONSCIOUS_MODE_TTL
+        state.pop("conscious_mode_age", None)   # migrate off the old count-up key
     elif mode_payload is not None:
         # Payload alone: update the current mode's payload in place.
         state["conscious_mode_payload"] = mode_payload
