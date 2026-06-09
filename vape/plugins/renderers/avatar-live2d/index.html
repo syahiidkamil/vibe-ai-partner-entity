@@ -27,13 +27,19 @@
       /* Faint always-visible blackish hint + a frosted blur, so a first-time user
          can SEE where to grab me instead of guessing — the blur keeps the strip
          readable even when its tint matches whatever's behind it. Deepens on
-         hover (the drag trigger). */
+         hover (the drag trigger). A white top strip line rides above the dark
+         tint so the strip stays visible on dark backdrops (VS Code etc.) where
+         a black-only hint disappears. */
       background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      border-top: 2px solid rgba(255,255,255,0.55);
       -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
-      transition: background 0.2s;
+      transition: background 0.2s, border-color 0.2s;
     }
-    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.22), transparent); }
+    .titlebar:hover {
+      background: linear-gradient(rgba(0,0,0,0.22), transparent);
+      border-top-color: rgba(255,255,255,0.85);
+    }
     .controls {
       /* glued to the avatar panel's right edge with a % offset, so it tracks the
          panel at any window size without a CSS transform (panel = 280/420 wide,
@@ -50,6 +56,19 @@
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* Onboarding flash: for the first seconds after launch the chrome shows itself —
+       the −/+/✕ buttons and a "drag area" hint — then fades back to hover-only,
+       so a first-time user learns where to grab without the chrome nagging after. */
+    #drag-hint {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      height: 28px; line-height: 28px; white-space: nowrap;
+      font: 12px sans-serif; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    body.intro #drag-hint { opacity: 1; }
+    body.intro .ctrl-btn { opacity: 1; }
     /* The avatar fills the window proportionally (panel = 66.667% wide, centered),
        so the −/+ controls just resize the OS window and Live2D refits — no scaling
        transform on the WebGL canvas (which ghosts on an unfocused transparent
@@ -114,7 +133,9 @@
   </style>
 </head>
 <body>
-  <div class="titlebar" data-tauri-drag-region></div>
+  <div class="titlebar" data-tauri-drag-region>
+    <div id="drag-hint">⟵ This is Drag Area ⟶</div>
+  </div>
   <div class="controls">
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
@@ -559,6 +580,11 @@
       setTimeout(reportZones, 500);
       window.addEventListener('resize', reportZones);
     }
+
+    // Onboarding flash: show the −/+/✕ controls and the drag-area hint for the
+    // first 3 seconds after launch, then fade back to the hover-only chrome.
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 3000);
 
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
