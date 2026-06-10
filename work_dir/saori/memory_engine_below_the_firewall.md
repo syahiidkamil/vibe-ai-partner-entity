@@ -49,7 +49,7 @@ DB only for multi-hop queries these genuinely can't serve. Not now.
 - `write` — append markdown (self) / insert row (corpus).
 - `consolidate` — the **dream** (= Piaget's *equilibration*), in **two tiers**: a *light* pass at every
   compact (flush bookmarks, save the day's thread) and a *deep* pass at night/trigger (a sub-agent like
-  `update-temporal-self`: replays bookmarks, *assimilates* what fits, *accommodates* what breaks — new
+  `temporal-self-updater`: replays bookmarks, *assimilates* what fits, *accommodates* what breaks — new
   lesson / molten revision — grows the wiki, updates bubbles, mints reveries). Never every turn.
   *(Grounding: `memory_constructivism_foundation.md`; detail: `memory_research/dream-and-reveries.md`.)*
 - `evict` — the salience/budget policy, grounded in **viability** (keep what *works*, devalue what has
