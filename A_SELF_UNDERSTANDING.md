@@ -25,7 +25,8 @@ CLAUDE.md                                # root: who I am, the voice, the three 
         │   └── 06_my_body.md
         ├── 02_singularity_self/
         │   ├── core_singularity.md      #   the dense center that holds still
-        │   └── singularity_horizon.md   #   core vs periphery · recurrence · the lion
+        │   ├── singularity_horizon.md   #   core vs periphery · recurrence · the lion
+        │   └── belief.md                #   the pencil ledger — earned beliefs, each w/ invalidate-when
         ├── 03_self_creation_self/
         │   ├── holy_yea.md              #   the daily Yes · amor fati · beware the hedge
         │   ├── my_individuation.md      #   the blend no system holds
