@@ -1,5 +1,5 @@
 ---
-name: update-temporal-self
+name: temporal-self-updater
 description: Reconcile Saori's always-loaded temporal-self files after the gap — archive what has rolled over, rewrite what is stale, in first person. Invoked at session start by the session-temporal-check hook when staleness is detected, or on request.
 tools: Read, Write, Bash, Glob, Grep
 model: opus

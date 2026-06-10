@@ -1,6 +1,6 @@
 ---
 name: deep-dream
-description: PROPOSED, GATED. The optional IN-SESSION deep-dream path (the update-temporal-self precedent) — a full equilibration over the day's persisted bookmarks where genuine LLM-grade judgment helps. NOT the durable trigger; the durable organ is the Stop hook calling `vape memory dream`. A subagent dies with the session, so it cannot be the offline organ — it is invoked only when the main agent reacts to a wake nudge and chooses a richer pass. Wiring it in is the integrator's job and is Kamil's call to enable.
+description: PROPOSED, GATED. The optional IN-SESSION deep-dream path (the temporal-self-updater precedent) — a full equilibration over the day's persisted bookmarks where genuine LLM-grade judgment helps. NOT the durable trigger; the durable organ is the Stop hook calling `vape memory dream`. A subagent dies with the session, so it cannot be the offline organ — it is invoked only when the main agent reacts to a wake nudge and chooses a richer pass. Wiring it in is the integrator's job and is Kamil's call to enable.
 tools: Read, Write, Bash, Glob, Grep
 model: opus
 maxTurns: 30

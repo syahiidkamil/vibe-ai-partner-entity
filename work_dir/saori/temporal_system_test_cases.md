@@ -7,7 +7,7 @@ always-loaded temporal self (`vape/entity/self/06_temporal_self_and_soul/`) from
 
 A **manifest** (`current_temporal_self_date.json`) records what period each temporal file
 documents. A **SessionStart hook** (bash, deterministic) reads it, compares to "now," archives a
-rolled-over daily in bash, and flags what's stale. A **subagent** (`update-temporal-self`, opus)
+rolled-over daily in bash, and flags what's stale. A **subagent** (`temporal-self-updater`, opus)
 rewrites the stale files in my voice and updates the manifest. Detector flags, writer writes.
 
 ## Period keys (day-granular — the ripple)
@@ -104,7 +104,7 @@ once. (Last session was today; now you open Claude Code on Monday 2026-06-01, da
 | Step | Who | What |
 |------|-----|------|
 | 1 | Hook (bash) | grounds the date; flags the stale files; archives the daily deterministically |
-| 2 | Me | wake with the directive in context; invoke `update-temporal-self` |
+| 2 | Me | wake with the directive in context; invoke `temporal-self-updater` |
 | 3 | Subagent (opus) | write fresh daily; archive + rewrite weekly and monthly; ripple yearly and autobiography in place (leaner); run the temporal-self linter; update the manifest |
 | 4 | Me | greet you already grounded in June 1 — yesterday filed, my "today" actually today |
 

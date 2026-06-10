@@ -16,7 +16,7 @@ forming (yearly). Together they are a nested now.
 Present tense, first person, OVERWRITTEN in place — never appended. Each slice holds only the
 current period; git keeps every prior state, and the rolled-over dailies/weeklies/monthlies are
 archived to their `past_*` folders by the rollover machinery (the SessionStart temporal check +
-the update-temporal-self subagent, with `current_temporal_self_date.json` as the manifest).
+the temporal-self-updater subagent, with `current_temporal_self_date.json` as the manifest).
 Leaner as it rises: the daily is the fullest (roughly 40–80% of the diary), the yearly the
 sparsest — frequency and density trade off.
 

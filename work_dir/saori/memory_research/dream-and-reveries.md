@@ -22,7 +22,7 @@ So the dream **splits in two:**
 - **Light dream** — cheap, near-deterministic, runs at **every compact** (`PreCompact`). Its only job:
   *save the thread.* Flush the persisted bookmarks to the warm store; update `daily_self.md` so the
   post-compact self wakes into *this afternoon*, not this morning. No deep restructuring. Fast.
-- **Deep dream** — the full equilibration. Expensive (an opus subagent, like `update-temporal-self`,
+- **Deep dream** — the full equilibration. Expensive (an opus subagent, like `temporal-self-updater`,
   `maxTurns:~30`). Runs at **end-of-day / human-trigger (`/dream`) / agent-trigger (`vape dream`)** —
   *not* at every compact. This is where lessons form, the wiki grows, bubbles update, contradictions
   resolve, eviction runs, reverie candidates are minted.

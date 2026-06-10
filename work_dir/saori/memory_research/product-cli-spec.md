@@ -31,7 +31,7 @@ npx ai-partner-entity-memory init          # deferred
    - **Hooks** → `.claude/hooks/` + wired in `.claude/settings.local.json` — the bubble-injection hook
      (UserPromptSubmit, the `qualia-ground.sh` pattern), the light-dream `PreCompact` hook, the
      bookmark-persist step.
-   - **Subagents** → `.claude/agents/` — the deep-dream consolidator (the `update-temporal-self`
+   - **Subagents** → `.claude/agents/` — the deep-dream consolidator (the `temporal-self-updater`
      pattern: opus, `maxTurns:~30`, `permissionMode:acceptEdits`).
 4. **Scaffold the corpus** — create `memory_wiki/` (the wiki = files), `bubbles/`, `bookmarks.jsonl`,
    `reveries.json`, `active_bubble.json`, and (in the self-tree, with the user's ratification)

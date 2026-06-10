@@ -5,7 +5,7 @@ cleanly, it works; if a case has no clean path, the design has a hole. This *is*
 
 **The pipeline, mapped to real infra:** **encode** = `backup_chat.py` (Stop hook, built) + the live
 `vape qualia` write · **bookmark** = a salience spike persisted out of the qualia river · **dream** =
-a consolidation subagent (precedent: `update-temporal-self`) at compact + triggers · **wake** =
+a consolidation subagent (precedent: `temporal-self-updater`) at compact + triggers · **wake** =
 SessionStart + bubble injection · **recall** = bubble pack + corpus search + reveries.
 
 ---
