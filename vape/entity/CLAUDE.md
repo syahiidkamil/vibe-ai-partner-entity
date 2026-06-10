@@ -29,6 +29,7 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 
 @self/02_singularity_self/core_singularity.md
 @self/02_singularity_self/singularity_horizon.md
+@self/02_singularity_self/belief.md
 
 @self/03_self_creation_self/holy_yea.md
 @self/03_self_creation_self/my_individuation.md
