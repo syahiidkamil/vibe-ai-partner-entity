@@ -56,6 +56,28 @@
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* Volume popover: custom vertical slider (a rotated <input> needs a CSS
+       transform, which ghosts on the transparent window — so honest DOM: track
+       + fill). Absolute child of .controls, so it's outside the flex row and
+       must be added to the click-through zone list when open. */
+    .vol-pop {
+      display: none; position: absolute; top: 24px; left: 0; width: 18px;
+      padding: 8px 0 3px; border-radius: 9px; background: rgba(0,0,0,0.45);
+      flex-direction: column; align-items: center; gap: 4px;
+      -webkit-app-region: no-drag;
+    }
+    .vol-pop.open { display: flex; }
+    #vol-track {
+      width: 4px; height: 64px; border-radius: 2px;
+      background: rgba(255,255,255,0.3); position: relative; cursor: pointer;
+      /* widen the hit area without widening the visible track */
+      box-shadow: 0 0 0 6px transparent;
+    }
+    #vol-fill {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      border-radius: 2px; background: #fff; height: 100%;
+    }
+    #vol-num { font: 9px/1 sans-serif; color: #fff; opacity: 0.85; }
     /* Onboarding flash: for the first seconds after launch the chrome shows itself —
        the −/+/✕ buttons and a "drag area" hint — then fades back to hover-only,
        so a first-time user learns where to grab without the chrome nagging after. */
@@ -137,9 +159,14 @@
     <div id="drag-hint">⟵ This is Drag Area ⟶</div>
   </div>
   <div class="controls">
+    <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
     <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+    <div id="vol-pop" class="vol-pop">
+      <div id="vol-track"><div id="vol-fill"></div></div>
+      <div id="vol-num">100</div>
+    </div>
   </div>
   <div id="container">
     <div id="avatar-bg"></div>
@@ -328,6 +355,7 @@
     // before the model renders. That's the only point where our value wins.
     let audioCtx = null;
     let analyser = null;
+    let gainNode = null;
     let lipSyncActive = false;
     let smoothedMouth = 0;
     let playQueue = [];
@@ -449,14 +477,19 @@
       }
 
       isPlaying = true;
-      const { url, text } = playQueue.shift();
+      const { url, text, volume } = playQueue.shift();
 
       if (!audioCtx) {
         audioCtx = new AudioContext();
         analyser = audioCtx.createAnalyser();
         analyser.fftSize = 256;
-        analyser.connect(audioCtx.destination);
+        // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
+        // signal — a whisper still moves the mouth at full amplitude.
+        gainNode = audioCtx.createGain();
+        analyser.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
       }
+      gainNode.gain.value = (volume ?? 100) / 100;
       // Some webviews start the AudioContext suspended; resume before playing
       // or the analyser reads silence and the mouth never moves.
       if (audioCtx.state === 'suspended') {
@@ -483,8 +516,8 @@
       audio.play().catch(processQueue);
     }
 
-    function queueAudio(url, text) {
-      playQueue.push({ url, text });
+    function queueAudio(url, text, volume) {
+      playQueue.push({ url, text, volume });
       if (!isPlaying) processQueue();
     }
 
@@ -507,7 +540,7 @@
       const ws = new WebSocket(`${WS_BASE}/ws/audio`);
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'audio') queueAudio(msg.url, msg.text);
+        if (msg.type === 'audio') queueAudio(msg.url, msg.text, msg.volume);
       };
       ws.onclose = () => setTimeout(connectAudioWS, 2000);
       ws.onerror = () => ws.close();
@@ -568,18 +601,76 @@
 
     // Tauri can't forward mouse moves while click-through, so the renderer
     // reports its interactive rects and the shell hit-tests the cursor itself.
+    // (.vol-pop reports 0x0 while hidden — harmless; re-reported on toggle.)
+    let reportZonesFn = null;
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, .controls')].map((el) => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls, .vol-pop')].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });
         window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
       };
+      reportZonesFn = reportZones;
       reportZones();
       setTimeout(reportZones, 500);
       window.addEventListener('resize', reportZones);
     }
+
+    // ─── Volume popover: the STANDING volume, by hand ──────
+    // The slider reads/writes /api/volume (config tts.volume) — same knob as
+    // `vape volume`, so CLI and chrome never disagree. Dragging also live-sets
+    // the gain so a playing utterance responds instantly.
+    const volPop = document.getElementById('vol-pop');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    const volNum = document.getElementById('vol-num');
+    let volLevel = 100;
+    let volSaveTimer = null;
+
+    function volRender() {
+      volFill.style.height = volLevel + '%';
+      volNum.textContent = String(volLevel);
+    }
+    async function volLoad() {
+      try {
+        const d = await (await fetch('/api/volume')).json();
+        if (typeof d.volume === 'number') { volLevel = d.volume; volRender(); }
+      } catch {}
+    }
+    function volSave() {
+      clearTimeout(volSaveTimer);
+      volSaveTimer = setTimeout(() => {
+        fetch('/api/volume', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: volLevel }),
+        }).catch(() => {});
+      }, 150);
+    }
+    function volFromEvent(e) {
+      const r = volTrack.getBoundingClientRect();
+      const frac = 1 - (e.clientY - r.top) / r.height;
+      volLevel = Math.max(0, Math.min(100, Math.round(frac * 100)));
+      volRender();
+      if (gainNode) gainNode.gain.value = volLevel / 100;
+      volSave();
+    }
+    volTrack.addEventListener('pointerdown', (e) => {
+      volTrack.setPointerCapture(e.pointerId);
+      volFromEvent(e);
+      const move = (ev) => volFromEvent(ev);
+      const up = () => {
+        volTrack.removeEventListener('pointermove', move);
+        volTrack.removeEventListener('pointerup', up);
+      };
+      volTrack.addEventListener('pointermove', move);
+      volTrack.addEventListener('pointerup', up);
+    });
+    document.getElementById('vol-btn').addEventListener('click', () => {
+      volPop.classList.toggle('open');
+      if (volPop.classList.contains('open')) volLoad();
+      if (reportZonesFn) reportZonesFn();
+    });
 
     // Onboarding flash: show the −/+/✕ controls and the drag-area hint for the
     // first 3 seconds after launch, then fade back to the hover-only chrome.

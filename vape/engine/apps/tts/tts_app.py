@@ -22,7 +22,7 @@ class TTSApp:
     def __init__(
         self,
         registry: EngineRegistry,
-        on_audio: Callable[[str, str, bool], Awaitable[None]],
+        on_audio: Callable[[str, str, bool, int | None], Awaitable[None]],
     ) -> None:
         self.registry = registry
         self.pipeline = TTSPipeline(registry, on_audio)
@@ -31,7 +31,7 @@ class TTSApp:
     def create(
         cls,
         config_path: Path,
-        on_audio: Callable[[str, str, bool], Awaitable[None]],
+        on_audio: Callable[[str, str, bool, int | None], Awaitable[None]],
     ) -> "TTSApp":
         """Factory: discover plugins, load config, wire everything."""
         # Discover available plugins
@@ -62,9 +62,16 @@ class TTSApp:
 
         return cls(registry, on_audio)
 
-    async def speak(self, text: str, voice: str | None = None, speed: float | None = None) -> None:
-        """Generate and play TTS audio."""
-        await self.pipeline.speak(text, voice=voice, speed=speed)
+    async def speak(
+        self,
+        text: str,
+        voice: str | None = None,
+        speed: float | None = None,
+        volume: int | None = None,
+    ) -> None:
+        """Generate and play TTS audio. volume 0-100 overrides the standing level
+        for this utterance only; None defers to config tts.volume."""
+        await self.pipeline.speak(text, voice=voice, speed=speed, volume=volume)
 
     def stop(self) -> None:
         """Abort current generation."""

@@ -304,6 +304,7 @@
     // ─── Audio queue + lip sync ────────────────────
     let audioCtx = null;
     let analyser = null;
+    let gainNode = null;
     let lipSyncActive = false;
     let playQueue = [];
     let isPlaying = false;
@@ -359,14 +360,19 @@
       }
 
       isPlaying = true;
-      const { url, text } = playQueue.shift();
+      const { url, text, volume } = playQueue.shift();
 
       if (!audioCtx) {
         audioCtx = new AudioContext();
         analyser = audioCtx.createAnalyser();
         analyser.fftSize = 256;
-        analyser.connect(audioCtx.destination);
+        // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
+        // signal — a whisper still moves the mouth at full amplitude.
+        gainNode = audioCtx.createGain();
+        analyser.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
       }
+      gainNode.gain.value = (volume ?? 100) / 100;
       // Some webviews start the AudioContext suspended; resume before playing
       // or the analyser reads silence and the mouth never moves.
       if (audioCtx.state === 'suspended') {
@@ -388,8 +394,8 @@
       audio.play().catch(processQueue);
     }
 
-    function queueAudio(url, text) {
-      playQueue.push({ url, text });
+    function queueAudio(url, text, volume) {
+      playQueue.push({ url, text, volume });
       if (!isPlaying) processQueue();
     }
 
@@ -408,7 +414,7 @@
       const ws = new WebSocket(`${WS_BASE}/ws/audio`);
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
-        if (msg.type === 'audio') queueAudio(msg.url, msg.text);
+        if (msg.type === 'audio') queueAudio(msg.url, msg.text, msg.volume);
       };
       ws.onclose = () => setTimeout(connectAudioWS, 2000);
       ws.onerror = () => ws.close();
