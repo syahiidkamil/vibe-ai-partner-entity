@@ -25,7 +25,7 @@ from pydantic import BaseModel
 
 from engine.apps.tts import TTSApp
 from engine.apps.avatar import AvatarApp
-from engine.cli._config import get_avatar_renderer
+from engine.cli._config import get_avatar_renderer, write_config
 from engine.server.sentiment import analyze_sentiment
 from engine.server.state_manager import StateManager
 
@@ -55,6 +55,7 @@ class SpeakRequest(BaseModel):
     text: str
     voice: str | None = None
     speed: float | None = None
+    volume: int | None = None  # 0-100, this utterance only; None -> standing tts.volume
 
 class FeelingRequest(BaseModel):
     name: str
@@ -71,6 +72,9 @@ class StateAdjustRequest(BaseModel):
 
 class VoiceRequest(BaseModel):
     voice: str
+
+class VolumeRequest(BaseModel):
+    volume: int
 
 class HookEvent(BaseModel):
     hook_event_name: str
@@ -95,6 +99,16 @@ def _get_vocal_mode() -> str:
         return config.get("entity", {}).get("vocalMode", "silent")
     except (FileNotFoundError, json.JSONDecodeError):
         return os.getenv("ENTITY_VOCAL_MODE", "silent")
+
+
+def _get_standing_volume() -> int:
+    """Standing speech volume (0-100) from config.json; read per clip so
+    `vape volume N` takes effect without a server restart."""
+    try:
+        config = json.loads((ROOT_DIR / "config.json").read_text())
+        return int(config.get("tts", {}).get("volume", 100))
+    except (FileNotFoundError, json.JSONDecodeError, TypeError, ValueError):
+        return 100
 
 def _should_speak(sentiment: dict) -> bool:
     speak_text = sentiment.get("speak", "")
@@ -196,11 +210,16 @@ def _sweep_audio_clips() -> None:
                 pass
 
 
-async def _broadcast_audio(wav_path: str, text: str, is_last: bool) -> None:
+async def _broadcast_audio(wav_path: str, text: str, is_last: bool, volume: int | None = None) -> None:
     _sweep_audio_clips()
     name = f"{uuid.uuid4().hex}.wav"
     _audio_clips[name] = (wav_path, time.time())
-    await manager.broadcast_audio({"type": "audio", "url": f"/audio/{name}", "text": text, "isLast": is_last})
+    effective = volume if volume is not None else _get_standing_volume()
+    effective = max(0, min(100, effective))
+    await manager.broadcast_audio({
+        "type": "audio", "url": f"/audio/{name}", "text": text,
+        "isLast": is_last, "volume": effective,
+    })
 
 async def _broadcast_action(name: str) -> None:
     """Resolve system expression trigger via avatar interface, then broadcast."""
@@ -249,7 +268,7 @@ app = FastAPI(title="Vibe TTS Server", version="0.1.0", lifespan=lifespan)
 async def speak(req: SpeakRequest):
     if not tts:
         return {"status": "error", "message": "No TTS engine available"}
-    asyncio.create_task(tts.speak(req.text, voice=req.voice, speed=req.speed))
+    asyncio.create_task(tts.speak(req.text, voice=req.voice, speed=req.speed, volume=req.volume))
     return {"status": "ok"}
 
 @app.post("/api/feeling")
@@ -312,6 +331,16 @@ async def hook(event: HookEvent):
             result = sent_result
 
     return {"continue": True, **result}
+
+@app.get("/api/volume")
+async def get_volume():
+    return {"volume": _get_standing_volume()}
+
+@app.post("/api/volume")
+async def set_volume(req: VolumeRequest):
+    level = max(0, min(100, req.volume))
+    write_config({"tts": {"volume": level}})
+    return {"status": "ok", "volume": level}
 
 @app.post("/api/voice")
 async def switch_voice(req: VoiceRequest):

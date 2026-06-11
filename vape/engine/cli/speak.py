@@ -16,6 +16,9 @@ def speak_cmd(
     text: Annotated[str, typer.Argument(help="Text to speak")],
     voice: Annotated[str | None, typer.Option(help="Voice ID")] = None,
     speed: Annotated[float, typer.Option(help="Speech speed")] = 1.0,
+    volume: Annotated[
+        int | None, typer.Option(min=0, max=100, help="Volume 0-100, this utterance only")
+    ] = None,
     port: Annotated[int, typer.Option(help="Server port")] = 0,
 ) -> None:
     """Send text to the TTS server to speak."""
@@ -27,6 +30,8 @@ def speak_cmd(
         payload: dict = {"text": text, "speed": speed}
         if voice:
             payload["voice"] = voice
+        if volume is not None:
+            payload["volume"] = volume
         response = httpx.post(f"http://localhost:{port}/api/speak", json=payload, timeout=10)
         data = response.json()
         if data.get("status") == "ok":

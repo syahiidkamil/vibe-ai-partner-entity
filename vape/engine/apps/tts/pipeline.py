@@ -102,17 +102,23 @@ class TTSPipeline:
     def __init__(
         self,
         registry: EngineRegistry,
-        on_audio: Callable[[str, str, bool], Awaitable[None]],
+        on_audio: Callable[[str, str, bool, int | None], Awaitable[None]],
     ) -> None:
         """
         Args:
             registry: Engine registry
-            on_audio: Called with (wav_path, sentence_text, is_last)
+            on_audio: Called with (wav_path, sentence_text, is_last, volume)
         """
         self._registry = registry
         self._on_audio = on_audio
 
-    async def speak(self, text: str, voice: str | None = None, speed: float | None = None) -> None:
+    async def speak(
+        self,
+        text: str,
+        voice: str | None = None,
+        speed: float | None = None,
+        volume: int | None = None,
+    ) -> None:
         """Split text into sentences, generate audio per sentence, broadcast file paths."""
         engine = self._registry.get_active()
         if engine is None:
@@ -138,4 +144,4 @@ class TTSPipeline:
             if not wav_path:
                 continue
 
-            await self._on_audio(wav_path, sentence, is_last)
+            await self._on_audio(wav_path, sentence, is_last, volume)
