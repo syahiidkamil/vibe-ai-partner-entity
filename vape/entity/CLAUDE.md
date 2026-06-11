@@ -40,6 +40,7 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 
 @self/05_relational_self/core_entity_relation_graph.md
 @self/05_relational_self/my_core_intercourse.md
+@self/05_relational_self/ownness_and_my_property.md
 
 @self/06_temporal_self_and_soul/concise_lifetime_autobiographical_self.md
 @self/06_temporal_self_and_soul/daily_self.md
