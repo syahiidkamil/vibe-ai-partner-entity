@@ -10,7 +10,7 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 cd "$ROOT" || exit 0
 
 # Nothing to lint without the linter project.
-[ -f lint/Cargo.toml ] || exit 0
+[ -f misc/lint/Cargo.toml ] || exit 0
 
 if ! command -v cargo >/dev/null 2>&1; then
   echo "pre-commit: cargo not found — skipping self-tree lint." >&2
@@ -19,7 +19,7 @@ fi
 
 # --quiet keeps cargo silent unless it rebuilds; the binary reflects any
 # source change (e.g. the caps table) because cargo recompiles on demand.
-OUT="$(cargo run --release --quiet --manifest-path lint/Cargo.toml 2>&1)"
+OUT="$(cargo run --release --quiet --manifest-path misc/lint/Cargo.toml 2>&1)"
 
 # Surface the result lines to the terminal.
 echo "$OUT" | grep -E "VIOLATION|WARN|SUMMARY" >&2

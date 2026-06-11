@@ -100,4 +100,4 @@ JSON, so only `"` and `\` need escaping.
 ## If it fails
 
 If the CLI prints "Server not running" (or curl gets connection-refused), the
-avatar isn't up. Start it with `uv run vape start`.
+avatar isn't up. Start it with `uv run vape start`. in local background

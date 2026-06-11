@@ -391,13 +391,29 @@ async def ws_audio(ws: WebSocket):
 # Static Avatar Files (must be last — after all API/WS routes)
 # ═══════════════════════════════════════════════════════════════
 
+class NoCacheStaticFiles(StaticFiles):
+    """Serve avatar assets with ``Cache-Control: no-store``.
+
+    The model/expressions/textures are local files served over loopback and loaded
+    once per launch, so HTTP caching saves ~nothing — but a stale WebKit copy
+    silently renders the pre-edit model/expression until the cache is hand-cleared
+    (the bug that makes an edited .exp3.json look like it "didn't take"). no-store
+    removes that trap entirely.
+    """
+
+    def file_response(self, *args: Any, **kwargs: Any) -> Response:
+        resp = super().file_response(*args, **kwargs)
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
+
+
 def _mount_avatar() -> None:
     """Serve the active renderer at / so any shell can load it over HTTP."""
     _avatar_app = AvatarApp(RENDERERS_DIR)
     _renderer = get_avatar_renderer()
     _dir = _avatar_app.get_static_dir(_renderer)
     if _dir and _dir.is_dir():
-        app.mount("/", StaticFiles(directory=str(_dir), html=True), name="avatar")
+        app.mount("/", NoCacheStaticFiles(directory=str(_dir), html=True), name="avatar")
     else:
         print(
             f"[avatar] renderer '{_renderer}' not found under {RENDERERS_DIR} — "

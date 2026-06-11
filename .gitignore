@@ -1,12 +1,20 @@
+# macOS Finder clutter
+.DS_Store
+
 # Models (downloaded by setup, not stored in git)
 vape/model-stocks/live2d/
 vape/model-stocks/vrm/
 vape/model-stocks/threejs/
 !vape/model-stocks/README.md
 
-# Environment
+# Environment — a bare pattern matches .env at ANY depth (nested folders included)
 .env
-.env.local
+.env.*
+!.env.example
+!.env.sample
+
+# Memory subsystem — personal/machine-local infra (references the private tunnel)
+vape/entity/memory/ensure-db-tunnel.sh
 
 # Build output (avatar plugins build during setup)
 dist/
@@ -44,3 +52,18 @@ config.json
 
 # Tracked intentionally despite the global ignore of **/.claude/settings.local.json
 !.claude/settings.local.json
+
+# backup-chat hook cursor (per-machine state)
+.claude/hooks/.chat_id_tracker.txt
+
+# Raw chat archive — auto-generated, high-churn, verbatim. The local staging
+# buffer that feeds distillation; the durable memory is the diary (git), not this.
+vape/entity/storage/
+
+# Memory engine — churny runtime state (per-machine, high-churn). The durable,
+# identity-adjacent memory (HOT.md, soul.json, MEMORY.md, reveries.json, the
+# active_bubble register) stays TRACKED and diffable; only the live buffers below
+# are ignored: the spike-store, the dream cursor, and the light-dream breadcrumb.
+vape/entity/memory_wiki/bookmarks.jsonl
+vape/entity/memory_wiki/dream_state.json
+vape/entity/memory_wiki/last_thread.md

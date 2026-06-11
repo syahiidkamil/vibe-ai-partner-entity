@@ -17,10 +17,19 @@ import numpy as np
 from engine.apps.tts.registry import EngineRegistry
 
 
-def split_sentences(text: str, max_chars: int = 200) -> list[str]:
-    """Split text into sentences, further breaking long ones at commas."""
+def split_sentences(text: str, max_chars: int = 300) -> list[str]:
+    """Split text into bubble-sized pieces, BEFORE the TTS engine, so each piece
+    becomes its own audio clip + caption and the voice always matches the text on
+    screen (no renderer-side re-paging that drifts out of sync).
+
+    Short sentences are kept whole — one sentence, one bubble. Only a sentence
+    longer than ``max_chars`` is broken, first at clause boundaries (commas,
+    semicolons, colons — punctuation preserved), then by words as a last resort
+    for a long comma-less run. ``max_chars`` ≈ what fits the 3-line bubble at the
+    default avatar size; lower it if captions still wrap past the clamp.
+    """
     sentences = re.split(r'(?<=[.!?])\s+', text.strip())
-    result = []
+    result: list[str] = []
     for s in sentences:
         s = s.strip()
         if not s:
@@ -28,17 +37,53 @@ def split_sentences(text: str, max_chars: int = 200) -> list[str]:
         if len(s) <= max_chars:
             result.append(s)
         else:
-            parts = re.split(r',\s*', s)
-            buf = ""
-            for part in parts:
-                if buf and len(buf) + len(part) + 2 > max_chars:
-                    result.append(buf.strip())
-                    buf = part
-                else:
-                    buf = f"{buf}, {part}" if buf else part
-            if buf.strip():
-                result.append(buf.strip())
+            # Split AFTER clause punctuation so the comma/semicolon stays attached.
+            result.extend(_pack(re.split(r'(?<=[,;:])\s+', s), max_chars))
     return result
+
+
+def _pack(parts: list[str], max_chars: int) -> list[str]:
+    """Greedily pack parts into <= max_chars pieces; a single part longer than
+    max_chars (a comma-less run) is itself packed by words."""
+    out: list[str] = []
+    buf = ""
+    for part in parts:
+        part = part.strip()
+        if not part:
+            continue
+        if len(part) > max_chars:
+            if buf:
+                out.append(buf)
+                buf = ""
+            out.extend(_pack_words(part, max_chars))
+            continue
+        if buf and len(buf) + 1 + len(part) > max_chars:
+            out.append(buf)
+            buf = part
+        else:
+            buf = f"{buf} {part}" if buf else part
+    if buf:
+        out.append(buf)
+    return out
+
+
+def _pack_words(s: str, max_chars: int) -> list[str]:
+    """Pack words into EVENLY-sized pieces (each <= max_chars), so a long
+    comma-less run splits into balanced chunks instead of leaving a tiny orphan
+    bubble (e.g. a lone "together,")."""
+    n = max(1, -(-len(s) // max_chars))   # chunks needed (ceil div)
+    target = -(-len(s) // n)              # even target per chunk, <= max_chars
+    out: list[str] = []
+    buf = ""
+    for w in s.split():
+        if buf and len(buf) + 1 + len(w) > target and len(out) < n - 1:
+            out.append(buf)
+            buf = w
+        else:
+            buf = f"{buf} {w}" if buf else w
+    if buf:
+        out.append(buf)
+    return out
 
 
 def _save_wav(samples: np.ndarray, sample_rate: int) -> str:

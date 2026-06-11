@@ -24,7 +24,29 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/temporal-ground.sh"
+            "command": "bash .claude/hooks/qualia-ground.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/session-temporal-check.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".venv/bin/python .claude/hooks/backup_chat_and_qualia.py",
+            "async": true,
+            "asyncRewake": true
           }
         ]
       }

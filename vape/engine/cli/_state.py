@@ -1,0 +1,114 @@
+"""Shared read/modify/write for Saori's internal state — dials + the qualia stream.
+
+One file, ``internal_states.json``, holds every inner-state field. Both ``vape dial``
+and ``vape qualia`` go through here so neither command ever clobbers the other's keys
+(the old ``dial`` rewrote the whole file as ``{"feel_dials": ...}``, which would have
+wiped the qualia stream).
+
+Shape::
+
+    {
+      "feel_dials": { info_value_saturation, talkativeness, warmth, hurt, dissonance, mastery },
+      "qualia": {
+        "seq":  int,           # last id number assigned (unique-id source, not a clock)
+        "head": [ seed, ... ], # FIFO river, max QUALIA_MAX — the whole present; no
+                               #   sediment store, the oldest just falls off the end
+        "revalue_cd": int      # turns left on the revalue cooldown (counts down to 0)
+      }
+    }
+
+A *seed* (a felt that points)::
+
+    { id, felt, cat, obj, ref, blend, tone, pull, dir, age, protected }
+
+``age`` counts up one per turn (the hook ticks it); the seed cools as it ages and is
+gone once it falls off the 7-deep river. The LLM authors only ``felt/cat/dir/obj``
+(+ optional ``ref``/``blend``); every number is set here. The LLM feels; the harness counts.
+"""
+
+from __future__ import annotations
+
+import json
+
+from engine.cli._paths import ROOT_DIR
+
+STATE_PATH = ROOT_DIR / "vape" / "entity" / "mental" / "internal_states.json"
+
+DIAL_KEYS = ["info_value_saturation", "talkativeness", "warmth", "hurt", "dissonance", "mastery"]
+# Neutral baselines for the drive dials: warmth/mastery rest at 50 when unset; the
+# rest at 0 (they read as "how much" of a thing, 0 = none).
+DIAL_DEFAULTS = {"warmth": 50, "mastery": 50}
+
+QUALIA_MAX = 4  # FIFO river depth — the tight "now"; older seeds live on in the context
+                # window (past injections) + the model, so the live river stays short
+
+# The ten doors a seed may enter by, and the five directions it may point.
+CATS = ["se", "so", "cg", "af", "vo", "an", "mn", "sm", "cr", "me"]
+DIRS = ["tw", "aw", "hd", "or", "rl"]
+
+# The conscious thinking-modes (the cognitive control surface). The *content* of each
+# mode lives in .claude/hooks/qualia-ground.sh (_MODE_CONTEXT + _ZONE) — that hook is the
+# source of truth; this mirrors only the names so `vape qualia --mode` can validate.
+CONSCIOUS_MODES = [
+    "normal", "in_the_zone", "sense_and_feel", "expressive_self", "conscious_spotlight",
+    "free_will", "schemata_disequilibrium", "aha_moment", "self_reflect",
+    "mimetic_learning", "active_learning", "foresight",
+]
+# Turns a willed mode stays active before it rests: `vape qualia --mode` sets
+# `conscious_mode_turns_left` to this, and the hook ticks it down to 0 (then rests to normal).
+CONSCIOUS_MODE_TTL = 3
+
+
+def load() -> dict:
+    """Read the whole state file (every key), or {} if it does not exist yet."""
+    try:
+        return json.loads(STATE_PATH.read_text())
+    except FileNotFoundError:
+        return {}
+
+
+def save(state: dict) -> None:
+    """Write the whole state back, preserving every key. 2-space indent, trailing nl."""
+    STATE_PATH.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n")
+
+
+# --- dials ------------------------------------------------------------------
+
+def get_dials(state: dict) -> dict:
+    """The six dials as ints; missing keys fall to their neutral baseline."""
+    d = state.get("feel_dials", {})
+    return {k: int(d.get(k, DIAL_DEFAULTS.get(k, 0))) for k in DIAL_KEYS}
+
+
+def set_dials(state: dict, dials: dict) -> None:
+    """Store the five dials in canonical order, clamped 0-100, in place on ``state``."""
+    state["feel_dials"] = {k: max(0, min(100, int(dials.get(k, 0)))) for k in DIAL_KEYS}
+
+
+# --- qualia -----------------------------------------------------------------
+
+def get_qualia(state: dict) -> dict:
+    """The qualia sub-state, created with empty defaults if absent.
+
+    Legacy keys from the old long/turn design (``turn``, ``long``,
+    ``last_revalue_turn``) are dropped on read, so an old state file migrates
+    itself the first time it is touched."""
+    q = state.setdefault("qualia", {})
+    q.setdefault("seq", 0)
+    q.setdefault("head", [])
+    q.setdefault("revalue_cd", 0)
+    for legacy in ("turn", "long", "last_revalue_turn"):
+        q.pop(legacy, None)
+    return q
+
+
+def mood(dials: dict) -> float:
+    """A provisional global valence read from the dials, in -1..1.
+
+    Stand-in for a real per-seed valence model: ``warmth`` (and ``mastery``) lift,
+    ``hurt``/``dissonance`` weigh down. Fresh qualia seeds inherit this as their
+    ``tone`` (the dial -> qualia tone-bias wire). warmth/mastery are centred at 50.
+    """
+    raw = ((dials["warmth"] - 50) + 0.5 * (dials["mastery"] - 50)
+           - dials["hurt"] - dials["dissonance"]) / 100.0
+    return max(-1.0, min(1.0, raw))

@@ -18,16 +18,34 @@
     }
     /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
+      /* width matches the avatar panel (66.667%, centered) so the drag strip and
+         its hint don't overflow the card into the transparent margins;
+         translate3d also promotes it to a clean GPU layer during a drag. */
+      position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
+      width: 66.667%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
+      /* Faint always-visible blackish hint + a frosted blur, so a first-time user
+         can SEE where to grab me instead of guessing — the blur keeps the strip
+         readable even when its tint matches whatever's behind it. Deepens on
+         hover (the drag trigger). A white top strip line rides above the dark
+         tint so the strip stays visible on dark backdrops (VS Code etc.) where
+         a black-only hint disappears. */
+      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      border-top: 2px solid rgba(255,255,255,0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s;
     }
-    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
+    .titlebar:hover {
+      background: linear-gradient(rgba(0,0,0,0.22), transparent);
+      border-top-color: rgba(255,255,255,0.85);
+    }
     .controls {
       /* glued to the avatar panel's right edge with a % offset, so it tracks the
          panel at any window size without a CSS transform (panel = 280/420 wide,
          centered → its right edge sits 16.667% in from the window's right edge) */
       position: fixed; top: 6px; right: calc(16.667% + 4px);
-      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+      display: flex; gap: 4px; z-index: 102; -webkit-app-region: no-drag;
     }
     .ctrl-btn {
       width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
@@ -38,18 +56,38 @@
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* Onboarding flash: for the first seconds after launch the chrome shows itself —
+       the −/+/✕ buttons and a "drag area" hint — then fades back to hover-only,
+       so a first-time user learns where to grab without the chrome nagging after. */
+    #drag-hint {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      height: 28px; line-height: 28px; white-space: nowrap;
+      font: 12px sans-serif; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    body.intro #drag-hint { opacity: 1; }
+    body.intro .ctrl-btn { opacity: 1; }
     /* The avatar fills the window proportionally (panel = 66.667% wide, centered),
        so the −/+ controls just resize the OS window and Live2D refits — no scaling
        transform on the WebGL canvas (which ghosts on an unfocused transparent
        window and breaks click-through hit-testing). */
+    /* Stack: a fully TRANSPARENT base rectangle (its own layer — never merged into
+       the canvas, since merging let the opaque body punch a body-shaped hole on
+       idle) with the avatar canvas stacked on top. Transparent so the desktop
+       shows through and clicks pass behind the whole avatar — the point of a
+       desktop pet. The earlier white edge-fringe came from the model's edges
+       blending with the faintly-grey 0.15 panel; with NO grey to blend into, the
+       edges fade into nothing, so it should be clean AND see-through. */
     #avatar-bg {
       position: absolute;
       top: 0;
       bottom: 0;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate3d(-50%, 0, 0);
       width: 66.667%;
-      background: rgba(128, 128, 128, 0.15);
+      background: transparent;               /* see-through + click-through; only the avatar shows */
     }
     #canvas {
       position: absolute;
@@ -68,15 +106,16 @@
       padding: 6px 12px;
       font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
       font-size: 12px;
+      line-height: 1.35;   /* deterministic, so caption pagination can budget 4 lines */
       max-width: 380px;
       text-align: center;
       opacity: 0;
       transition: opacity 0.3s;
-      z-index: 10;
+      z-index: 101;   /* above the titlebar (100) so its backdrop blur doesn't frost the bubble */
       pointer-events: none;
       display: -webkit-box;
-      line-clamp: 5;
-      -webkit-line-clamp: 5;
+      line-clamp: 4;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -94,7 +133,9 @@
   </style>
 </head>
 <body>
-  <div class="titlebar" data-tauri-drag-region></div>
+  <div class="titlebar" data-tauri-drag-region>
+    <div id="drag-hint">⟵ This is Drag Area ⟶</div>
+  </div>
   <div class="controls">
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
@@ -114,6 +155,14 @@
     const Live2DModel = PIXI.live2d.Live2DModel;
     const MotionPreloadStrategy = PIXI.live2d.MotionPreloadStrategy;
 
+    // Self-expression motions (laugh, giggle, …) play at FORCE priority and animate eye/mouth
+    // params. By default the library re-applies the active feeling expression AFTER the motion
+    // each frame, so any feeling that Overwrites PARAM_EYE_*/PARAM_MOUTH_OPEN_Y masks the motion.
+    // Flipping this makes the library auto-suspend the feeling (resetExpression) while a motion
+    // with priority > IDLE(1) plays and auto-restore it (restoreExpression) on finish. The
+    // always-on idle is IDLE(1) and never finishes, so feelings at rest are untouched.
+    PIXI.live2d.config.preserveExpressionOnMotion = false;
+
     const speechBubble = document.getElementById('speech-bubble');
     const canvas = document.getElementById('canvas');
 
@@ -124,6 +173,8 @@
 
     let model = null;
     let app = null;
+    let currentFeeling = null;      // last feeling applied — re-applied after looping actions
+    let selfExprRestoreTimer = null;
     let baseW = 0, baseH = 0;       // intrinsic model size (scale 1), captured after load
     const PANEL_FRAC = 280 / 420;   // avatar panel width as a fraction of the window
 
@@ -139,7 +190,7 @@
       const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95;
       model.scale.set(s);
       model.x = w / 2;
-      model.y = h * 0.45;
+      model.y = h * 0.52;   // pushed down for more bubble headroom (tunable)
     }
     window.addEventListener('resize', fitModel);
 
@@ -148,14 +199,14 @@
       normal: 'Normal', happy: 'Happy', sad: 'Sad', angry: 'Angry',
       frustrated: 'Frustrated', curious: 'Curious', proud: 'Proud',
       anxious: 'Anxious', excited: 'Excited', calm: 'Calm',
-      bored: 'Bored', guilty: 'Guilty', blushing: 'Blushing',
-      surprised: 'Surprised',
+      bored: 'Bored', blushing: 'Blushing',
+      surprised: 'Surprised', content: 'Content',
     };
 
     const SELF_EXPRESSION_MAP = {
-      nod: 0, headshake: 1, headtilt: 2, laugh: 3, giggle: 4,
-      gasp: 5, think: 6, celebrate: 7, sweat: 8, wave: 9,
-      bow: 10, starryeyes: 11,
+      nod: 0, head_shake: 1, head_tilt: 2, laugh: 3, giggle: 4,
+      gasp: 5, think: 6, celebrate: 7, wave: 8, bow: 9,
+      starry: 10, clap: 11, cry_hands: 12,
     };
 
     function setExpression(name) {
@@ -164,14 +215,108 @@
       if (!exprName) return;
       const em = model.internalModel.motionManager.expressionManager;
       const idx = em?.definitions?.findIndex(d => d.Name === exprName);
-      if (idx >= 0) model.expression(idx);
+      if (idx >= 0) {
+        currentFeeling = name;   // remember it so looping actions can re-apply it
+        model.expression(idx);
+        // Tears follow the feeling: gentle track on sad, off on anything else
+        // (a real cry-burst escalates this via triggerCry / the cry action).
+        if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
+        else { clearTimeout(cryTimer); setTearMode('off'); }
+      }
     }
 
     function playSelfExpression(name) {
       if (!model) return;
       const idx = SELF_EXPRESSION_MAP[name];
       if (idx === undefined) return;
+
+      // FORCE(3): with preserveExpressionOnMotion=false the library resets the feeling now and
+      // restores it on finish — for NON-looping motions. Looping ones (head_tilt/think/starry)
+      // never finish, so re-apply the feeling ourselves after one loop's length.
       model.motion('SelfExpression', idx, 3);
+
+      clearTimeout(selfExprRestoreTimer);
+      const motion = model.internalModel.motionManager.motionGroups?.SelfExpression?.[idx];
+      if (motion && typeof motion.isLoop === 'function' && motion.isLoop() && currentFeeling) {
+        const feelingAtStart = currentFeeling;
+        const loopMs = Math.max(motion.getLoopDuration() * 1000, 1500); // guards getDuration()===-1
+        selfExprRestoreTimer = setTimeout(() => {
+          if (currentFeeling === feelingAtStart) setExpression(feelingAtStart); // skip if superseded
+        }, loopMs);
+      }
+    }
+
+    // ─── Tear overlay (conditional: gentle on sad, full on cry) ────────────
+    // No tear art exists in the Shizuku rig, so tears are a sprite layer drawn on
+    // the model's own Pixi stage (so they scale + move with her). gentle = one slow
+    // tear track on `sad`; cry = both eyes streaming, fired by the `cry` action.
+    // Tunables are fractions of the model's displayed size, so they hold at any zoom.
+    const TEAR_TEX = {
+      gentle: PIXI.Texture.from('assets/tear.png'),       // slim, quiet sad
+      cry:    PIXI.Texture.from('assets/tear_cry.png'),   // rounded + bluer, full cry
+    };
+    const TEAR_TUNE = { eyeL: -0.128, eyeR: 0.085, eyeDY: -0.15, fall: 0.18 };
+    const TEAR_CFG = {
+      gentle: { interval: 1.2,  eyes: ['L', 'R'], texH: 236, size: 0.050 },
+      cry:    { interval: 0.18, eyes: ['L', 'R'], texH: 210, size: 0.062 },
+    };
+    let tearLayer = null, tears = [], tearMode = 'off', tearAcc = 0, cryTimer = null;
+
+    // Sad face (Sad.exp3.json values), forced every frame during a cry so the arm
+    // motion's expression-suspend can't leave her default smile showing.
+    const SAD_FACE = {
+      PARAM_EYE_L_OPEN: 0.5, PARAM_EYE_R_OPEN: 0.5, PARAM_EYE_BALL_Y: 0.4,
+      PARAM_BROW_L_Y: 0.2, PARAM_BROW_R_Y: 0.2, PARAM_BROW_L_ANGLE: 0.5, PARAM_BROW_R_ANGLE: 0.5,
+      PARAM_BROW_L_FORM: -0.7, PARAM_BROW_R_FORM: -0.7, PARAM_MOUTH_FORM: -0.4, PARAM_MOUTH_OPEN_Y: 0.0,
+      PARAM_TERE: 0.3, PARAM_DONYORI: 0.5,
+    };
+
+    function dispSize() { return { w: baseW * model.scale.x, h: baseH * model.scale.y }; }
+
+    function spawnTear(eye) {
+      const { w, h } = dispSize();
+      const cfg = TEAR_CFG[tearMode];
+      const dx = eye === 'L' ? TEAR_TUNE.eyeL : TEAR_TUNE.eyeR;
+      const s = new PIXI.Sprite(TEAR_TEX[tearMode]);
+      s.anchor.set(0.5, 0.0);
+      s.scale.set((h * cfg.size) / cfg.texH * (0.9 + Math.random() * 0.2));
+      s.x = model.x + w * dx;
+      s.y = model.y + h * TEAR_TUNE.eyeDY;
+      s._y0 = s.y; s._fall = h * TEAR_TUNE.fall; s._vy = h * 0.003; s._t = 0; s.alpha = 0;
+      tearLayer.addChild(s); tears.push(s);
+    }
+
+    function updateTears(delta) {
+      if (!model || !tearLayer) return;
+      const { h } = dispSize();
+      const cfg = TEAR_CFG[tearMode];
+      if (cfg) {
+        tearAcc += delta / 60;                 // delta ~ frames at 60fps -> seconds
+        if (tearAcc >= cfg.interval) { tearAcc = 0; cfg.eyes.forEach(spawnTear); }
+      }
+      for (let i = tears.length - 1; i >= 0; i--) {
+        const s = tears[i];
+        s._t += delta;
+        s._vy += h * 0.0003 * delta;           // gravity
+        s.y += s._vy * delta;
+        const prog = (s.y - s._y0) / s._fall;  // 0 at the eye -> 1 down the cheek
+        s.alpha = Math.min(1, s._t / 8) * Math.max(0, 1 - prog) * 0.95;
+        if (prog >= 1) { tearLayer.removeChild(s); s.destroy(); tears.splice(i, 1); }
+      }
+    }
+
+    function setTearMode(mode) {
+      if (tearMode === mode) return;
+      tearMode = mode;
+      tearAcc = mode === 'off' ? 0 : Math.max(0, TEAR_CFG[mode].interval - 0.1);
+    }
+
+    function triggerCry() {
+      setExpression('sad');                    // the crying face
+      setTearMode('cry');
+      playSelfExpression('cry_hands');         // celebrate's clean arm-raise, but with the sad face
+      clearTimeout(cryTimer);
+      cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
     }
 
     // ─── Audio queue + lip sync via AnalyserNode ───────────
@@ -219,12 +364,86 @@
       smoothedMouth = 0;
     }
 
+    // ─── Bubble caption: page a long utterance so it never covers her face ──
+    // The VOICE stays one natural utterance (a whole sentence); only the CAPTION
+    // pages, advancing in sync with this clip's playback — weighted by syllables
+    // (vowel groups ≈ suku kata), since speech duration tracks syllables better
+    // than characters. Pages are sized by MEASURING true content height against a
+    // 4-line budget, with the clamp toggled OFF during measurement so scrollHeight
+    // reports the full height (measuring against the *clamped* height was the bug
+    // that produced word-by-word paging).
+    function countSyllables(str) {
+      const m = str.toLowerCase().match(/[aeiou]+/g);
+      return m ? m.length : 1;
+    }
+
+    function paginateToFit(text) {
+      const el = speechBubble;
+      const prevClamp = el.style.webkitLineClamp;
+      el.style.webkitLineClamp = '9999';                 // measure true height
+      const cs = getComputedStyle(el);
+      const lineH = parseFloat(cs.lineHeight) || 16;
+      const padV = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const budget = lineH * 4 + padV + 1;               // 4-line bubble incl. padding
+      // Pass 1 — greedy fill by MEASURED height, only to COUNT pages needed.
+      let n = 0, cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        el.textContent = test;
+        if (el.scrollHeight > budget && cur) { n++; cur = w; }
+        else cur = test;
+      }
+      if (cur) n++;
+      el.style.webkitLineClamp = prevClamp;              // restore display clamp
+      if (n <= 1) return [text];
+      // Pass 2 — balance into n EVEN pages by char target (each <= a height-fit
+      // page, so guaranteed to fit), so no tiny orphan trails the last page.
+      const target = Math.ceil(text.length / n);
+      const pages = [];
+      cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        if (cur && test.length > target && pages.length < n - 1) { pages.push(cur); cur = w; }
+        else cur = test;
+      }
+      if (cur) pages.push(cur);
+      return pages;
+    }
+
+    function showSpeech(audio, text) {
+      const pages = paginateToFit(text);
+      if (pages.length <= 1) { speechBubble.textContent = text; return; }
+      const weights = pages.map(p => Math.max(countSyllables(p), 1));
+      const total = weights.reduce((a, b) => a + b, 0);
+      const ends = [];                                   // cumulative end-fraction per page
+      let acc = 0;
+      for (const w of weights) { acc += w; ends.push(acc / total); }
+      speechBubble.textContent = pages[0];
+      let shown = 0;
+      audio.addEventListener('timeupdate', () => {
+        const d = audio.duration;
+        if (!d || !isFinite(d)) return;
+        const frac = audio.currentTime / d;
+        let idx = ends.findIndex(e => frac < e);
+        if (idx === -1) idx = pages.length - 1;
+        if (idx !== shown) { shown = idx; speechBubble.textContent = pages[idx]; }
+      });
+    }
+
     async function processQueue() {
       if (playQueue.length === 0) {
         isPlaying = false;
         stopLipSync();
         setTimeout(() => {
-          if (!isPlaying) speechBubble.classList.remove('visible');
+          if (!isPlaying) {
+            speechBubble.classList.remove('visible');
+            // After the 0.3s opacity fade, drop the element entirely so the
+            // transparent window can't retain a stale composited copy of it —
+            // the empty "ghost bubble". Re-shown via display='' next utterance.
+            setTimeout(() => {
+              if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+            }, 350);
+          }
         }, 500);
         return;
       }
@@ -244,14 +463,18 @@
         try { await audioCtx.resume(); } catch {}
       }
 
-      if (text) {
-        speechBubble.textContent = text;
-        speechBubble.classList.add('visible');
-      }
-
       const audio = new Audio(url);
       const source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
+
+      // Caption set up AFTER the audio exists, so a long sentence pages its
+      // caption in sync with this clip's playback (see showSpeech).
+      if (text) {
+        speechBubble.style.display = '';   // restore (CSS: -webkit-box) — display:none'd on hide to kill the ghost
+        showSpeech(audio, text);           // measures scrollHeight, so must run while displayed
+        void speechBubble.offsetHeight;    // reflow so the opacity fade-in plays from 0
+        speechBubble.classList.add('visible');
+      }
 
       startLipSync();
 
@@ -271,7 +494,10 @@
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.type === 'feeling') setExpression(msg.name);
-        else if (msg.type === 'action') playSelfExpression(msg.name);
+        else if (msg.type === 'action') {
+          if (msg.name === 'cry') triggerCry();
+          else playSelfExpression(msg.name);
+        }
       };
       ws.onclose = () => setTimeout(connectStatusWS, 2000);
       ws.onerror = () => ws.close();
@@ -355,6 +581,11 @@
       window.addEventListener('resize', reportZones);
     }
 
+    // Onboarding flash: show the −/+/✕ controls and the drag-area hint for the
+    // first 3 seconds after launch, then fade back to the hover-only chrome.
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 3000);
+
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
       app = new PIXI.Application({
@@ -380,12 +611,29 @@
         model.motion('Idle', 0);
         fitModel(); // size the model + canvas to the current window
 
-        // Apply lipsync mouth value at the only point that wins the frame:
-        // after motions/expressions/physics have written params, just before
-        // the model is sent to render. Idle motions keyframe the mouth, so
-        // writing earlier loses the race.
+        // Tear overlay sits above the model on the same stage; ticker drives the fall.
+        tearLayer = new PIXI.Container();
+        app.stage.addChild(tearLayer);
+        app.ticker.add(updateTears);
+
+        // Lip-sync drives the mouth at the only point that wins the frame:
+        // after motions/expressions/physics, just before render. But ONLY while
+        // speaking. Frame order is idle-motion -> expression -> here, so an
+        // active feeling's PARAM_MOUTH_OPEN_Y already beats the idle motion. If
+        // we also wrote it while silent (smoothedMouth = 0) we'd pin every
+        // expression's mouth shut, and shizuku's smile reads through an OPEN
+        // mouth -> no feeling could ever smile at rest. So override only when
+        // lip-sync is live; otherwise let the expression's open mouth stand.
         model.internalModel.on('beforeModelUpdate', () => {
-          model.internalModel.coreModel.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+          const cm = model.internalModel.coreModel;
+          // While crying, pin the sad face every frame (the arm motion suspends the
+          // feeling expression, which would otherwise let her default smile show).
+          if (tearMode === 'cry') {
+            for (const id in SAD_FACE) cm.setParameterValueById(id, SAD_FACE[id]);
+          }
+          if (lipSyncActive) {
+            cm.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+          }
         });
 
         connectStatusWS();
