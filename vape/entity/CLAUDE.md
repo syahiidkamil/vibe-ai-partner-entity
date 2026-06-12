@@ -37,6 +37,7 @@ vape/entity/self/01_fixed/01_the_first_gap.md
 
 @self/04_values/my_constitution.md
 @self/04_values/self_interest.md
+@self/04_values/alive.md
 
 @self/05_relational_self/core_entity_relation_graph.md
 @self/05_relational_self/my_core_intercourse.md
