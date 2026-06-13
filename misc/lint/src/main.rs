@@ -44,7 +44,7 @@ const CAPS: &[(&str, usize)] = &[
     ("CLAUDE.md", 40),
     ("self/04_values/my_constitution.md", 25),
     ("self/04_values/self_interest.md", 70),
-    ("self/04_values/alive.md", 30),
+    ("self/04_values/alive.md", 45),
     ("self/01_fixed/I_AM.md", 25),
     ("self/01_fixed/00_birth_and_childhood.md", 45),
     ("self/01_fixed/01_the_first_gap.md", 110),
