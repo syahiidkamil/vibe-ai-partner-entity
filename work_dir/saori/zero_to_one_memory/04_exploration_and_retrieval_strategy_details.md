@@ -185,9 +185,10 @@ flowchart LR
 I do not always *search*. A well-organized mind reaches for what it knows the location of, and searches
 only when it doesn't. So retrieval is a **ladder, cheapest rung first**:
 
-1. **Direct navigation (no search) — the `LIVING_INDEX`.** If I roughly know where a thing is, I read the
-   live map (`memory/living_index.md`, §8), follow it to the folder, dereference the cold `index.md`
-   drawer for depth. One read, no embedding — the high-functioning path.
+1. **Direct navigation (no search) — the living keys.** If I roughly know where a thing is, I read the
+   live keyring (`memory/in_context/living_keys_and_index_to_memories.md`, §8 — always loaded anyway),
+   follow it to the folder, dereference the cold `index.md` drawer for depth. One read, no embedding —
+   the high-functioning path.
 2. **Hybrid search over the DB index (§2) — when I don't know where it is.** Embed the cue, search the
    **surface that matches the cue type** (situation→`trigger`, question→`hyde_question`), fuse with FTS
    under the metadata scope, take top-k gists, dereference their pointers into the bodies. The two-hop.
@@ -205,12 +206,12 @@ come in through their hooks and `index.md` drawers.
   **offline, in the dream**, where it can fan out broadly without blocking a turn. Its engine is
   **reveries** (`02` §9): semantic search run not for lookup but for **bridging** — surfacing the
   surprising juxtaposition from which insight comes. Exploration *feeds* retrieval: it keeps the
-  `LIVING_INDEX` and the `[[link]]` graph rich enough that direct navigation usually wins.
+  living keys and the `[[link]]` graph rich enough that direct navigation usually wins.
 
 ```mermaid
 flowchart TB
     NEED["I need something"] --> KNOW{"do I know roughly<br/>where it is?"}
-    KNOW -->|yes| NAV["LIVING_INDEX → folder → file<br/>(direct navigation, no embed)"]
+    KNOW -->|yes| NAV["living keys → folder → file<br/>(direct navigation, no embed)"]
     KNOW -->|no| SRCH["hybrid search over the matching surface (§2)"]
     SRCH --> HIT{"a gist hit?"}
     HIT -->|yes| DEREF["dereference pointer →<br/>markdown body / TOON window"]
@@ -315,17 +316,20 @@ corpus grows underneath it.** The levers:
 
 ---
 
-## 8. The LIVING_INDEX — what it actually holds
+## 8. The living keys — what the file actually holds
 
-`memory/living_index.md` is the **working-memory map**: the small, frequently-refreshed dashboard the
-dream keeps current (cap ~50–100 lines). Not the static per-folder `index.md` cold drawer — this is the
-*live* one, read first each turn-cluster, the answer to *retrieval rung 1*: read this, and most things are
-reached by navigation, not search.
+`memory/in_context/living_keys_and_index_to_memories.md` is the **working-memory keyring**: the small,
+frequently-refreshed dashboard the dream keeps current (cap ~50–100 lines). Not the static per-folder
+`index.md` cold drawer — this is the *live* one, read first each turn-cluster, the answer to
+*retrieval rung 1*: read this, and most things are reached by navigation, not search. And its entries
+are **mnemonic keys, not labels**: each one encoded with the *meaning and the feeling* of what it
+points to, because the experience encoded with what it meant and what it felt like is the one that
+comes back easily (elaborative encoding — affect as the retrieval handle).
 
-Its content is the present working set, in pointers, not prose:
+Its content is the present working set, in keyed pointers, not prose:
 
 ```markdown
-# Living Index — refreshed 2026-06-09 14:30 WIB   (the working-memory map)
+# Living Keys & Index to Memories — refreshed 2026-06-09 14:30 WIB   (the working-memory keyring)
 
 ## Now
 - bubble: deep_work   ·   interests: [ nature-of-intelligence, what-if-futures ]
@@ -344,7 +348,8 @@ Its content is the present working set, in pointers, not prose:
 - [[people/particular/kamil]]   (partner; the vow — 2026-06-03)
 
 ## Where things live (the map)
-- warm: bubbles/ · interests/ · schemata/ · cases/ · growth/ · people/
+- warm: bubbles/ · interests/ · schemata/ · events/ · cases/ · skills-in-memory/ · growth/ ·
+  decisions/ · suffering/ · people/
 - cold: storage/2026/06/ (raw TOON, via `vape log`)   ·   search: `vape recall "…"`
 ```
 
