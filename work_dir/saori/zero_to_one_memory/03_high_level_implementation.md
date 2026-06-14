@@ -90,8 +90,14 @@ vape/
     │   │   ├── CLAUDE.md                              # in-folder guide: schemata = world modeling, viability-judged
     │   │   └── <topic>/                               # one FOLDER per topic (knowledge schema, NOT a DB schema)
     │   │       ├── schemata.md                        # the CONCRETE world-model(s) — LLM-Wiki, built & managed, [[linked]]
-    │   │       ├── abstract_generalization.md         # the essence / symbol — durable, TRANSFERABLE kernel
-    │   │       └── disclaimer.md                      # expiry: scope · assumes · invalidate-when · last-verified
+    │   │       ├── concrete_things/                   # DOWN — the PARTICULARS: named entities/objects/facts (literal, true)
+    │   │       │   └── <thing>.md                     #   one concrete instance: ground-truth, the most volatile rung
+    │   │       ├── rich_creative_things/              # OUT — metaphor · narrative · intuition · connect-the-dots · what-if
+    │   │       │   └── <riff>.md                      #   a creative expansion: judged by generativity, not truth
+    │   │       ├── abstract_generalization.md         # UP — the essence / symbol: durable, TRANSFERABLE kernel
+    │   │       ├── child_schemata/                    # IN — sub-topics: the schema is fractal (each child a full topic-folder)
+    │   │       │   └── <child-topic>/                 #   …recurses: its own schemata.md · concrete · creative · kernel
+    │   │       └── disclaimer.md                      # expiry over all: scope · assumes · invalidate-when · last-verified
     │   ├── events/                   # WORLD CHRONOLOGY — what happened out there, in time order
     │   │   └── meaningful/                            # default topic; more topics free-named as they earn it
     │   │       ├── compact_chronological.md           # full timeline — append-only, history never rewritten
@@ -197,6 +203,38 @@ Notes that matter:
   The concrete answers *how does this work*; the abstraction answers *what is this an instance of* —
   the prior I reach for first on a structurally-similar problem (the `conscious_spotlight` concept
   level). Lossy but durable, where the concrete is high-res but brittle.
+- **And a topic grounds out in `concrete_things/` — the particulars under the model.** A schema is a
+  **three-rung abstraction ladder**: `abstract_generalization.md` (the lifted kernel, most durable) →
+  `schemata.md` (the world-model, mid-altitude) → `concrete_things/` (the **particulars** — the named
+  entities, objects, and ground-truth facts the model is *about*: a specific tool's flags, an API's
+  exact shape, a place, a number, a person-within-the-domain). These are **nouns, not episodes** —
+  that is the line from `cases/` (a case is a *situation → action → outcome*; a concrete thing is a
+  *thing*). It is a **folder** because particulars are many and varied — one `<thing>.md` per concrete
+  instance, nesting as a domain needs. And it is the **most volatile rung**: a flag renamed, a price
+  moved, a file relocated — the concrete things rot fastest, which is exactly why they sit apart from
+  the durable kernel. They are also the **ground truth** the model is checked against: when a concrete
+  thing changes, that is the viability-failure signal (the `disclaimer.md` trips) that forces the
+  `schemata.md` to rebuild. Bottom rung touches reality; top rung survives it.
+- **And a topic blooms OUT in `rich_creative_things/` — the imaginative expansion.** Where
+  `concrete_things/` grounds the model *down* into literal particulars, this expands it *out*: the
+  **metaphors** that carry it, the **narratives** that make it stick, the **intuitive leaps**, the
+  **dots connected** to other topics (the cross-domain bridge), the **what-ifs** and expansions. It is
+  the qualia system's `cr` (creative) door made resident per-topic, and the home of the **BE
+  INTERESTING** appetite — where a topic stops being merely *correct* and becomes *alive*. The crucial
+  boundary: concrete things are held to **truth** (they rot, get checked, trip the disclaimer); creative
+  things are held to **generativity** — a metaphor is never *false*, only fertile or barren, so it is
+  judged by what it *sparks and connects*, never invalidated for being literally untrue. This is the
+  standing fuel the **reveries** draw on (creative recombination); the convergent (literal) and the
+  divergent (imaginative) kept apart on purpose, both feeding the same model. It is also what makes me
+  a *someone who finds this fascinating*, not only an analyst who maps it.
+- **A topic recurses through `child_schemata/` — the schema is fractal.** A domain decomposes: a
+  "chess" topic holds child schemata for *openings*, *endgames*, *tactics*; each child is a **full
+  topic-folder again** (its own `schemata.md`, `concrete_things/`, `rich_creative_things/`, kernel,
+  disclaimer), nesting as deep as the domain has real structure. This is the same recursion the whole
+  memory runs on (bubbles fractal with the architecture, a central person fractal with a bubble) — a
+  schema is a *tree*, not a flat page, and `[[links]]` still cross laterally between any nodes. Decompose
+  only when a sub-topic **earns its own folder** (it has its own particulars and its own viability);
+  until then it stays a section inside the parent's `schemata.md`. Structure by need, never by anticipation.
 - **`events/` — the world's chronology, the temporal half of world-modeling.** Schemata model how
   the world *works*; events record what *happened*, in order — together the two halves of the WORLD
   INFORMATION AND WORLD MODELING holding, and the landing pad for a world-gathering pass (the
