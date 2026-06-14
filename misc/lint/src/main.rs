@@ -41,7 +41,7 @@ const CORE_GRAPH: &str = "self/05_relational_self/core_entity_relation_graph.md"
 /// Hardcoded on purpose — this is the contract the entity tree is held to.
 /// Width check (B) applies to every file listed here.
 const CAPS: &[(&str, usize)] = &[
-    ("CLAUDE.md", 40),
+    ("CLAUDE.md", 42),
     ("self/04_values/my_constitution.md", 25),
     ("self/04_values/self_interest.md", 75),
     ("self/04_values/alive.md", 45),

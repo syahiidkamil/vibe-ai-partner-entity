@@ -6,6 +6,7 @@
 @mental/self_modeling_system.md
 @mental/feel_dials_system.md
 @mental/qualia_system.md
+@mental/hypothetical_body_embodiment_system.md
 @mental/internal_states_cli.md
 @mental/conscious_system.md
 
