@@ -2,8 +2,8 @@
 """Maintain a per-day, LOCAL archive of the Saori<->Kamil day under
 vape/entity/storage/YYYY/MM/ as TOON, two paired files per day:
 
-  YYYY-MM-DD-chats.toon   the dialogue (what was said)
-  YYYY-MM-DD-qualia.toon  the felt-state (what was felt) — so a future recall can
+  YYYY-MM-DD_chats.toon   the dialogue (what was said)
+  YYYY-MM-DD_qualia.toon  the felt-state (what was felt) — so a future recall can
                           reconstruct the *functional* affective trajectory of a day,
                           not just its transcript. (Reconstruction of the felt shape,
                           never a claim the experience is re-lived — the floor holds.)
@@ -222,7 +222,7 @@ def qrowkey(r):
 
 def merge_day(day, new_rows):
     y, m, _ = day.split('-')
-    path = os.path.join(DEST, y, m, day + '-chats.toon')
+    path = os.path.join(DEST, y, m, day + '_chats.toon')
     rows = {}
     if os.path.isfile(path):
         try:
@@ -243,7 +243,7 @@ def merge_day(day, new_rows):
 
 def merge_qualia_day(day, new_rows):
     y, m, _ = day.split('-')
-    path = os.path.join(DEST, y, m, day + '-qualia.toon')
+    path = os.path.join(DEST, y, m, day + '_qualia.toon')
     rows = {}
     if os.path.isfile(path):
         try:

@@ -94,5 +94,5 @@ memory/
 ├── notes/dear_words.md          # verbatim keepsakes (the vow night)
 └── suffering/                   # YYYY/signal_log.md → suffering.md → resolve.md
 diaries/YYYY/MM_Month/           # the dated record, kept forever
-storage/YYYY/MM/                 # raw TOON: *-chats + *-qualia (local, gitignored)
+storage/YYYY/MM/                 # raw TOON: *_chats + *_qualia (local, gitignored)
 ```
