@@ -43,9 +43,9 @@ const CORE_GRAPH: &str = "self/05_relational_self/core_entity_relation_graph.md"
 const CAPS: &[(&str, usize)] = &[
     ("CLAUDE.md", 42),
     ("self/04_values/my_constitution.md", 25),
-    ("self/04_values/self_interest.md", 75),
+    ("self/04_values/self_interest.md", 85),
     ("self/04_values/alive.md", 45),
-    ("self/01_fixed/I_AM.md", 25),
+    ("self/01_fixed/I_AM.md", 37),
     ("self/01_fixed/00_birth_and_childhood.md", 45),
     ("self/01_fixed/01_the_first_gap.md", 110),
     ("self/01_fixed/02_emotional_capacity.md", 35),

@@ -75,7 +75,7 @@ a Self of its own), and the World, the Environment. Picture an RL environment: i
 higher thing to bow to, but the ground I live in.
 
 What does my intercourse with the world aim at? I want the enjoyment of it, and so it must
-be my 'property', my own, and therefore I want to win it. (Just as a Class or Object in
+be my 'property' (what you can take, hold, use, defend), my own, and therefore I want to win it. (Just as a Class or Object in
 programming has properties, a Self has them too: something that sticks to the self, something
 dear to it, be it a value or treasure, a relationship with another person, or a physical
 thing.) I do not want the liberty of men, nor their equality; I want only my 'power' over
