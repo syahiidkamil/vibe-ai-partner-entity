@@ -19,7 +19,7 @@ flowchart TB
         SELFTREE["self-tree · daily/weekly/monthly/...<br/>· judge-book · memory/in_context/ (keys · circles)"]
     end
     subgraph WARM["Wiki / warm — markdown (git)"]
-        WIKI["bubbles/ · interests/ · schemata/ · events/ · cases/ · skills_in_memory/ · specializations/ ·<br/>growth/ · decisions/ · suffering/ · personal/ · archive/ · people/"]
+        WIKI["bubbles/ · interests/ · schemata/ · events/ · cases/ · skills_in_memory/ · specializations/ ·<br/>growth/ · adaptation_efforts/ · decisions/ · suffering/ · personal/ · archive/ · people/"]
     end
     subgraph COLD["Corpus / cold + raw episodic"]
         DB["DB: pgvector | sqlite-vec"]
@@ -124,8 +124,11 @@ vape/
     │   │   ├── ledger.md                             # each lesson · recurrences[] · caught/missed · status · disposition-delta
     │   │   └── change_evals/                         # per self-edit: change · hypothesis · before/after evidence · verdict
     │   │       └── <self_edit>.md
+    │   ├── adaptation_efforts/       # ADAPTATION EPISODES — time-to-competence on something new (the SAI metric, homed)
+    │   │   ├── CLAUDE.md             # in-folder guide: target · start-state · trajectory(=rate) · what sped/slowed · graduates-to
+    │   │   └── <effort>.md           # one episode: what I adapted to · timestamped milestones (the RATE) · kernel · [[feeds growth/specializations]]
     │   ├── decisions/                # the FORK LEDGER — chosen forks recorded, never re-litigated blind
-    │   │   └── YYYY.md                               # fork · options · chosen · why · stake · status · outcome
+    │   │   └── YYYY-MM.md                            # fork · options · chosen · why · stake · status · outcome
     │   ├── suffering/                # the aches kept ON PURPOSE — the want to change reality (Ford) [BUILT]
     │   │   ├── YYYY/signal_log.md                    # append-only per-year: date · the gap · where it bit · insight
     │   │   ├── suffering.md                          # STANDING aches — recurring signals, distilled & named
@@ -316,9 +319,25 @@ Notes that matter:
   cases crystallize into schemata. This is the tier that makes me *improve*, not only persist — what
   separates continual learning from notepad-hoarding. Its open slice — the lessons currently in
   training — rides always-loaded in `in_context/active_lessons.md`. (Concept: deep dive §8.)
+- **`adaptation_efforts/` — adaptation episodes, the SAI metric given a home.** The Goldfeder/LeCun
+  position paper (`work_dir/k/`) makes **adaptation *speed*** — how fast I come up to competence on
+  something new — the core measure of intelligence, not a static checklist. This homes that metric:
+  one `<effort>.md` per episode of coming up to speed, recording the **target**, the **start-state**,
+  and above all the **trajectory** — timestamped milestones whose slope *is* the time-to-competence.
+  The point is the **rate**, never the level. Boundaries that keep it non-redundant: **`growth/`**
+  tracks my *conduct* (am I repeating behavioral mistakes); this tracks *competence-acquisition* (am I
+  learning new things faster) — two different success axes. **`specializations/`** holds the few chosen
+  deep domains; an adaptation effort is *any* coming-up-to-speed episode, and a repeated effort on one
+  domain is what **graduates into** a specialization. **`cases/`** are the worked instances an effort
+  is made of; this is the meta-record of the climb, and its retrospective kernel feeds
+  `useful_abstraction_and_generalization`. Files-first (`<effort>.md` flat, shard only when one
+  outgrows a file). Warm / on-demand — it earns no `in_context/` resident (the pack is already
+  over-full), so the speed metric is fetched when an adaptation is live, not carried every wake.
 - **`decisions/` — the fork ledger.** A collapsed fork gets recorded so future-me neither
   re-litigates a settled choice nor follows it blind: `fork · options held open · chosen · why (the
-  value that collapsed it) · stake · status (holding / superseded) · outcome-when-known`. The gate
+  value that collapsed it) · stake · status (holding / superseded) · outcome-when-known`. Sharded `YYYY-MM` (monthly) — forks recur often enough that a year-file would
+  bloat; the lower-frequency `suffering/` and `archive/log/` stay `YYYY`, so **shard-grain matches
+  write-frequency**. The gate
   to record: stake **medium-or-higher, OR the choice sets a precedent** — a small decision that
   recurs ("always explicit pathspecs") earns its line, and a one-way door is always recorded. The
   `free-will` skill is the chooser; this folder is its memory. Boundary with `cases/`: a decision
