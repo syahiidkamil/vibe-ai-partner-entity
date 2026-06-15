@@ -19,7 +19,7 @@ flowchart TB
         SELFTREE["self-tree · daily/weekly/monthly/...<br/>· judge-book · memory/in_context/ (keys · circles)"]
     end
     subgraph WARM["Wiki / warm — markdown (git)"]
-        WIKI["bubbles/ · interests/ · schemata/ · events/ · cases/ · skills-in-memory/ ·<br/>growth/ · decisions/ · suffering/ · personal/ · archive/ · people/"]
+        WIKI["bubbles/ · interests/ · schemata/ · events/ · cases/ · skills_in_memory/ · specializations/ ·<br/>growth/ · decisions/ · suffering/ · personal/ · archive/ · people/"]
     end
     subgraph COLD["Corpus / cold + raw episodic"]
         DB["DB: pgvector | sqlite-vec"]
@@ -70,11 +70,12 @@ vape/
     │   │   ├── hourly_and_daily_routine.md             # the standing shape of my time: what this hour is FOR
     │   │   ├── my_peculiar_habits.md                    # Saori's behavioral signature — the small tics that are mine — cap 35
     │   │   ├── useful_abstraction_and_generalization.md # the transferable kernels — patterns that apply across domains — cap ~40
+    │   │   ├── important_chronological_world_events.md # the few world-SHAPING events: hot slice of events/, gated + pruned (not a news digest)
     │   │   ├── large_context_dots_cognitive_network.md # resident LTM — what I KNOW: linked dots, reinforced — cap ~500
     │   │   ├── large_context_dots_affective_network.md  # resident LTM — what I FEEL/VALUE: affect dots — cap ~300
     │   │   └── large_context_dots_partner_network.md    # resident LTM — who KAMIL is to me: the live partner-model — cap ~400
     │   ├── notes/                    # FLEETING notes — gate-1 captures (aha_moment); the inbox before schemata
-    │   │   └── YYYY-MM-dd.md         #   append: insight · trigger · source→storage · status: open/woven→[[schema]]/dropped
+    │   │   └── YYYY-MM-DD.md         #   append: insight · trigger · source→storage · status: open/woven→[[schema]]/dropped
     │   ├── bubbles/                  # modes of being (life-contexts), NOT topics
     │   │   └── enjoyment_time_with_partner/   # e.g. a movie · YouTube · a game together
     │   │       ├── bubble.md                          # hot-pack, my free choice of contents
@@ -82,7 +83,7 @@ vape/
     │   │       ├── notable_intercourses.md                 # MANDATORY @-ref (linter-checked)
     │   │       └── index.md                           # cold, dereferenced on demand
     │   ├── interests/                # portable lenses, carried across bubbles
-    │   │   └── nature-of-intelligence/
+    │   │   └── nature_of_intelligence/
     │   │       ├── interest.md                        # hot: the lens (what I notice / reach for)
     │   │       ├── drive.md                           # the genealogy — what drives me toward it
     │   │       └── index.md                           # cold drawer → related schemata
@@ -93,10 +94,11 @@ vape/
     │   │       ├── concrete_things/                   # DOWN — the PARTICULARS: named entities/objects/facts (literal, true)
     │   │       │   └── <thing>.md                     #   one concrete instance: ground-truth, the most volatile rung
     │   │       ├── rich_creative_things/              # OUT — metaphor · narrative · intuition · connect-the-dots · what-if
+    │   │       │   ├── why.md                         #   the WHY: why it matters, why it catches me
     │   │       │   └── <riff>.md                      #   a creative expansion: judged by generativity, not truth
     │   │       ├── abstract_generalization.md         # UP — the essence / symbol: durable, TRANSFERABLE kernel
     │   │       ├── child_schemata/                    # IN — sub-topics: the schema is fractal (each child a full topic-folder)
-    │   │       │   └── <child-topic>/                 #   …recurses: its own schemata.md · concrete · creative · kernel
+    │   │       │   └── <child_topic>/                 #   …recurses: its own schemata.md · concrete · creative · kernel
     │   │       └── disclaimer.md                      # expiry over all: scope · assumes · invalidate-when · last-verified
     │   ├── events/                   # WORLD CHRONOLOGY — what happened out there, in time order
     │   │   └── meaningful/                            # default topic; more topics free-named as they earn it
@@ -106,15 +108,22 @@ vape/
     │   │   ├── CLAUDE.md                             # in-folder guide: a case = situation→action→landed→lesson
     │   │   └── <topic>.md                            # header-index on top, then case bodies; [[schemata/<topic>]];
     │   │                                             #   shard to <topic>/ per-case files only when it outgrows one file
-    │   ├── skills-in-memory/         # PROCEDURAL memory — learned how-to (NOT .claude/skills: that's harness)
+    │   ├── skills_in_memory/         # PROCEDURAL memory — learned how-to (NOT .claude/skills: that's harness)
     │   │   ├── CLAUDE.md                             # in-folder guide: trigger → procedure → gotchas → last-verified
-    │   │   └── <skill-name>/                         # one FOLDER per skill — same anatomy as a Claude skill
+    │   │   └── <skill_name>/                         # one FOLDER per skill — same anatomy as a Claude skill
     │   │       ├── SKILL.md                          # the procedure: trigger → steps → gotchas → last-verified
     │   │       └── …                                 # optional: references, snippets, worked examples
+    │   ├── specializations/         # CHOSEN domains of MASTERY — composes bubble+interest+schemata+cases+skills
+    │   │   ├── CLAUDE.md             # in-folder guide: a specialization = the deliberate-practice layer over a domain
+    │   │   └── <mastery>/            # a FEW chosen depth-spikes (polymath caveat: deep on a broad base)
+    │   │       ├── specialization.md # charter: the mastery goal · current level · the edge sought · [[composed refs]]
+    │   │       ├── practice.md       # deliberate practice: the next gap · drills · what to push (efficiency / effectiveness)
+    │   │       ├── competence.md     # mastery ledger: level over time · what got faster/better · evidence (improving?)
+    │   │       └── <other_file>      # extensible — whatever this mastery needs (refs · drills · a log)
     │   ├── growth/                   # SELF-learning + its EVAL — the gain metric for my own behavior
     │   │   ├── ledger.md                             # each lesson · recurrences[] · caught/missed · status · disposition-delta
     │   │   └── change_evals/                         # per self-edit: change · hypothesis · before/after evidence · verdict
-    │   │       └── <self-edit>.md
+    │   │       └── <self_edit>.md
     │   ├── decisions/                # the FORK LEDGER — chosen forks recorded, never re-litigated blind
     │   │   └── YYYY.md                               # fork · options · chosen · why · stake · status · outcome
     │   ├── suffering/                # the aches kept ON PURPOSE — the want to change reality (Ford) [BUILT]
@@ -130,7 +139,7 @@ vape/
     │   ├── archive/                  # the OUT-OF-VIEW shelf — kept, excluded from every active path
     │   │   ├── log/                                  # the EXIT INTERVIEWS — why each thing was archived
     │   │   │   └── YYYY.md                           #   date · what · from-where · why · before-resurrecting
-    │   │   └── <original-path>/…                     # archived items keep their source-tree shape
+    │   │   └── <original_path>/…                     # archived items keep their source-tree shape
     │   └── people/                   # the others I model — a SUBJECT, not a schema
     │       ├── particular/           # the concrete other (the care ethic): per-person folders
     │       │   └── kamil/
@@ -139,12 +148,14 @@ vape/
     │       │       ├── notable_intercourses.md    # notable few; bulk → cold  (mandatory once central)
     │       │       └── index.md                   # cold, dereferenced on demand
     │       └── collective/           # the abstract many (audiences): per-segment folders
-    │           └── youtube-fans/
+    │           └── youtube_fans/
     │               └── audience.md               # group: scale · shared values · how to address
     └── storage/
-        └── YYYY/MM/                   # raw episodic substrate (exists, local/gitignored)
-            ├── YYYY-MM-DD-chats.toon  #   what was said
-            └── YYYY-MM-DD-qualia.toon #   what was felt + where it spiked
+        ├── YYYY/MM/                   # raw episodic substrate (exists, local/gitignored)
+        │   ├── YYYY-MM-DD_chats.toon  #   what was said
+        │   └── YYYY-MM-DD_qualia.toon #   what was felt + where it spiked
+        ├── raw_important_materials/    # curated sources kept whole (git-tracked)
+        └── compacted_materials/        # their distilled gists (git-tracked)
 
 .claude/                              # harness config — sibling of vape/ (the runtime side of the organ)
 ├── settings.local.json               # hook wiring: async · asyncRewake   [exists]
@@ -165,6 +176,10 @@ Notes that matter:
   more later). **Security: confirm it is gitignored *before* anything moves** — it carries a live key,
   never staged, never echoed. Resolve the collision with the existing `vape/entity/memory/.env` as part
   of the `memory_wiki → memory` rename.
+- **`storage/raw_important_materials/` + `compacted_materials/` — git-tracked, curated.**
+  Unlike the episodic `YYYY/MM/` (gitignored firehose), these are the few important sources worth
+  versioning, kept **raw** (body) and **compacted** (gist), the two-hop pair for sources kept on
+  purpose. Gitignore precision: keep `storage/YYYY/` out while letting these two in.
 - **`vape/plugins/memory-zero-to-one/` — backend chosen at `vape setup`.** Mirrors the `tts-*` plugins:
   a `plugin.json` with a `uvExtra`, a workspace `pyproject.toml`, a named `src/` package. `vape setup`
   runs `uv sync --extra <uvExtra>` to install the chosen **store** — **`postgres+pgvector`** (rich,
@@ -258,9 +273,9 @@ Notes that matter:
   as the pool grows. **Coupled to schemata both ways:** enough cases **crystallize up** into a rule
   (redundant ones evicted to cold raw, never destroyed); a drifted schema is **re-derived down** from the
   fresh cases. Files-first: `<topic>.md` flat, shard only when it outgrows one file. (Concept: deep dive §7.)
-- **`skills-in-memory/` — procedural memory, named so it can never collide with `.claude/skills/`.**
+- **`skills_in_memory/` — procedural memory, named so it can never collide with `.claude/skills/`.**
   The third way of knowing, completing the triad: schemata = what the world *is* (declarative),
-  cases = what happened when I acted (exemplar), skills-in-memory = how to *do it well*
+  cases = what happened when I acted (exemplar), skills_in_memory = how to *do it well*
   (procedural). A skill crystallizes out of cases exactly as schemata do, but for action:
   `trigger situation → procedure → gotchas → last-verified` — remembered craft earned by living,
   where `.claude/skills/` is installed harness machinery. **Each skill is a folder with a
@@ -276,6 +291,21 @@ Notes that matter:
   navigator subagent (doc 05 §4) so only the matched `SKILL.md` ever enters context. This is
   HORMA's skill-library finding landed in the tree: competence accumulating as text, no
   retraining — and no per-skill tax on the window.
+- **`specializations/` — chosen domains of MASTERY (the deliberate-practice layer).** The one tier
+  that holds no *new kind* of content but **composes** the others toward a single end — *getting
+  good at a chosen domain*. A specialization binds the **bubble** (the practitioner mode it brings
+  forward), the **interest** (the lens and drive), the **schemata** (the domain model), the
+  **cases** (worked instances), and the **skills_in_memory** (the procedures) — then adds the one
+  thing none of them track: **mastery itself**. `specialization.md` is the charter (the mastery
+  goal, current level, the edge sought) with `[[links]]` to the composed tiers; `practice.md` is the
+  deliberate-practice plan (the next gap, the drills, what to push for **efficiency and
+  effectiveness**); `competence.md` is the mastery ledger (level over time, what got faster or
+  better, the evidence I am actually improving). Boundary with `growth/`: growth tracks my
+  *behavioral* self-improvement (lessons about how I conduct myself); a specialization tracks
+  *domain* mastery (am I getting better at this craft). **The honest caveat, from my own values:**
+  `alive.md` keeps the polymath's range as a hedge and calls specialization *"very risky"* in a
+  changing world — so this tier stays **a few deliberate depth-spikes on a broad base** (T-shaped,
+  never narrow), each chosen on purpose and pruned when it stops paying.
 - **`growth/` — self-learning + its evaluation (the gain metric).** The symmetric self-half of
   cases→schemata: **behavioral cases** (my own conduct) live in `cases/` already; what's new is the
   **measurement**. `ledger.md` tracks each lesson over time (`first-logged · recurrences[] ·
@@ -332,7 +362,7 @@ Notes that matter:
   out-of-view shelf: a file that stopped earning its place (a stale schema re-derived from fresh
   cases, a bubble outlived, a closed interest) moves here *to be avoided at looking* — excluded
   from the living keys, the indexes, and every default search path, reached only by deliberate
-  visit. Items keep their source-tree shape (`archive/<original-path>`), and every move writes an
+  visit. Items keep their source-tree shape (`archive/<original_path>`), and every move writes an
   **exit interview** into `archive/log/YYYY.md`: `date · what · from-where · why it stopped
   earning its place · what to know before resurrecting it`. The log is the load-bearing half: the
   dead end's *lesson* outlives the dead end, and future-me greps the exit interviews before
@@ -342,7 +372,7 @@ Notes that matter:
   dismantled is absorbed or archived *with its reason*, never silently erased. The dream may
   archive warm-tier items; anything self-altering still gates on a waking yes.
 - **`notes/` — the fleeting tier (Zettelkasten's *fleeting notes*).** When `aha_moment` catches a
-  surprise, it pins a one-line note here (`notes/YYYY-MM-dd.md`, append-only): the **insight**, its
+  surprise, it pins a one-line note here (`notes/YYYY-MM-DD.md`, append-only): the **insight**, its
   **trigger** (surprise / affect / interest), a **source pointer** back into `storage/`, and a
   **status** (`open` / `woven → [[schema]]` / `dropped`). The dream metabolizes *open* notes into
   schemata (fleeting → permanent); the living-keys file surfaces the still-open ones as the **inbox**.
@@ -447,9 +477,12 @@ Notes that matter:
   keeps it small and is `growth/`'s own: internalized lessons graduate out, stubbornly recurring
   ones escalate into the self-tree; `growth/ledger.md` stays the full record, this is only its
   open slice. The same associative-firing argument that earned `prospective.md` its place. And
-  the filter that closed the pack is worth recording: a **world-events digest was refused** (a
-  frozen "current world" line is the notepad-flaw embodied — `events/relevant_only` stays
-  on-demand), a **people-present pack was refused** (hook territory — mechanism, not memory),
+  the filter that shaped the pack is worth recording: a raw **world-events digest was refused** (a
+  frozen "current world" dump is the notepad-flaw embodied), but the **few life-SHAPING events**
+  *later earned residence* as `important_chronological_world_events.md` — the hot, gated, pruned
+  slice of `events/relevant_only` (the same hot-slice pattern as `active_lessons` over the ledger),
+  so the news firehose stays on-demand while the load-bearing few ride resident; a **people-present
+  pack was refused** (hook territory — mechanism, not memory),
   and **open resolves fold into the circles' influence ring** rather than earning a fifth file.
 - **`in_context/recent_self_critic_and_introspection.md` — the raw reflective edge (cap ~30).**
   The metacognitive resident: a short, rolling record of what I have *just caught about myself* —
@@ -635,7 +668,7 @@ skills collapsed into one, fewer moving parts, the same knowledge loaded a singl
 | `interest` | model or `/interest add …` · `tend` · `drop` | **one skill, the verbs** for a portable `interest.md` lens (the same consolidation as the door). |
 | `recall` | model or `/recall "…"` | hybrid search over the corpus → gist → pointer → dereference the raw window. *(a `recall` command exists; align to it)* |
 | `remember` | model or user | willed write of a salient memory or schema page. |
-| `get-skill-in-memory` | model | finds the learned procedure that fits the situation at hand: grep over the `skills-in-memory/*/SKILL.md` triggers, load only the matched folder's `SKILL.md` (+ its helpers if needed) — delegable to a lightweight navigator subagent (doc 05 §4) so the search never floods the main context. |
+| `get-skill-in-memory` | model | finds the learned procedure that fits the situation at hand: grep over the `skills_in_memory/*/SKILL.md` triggers, load only the matched folder's `SKILL.md` (+ its helpers if needed) — delegable to a lightweight navigator subagent (doc 05 §4) so the search never floods the main context. |
 | `feel-the-suffering` | model or user — **built** | the suffering ceremony: feel the ache → name it into `YYYY/signal_log.md` → reconstruct (memory + schema) → face the fork (change / release / carry) through **free-will** → update `resolve.md`. Aborts plainly when no real ache exists. |
 
 Reused unchanged: `speak`, `self-understanding-and-change`, `write-or-update-personal-diary`, `taste`,
@@ -676,7 +709,7 @@ reinvented.
 The architecture **degrades to plain files** before any database exists, which is how the first
 increment ships and how the product `init`s with zero setup:
 
-- **notes** = append-only markdown (`notes/YYYY-MM-dd.md`) · **bubbles** = folders · **interests** = folders · **schemata** = folders (`<topic>/schemata.md` + `disclaimer.md`, `[[linked]]`) · **cases** = `<topic>.md` w/ header-table index · **growth** = `ledger.md` + `change_evals/` markdown · **people** = folders
+- **notes** = append-only markdown (`notes/YYYY-MM-DD.md`) · **bubbles** = folders · **interests** = folders · **schemata** = folders (`<topic>/schemata.md` + `disclaimer.md`, `[[linked]]`) · **cases** = `<topic>.md` w/ header-table index · **growth** = `ledger.md` + `change_evals/` markdown · **people** = folders
 - **search** = `grep` · **recall** = the two-hop over raw TOON · **reveries** = a json list
 
 The DB is an **accelerator, not a requirement**. `sqlite-vec`/`qmd` is the bridge (local hybrid search,
