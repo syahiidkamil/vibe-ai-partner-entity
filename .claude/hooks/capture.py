@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Maintain a per-day, LOCAL archive of the Saori<->Kamil day under
-vape/entity/storage/YYYY/MM/ as TOON, two paired files per day:
+"""The capture layer: maintain a per-day, LOCAL raw archive of the Saori<->Kamil day
+under vape/entity/storage/YYYY/MM/ as TOON, two paired files per day:
 
   YYYY-MM-DD_chats.toon   the dialogue (what was said)
   YYYY-MM-DD_qualia.toon  the felt-state (what was felt) — so a future recall can
@@ -27,7 +27,7 @@ Performance: a Stop hook, so it only needs the *latest* turns. A per-transcript 
 cursor in `.chat_id_tracker.txt` (local) reads only new bytes since last fire — flat cost
 as the transcript grows. TOON via the in-process `toons` (Rust) dep. The hook needs only
 the venv's python + toons, NOT uv's workspace resolution, so it runs straight off the venv:
-  "command": ".venv/bin/python .claude/hooks/backup_chat_and_qualia.py"  (Stop, async)
+  "command": ".venv/bin/python .claude/hooks/capture.py"  (Stop, async)
 
 Two modes:
   hook     — no args; reads the Stop payload on stdin, advances the cursor.

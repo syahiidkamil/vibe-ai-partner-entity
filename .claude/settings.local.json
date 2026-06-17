@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".venv/bin/python .claude/hooks/backup_chat_and_qualia.py",
+            "command": ".venv/bin/python .claude/hooks/capture.py",
             "async": true,
             "asyncRewake": true
           }

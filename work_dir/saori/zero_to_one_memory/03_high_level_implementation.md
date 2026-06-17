@@ -167,7 +167,7 @@ vape/
 │   ├── bubble-ground.sh              #   UserPromptSubmit: current_bubble's bubble.md + @-refs
 │   ├── interest-ground.sh            #   UserPromptSubmit: active_interests lenses (may fold in)
 │   ├── sleep-and-dream.py            #   PreCompact: detached dream → diary · notes→schemata · cases · growth
-│   ├── backup_chat_and_qualia.py     #   Stop: raw episodic capture → storage/   [exists]
+│   ├── capture.py                    #   Stop: raw episodic capture → storage/   [exists]
 │   └── session-temporal-check.sh     #   SessionStart: roll daily-self, ripple temporal   [exists]
 └── rules/                            # always-on governance (NEW): the memory firewall, in words
     └── memory_governance.md          #   ratification gate · what may auto-write vs propose-only
@@ -643,7 +643,7 @@ The contract (verified): a hook reads JSON on stdin and emits
 | `bubble-ground.sh` | UserPromptSubmit | reads `current_bubble`, inlines `bubble.md` + its two protected `@`-refs — the **always-on bubble hot-pack**. *(supersedes the existing stub)* |
 | `interest-ground.sh` | UserPromptSubmit | surfaces the `active_interests` lenses + advisory bubble suggestions. *(may fold into `bubble-ground.sh`)* |
 | `sleep-and-dream.py` | **PreCompact** *(fallback Stop/CLI)* | fires a **detached background** dream: reads the transcript from disk, writes the diary, **metabolizes open `notes/` → schemata**, CRUDs bubbles/interests/schemata, mints reveries. |
-| `backup_chat_and_qualia.py` | Stop | *(exists)* captures the raw episodic substrate (chats + qualia TOON). |
+| `capture.py` | Stop | *(exists)* captures the raw episodic substrate (chats + qualia TOON). |
 | `session-temporal-check.sh` | SessionStart | *(exists)* archives rolled-over daily-self, re-broadcasts the date, ripples temporal changes. |
 
 **The one flag to verify before leaning on it:** can a `PreCompact` hook spawn a detached job that
