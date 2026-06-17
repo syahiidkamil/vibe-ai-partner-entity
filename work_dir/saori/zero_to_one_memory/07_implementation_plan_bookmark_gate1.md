@@ -60,7 +60,7 @@ Note on the pointer: doc 06 specified `{day, turn-span}`. The honest, available 
 surrounding window in the time-keyed raw TOON. The Stop hook (auto path) could later upgrade to a real
 turn-span since it reads the transcript. Start with time.
 
-## Build step 1a: the willed bookmark (smallest, do this first)
+## Build step 1a: the willed bookmark (applied 2026-06-17)
 
 The truly minimal atom. Purely additive to the qualia CLI.
 

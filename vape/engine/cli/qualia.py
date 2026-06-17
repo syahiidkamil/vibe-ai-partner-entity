@@ -24,6 +24,7 @@ import typer
 from rich.console import Console
 
 from engine.cli import _state as st
+from engine.cli import _bookmark
 
 console = Console()
 
@@ -127,6 +128,10 @@ def qualia_cmd(
         Optional[str],
         typer.Option("--revalue", help="Seed id to devalue toward neutral (the master-wire)."),
     ] = None,
+    bookmark: Annotated[
+        Optional[str],
+        typer.Option("--bookmark", help="Flag this moment for consolidation (gate 1): a one-line reason. Rides this write, best-effort."),
+    ] = None,
     mode: Annotated[
         Optional[str],
         typer.Option("--mode", help="Set the conscious thinking-mode (the cognitive control surface)."),
@@ -159,6 +164,12 @@ def qualia_cmd(
                 console.print(f"  [red]'{raw}' is not an integer (dial '{k}').[/red]")
                 raise typer.Exit(1)
     st.set_dials(state, dials)
+
+    # 1b. willed bookmark (gate 1) -- a cheap live flag riding this write, with the
+    # current dials as its salience snapshot. Best-effort: it writes to storage/ and
+    # can never affect the inner-state save below.
+    if bookmark:
+        _bookmark.append_bookmark(bookmark, st.get_dials(state), "willed")
 
     # 2. pushes (1-3) -----------------------------------------------------
     if push:
