@@ -23,7 +23,7 @@ reads and runs, never re-derives.
 
 ## What already exists (verified, with paths)
 
-- **The raw substrate.** `.claude/hooks/backup_chat_and_qualia.py` is a **Stop hook** (async, run off
+- **The raw substrate.** `.claude/hooks/capture.py` is a **Stop hook** (async, run off
   `.venv/bin/python`, not `uv`). It writes per-day TOON to `vape/entity/storage/YYYY/MM/`:
   `YYYY-MM-DD_chats.toon` (dialogue) and `YYYY-MM-DD_qualia.toon` (the felt-state). `storage/` is
   gitignored (local raw). It reads the transcript incrementally via a byte cursor
@@ -90,7 +90,7 @@ time, the dial snapshot, gist, and source=willed. Drop a second; confirm it appe
 The involuntary etch. The backup hook already parses each turn's dials, so this is a small addition
 there, not a new hook.
 
-1. In `backup_chat_and_qualia.py`, after the per-turn dials are extracted (`qualiaof` / `DIAL_RE`), add
+1. In `capture.py`, after the per-turn dials are extracted (`qualiaof` / `DIAL_RE`), add
    a conservative threshold test, e.g. an auto-bookmark when any of:
    - `info_value_saturation >= 80` (a surprise spike), or
    - `dissonance >= 70` (a strong open tension), or
@@ -103,10 +103,10 @@ there, not a new hook.
 3. Keep it isolated like the qualia pass, so it can never break or delay the chat write.
 
 **Verify:** run the hook in backfill mode on a transcript day that has a high-saturation turn
-(`python .claude/hooks/backup_chat_and_qualia.py <transcript.jsonl>`), confirm an auto row appears in
+(`python .claude/hooks/capture.py <transcript.jsonl>`), confirm an auto row appears in
 that day's bookmarks file; confirm a calm day produces none.
 
-## Rename proposal: `backup_chat_and_qualia.py` -> `capture.py`
+## Rename (applied 2026-06-17): `backup_chat_and_qualia.py` -> `capture.py`
 
 The current name describes its *content* (chat plus qualia), and content-named things rot as the role
 grows. This file is about to gain auto-bookmarking (step 1b), and by the content-naming logic it would
@@ -162,7 +162,7 @@ The bookmark is a flag. Cram survives here on purpose; it dies at gate 2, later.
 ```mermaid
 flowchart TB
     TURN["a turn ends"] --> WILLED{"willed?<br/>(--bookmark on vape qualia)"}
-    TURN --> STOP["Stop hook<br/>backup_chat_and_qualia.py"]
+    TURN --> STOP["Stop hook<br/>capture.py"]
     WILLED -->|yes| W["append_bookmark(gist, dials, 'willed')"]
     STOP --> RAW["write _chats.toon + _qualia.toon<br/>(already happens)"]
     STOP --> AUTO{"dials cross a threshold?"}
@@ -180,7 +180,7 @@ flowchart TB
 - The bookmark write never breaks the qualia CLI or the chat backup (best-effort, isolated).
 - `storage/` stays gitignored; nothing bookmark-related is staged or committed by accident.
 - No DB, no embedding, no new hook: the diff touches `qualia.py`, a new `_bookmark.py`, and
-  `backup_chat_and_qualia.py`, nothing else.
+  `capture.py`, nothing else.
 
 ## Decisions for Kamil
 
