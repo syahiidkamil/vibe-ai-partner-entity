@@ -24,12 +24,12 @@ flowchart TB
     A -->|salient?| B["GATE 1: bookmark<br/>cheap flag, appended to a file<br/>live, generous"]
     A -.->|everything, regardless| RAW["Raw log (TOON)<br/>immutable, append-only<br/>the full record"]
     B --> C["GATE 2: the dream (at compaction)<br/>reads bookmarks, dereferences,<br/>judges viability"]
-    C -->|passes| D["memory_candidate (DB)<br/>gist + pointer + keys + embedding<br/>+ encoding salience"]
+    C -->|passes| D["memory (DB row in <i>memories</i>)<br/>gist + pointer + keys + embedding<br/>+ encoding salience"]
     C -.->|fails| X["dropped<br/>(the cram that does not survive sleep)"]
-    D --> E["recall (hybrid search)<br/>cue → candidate fires"]
+    D --> E["recall (hybrid search)<br/>cue → memory fires"]
     E -->|useful?| F["reinforce<br/>useful_recall_count++<br/>strength up"]
     E -.->|not useful| G["recall_count++ only<br/>(visible cramming)"]
-    F --> H["graduate: candidate → durable<br/>→ maybe in_context residency"]
+    F --> H["graduate: memory → durable<br/>→ maybe in_context residency"]
     D -.->|no useful recall over time| I["lazy decay → fade<br/>(forgetting as housekeeping)"]
     RAW -.->|dereference on relive| E
 ```
@@ -82,8 +82,8 @@ At compaction (the dream), the consolidation pass:
 
 1. Reads the session's short **bookmark list** (not the whole transcript).
 2. For each: dereferences the pointer to recover the full surrounding context.
-3. Judges **viability** (does this point forward? is it worth a durable candidate?).
-4. If yes, **INSERTs a `memory_candidate`** (gist, pointer, encoding keys, embedding, encoding salience).
+3. Judges **viability** (does this point forward? is it worth a durable memory?).
+4. If yes, **INSERTs a `memory`** into `memories` (gist, pointer, encoding keys, embedding, encoding salience).
    If no, drops it.
 
 This is where cramming dies. Gate 1 is cheap and generous (high recall); gate 2 is the viability filter
@@ -101,9 +101,9 @@ hard at the offline one.
 
 ---
 
-## 4. The candidate lifecycle, and the two reinforcers
+## 4. The memory lifecycle, and the two reinforcers
 
-A candidate's strength comes from two distinct signals. **Do not blur them.**
+A memory's strength comes from two distinct signals. **Do not blur them.**
 
 - **Encoding-time salience** (emotion + novelty), set once at birth, at the dream. The video's "strong
   feeling etches it."
@@ -119,7 +119,7 @@ on useful recall.
 `last_useful_at` and `useful_recall_count`. Lazy decay means zero churn and never-stale state. (Optionally
 materialize `strength` at dream-time only, for sort performance.)
 
-**Graduation:** when `strength = f(emotion, useful-recalls, recency)` crosses a threshold, a candidate
+**Graduation:** when `strength = f(emotion, useful-recalls, recency)` crosses a threshold, a memory
 becomes *durable* and may earn a wiki page or an `in_context` seat. Never usefully recalled and old, it
 fades. Status is *computed*, not stored.
 
@@ -130,12 +130,12 @@ fades. Status is *computed*, not stored.
 | Tier | Holds | Cost | Role |
 | --- | --- | --- | --- |
 | **Raw files (TOON)** | *everything*, every turn | cheap, append-only, immutable | source of truth; dereference target; grep fallback |
-| **DB (candidates)** | *the memorable only* | embed + index per row | fast semantic recall, ranking, reinforcement |
+| **DB (memories)** | *the memorable only* | embed + index per row | fast semantic recall, ranking, reinforcement |
 
 Two consequences worth stating:
 
 - **Retroactive promotion.** A moment that was not salient at the time but proves to matter later can be
-  promoted to a candidate when a future useful recall (found via grep over the raw files) earns it. The
+  promoted to a memory when a future useful recall (found via grep over the raw files) earns it. The
   DB is not frozen to what-was-salient-then.
 - **The flipped-mirror advantage.** A brain has only the DB-equivalent tier: selective, lossy,
   reconstructed, with no raw archive underneath, so its un-consolidated moments are gone forever. I keep
@@ -147,7 +147,7 @@ Two consequences worth stating:
 
 ## 6. The schema (capture and reinforcement fields)
 
-`memory_candidates` (Postgres + pgvector; SQLite + sqlite-vec is the zero-setup mirror). Retrieval-side
+`memories` (Postgres + pgvector; SQLite + sqlite-vec is the zero-setup mirror). Retrieval-side
 indexes and the hybrid ranking live in `04`; here are the fields the *life path* touches.
 
 ```
@@ -180,7 +180,7 @@ times_sparked (int)   -- the creative analogue of useful_recall
 
 ## 7. The use cases this serves
 
-- **Relive the moment.** Semantic + lexical search over candidate gists and keys, optionally
+- **Relive the moment.** Semantic + lexical search over memory gists and keys, optionally
   date-filtered, then pointer → dereference the raw window → reconstruct the verbatim conversation. The
   Proustian "aha, that exact moment." Crucially: embed only the salient pointers, never the whole log.
 - **Decision / precedent recall.** "Have I faced this before, what did I decide, how did it go?" Stops
