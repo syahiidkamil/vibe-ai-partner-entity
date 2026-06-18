@@ -45,13 +45,27 @@ def _key(r: dict) -> tuple:
     return (r.get("time", ""), r.get("gist", ""), r.get("source", ""))
 
 
-def append_bookmark(gist: str, dials: dict | None = None, source: str = "willed") -> bool:
-    """Append one bookmark row to today's bookmarks.toon. Return True on success.
+def append_bookmark(
+    gist: str,
+    dials: dict | None = None,
+    source: str = "willed",
+    day: str | None = None,
+    time: str | None = None,
+) -> bool:
+    """Append one bookmark row to a day's bookmarks.toon. Return True on success.
 
     The row is flat (TOON-friendly, matching the chats/qualia rows): the capture time
     (which doubles as the dereference handle into the same-day raw TOON, since the file
     is already per-day), the gist, the six-dial salience snapshot, and the source. Loads
     the existing file, dedups by (time, gist, source), sorts by time, atomic-writes.
+
+    `day`/`time` override the stamp: the willed path passes neither and rides `_now_wib()`
+    (it fires live); the auto path (the Stop hook) passes the turn's own day+time, so the
+    dereference handle points at the right window even when one hook fire spans several turns.
+
+    Capture stays generous: only literal (time, gist, source) duplicates collapse here. Any
+    near-duplicate collapsing (a run of the same spike, similar gists) is gate 2's job, where
+    real judgment reads the dereferenced windows. Cram is meant to survive here; it dies at gate 2.
 
     Best-effort: any failure returns False and never raises, so the caller's inner-state
     write is untouched.
@@ -60,9 +74,11 @@ def append_bookmark(gist: str, dials: dict | None = None, source: str = "willed"
         import toons
 
         dials = dials or {}
-        now = _now_wib()
-        day = now.strftime("%Y-%m-%d")
-        row = {"time": now.strftime("%H:%M:%S"), "gist": gist}
+        if not (day and time):
+            now = _now_wib()
+            day = now.strftime("%Y-%m-%d")
+            time = now.strftime("%H:%M:%S")
+        row = {"time": time, "gist": gist}
         for k in DIAL_KEYS:
             row[_SHORT[k]] = dials.get(k, "")
         row["source"] = source
@@ -77,6 +93,7 @@ def append_bookmark(gist: str, dials: dict | None = None, source: str = "willed"
                     rows[_key(r)] = r
             except Exception:
                 pass
+
         rows[_key(row)] = row
         ordered = sorted(rows.values(), key=lambda r: r.get("time", ""))
 
