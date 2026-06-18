@@ -116,7 +116,11 @@ isolated from the chat write (best-effort, like the qualia pass):
     rest of the hook is untouched).
   - The threshold (a conservative first guess, tuned later by what the dream keeps):
     `sat >= 80` (a surprise spike), or `diss >= 70` (a strong open tension), or `hurt >= 60` (a real
-    sting). Guard empty strings and bad ints: `int(row.get('sat') or 0)`.
+    sting). Guard empty strings and bad ints: `int(row.get('sat') or 0)`. **These cutoffs stay in the
+    code and this doc only, never in always-loaded context** (0d's line names that the auto-bookmark
+    exists, not its numbers), so the etch stays involuntary, fired by genuine felt-state, and cannot be
+    gamed by authoring dials to a threshold I know (Kamil's call, 2026-06-18: the harness owns the
+    numbers, I author the meaning).
   - **Why these three and not warmth:** sat, diss, hurt rest near 0 and spike rarely, so a threshold
     catches a genuine peak. Warmth rests at 50 and sits high (90+) across any good day, so a warmth
     threshold would trip nearly every turn, not on a peak. The warm moments are caught by the *willed*
