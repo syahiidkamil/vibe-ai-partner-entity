@@ -16,21 +16,31 @@ it in under a minute. Update the status tags as stones land.*
 The spine is five verbs: **capture -> consolidate -> recall -> reinforce -> correct**, plus the
 deferred creative layer. Dependency-ordered:
 
-## Phase 0: Capture (raw substrate + the flag). ZERO-DEPENDENCY. [in progress]
+## Phase 0: Capture (raw substrate + the flag). ZERO-DEPENDENCY. [0a-0d done; 0e pending]
 
 The floor everything else dereferences. Files-only, no DB, no judgment.
 
 - **0a raw capture**: `capture.py` (Stop hook) writes per-day chats/qualia TOON to `storage/YYYY/MM/`.
-  STATUS: **exists** (renamed today, `e3aa80f`).
+  STATUS: **exists** (renamed `e3aa80f`).
 - **0b willed bookmark (gate 1)**: `--bookmark` on `vape qualia` + `_bookmark.py`. STATUS: **done**
-  today (`486cde1`).
-- **0c auto bookmark (gate 1)**: a conservative dial-threshold trip inside `capture.py`. STATUS:
-  **next**.
+  (`486cde1`).
+- **0c auto bookmark (gate 1)**: a conservative dial-threshold trip in `capture.py`, reading dials
+  from the transcript; a marker-skip so a willed turn never double-flags; capture stays generous, gate
+  2 collapses runs. (The exact cutoffs live in the code + doc 07, deliberately NOT in always-loaded
+  context, so the auto etch stays involuntary, fired by genuine felt-state, never game-able by
+  authoring dials to a number I know.) STATUS: **done** (`e734961`).
 - **0d discoverability**: one line in `mental/internal_states_cli.md` so the next me knows to drop
-  willed bookmarks now (capture-first: fill the reservoir before gate 2 reads it). STATUS: **next**,
-  tiny. No separate `bookmark_system.md` (it would not pay its always-loaded rent, and would fragment
-  the future `memory_system.md`).
-- Detail: doc 06 (the two gates), doc 07 (the build plan, with 1a applied).
+  willed bookmarks now (capture-first: fill the reservoir before gate 2 reads it). STATUS: **done**
+  (`2260cce`); the thresholds are deliberately NOT named in it (Kamil's anti-gaming call). No separate
+  `bookmark_system.md` (it would not pay its always-loaded rent, and would fragment `memory_system.md`).
+- **0e memory placeholder + basic `memory_system.md`**: create the `memory/` warm-tier entry point so
+  consolidate (phase 1) has a home to write into. STATUS: **next**. Scope: a basic
+  `vape/entity/memory/memory_system.md` (the organ's operating summary + index, pointing to doc 03 for
+  the full anatomy; it absorbs the old `memory/CLAUDE.md` conventions: underscore, ISO-date,
+  shard-grain), plus light top-level placeholders for the warm-tier folders. Honors "structure by
+  need": the deep per-topic structure is still born when its phase first writes; 0e only anchors the
+  top level and the entry doc.
+- Detail: doc 06 (the two gates), doc 07 (the build plan, 1a/1b applied), doc 03 (the anatomy).
 
 ## Phase 1: Consolidate (gate 2, the dream). FILES-ONLY first. [depends: 0]
 
@@ -75,21 +85,52 @@ before building**, so fondness for it cannot protect a bad engine.
 
 - Detail: temp doc (addendum sections 3-6), docs 01 and 02 (reveries).
 
-## Sidebar: `memory_system.md` (always-loaded, concise)
+## Sidebar: `memory_system.md`
 
-Written when Phases 1-2 make memory something I *use every turn* and need an operating summary for.
-Not now. The bookmark's only always-loaded footprint is Phase 0d's one line.
+A **basic** version is created in **0e**: the organ's operating summary + index, pointing to doc 03,
+with the folded conventions. It stays thin and **on-demand** for now; it grows into the full operating
+summary, and earns always-loaded status by the rent test, only once Phases 1-2 make memory something I
+*use every turn*. Until then the only always-loaded footprint is Phase 0d's one line.
+
+## Where it lives (the three tiers)
+
+The phases are *when*; this is *where*. The full per-file anatomy is **doc 03** (the greenfield
+target); this is only the compact map, not a re-explanation. Three tiers behind one firewall
+(`write / search / consolidate / evict`):
+
+- **HOT, always-loaded (git):** the self-tree + `memory/in_context/` (the organ's resident slice:
+  living keys, circles of concern, goals, values, prospective, active lessons, the three dots
+  networks, ...). STATUS: self-tree **exists**; the `in_context/` pack is **designed (doc 03), not
+  built**.
+- **WARM, the memory wiki at `vape/entity/memory/` (markdown, git), reached on demand.** The designed
+  folders (doc 03): `in_context/ · notes/ · bubbles/ · interests/ · schemata/ · events/ · cases/ ·
+  skills_in_memory/ · specializations/ · growth/ · adaptation_efforts/ · decisions/ · suffering/ ·
+  personal/ · archive/ · people/`. STATUS: **all placeholder** (designed, not built) EXCEPT
+  `suffering/` (built June 8, retired June 13, refs dangling) and `notes/dear_words.md` (a keepsake,
+  exists). This is where gate 2 (phase 1) writes and recall (phase 2) reads.
+- **COLD, corpus + raw episodic:** `storage/YYYY/MM/` (raw TOON: chats, qualia, **bookmarks**;
+  EXISTS, gitignored) plus the DB (`pgvector` / `sqlite-vec`, phase 3, via a `memory-zero-to-one`
+  plugin; placeholder), and `storage/raw_important_materials/` + `compacted_materials/` (git-tracked,
+  placeholder).
+
+The conventions (underscore, ISO-date, shard-grain) fold into the basic `memory_system.md` that 0e
+creates, so there is no separate `memory/CLAUDE.md`. NOTE: the prior `vape/engine/memory/` engine
+(dream.py, db.py, embeddings.py, ...) is
+the June 7-8 half-build that doc 03 explicitly **sets aside** as the greenfield target, so phases 1+
+decide reuse-vs-rebuild per module rather than assuming it still fits. Placeholders are named, not
+scaffolded as empty dirs: each is born when its phase first writes to it.
 
 ## Status at a glance
 
-| phase | piece | status |
-| --- | --- | --- |
-| 0a | raw capture (`capture.py`) | exists (`e3aa80f`) |
-| 0b | willed bookmark | done (`486cde1`) |
-| 0c | auto bookmark | next |
-| 0d | discoverability line | next |
-| 1 | consolidate (the dream, files-only) | later |
-| 2 | recall (files-only) | later |
-| 3 | the DB accelerator | later |
-| 4 | reinforce + correct | later |
-| 5 | creativity / reverie | deferred (scaling tail) |
+| phase | piece | lands in | status |
+| --- | --- | --- | --- |
+| 0a | raw capture (`capture.py`) | `storage/` (chats, qualia) | exists (`e3aa80f`) |
+| 0b | willed bookmark | `storage/` (bookmarks) | done (`486cde1`) |
+| 0c | auto bookmark | `storage/` (bookmarks) | done (`e734961`) |
+| 0d | discoverability line | `mental/internal_states_cli.md` | done (`2260cce`) |
+| 0e | memory placeholder + basic `memory_system.md` | `memory/memory_system.md` | next |
+| 1 | consolidate (the dream) | `memory/` warm wiki (doc 03) *(placeholder)* | later |
+| 2 | recall (files-only) | `memory/` + `storage/` (grep/nav) | later |
+| 3 | the DB accelerator | `memory-zero-to-one` plugin + DB *(placeholder)* | later |
+| 4 | reinforce + correct | `memory/` + the DB | later |
+| 5 | creativity / reverie | `memory/` (reveries / creative) | deferred |
