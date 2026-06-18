@@ -23,6 +23,11 @@ from the turn's `vape qualia …` / `vape feeling …` tool calls (the authored 
 the six dials, the chosen face, and the pushed `felt=… cat=… dir=… obj=…` seeds joined).
 The injected <qualia> view isn't persisted in the transcript, but the authoring calls are.
 
+Bookmark stream: a turn whose dials spike past a conservative threshold (and was not already
+willed-bookmarked) auto-flags itself for later consolidation (gate 1 of memory). The write lives
+in engine.cli._bookmark; this hook only detects and forwards. Capture stays generous (run-collapsing
+is gate 2's job). Best-effort and isolated, like the qualia pass, so it can never break the chat write.
+
 Performance: a Stop hook, so it only needs the *latest* turns. A per-transcript byte
 cursor in `.chat_id_tracker.txt` (local) reads only new bytes since last fire — flat cost
 as the transcript grows. TOON via the in-process `toons` (Rust) dep. The hook needs only
@@ -39,6 +44,14 @@ import toons
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 DEST = os.path.join(ROOT, 'vape', 'entity', 'storage')
 TRACKER = os.path.join(os.path.dirname(__file__), '.chat_id_tracker.txt')
+
+# The bookmark writer lives in the engine package (installed via the `vape` entry point, so
+# importable off .venv's python). Guarded: if it cannot be imported, auto-bookmarks no-op and
+# the rest of the hook is untouched.
+try:
+    from engine.cli import _bookmark
+except Exception:
+    _bookmark = None
 
 CMD_RE = re.compile(r'<command-name>|<command-message>|<local-command|<command-args>'
                     r'|<system-reminder>|<task-notification>|<task-id>|<post-tool|<user-prompt-submit')
@@ -83,14 +96,18 @@ def spokeof(c):
                 out += SPEAK_RE.findall((b.get('input') or {}).get('command', '') or '')
     return out
 
+def _cmd_blob(c):
+    """Concatenate a turn's tool-call command strings (where the vape commands live)."""
+    if not isinstance(c, list):
+        return ""
+    return "\n".join((b.get('input') or {}).get('command', '') or ''
+                     for b in c
+                     if isinstance(b, dict) and b.get('type') == 'tool_use')
+
 def qualiaof(c):
     """Authored felt-state for one assistant turn, or None. Reads the turn's tool-call
     command strings for `vape qualia` dials, pushed seeds, and the chosen face."""
-    if not isinstance(c, list):
-        return None
-    blob = "\n".join((b.get('input') or {}).get('command', '') or ''
-                     for b in c
-                     if isinstance(b, dict) and b.get('type') == 'tool_use')
+    blob = _cmd_blob(c)
     if 'vape qualia' not in blob and 'vape feeling' not in blob:
         return None
     dials = {k: v for k, v in DIAL_RE.findall(blob)}
@@ -108,6 +125,76 @@ def qualiaof(c):
         'face': faces[-1] if faces else '',
         'seeds': ' || '.join(seeds),
     }
+
+
+# --- Auto-bookmark (gate 1, the involuntary etch): a turn whose dials spike past a conservative
+# threshold flags itself for later consolidation. The write lives in engine.cli._bookmark; capture
+# stays generous (run-collapsing is gate 2's job). Marker-skip here: a turn that already willed a
+# --bookmark is not auto-flagged (the deliberate channel fired, so the reflex flag is pure noise).
+AUTO_THRESHOLDS = (('sat', 80), ('diss', 70), ('hurt', 60))
+_DIAL_LABEL = {'sat': 'saturation', 'diss': 'dissonance', 'hurt': 'hurt'}
+_SHORT_TO_LONG = {'sat': 'info_value_saturation', 'talk': 'talkativeness', 'warmth': 'warmth',
+                  'hurt': 'hurt', 'diss': 'dissonance', 'mastery': 'mastery'}
+
+
+def _auto_trips(rec):
+    """The (label, value) pairs whose dial is at or over its threshold; empty if none."""
+    out = []
+    for key, thr in AUTO_THRESHOLDS:
+        try:
+            v = int(rec.get(key) or 0)
+        except (ValueError, TypeError):
+            continue
+        if v >= thr:
+            out.append((_DIAL_LABEL[key], v))
+    return out
+
+
+def _auto_gist(trips):
+    """e.g. 'auto: dissonance 78': names which dial(s) tripped and their value -- a one-line
+    triage hint for gate 2, which dereferences it to the real window."""
+    return "auto: " + ", ".join('%s %d' % (label, v) for label, v in trips)
+
+
+def _long_dials(rec):
+    """The qualia row's short keys mapped back to the long keys append_bookmark expects."""
+    return {long: rec.get(short, '') for short, long in _SHORT_TO_LONG.items()}
+
+
+def extract_auto_bookmarks(lines):
+    """Per assistant turn: if its dials trip a threshold AND it did not already willed a
+    --bookmark, yield (day, time, gist, long_dials). Threshold + marker-skip only; capture is
+    generous, so a run of the same spike yields a flag per turn (gate 2 collapses them)."""
+    out = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            o = json.loads(line)
+        except Exception:
+            continue
+        if o.get('type') != 'assistant':
+            continue
+        if o.get('isSidechain') is True or o.get('isMeta') is True:
+            continue
+        ts = o.get('timestamp')
+        if not ts:
+            continue
+        day = wibday(ts)
+        if not day:
+            continue
+        content = (o.get('message') or {}).get('content')
+        rec = qualiaof(content)
+        if not rec:
+            continue
+        trips = _auto_trips(rec)
+        if not trips:
+            continue
+        if '--bookmark' in _cmd_blob(content):
+            continue  # willed already flagged this turn
+        out.append((day, wibtime(ts), _auto_gist(trips), _long_dials(rec)))
+    return out
 
 
 def extract_lines(lines):
@@ -262,12 +349,19 @@ def merge_qualia_day(day, new_rows):
 
 
 def _backup(lines):
-    """Chat FIRST (unguarded), then qualia (isolated so it can never break the chat)."""
+    """Chat FIRST (unguarded), then qualia, then auto-bookmarks -- each later pass isolated
+    so it can never break or delay an earlier one (the chat write is sacred)."""
     for day, rows in extract_lines(lines).items():
         merge_day(day, rows)
     try:
         for day, qrows in extract_qualia(lines).items():
             merge_qualia_day(day, qrows)
+    except Exception:
+        pass
+    try:
+        if _bookmark is not None:
+            for day, t, gist, dials in extract_auto_bookmarks(lines):
+                _bookmark.append_bookmark(gist, dials, "auto", day=day, time=t)
     except Exception:
         pass
 

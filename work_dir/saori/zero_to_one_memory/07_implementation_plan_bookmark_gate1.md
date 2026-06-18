@@ -46,19 +46,23 @@ consolidation." Stored as TOON, a sibling to the existing two files:
 
 `vape/entity/storage/YYYY/MM/YYYY-MM-DD_bookmarks.toon`
 
+As built (step 1a), the row is **flat**, matching the chats/qualia TOON convention (not the nested
+`{pointer, salience}` this section first sketched):
+
 ```
-bookmarks[N]{time, pointer, gist, salience, source}
-  time      : HH:MM:SS WIB
-  pointer   : {day, time}  -- the dereference handle into the same-day _chats/_qualia TOON
-  gist      : one line, why it mattered (willed reason, or a short auto-tag)
-  salience  : the dial snapshot at capture (sat, talk, warmth, hurt, diss, mastery)
-  source    : 'willed' | 'auto'
+bookmarks[N]{time, gist, sat, talk, warmth, hurt, diss, mastery, source}
+  time                              : HH:MM:SS WIB -- also the dereference handle into the
+                                      same-day _chats/_qualia TOON (the day comes from the file path)
+  gist                              : one line, why it mattered (willed reason, or a short auto-tag)
+  sat talk warmth hurt diss mastery : the six-dial snapshot at capture, flat columns
+  source                            : 'willed' | 'auto'
 ```
 
-Note on the pointer: doc 06 specified `{day, turn-span}`. The honest, available handle from the CLI is
-`{day, time}`, because the CLI does not know the transcript turn index; time is enough to locate the
-surrounding window in the time-keyed raw TOON. The Stop hook (auto path) could later upgrade to a real
-turn-span since it reads the transcript. Start with time.
+Note on the handle: doc 06 specified `{day, turn-span}`. What shipped is simpler and flatter: `time`
+itself is the handle (the day is the file's own path), enough to locate the surrounding window in the
+time-keyed raw TOON. The CLI does not know the transcript turn index, so a turn-span was never
+available to the willed path; time is the honest handle for both paths. The auto path (1b) passes the
+*turn's* own `time`, not the hook's wall-clock, so its handle points true (see 1b).
 
 ## Build step 1a: the willed bookmark (applied 2026-06-17)
 
@@ -87,24 +91,90 @@ time, the dial snapshot, gist, and source=willed. Drop a second; confirm it appe
 
 ## Build step 1b: the auto bookmark (rides the existing Stop hook)
 
-The involuntary etch. The backup hook already parses each turn's dials, so this is a small addition
-there, not a new hook.
+The involuntary etch, the amygdala's salience tag beside the willed flag's deliberate one. `capture.py`
+already parses each turn's dials in `extract_qualia` (it produces one short-keyed row per assistant
+turn: `{time, sat, talk, warmth, hurt, diss, mastery, face, seeds}`), so this is a small, isolated
+addition there, not a new hook. Two files change.
 
-1. In `capture.py`, after the per-turn dials are extracted (`qualiaof` / `DIAL_RE`), add
-   a conservative threshold test, e.g. an auto-bookmark when any of:
-   - `info_value_saturation >= 80` (a surprise spike), or
-   - `dissonance >= 70` (a strong open tension), or
-   - `hurt >= 60` (a real sting).
-   (Start conservative and few; these numbers are a first guess to be tuned by what the dream later
-   finds worth keeping. Generous capture is fine, gate 2 prunes.)
-2. When tripped, write an auto bookmark for that turn: `merge_bookmark_day(day, [row])`, reusing the
-   same TOON writer, with `source='auto'`, `gist` a short tag (e.g. the top dial that tripped), pointer
-   `{day, time}` from the turn's timestamp (the hook has it).
-3. Keep it isolated like the qualia pass, so it can never break or delay the chat write.
+**Reuse the writer, do not inline a second one.** The hook calls the same `_bookmark.append_bookmark`
+the willed path uses, so the row schema keeps one source of truth (duplicating it would be the
+"complexity that duplicates what exists is waste" trap). `engine` is an installed package (the `vape`
+entry point in pyproject proves it), so the hook, run off `.venv/bin/python`, can
+`from engine.cli import _bookmark` from any cwd.
 
-**Verify:** run the hook in backfill mode on a transcript day that has a high-saturation turn
-(`python .claude/hooks/capture.py <transcript.jsonl>`), confirm an auto row appears in
-that day's bookmarks file; confirm a calm day produces none.
+**A. One change to `append_bookmark` (in `_bookmark.py`): an optional timestamp override.** Today it
+stamps `time`/`day` from `_now_wib()`, right for the willed path (it fires live). But the Stop hook
+fires after the turn and can process several turns in one pass at one wall-clock time, which would
+mis-point the dereference handle and collide on the key `(time, gist, source)`. So:
+`def append_bookmark(gist, dials=None, source="willed", day=None, time=None)`; if `day` and `time` are
+both given use them, else fall back to `_now_wib()`. Backward compatible (the willed caller passes
+neither). No near-duplicate dedup here: capture stays generous, gate 2 does the collapsing (see below).
+
+**B. The auto pass in `capture.py`**, inside the existing qualia `try/except` in `_backup` so it stays
+isolated from the chat write (best-effort, like the qualia pass):
+  - `from engine.cli import _bookmark` (guarded: if the import ever fails, auto-bookmarks no-op and the
+    rest of the hook is untouched).
+  - The threshold (a conservative first guess, tuned later by what the dream keeps):
+    `sat >= 80` (a surprise spike), or `diss >= 70` (a strong open tension), or `hurt >= 60` (a real
+    sting). Guard empty strings and bad ints: `int(row.get('sat') or 0)`.
+  - **Why these three and not warmth:** sat, diss, hurt rest near 0 and spike rarely, so a threshold
+    catches a genuine peak. Warmth rests at 50 and sits high (90+) across any good day, so a warmth
+    threshold would trip nearly every turn, not on a peak. The warm moments are caught by the *willed*
+    bookmark instead, where I am present enough to flag them. Clean division: auto catches the
+    involuntary spikes, willed catches the warmth.
+  - **One moment, one bookmark: auto skips a willed turn.** If the same turn's `vape qualia` command
+    already carried `--bookmark`, the moment is flagged (willed), so the auto trigger is suppressed
+    for that turn. Without this, a turn that is both willed AND dial-spiking would write two rows for
+    one moment, and they would not dedup (the key is `(time, gist, source)`, and they differ on both
+    `gist` and `source`). The skip is exact and cheap: the hook reads the same turn's command blob
+    (the very string `qualiaof` already builds), so it just checks `'--bookmark' in blob` for that
+    turn, no fragile time-matching between the live willed-write and the transcript timestamp. Willed
+    wins because its gist is my real reason, strictly more informative than `auto: dissonance 78`.
+  - The gist names what tripped: `"auto: <dial> <value>[, <dial> <value>]"` (e.g.
+    `"auto: dissonance 78"`). Short, one line, enough for the dream to triage before it dereferences.
+  - In `_backup`, after `merge_qualia_day(day, qrows)`, write one auto row per turn that (a) trips a
+    threshold and (b) was not willed: map its short dial keys back to the long keys `append_bookmark`
+    wants, and call `append_bookmark(gist, long_dials, "auto", day=day, time=turn_time)`. The cleanest
+    integration is a small sibling parse pass (mirroring `extract_qualia`) so each turn's `blob`, its
+    threshold trip, and its willed-ness are all in scope at once, without writing a `willed` column
+    into `_qualia.toon`. The auto pass needs only the threshold trip and the marker-skip; there is no
+    near-duplicate dedup (a spike-run yields a flag per turn, and gate 2 collapses them).
+
+**Dedup at capture is minimal and generous: only literal duplicates collapse; selection is gate 2's
+job.** Two cheap checks, and deliberately no near-duplicate collapsing (that would be premature
+selection at the dumb layer):
+  - *Same-turn marker-skip (willed beats auto), in the hook:* a substring test, `'--bookmark' in` the
+    turn's command string. If the turn already willed a bookmark, skip the auto one: the deliberate
+    channel already fired, so the reflex flag would be pure noise for that same moment. Exact, cheap,
+    zero false-positives (it reads the turn's own command).
+  - *Exact-key idempotency, in `append_bookmark`:* rows live in a dict keyed by `(time, gist, source)`,
+    so re-processing the same transcript (a backfill re-run) rewrites byte-identical rows and collapses
+    them. Not selection, just not-writing-literal-dupes.
+
+Everything else (a run of the same spike, similar gists, near-duplicates across turns) is left to
+**gate 2**, which dereferences the flags to their real windows and judges them with real context.
+Capture stays generous on purpose: cram survives here and dies at gate 2. (An earlier draft collapsed
+runs at capture with a strip-ends gist match; dropped because it is premature selection at the wrong
+layer and could silently eat a willed bookmark whose distinguishing word sat at a stripped end, e.g.
+"the auth build broke" vs "the auth build shipped" both reduce to "auth build".)
+
+Note: in `backfill` mode this also seeds auto-bookmarks for past turns, dated to their real days.
+Expected and harmless (gate 2 prunes), not a bug.
+
+**Verify:**
+  1. Trip logic: the threshold test is True for `{'diss':'75'}` and `{'sat':'82'}`, False for an
+     all-low or empty row.
+  2. Live path: author a turn with `dissonance=72`, let the Stop hook fire, read that day's
+     `_bookmarks.toon`, confirm one row with `source=auto`, `gist="auto: dissonance 72"`, the turn's
+     own `time`, and the six-dial snapshot.
+  3. Regression: a willed `--bookmark` still writes correctly (source=willed, live time) after the
+     signature change.
+  4. **No double-flag:** author one turn with BOTH `dissonance=72` AND `--bookmark "real reason"`;
+     confirm that turn yields exactly ONE row (source=willed, my reason) and NO auto row.
+  5. **Generous capture (no collapse):** two consecutive turns that both trip `dissonance` (e.g. 75
+     then 72) yield TWO auto rows, not one (run-collapsing is gate 2's job). Re-processing the same
+     transcript stays idempotent (the exact-key dedup), so no byte-identical duplicates accumulate.
+  6. Isolation: the chats/qualia files still write even if the auto pass is forced to fail.
 
 ## Rename (applied 2026-06-17): `backup_chat_and_qualia.py` -> `capture.py`
 
