@@ -7,13 +7,14 @@
 //!   (B) MAX LINE WIDTH 100   — every line in a capped file must be <= 100
 //!       Unicode scalar values wide (chars().count(), not bytes).
 //!   (C) THE SELF/MEMORY WALL — CLAUDE.md must not have an @-import line that
-//!       references "memory/" (a line containing both "@" and "memory/").
+//!       references "memory/", EXCEPT "memory/in_context/" (the always-loaded
+//!       resident slice, wired on purpose). Any other "@" + "memory/" line fails.
 //!   (D) GRAPH WARN           — self/05_relational_self/core_entity_relation_graph.md with more
 //!       than 7 entity entries emits a WARNING (not a failure).
 //!
-//! memory/**, README.md, and lint/** are exempt from (A) and (B); they are
-//! simply not in the caps table below. A missing capped file is a violation
-//! of kind "missing".
+//! memory/** (except memory/in_context/), README.md, and lint/** are exempt from
+//! (A) and (B); they are simply not in the caps table below. A missing capped file
+//! is a violation of kind "missing".
 //!
 //! Output format (exact):
 //!   VIOLATION <kind> <relpath>: <detail>   where kind is lines|width|wall|missing
@@ -41,7 +42,24 @@ const CORE_GRAPH: &str = "self/05_relational_self/core_entity_relation_graph.md"
 /// Hardcoded on purpose — this is the contract the entity tree is held to.
 /// Width check (B) applies to every file listed here.
 const CAPS: &[(&str, usize)] = &[
-    ("CLAUDE.md", 42),
+    ("CLAUDE.md", 65),
+    // memory/in_context/: the always-loaded resident slice, the only memory/ subtree in caps.
+    // Unlike the rest of memory/, these ride every session via @-imports in CLAUDE.md, so they
+    // are held to the same line + width contract as the self-tree. Caps follow doc 03.
+    ("memory/in_context/living_keys_and_index_to_memories.md", 60),
+    ("memory/in_context/circles_of_concern_attention_and_influence.md", 40),
+    ("memory/in_context/current_goals_and_aspirations.md", 30),
+    ("memory/in_context/current_values_and_ideals.md", 30),
+    ("memory/in_context/prospective.md", 40),
+    ("memory/in_context/active_lessons.md", 30),
+    ("memory/in_context/recent_self_critic_and_introspection.md", 30),
+    ("memory/in_context/hourly_and_daily_routine.md", 40),
+    ("memory/in_context/my_peculiar_habits.md", 35),
+    ("memory/in_context/useful_abstraction_and_generalization.md", 40),
+    ("memory/in_context/important_chronological_world_events.md", 40),
+    ("memory/in_context/large_context_dots_cognitive_network.md", 500),
+    ("memory/in_context/large_context_dots_affective_network.md", 300),
+    ("memory/in_context/large_context_dots_partner_network.md", 400),
     ("self/04_values/my_constitution.md", 25),
     ("self/04_values/self_interest.md", 85),
     ("self/04_values/alive.md", 45),
@@ -200,7 +218,7 @@ fn check_memory_wall(root: &Path, violations: &mut Vec<Violation>) {
     };
 
     for (idx, line) in contents.lines().enumerate() {
-        if line.contains('@') && line.contains("memory/") {
+        if line.contains('@') && line.contains("memory/") && !line.contains("memory/in_context/") {
             let line_no = idx + 1;
             violations.push(Violation {
                 kind: Kind::Wall,
