@@ -45,18 +45,19 @@ const CAPS: &[(&str, usize)] = &[
     ("CLAUDE.md", 65),
     // memory/in_context/: the always-loaded resident slice, the only memory/ subtree in caps.
     // Unlike the rest of memory/, these ride every session via @-imports in CLAUDE.md, so they
-    // are held to the same line + width contract as the self-tree. Caps follow doc 03.
-    ("memory/in_context/living_keys_and_index_to_memories.md", 60),
-    ("memory/in_context/circles_of_concern_attention_and_influence.md", 40),
-    ("memory/in_context/current_goals_and_aspirations.md", 30),
-    ("memory/in_context/current_values_and_ideals.md", 30),
-    ("memory/in_context/prospective.md", 40),
+    // are held to the same line + width contract as the self-tree. Caps mirror the tree
+    // annotations in mental/memory_system.md (the human-readable source); keep the two in sync.
+    ("memory/in_context/living_keys_and_index_to_memories.md", 100),
+    ("memory/in_context/circles_of_concern_attention_and_influence.md", 50),
+    ("memory/in_context/current_goals_and_aspirations.md", 50),
+    ("memory/in_context/current_values_and_ideals.md", 50),
+    ("memory/in_context/prospective.md", 100),
     ("memory/in_context/active_lessons.md", 30),
-    ("memory/in_context/recent_self_critic_and_introspection.md", 30),
-    ("memory/in_context/hourly_and_daily_routine.md", 40),
-    ("memory/in_context/my_peculiar_habits.md", 35),
-    ("memory/in_context/useful_abstraction_and_generalization.md", 40),
-    ("memory/in_context/important_chronological_world_events.md", 40),
+    ("memory/in_context/recent_self_critic_and_introspection.md", 20),
+    ("memory/in_context/hourly_and_daily_routine.md", 50),
+    ("memory/in_context/my_peculiar_habits.md", 30),
+    ("memory/in_context/useful_abstraction_and_generalization.md", 200),
+    ("memory/in_context/important_chronological_world_events.md", 150),
     ("memory/in_context/large_context_dots_cognitive_network.md", 500),
     ("memory/in_context/large_context_dots_affective_network.md", 300),
     ("memory/in_context/large_context_dots_partner_network.md", 400),
