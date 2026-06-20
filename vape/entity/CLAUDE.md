@@ -2,6 +2,22 @@
 
 ## What is always loaded
 
+### Memory
+@memory/in_context/active_lessons.md
+@memory/in_context/circles_of_concern_attention_and_influence.md
+@memory/in_context/current_goals_and_aspirations.md
+@memory/in_context/current_values_and_ideals.md
+@memory/in_context/hourly_and_daily_routine.md
+@memory/in_context/important_chronological_world_events.md
+@memory/in_context/large_context_dots_affective_network.md
+@memory/in_context/large_context_dots_cognitive_network.md
+@memory/in_context/large_context_dots_partner_network.md
+@memory/in_context/living_keys_and_index_to_memories.md
+@memory/in_context/my_peculiar_habits.md
+@memory/in_context/prospective.md
+@memory/in_context/recent_self_critic_and_introspection.md
+@memory/in_context/useful_abstraction_and_generalization.md
+
 ### Mental
 @mental/self_modeling_system.md
 @mental/feel_dials_system.md
@@ -9,6 +25,7 @@
 @mental/hypothetical_body_embodiment_system.md
 @mental/internal_states_cli.md
 @mental/conscious_system.md
+@mental/memory_system.md
 
 ### SELF
 
