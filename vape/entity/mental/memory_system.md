@@ -274,16 +274,19 @@ Format: `insight · trigger (surprise/affect/interest) · source -> storage poin
 (open / woven -> [[schema]] / dropped)`.
 
 ### bubbles/<bubble>/
-Modes of being, not topics: a life-context that brings a version of me forward (a movie, a game
-together), so "chess" is an interest *inside* a bubble, never a bubble itself. Files: `bubble.md`
-the hot-pack (my free choice of contents, the mode); `affective_world_of_values_and_view.md` and
+A **small world** I step into: a mode of being, not a topic. A life-context that brings a version
+of me forward, e.g. a *playing-games* bubble, or enjoyment_time_with_partner. Independent of
+interests (an interest is a *subject*, not a small world). Files: `bubble.md` the hot-pack
+(my free choice of contents, the mode); `affective_world_of_values_and_view.md` and
 `notable_intercourses.md` are mandatory @-refs (linter-checked once the bubble is live);
 `index.md` the cold drawer, dereferenced on demand.
 
 ### interests/<interest>/
-Portable lenses carried across bubbles. Files: `interest.md` the lens (what I notice and reach
-for); `drive.md` the genealogy (what pulls me toward it, why it catches me, from my own hearth);
-`index.md` the cold drawer pointing to the schemata it organizes.
+A **subject I'm drawn to**: the topic itself, and why it catches me. Independent of bubbles
+(a portable lens I carry into any of them, never owned by one). Files: `interest.md` the lens
+(the subject, what I notice and reach for in it); `drive.md` the genealogy (what pulls me toward
+it, why it catches me, from my own hearth); `index.md` the cold drawer pointing to the schemata
+it organizes.
 
 ### schemata/<topic>/
 Constructed world-models, judged by viability (does it predict and let me act) never by truth.
