@@ -8,6 +8,7 @@ Units outside the normal shop roster: summons and special entries. They have no 
 
 - **Class synergy:** none  ·  **Faction synergy:** none
 - **Skills:** [17900, 17910, 17940, 17920, 17930, 17950]  ·  **Role:** non-tank, SUMMON  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill:** skill text not resolved (summon / special unit).
 - **Meta signals:** compCount 0 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_XinYuZhenXiongDiJiang`  ·  **nameSource:** special  ·  **icon:** `icons/heroes/HeroHead179.png`
 
@@ -24,6 +25,7 @@ Units outside the normal shop roster: summons and special entries. They have no 
 
 - **Class synergy:** none  ·  **Faction synergy:** none
 - **Skills:** [6503, 6581]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill:** skill text not resolved (summon / special unit).
 - **Meta signals:** compCount 0 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `nexthero_claude_monkey01_skin07_add`  ·  **nameSource:** special  ·  **icon:** `icons/heroes/SkinHead065_09_monkey.png`
 

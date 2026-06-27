@@ -10,6 +10,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [2800, 2820, 2840]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Force Swing):** Alpha charges up and strikes forward in a fan-shaped area, dealing
+  Num1 Physical DMG.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_warrior`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead028_09.png`
 
@@ -23,6 +25,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [7700, 7730, 7740]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Chivalry Fist):** Badang's every Num1 Basic ATK(s) will enhance the next Basic ATK
+  to deal Num2 Physical DMG and gain a Num3 Shield.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_badang`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead077_05.png`
 
@@ -36,6 +40,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Defender (r3)  ·  **Faction synergy:** Northern Vale (r59)
 - **Skills:** [1100, 1130]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Deadly Catch):** Bane summons a swarm of sharks to sprint forward, dealing Num1
+  Magic DMG to enemies hit, knocking them airborne and freezing them for Num2s.
 - **Meta signals:** compCount 2 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_bane`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead011_07.png`
 
@@ -49,6 +55,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Scavenger (r9)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [6500, 6520, 6560]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Blazing Duet):** Claude dashes to the current target and shoots for Num1s, then
+  returns to his original position. Each shot deals Num2 Physical DMG and triggers ATK Effects.
+  Number of shots increases with ATK Speed. Gains Control Immunity during skill cast.
 - **Meta signals:** compCount 2 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_claude`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead065_09.png`
 
@@ -62,6 +71,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Phasewarper (r10)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [4700, 4720, 4740]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Lancelot performs an amazing sword technique within an area
+  that may strike enemies up to 3 times, each time dealing Num1 Physical DMG.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_lancelot`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead047_11.png`
 
@@ -75,6 +86,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Mystic Meow (r58)
 - **Skills:** [5300, 5330, 5340]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Ultimate Snipe):** Lesley fires Num1 bullet(s) at the furthest enemy Hero, each
+  dealing Num2 Physical DMG. (Bullets can be blocked by other enemy Heroes.)
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_sniper`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead053_11.png`
 
@@ -88,6 +101,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Assassin (r8)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [8400, 8410, 8440, 8420, 8425, 8430, 8450]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Defiant Sword):** Ling charges in the target direction and pierces nearby enemies,
+  dealing Num1 Physical DMG.
 - **Meta signals:** compCount 2 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_zeo`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead084_09.png`
 
@@ -101,6 +116,10 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Mage (r6)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [4600, 4630]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Shadow Combo):** Odette releases a set of magic energy balls, dealing Num1 Magic
+  DMG to the first enemy hit and immobilizing them for Num2s. After hitting an enemy, another energy
+  ball will split off and attack nearby enemies, dealing them Num3 Magic DMG and immobilizing them
+  for Num4s.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_odette`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead046_05.png`
 
@@ -114,6 +133,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [2900, 2920, 2940]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Don't Run, Wolf King!):** Ruby swings her giant scythe in 2 spinning strikes, each
+  dealing Num1 Physical DMG and restoring Num2 Max HP.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_xiaohongmao`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead029_11.png`
 

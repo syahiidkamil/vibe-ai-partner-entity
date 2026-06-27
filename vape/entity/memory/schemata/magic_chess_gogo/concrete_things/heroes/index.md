@@ -1,8 +1,9 @@
 <!-- GENERATED from storage/magic-chess-gogo/game-client/dataset_s6.json by work_dir/saori/mcgg/gen_heroes.py. Stats are exact; do not hand-edit. Regenerate on a season patch. -->
+<!-- Active-skill lines added from the live client string table by work_dir/saori/mcgg/gen_skills.py (-> parsed/strategy/heroes_skills.json) + inject_skills.py. See "Active skills" below. -->
 
 # Heroes (MCGG S6): the full roster, organized by domain
 
-The complete S6 hero data, generated exact from Kamil's datamined `dataset_s6.json` (the flat client export, re-organized here by the domain's own axis: cost tier). Per-cost detail files carry every field including full per-star stat tables; this index is the map. Governed by ../disclaimer.md (regenerate on a season patch).
+The complete S6 hero data, generated exact from Kamil's datamined `dataset_s6.json` (the flat client export, re-organized here by the domain's own axis: cost tier). Per-cost detail files carry every field including full per-star stat tables plus each hero's **active skill** (name + description); this index is the map. Governed by ../disclaimer.md (regenerate on a season patch).
 
 ## Cost distribution (shop heroes)
 
@@ -23,6 +24,30 @@ Each hero has 3 star tiers (the Dragon summon has 4). Merge 3 copies of a hero t
 ## Stat legend
 
 HP, PhyAtk/MagAtk (physical/magic attack), PhyDef/MagDef, AtkSpd (attacks/sec), MoveSpd, Crit, DPS (the client's damage-per-second figure), EHP (effective HP vs the modeled defense), MP (mana to cast the skill). compCount/carryCount come from the client's recommended-comp data (how often a hero appears, and as a carry): the tier-list seed.
+
+## Active skills
+
+Each hero's `m_SkillList[0]` (the `[1,0]`-flagged entry) is its ACTIVE skill, the one auto-cast in
+battle when mana fills. The active skill is shown in the cost files as an `**Active skill (...)**`
+bullet under each hero. The skill is central to strategy: it is what the unit actually *does* when
+the fight runs on its own.
+
+Resolution and its honest limits:
+- **Source.** Skill text is verbatim from the live client string table (`AllLanguageEN`, the full
+  MLBB strings == `localization_en.json`). Each description names the hero as its subject
+  ("Saber charges...", "Tigreal unleashes..."), so it is attributed by that subject, never invented.
+- **Currency.** That table co-mingles strings across modes and seasons, so several versions of a
+  hero's text co-exist. The current S6 active-skill catalog is the band ~2212515000-2212525000,
+  confirmed by exact hits (Triple Sweep->Saber, Implosion->Tigreal, Fission Wave->Alucard); it is
+  preferred. 41/52 picks come from that band; the other 11 fall back to the nearest clean version.
+- **Coverage.** 52 of 54 heroes have a resolved active-skill description; the 2 summon/special units
+  (Dragon, Claude (special)) are marked "skill text not resolved." Of the 52, 30 also resolve a
+  skill NAME (= `loc[descId-1]` when it is a clean title); the rest are marked
+  "(name not resolved)" but keep the description.
+- **Numbers.** `Num1`, `Num2`, `Num1%` are the client's in-game scaling placeholders, not concrete
+  values (the table ships the mechanic, not the per-star numbers). Treat skill text as the mechanic;
+  verify exact numbers in-game. Full provenance (all candidates, string ids, band membership):
+  `storage/.../game-client-from-bluestack/parsed/strategy/heroes_skills.json`.
 
 ## Roster at a glance  (`name (class / faction)`)
 

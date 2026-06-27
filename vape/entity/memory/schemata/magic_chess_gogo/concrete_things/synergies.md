@@ -1,26 +1,28 @@
 # Synergies — MCGG S6 (concrete rung)
 
-The 20 team-bonus groups ("Sort"/relations). Member rosters and activation tiers are solid ground
-truth from `dataset_s6.json`. **Names were resolved on 2026-06-27** from in-game UI screenshots
-matched to the icons (the client's own `name` field is null for every synergy). Per-tier effect
-TEXT is still not in the client (templated formula codes); only the activation count and a `dps`
-scaling value are stored. Each synergy's icon, renamed by name, lives in `synergy_icons/`.
+The 20 team-bonus groups ("Sort"/relations; "Fetter" 羁绊 in the client). Member rosters and
+activation tiers are solid ground truth from the datamine. **Names confirmed first-party on
+2026-06-28** from the live client (v1.2.88.302.2, pulled from BlueStacks and parsed): the
+localization name-bands, each synergy's `FX_Fetter_<pinyin>` effect name, and `m_Sort` membership
+all agree. Per-tier effect *prose* lives in the localization but is not cleanly keyable per tier;
+the client stores the structured tier data (activation `need`, `skillId`, a `dps` scaling value,
+and templated value-formulas). Each synergy's icon, renamed by name, lives in `synergy_icons/`.
 
 **Axis.** class = relId 1-10 (role/archetype, RelationType 2). faction = relId 50-59 (origin,
 RelationType 1). A hero usually belongs to one class and one faction.
 
-**Name confidence.** All 20 names are resolved (high confidence: icon match calibrated against the
-four anchors Defender/Marksman/Mage/Assassin, plus member-roster cross-check). The last two,
-**Scavenger (r9)** and **Phasewarper (r10)**, came from a second UI screenshot and are corroborated
-by the comp guides (Scavenger is the economy synergy; Phasewarper's lineups name Julian and Clint,
-both r10).
+**Name provenance (first-party).** All 20 resolved three independent ways from the live client:
+(1) the faction localization band is a clean run, `loc[2012764216 + (relId-50)]` for r50-r59
+(classes from `loc[493757747+]`); (2) each synergy's `FX_Fetter_<pinyin>` matches its name
+(e.g. r5 SheShou 射手 = Marksman, r51 QuMoShi 驱魔师 = Exorcist, r54 ZhenLong 真龙 = Dragoncaller);
+(3) `m_Sort` membership composition. r8 (Assassin) and r10 (Phasewarper) had stale localization
+bands, resolved via the FX pinyin (shashou, ChuanSuoZhe) plus all-assassin / all-phaser membership.
 
-**Correction to the datamine `plan.md` (flagged for Kamil to confirm).** plan.md labeled relId 51
-as "Dragon Altar / Dragoncaller" and tied the Dragon summon (id 179) to it. The S6 icon and the
-comp-guide rosters disagree: **relId 51 = Exorcist** (a torii-gate icon), and **relId 54 =
-Dragoncaller** (the dragon icon; its members Balmond, Terizla, Gusion all match the comp guides'
-Dragoncaller lineups). So the Dragon is summoned by **r54**, not r51. High confidence, but it
-contradicts the doc, so confirm before I propagate it into the hero roster and the disclaimer.
+**Resolved: the datamine `plan.md` was wrong on 51/54.** plan.md labeled relId 51 as
+"Dragoncaller" and tied the Dragon summon (id 179) to it. First-party client data settles it the
+other way: **relId 51 = Exorcist** (FX `FX_Fetter_QuMoShi`, 驱魔师), **relId 54 = Dragoncaller**
+(FX `FX_Fetter_ZhenLong`, 真龙; the dragon faction, members Balmond/Terizla/Gusion). The Dragon is
+summoned by **r54**, not r51. Confirmed, no longer flagged.
 
 ## Class synergies (relId 1-10) — `rN Name (activation tiers): members`
 - **r1 Bruiser** (2/4/6): Gatotkaca, Belerick, Badang, Dyrroth, Masha, Yu Zhong
@@ -47,10 +49,40 @@ contradicts the doc, so confirm before I propagate it into the hero roster and t
 - **r58 Mystic Meow** (2): Lesley, Silvanna, Julian
 - **r59 Northern Vale** (2/3): Bane, Luo Yi, Joy
 
+## Per-tier effect layer (DSL cracked 2026-06-28)
+
+Each synergy tier carries value-formula tokens (`m_NumDescribe`): a small DSL that fills the
+`<Num>` / `<%Num>` placeholders in the effect text. Full spec in the datamine
+(`work_dir/saori/mcgg/FORMULA_DSL.md`); structured per-tier output (all 20, every token parsed)
+in `parsed/strategy/resolved_effects.json`.
+
+- **Token:** `[type|effectId|param|unit|expr]`. type 2 = MCEffect value, 3 = trigger chance,
+  105010/105011 = count-scaled; unit is %/flat/raw; expr e.g. `N*0.01` = raw stored x100 -> percent.
+- **Validated:** `N*0.01` matches the item convention (stored 2000 -> 20%; Inspire = 20/25/30/40%).
+- **Numbers stay templated.** The raw `N` lives in MCEffect under a composite id the client maps in
+  battle logic, not a flat key (verified: sibling ids absent from every table). So the effect
+  *shape* is certain; the exact per-tier percentages need the IL2CPP read-program.
+- Effect-mechanic text below is a localization candidate (text is hash-keyed; mapping unverified).
+
+Effect shape per synergy (Num order; chance = a proc %, value = a scaling %, flat = absolute):
+- **r1 Bruiser**: chance% + value%. **r2 Dauntless / r10 Phasewarper / r54 Dragoncaller**: value%s.
+- **r3 Defender / r7 Stargazer**: flat values. **r5 Marksman / r8 Assassin**: count-scaled.
+- **r9 Scavenger / r56 Kishin / r57 Enchanted Tales**: include a resolved literal (e.g. +1).
+
+Mechanic candidates (localization; numbers templated):
+- **r4 Weapon Master**: gain ATK Speed for every % HP lost.
+- **r6 Mage**: steal Mana from the target when Basic ATKs deal DMG.
+- **r8 Assassin**: grants Dodge when the synergy reaches max stacks.
+- **r50 Emberlord**: on an Emberlord Hero's death, Emberlord Heroes with 3 Equipment gain ATK Speed.
+- **r51 Exorcist**: a Hero turned Phantom deals extra True DMG (% of Adaptive ATK).
+- **r52 Heartbond**: when one partner enters Dormancy, the other gains ATK Speed.
+- **r53 Astro Power**: each deployed Astro star adds damage to the most-equipped Astro Hero.
+- **r55 Neobeasts**: Heroes gain extra Hybrid ATK, building points on each enemy death.
+
 ## Reading notes
 - Icons live in `synergy_icons/<name>.png` (copied from the datamine's `relationN.png`, renamed by
   the resolved name): all 20 named, including `scavenger.png` and `phasewarper.png`.
-- The `dps` values scale steeply with tier but are raw scaling numbers, not readable effects; the
-  human-readable per-tier effects are still absent from the client dump (templated). Marked unknown.
+- The `dps` values scale steeply with tier but are raw balance-scaling numbers, not the displayed
+  effect; the readable per-tier numbers stay templated (see effect layer above).
 - Comp-building target: cross faction and class breakpoints with the fewest slots. See
   [[heroes/index]] for who shares what, and [[abstract_generalization]] for why thresholds rule.
