@@ -10,6 +10,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Phasewarper (r10)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [1300, 1310]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Quick Draw):** Clint rapidly shoots Num1 bullets at the target, each dealing Num2
+  Physical DMG.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_cowboy`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead013_12.png`
 
@@ -23,6 +25,10 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Dauntless (r2), Weapon Master (r4)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [1000, 1010]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Hook Shock):** Franco launches an iron hook towards the furthest enemy, dealing
+  Num1 Physical DMG. He then drags the enemy back and gains a Shield equal to Num5% of his Max HP.
+  Afterward, he deals Num2 Physical DMG to surrounding enemies (DMG decreases with the number of
+  enemies hit).
 - **Meta signals:** compCount 7 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_franco`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead010_08.png`
 
@@ -36,6 +42,10 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [11700, 11710]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Piercing Strike):** Fredrinn thrusts his sword forward, dealing Num1 Physical DMG
+  (DMG decreases with the number of enemies hit) and gaining a Shield equal to Num2% of his Max HP
+  for Num7s. Fredrinn also enhances the next Basic ATK, increasing its range and dealing Num3
+  Physical DMG.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_feiden`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead117_03.png`
 
@@ -49,6 +59,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Assassin (r8)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [5100, 5120]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Helcurt blinks to the enemy Hero with the highest damage
+  output within 3 tiles (prioritizes ranged Heroes) upon first skill cast, and then fires Num1
+  Deadly Stinger(s) forward, each dealing Num2 Physical DMG to enemies.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_sdhunter`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead051_04.png`
 
@@ -62,6 +75,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [3500, 3530]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (name not resolved):** Hilda launches a powerful slash, dealing Num1 Physical DMG
+  to the target and Num2 Physical DMG to nearby enemies. Hilda also gains a Shield equal to Num3 of
+  her HP that lasts for Num4s.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_Hilda`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead035_04.png`
 
@@ -75,6 +91,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Mage (r6), Phasewarper (r10)  ·  **Faction synergy:** Mystic Meow (r58)
 - **Skills:** [11600, 11610]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Enhanced Scythe):** Julian hurls a powerful scythe forward, dealing Num1 Magic DMG
+  to the first enemy hit. The scythe remains in place, dealing Num4 Magic DMG to nearby units every
+  Num3s for Num2s. Upon skill cast, Julian also gains a Shield equal to Num7% of Max HP for Num8s.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_julian`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead116_05.png`
 
@@ -88,6 +107,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Defender (r3)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [7800, 7830]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Spell Curse):** Khufra deals Magic DMG equal to Num1 plus Num2% of target's Max
+  HP.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_munaiyi`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead078_03.png`
 
@@ -101,6 +122,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Northern Vale (r59)
 - **Skills:** [9600, 9630]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (name not resolved):** Luo Yi releases the skill in the target direction, dealing
+  Num1 Magic DMG to the first enemy hit and those behind them in a fan-shaped area.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_magneticmage`  ·  **nameSource:** manual  ·  **icon:** `icons/heroes/SkinHead096_08.png`
 
@@ -114,6 +137,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [8800, 8830, 8850]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Masha releases Thunderclap after charging at the target,
+  dealing Physical DMG equal to Num1% of the target's Max HP.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_xiongnv`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead088_06.png`
 
@@ -127,6 +152,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [100, 110]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Miya's Basic ATKs grant stackable ATK Speed, with each stack
+  providing Num1%, up to Num2 stacks. Miya shoots Num3 extra Split Arrows that deal Num4 Physical
+  DMG and trigger ATK Effects.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_gongjianshou`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead001_06.png`
 
@@ -140,6 +168,10 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Assassin (r8)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [300, 310]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Triple Sweep):** Saber charges toward an enemy, knocking them airborne and dealing
+  Num1 Physical DMG, then slashes twice, each dealing Num2 Physical DMG. The first cast targets the
+  enemy with the highest DMG output within 4 tiles. Saber gains Num3 DMG Reduction during skill cast
+  and restores Mana when killing the enemy Hero.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_shikongjianhao`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead003_09.png`
 
@@ -153,6 +185,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Defender (r3)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [600, 630]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Implosion):** Tigreal unleashes the power of his hammer, gaining a Num1 Shield and
+  dealing Num2 Physical DMG to enemies within 8 tiles, stunning them for Num3s.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_snow`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead06_01.png`
 

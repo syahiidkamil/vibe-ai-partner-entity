@@ -13,8 +13,8 @@ rounds, you do not control it in the fight. Last Commander standing wins.
 
 ## The core loop (one round, repeated)
 
-1. **Earn gold** at the round's start (round income, plus likely interest on savings and
-   win/loss streak bonuses — marked inferred, see [[equipment_and_economy]]).
+1. **Earn gold** at the round's end (base salary 5, interest, win/loss streak, +1 per win;
+   exact first-party numbers in [[encyclopedia/gold_economy]]).
 2. **Open the shop**: a small random offer of heroes, priced by cost tier. Buy, **refresh** for
    a new offer, or **level up** (spend to raise Commander Level).
 3. **Place and arrange** heroes on the board, within **Hero Capacity** (board size, set by
@@ -28,9 +28,11 @@ rounds, you do not control it in the fight. Last Commander standing wins.
 
 ## The pieces (entities)
 
-- **The Commander** = the player (me). Has **Commander HP** (starts around 100, drains on lost
-  fights; exact start unverified), a **Level** (raised with gold/XP, gates capacity), and a
-  chosen **Go Go Card**. See [[game_rules_and_round_flow]].
+- **The Commander** = the player (me): an original GoGo character (Remy, Kaboom, ...) shown with
+  crossover **skins** (the MLBB-hero look, e.g. Remy in the Lancelot skin). Has **Commander HP**
+  (drains on lost fights; exact start unverified), a **Level** (raised with gold/XP, gates
+  capacity), run-shaping **passives**, and a chosen **Go Go Card**. Roster and passives:
+  [[commanders/index]]. See also [[game_rules_and_round_flow]].
 - **Heroes** — the units. Each: a **cost** (1-5 gold = rarity tier), a **star level** (1-3), a
   **row** (front/back), combat **stats**, one **skill** (its ultimate), and usually **two
   synergies** (one class + one faction). 54 heroes in S6. Full roster with per-star stats:
@@ -39,9 +41,9 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   (2/4/6, some factions reaching 10). 20 total: 10 **class** (role-pure: Marksman, Mage,
   Defender, Assassin, ...) and 10 **faction** (origin-mixed: Dragoncaller, ...). List:
   [[synergies]].
-- **Equipment** — stat items held on heroes (up to 3 gear slots each). About 97 base items,
-  stat blocks of (attr, value), one set, no recipe tree. Won from creep rounds and the Go Go
-  Box. See [[equipment_and_economy]].
+- **Equipment** — stat items held on heroes (up to 3 gear slots each). 61 distinct items (97
+  rows: each has a Basic and often an Enhanced variant), stat blocks of (attr, value), won from
+  creep rounds and the Go Go Box. Items: [[equipments/index]]; economy: [[equipment_and_economy]].
 - **Go Go Cards** (Commander Power Cards) — a chosen, run-shaping power (augment-like): e.g.
   three free 3-star heroes, or lifesteal for the whole team. See [[gogo_cards/index]].
 
@@ -53,7 +55,8 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   in turn **from lowest to highest Commander HP** (catch-up for whoever is behind).
 - **Power Card selection** — choose a **Go Go Card** at set points in the run.
 
-Detailed rules: [[game_rules_and_round_flow]].
+Detailed rules: [[game_rules_and_round_flow]]. The game's own rules text (8 Encyclopedia tabs
+plus the mode and feature guides): [[encyclopedia/README]].
 
 ## How you actually win (the strategy spine)
 

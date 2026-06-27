@@ -10,6 +10,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [700, 730]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Fission Wave):** Alucard deals Num1 Physical DMG to the target and absorbs Num2
+  Hybrid DEF for 6s.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_alucard`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead007_05.png`
 
@@ -23,6 +25,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [10000, 10040]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Brody locks on to all the targets within his ATK range,
+  dealing Num2 Physical DMG to them.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_chargingshooter`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead100_07.png`
 
@@ -36,6 +40,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Mage (r6)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [9100, 9110, 9190]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Bat Impact):** Cecilion commands a giant bat to dive at the target location,
+  dealing Num1 Magic DMG to the enemy. The bat explodes at its destination, dealing Num2 Magic DMG.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_couplemage`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead091_06.png`
 
@@ -49,6 +55,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [8500, 8565, 8580]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Dyrroth gains Num1 Commander EXP per devour. After every
+  Num2 devour(s), the next devour grants Num3 Heroes, each sharing one Synergy as the devoured one.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_diyasi`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead085_06.png`
 
@@ -62,6 +70,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [1500, 1510]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 0, 2]
+- **Active skill (Thunderstruck):** Eudora summons a great storm of lightning, dealing Num1 Magic
+  DMG to the target.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_eudora`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead015_08.png`
 
@@ -75,6 +85,11 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Defender (r3)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [1900, 1920, 1930]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (name not resolved):** Minotaur hammers the ground 3 times, sending shockwaves that
+  deal Num1 Physical DMG to enemies within a large area and reduces their Movement Speed by Num8 for
+  Num9s for the first two strikes. The final shockwave deals Num2 Physical DMG and knocks targets
+  airborne for Num3s. Minotaur is immune to CC while casting this skill. For Num7s after casting
+  this skill, Minotaur will recover Num6 HP when he takes damage.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_minotaur`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead019_04.png`
 
@@ -88,6 +103,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Scavenger (r9)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [10600, 10610]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Demonic Impact):** Phoveus slams his monolith into the ground, dealing Num1
+  Physical DMG to enemies in the area and gaining a Shield of Num2 Max HP, while leaving behind an
+  Astaros Eye that implodes after a short delay, dealing Num3 Magic DMG to the enemies.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_Phoveus`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead106_04.png`
 
@@ -101,6 +119,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Mystic Meow (r58)
 - **Skills:** [9000, 9030]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 1, 0]
+- **Active skill (name not resolved):** Silvanna's ATK reduces the target's Physical and Magic DEF
+  by Num1 on hit. Stacks up to Num2 times.
 - **Meta signals:** compCount 2 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_nvqishi`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead090_09.png`
 

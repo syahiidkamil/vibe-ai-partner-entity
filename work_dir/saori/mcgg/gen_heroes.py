@@ -3,15 +3,18 @@
 straight from dataset_s6.json so every stat is exact (no transcription)."""
 import json, collections, os
 
-ROOT = "vape/entity/storage/magic-chess-gogo/game-client/dataset_s6.json"
-OUT = "vape/entity/memory/schemata/magic_chess_gogo/heroes"
+ROOT = "vape/entity/storage/magic-chess-gogo/game-client-from-friend/dataset_s6.json"
+OUT = "vape/entity/memory/schemata/magic_chess_gogo/concrete_things/heroes"
+# NOTE: heroes/ moved under concrete_things/ (2026-06-28). After regenerating here, re-run
+# gen_skills.py + inject_skills.py to re-add the active-skill bullets (this base gen omits them).
 os.makedirs(OUT, exist_ok=True)
 
 d = json.load(open(ROOT))
 heroes = d["heroes"]
 
-# synergy id -> display name, resolved 2026-06-27 from in-game UI icons (corrects plan.md:
-# 51 is Exorcist, 54 is Dragoncaller). High confidence; icon match + member-roster cross-check.
+# synergy id -> display name, confirmed first-party 2026-06-28 from the live client v302.2
+# (localization name-bands + FX_Fetter pinyin + m_Sort membership; corrects plan.md: 51=Exorcist,
+# 54=Dragoncaller).
 KNOWN = {1: "Bruiser", 2: "Dauntless", 3: "Defender", 4: "Weapon Master", 5: "Marksman",
          6: "Mage", 7: "Stargazer", 8: "Assassin", 9: "Scavenger", 10: "Phasewarper",
          50: "Emberlord", 51: "Exorcist", 52: "Heartbond", 53: "Astro Power", 54: "Dragoncaller",

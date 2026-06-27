@@ -10,6 +10,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [3600, 3610]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (name not resolved):** Aurora summons an icy meteorite to strike at the location
+  with the most enemies, dealing Num2 Magic DMG Num1 times within medium range.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_aurora`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead036_04.png`
 
@@ -23,6 +25,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [8100, 8130]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Stardust Dance):** Esmeralda deals Num1 Physical DMG and Num2 Magic DMG to
+  surrounding enemies.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Esmeralda`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead081_03.png`
 
@@ -36,6 +40,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Assassin (r8)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [5600, 5620]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 0, 2]
+- **Active skill (Shadowblade Slaughter):** Gusion throws daggers forward, each dealing Num1 Magic
+  DMG to the target hit. Then he recalls the daggers, dealing the same Magic DMG.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_Gusin`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead056_11.png`
 
@@ -49,6 +55,10 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [4300, 4310, 4340]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Heavy Crossbow):** Irithel switches to the heavy crossbow and orders Leo to let
+  out a mighty roar, reducing nearby enemies' Physical DEF by Num1 and increasing nearby allies'
+  Physical and Magic DEF by Num2 for Num3s. Her next Num4 Basic ATK(s) will splash and deal Num5%
+  Physical DMG.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_rider`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead043_03.png`
 
@@ -62,6 +72,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Mage (r6)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [2500, 2510]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Torn-Apart Memory):** Kagura unleashes Num1 Seimei Umbrella(s) that deal Num2
+  Magic DMG to enemies in their path.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_kagura_skin07_add`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead025_07.png`
 
@@ -75,6 +87,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [4000, 4030]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Karrie enters Dual Wield state for the next Num1s, gaining
+  Num2% ATK Speed. Every ATK releases 2 lightwheels (triggering ATK Effects), each dealing Num3
+  Physical DMG.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_feilun`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead040_10.png`
 
@@ -88,6 +103,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Enchanted Tales (r57)
 - **Skills:** [6700, 6710, 6790, 6730, 6750]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (name not resolved):** Leomord enters a mounted state, increasing his ATK Speed by
+  Num1 and enhancing his Basic ATKs to hit in a circular area.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Leomord`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead067_08.png`
 
@@ -101,6 +118,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [6800, 6860]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Mystic Evolution):** Lunox dashes to a safe location and releases Num3 Chaos
+  Assaults, each dealing Num1 Magic DMG. Killing an enemy Hero grants 1 additional cast of Chaos
+  Assault.
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_balancemagic`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead068_08.png`
 
@@ -114,6 +134,8 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [5200, 5230, 5240]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
+- **Active skill (Feathered Air Strike):** Pharsa floats into mid-air. Over the next Num1s, she
+  launches up to Num3 bombardments, each dealing Num2 Magic DMG to enemies in range.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_fasha`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead052_10.png`
 
@@ -127,6 +149,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Defender (r3)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [8200, 8230]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
+- **Active skill (Penalty Zone):** Terizla leaps up and slams down forcefully, dealing Num1 Physical
+  DMG to adjacent enemies and knocking them Airborne for Num2s, while gaining a Shield equal to Num3
+  of his Max HP for Num5s.
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_terizla`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead082_05.png`
 
@@ -140,6 +165,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Mage (r6)  ·  **Faction synergy:** Enchanted Tales (r57)
 - **Skills:** [3800, 3830, 3840]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 0, 2]
+- **Active skill (name not resolved):** Vexana summons Eternal Guard to devastate the battlefield,
+  dealing Num1 Magic DMG to enemies in range and knocking them airborne for Num2s. Eternal Guard's
+  Basic ATK deals Num3 Magic DMG.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Vexana`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead038_06.png`
 
@@ -153,6 +181,9 @@ Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI
 
 - **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [9500, 9540]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
+- **Active skill (Black Dragon Form):** Yu Zhong transforms into his Black Dragon Form and rampaging
+  through enemy Heroes for up to Num1s, gaining Num2 DMG Reduction and dealing Num3 Physical DMG to
+  enemy Heroes.
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_BlackDragon`  ·  **nameSource:** manual  ·  **icon:** `icons/heroes/SkinHead095_04.png`
 
