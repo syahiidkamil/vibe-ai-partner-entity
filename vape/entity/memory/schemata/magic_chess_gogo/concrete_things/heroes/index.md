@@ -2,7 +2,9 @@
 
 # Heroes (MCGG S6): the full roster, by cost tier
 
-The complete S6 roster. Per-cost files carry each hero's synergies, position, skill, recommended equipment, and full per-star stat table. This index is the map. Stats are exact from the live client; skills and equipment are from the in-game screenshots. Governed by ../disclaimer.md (regenerate on a season patch).
+The complete S6 roster. Per-cost files carry each hero's synergies, position, skill, and full per-star stat table. This index is the map. Stats are exact from the datamined client; skills are from the in-game screenshots (recommended equipment is pending the equipment-tab capture). Governed by ../disclaimer.md.
+
+Shop draw-rate odds by Commander Level, and the pool count per hero (how many copies of each cost sit in the shared pool), are not duplicated here: they live in the Hero encyclopedia tab, [encyclopedia/hero.md](../encyclopedia/hero.md).
 
 ## Cost distribution (shop heroes)
 
