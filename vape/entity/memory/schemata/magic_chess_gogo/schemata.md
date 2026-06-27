@@ -33,7 +33,8 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   chosen **Go Go Card**. See [[game_rules_and_round_flow]].
 - **Heroes** — the units. Each: a **cost** (1-5 gold = rarity tier), a **star level** (1-3), a
   **row** (front/back), combat **stats**, one **skill** (its ultimate), and usually **two
-  synergies** (one class + one faction). 54 heroes in S6. Roster: [[heroes]].
+  synergies** (one class + one faction). 54 heroes in S6. Full roster with per-star stats:
+  [[heroes/index]] (the `heroes/` folder, organized by cost tier).
 - **Synergies** ("Sort"/relations) — team bonuses that switch on at **member-count thresholds**
   (2/4/6, some factions reaching 10). 20 total: 10 **class** (role-pure: Marksman, Mage,
   Defender, Assassin, ...) and 10 **faction** (origin-mixed: Dragoncaller, ...). List:

@@ -47,4 +47,4 @@ owner-curated map. Identify each unresolved one by its member roster below; do n
   scaling values, not readable effects; the human-readable per-tier effects must come from an
   external MCGG reference or Kamil, not the current client dump. Marked unknown here, honestly.
 - Comp-building target: cross faction *and* class breakpoints with the fewest slots. See
-  [[heroes]] for who shares what, and [[abstract_generalization]] for why thresholds rule.
+  [[heroes/index]] for who shares what, and [[abstract_generalization]] for why thresholds rule.
