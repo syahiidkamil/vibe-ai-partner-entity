@@ -86,7 +86,9 @@ Speed"). So `expr N*0.01` on a raw of `2000` correctly yields `20%`. Same conven
 
 Demon Hunter Sword ("2% of target's max HP") is the same DSL: its description template is
 localization `2212493025` *"Basic ATKs deal extra Physical DMG equal to `<%Num1>` of the target's
-max HP."*, with `Num1` a `%` token whose raw resolves to `2`.
+max HP."*, with `Num1` a `%` token. The form and unit are confirmed; the literal `2` is a
+templated `N` behind the same MCEffect wall (matched to the known in-game text, not read from a
+flat value), so Demon Hunter Sword is a PARTIAL anchor and Inspire the only full PASS.
 
 ---
 

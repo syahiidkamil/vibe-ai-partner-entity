@@ -3,18 +3,27 @@
 The in-app **Gold** tab (prose) plus the first-party S6 economy numbers from the decoded battle
 config. The prose says "a certain amount" / "some Gold"; the config gives the actual values.
 
-## Gold tab, verbatim (id `3003307287`)
-> 1. **Basic Reward** — You will automatically get a certain amount of Gold at the end of each
->    round.
-> 2. **Interest** — You can get 2 Gold as Interest for every 10 Gold you have at the end of each
->    round (up to a max of 4 Gold).
-> 3. **Winning or Losing Streak Bonus** — You can get some Gold based on your current winning or
->    losing streak at the end of each round.
-> 4. **Victory Reward** — You will get 1 Gold after each victory.
-> 5. **Commander** — Some Commanders can help you earn extra Gold.
+Transcribed from the in-app Encyclopedia screenshot (gold.png), 2026-06-28, live client
+v1.2.88.302.2.
 
-Shop actions (id `3003307288`): 1. Purchase to recruit Heroes. 2. Refresh the Shop. 3. Level up
-your Commander.
+## Gold tab, verbatim (id `3003307287`)
+
+The tab has two headings, "Source" and "Function".
+
+### Source
+> 1. **Basic Reward**: You will automatically get a certain amount of Gold at the end of each
+>    round.
+> 2. **Interest**: You can get 2 Gold as Interest for every 10 Gold you have at the end of each
+>    round (up to a max of 4 Gold).
+> 3. **Winning or Losing Streak Bonus**: You can get some Gold based on your current winning or
+>    losing streak at the end of each round.
+> 4. **Victory Reward**: You will get 1 Gold after each victory.
+> 5. **Commander**: Some Commanders can help you earn extra Gold.
+
+### Function (id `3003307288`)
+> 1. Purchase to recruit Heroes.
+> 2. Refresh the Shop.
+> 3. Level up your Commander.
 
 ## The exact numbers (first-party, `MCClassicsBattleConfig_S6.txt`)
 

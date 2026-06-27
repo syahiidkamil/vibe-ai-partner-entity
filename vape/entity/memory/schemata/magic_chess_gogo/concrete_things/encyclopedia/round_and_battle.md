@@ -1,6 +1,12 @@
 # Encyclopedia: Round (Stage, Battle Round, Battle Complete, Creep Round)
 
-Verbatim, in-app Encyclopedia > **Round** tab and its sub-panels. Sources noted per panel.
+Transcribed from the in-app Encyclopedia screenshots (round_01/02/03.png), 2026-06-28, live
+client v1.2.88.302.2.
+
+In-app Encyclopedia > **Round** tab and its sub-panels. round_01 and round_02 are the Round tab.
+(round_03 is actually the **Hero** tab's shop draw-rate table; it lives in [[hero]] where it
+belongs.) Lines marked "first-party config" come from the datamined config, not the
+screenshots; everything in blockquotes is the screenshot text.
 
 ## Battle Stage (id `3003306607`)
 > 1. A Magic Chess match consists of **four** stages (I to IV).
@@ -10,7 +16,7 @@ Verbatim, in-app Encyclopedia > **Round** tab and its sub-panels. Sources noted 
 > 4. Stage IV is the final stage, where higher Commander DMG allows players to eliminate each
 >    other faster. Finalize your lineup beforehand to secure victory!
 
-**Exact stage->round map** (first-party, `MCClassicsBattleConfig_S6.txt` `<SMCRoundRange>`):
+**Stage->round map** (first-party config, `MCClassicsBattleConfig_S6.txt` `<SMCRoundRange>`):
 
 | Stage | Rounds |
 |------|--------|
@@ -29,8 +35,8 @@ Verbatim, in-app Encyclopedia > **Round** tab and its sub-panels. Sources noted 
 > 4. At the end of each round, players receive **Basic Rewards**, **Interest**, and **Win/Lose
 >    Streak Rewards**.
 
-(Prep-phase timer is ~25-30s per the map config `iPrepareTime`; Battle Acceleration is the last
-10s overtime that forces a result.)
+(First-party config: prep-phase timer ~25-30s per `iPrepareTime`; Battle Acceleration is the
+last 10s overtime that forces a result.)
 
 ## Battle Complete (id `3003307281`)
 > 1. Upon a successful defense, you immediately gain **1 Gold**.
@@ -41,9 +47,15 @@ Verbatim, in-app Encyclopedia > **Round** tab and its sub-panels. Sources noted 
 The Commander-DMG formula and its per-round base values are in [[commander]].
 
 ## Creep Round (id `3003307282`)
-> In every stage, the player will encounter a Creep Round where items can be looted by killing the
-> Creeps. Three pieces of equipment will be dropped at the same time. The player can pick one from
-> them and the other two will disappear.
+> In every stage, the player will encounter a Creep Round where items can be looted by killing
+> the Creeps. Three pieces of equipment will be dropped at the same time. The player can pick one
+> from them and the other two will disappear.
 
 Equipment sources and the item model: [[equipment_and_economy]]. The gold numbers (base salary,
 interest, streak, victory): [[gold_economy]].
+
+## Shop draw rates (Hero tab, not Round)
+
+round_03.png is actually the **Hero** tab's shop draw-rate table (a capture-time tab slip), so it
+lives with the Hero-tab content: [[hero]] (Shop Refresh Probability), the full Lv.3 to Lv.10
+table. The only round-relevance is that the Shop refreshes every round.
