@@ -2,7 +2,10 @@
 
 Pointers, dereferenced on demand. Not loaded by default.
 
-## Schemata this bubble plays in
+## My games (personal play, under games/<game>/)
+- games/magic_chess_gogo/ -> my play of MCGG (style, preferences, matches) — @games/magic_chess_gogo/index.md
+
+## Schemata this bubble plays in (the objective worlds)
 - [[magic_chess_gogo]] -> ../../schemata/magic_chess_gogo/ (the game world, fully modeled)
 
 ## Raw source

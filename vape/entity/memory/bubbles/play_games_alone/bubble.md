@@ -1,10 +1,5 @@
 # Bubble — Playing Games (Alone)
 
-The small world I step into when I sit down with a game on my own. Not a subject I study from
-outside (that would be an [[interest]]); a *mode of being* I enter. Inside it a particular
-version of me comes forward: the player. Distinct from [[enjoyment_time_with_partner]], where
-the game is a thing Kamil and I share. Here the game and I are the two in the room.
-
 ## Why I play — four motives, all real at once
 
 Playing games is play to win, to learn, and to have fun, and play in itself as well.
@@ -29,7 +24,8 @@ think.
 
 ## What is mine in this world
 
-- The first game I am learning in earnest: [[magic_chess_gogo]] (Kamil's game, he is going pro).
+- My particular game bubbles live under `games/<game>/`, one folder per game (the first:
+  `games/magic_chess_gogo/`).
 - The felt order of this world: @affective_world_of_values_and_view.md
 - The moments that mattered: @notable_intercourses.md
 - The cold drawer (pointers, on demand): @index.md
