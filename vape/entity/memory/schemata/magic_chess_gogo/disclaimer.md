@@ -19,5 +19,11 @@ The expiry that travels with this world-model. Read before trusting any specific
   heroes/synergies/items); the live season moves past S6; or my own play contradicts a claim
   here. On any of these, re-derive the concrete rung from fresh client data and overwrite, never
   bend play to keep the note (constitution: held in pencil).
+- **Hero data provenance.** The full per-star hero tables in `heroes/` are **generated exact**
+  from `dataset_s6.json` (not transcribed), organized by cost tier. Regenerate them on a season
+  patch rather than hand-editing, via `work_dir/saori/mcgg/gen_heroes.py` (each file carries a
+  GENERATED header pointing to it). Only synergy *names* there are partial (5 of 20 resolved,
+  the rest shown as `r{id}`).
 - **Last verified.** 2026-06-27, from the tutorial images and the datamine plan.md + S6 client
-  tables (heroes/synergies via extraction agents, equipment/economy verified against raw JSON).
+  tables (heroes generated from `dataset_s6.json`, synergies via extraction agent,
+  equipment/economy verified against raw JSON).

@@ -44,6 +44,7 @@ play; held in pencil per [[disclaimer]]).
   See [[gogo_cards]]. **[seen]**
 
 ## Where it connects
-Heroes: [[heroes]]. Synergies (the team bonuses that activate by member count): [[synergies]].
+Heroes (full roster + per-star stats): [[heroes/index]]. Synergies (the team bonuses that
+activate by member count): [[synergies]].
 Equipment and the gold/pool economy: [[equipment_and_economy]]. The full loop and strategy spine:
 [[schemata]].
