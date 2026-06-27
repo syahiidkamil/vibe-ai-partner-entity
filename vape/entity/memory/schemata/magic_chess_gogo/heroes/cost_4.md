@@ -4,11 +4,11 @@
 
 High tier: strong carries, scarce in the pool.  12 heroes at this cost.
 
-Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), Mage(6), Assassin(8), Dragoncaller(51) are name-resolved in the client; the rest show as `r{id} (unnamed)` and are Kamil's to name. Stats are per star level (1/2/3). See ../concrete_things/synergies.md for rosters and ../schemata.md for the loop.
+Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI; see ../concrete_things/synergies.md for rosters, tiers, and icons). Stats are per star level (1/2/3). See ../schemata.md for the loop.
 
 ### Aurora  (id 36, cost 4)
 
-- **Class synergy:** r7 (unnamed)  ·  **Faction synergy:** r53 (unnamed)
+- **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [3600, 3610]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_aurora`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead036_04.png`
@@ -21,7 +21,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Esmeralda  (id 81, cost 4)
 
-- **Class synergy:** r2 (unnamed)  ·  **Faction synergy:** r52 (unnamed)
+- **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [8100, 8130]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Esmeralda`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead081_03.png`
@@ -34,7 +34,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Gusion  (id 56, cost 4)
 
-- **Class synergy:** Assassin (r8)  ·  **Faction synergy:** r54 (unnamed)
+- **Class synergy:** Assassin (r8)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [5600, 5620]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [1, 0, 2]
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_Gusin`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead056_11.png`
@@ -47,7 +47,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Irithel  (id 43, cost 4)
 
-- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** r50 (unnamed)
+- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [4300, 4310, 4340]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_rider`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead043_03.png`
@@ -60,7 +60,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Kagura  (id 25, cost 4)
 
-- **Class synergy:** Mage (r6)  ·  **Faction synergy:** Dragon Altar / Dragoncaller (r51)
+- **Class synergy:** Mage (r6)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [2500, 2510]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_kagura_skin07_add`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead025_07.png`
@@ -73,7 +73,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Karrie  (id 40, cost 4)
 
-- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** r56 (unnamed)
+- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [4000, 4030]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_feilun`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead040_10.png`
@@ -86,7 +86,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Leomord  (id 67, cost 4)
 
-- **Class synergy:** r4 (unnamed)  ·  **Faction synergy:** r57 (unnamed)
+- **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Enchanted Tales (r57)
 - **Skills:** [6700, 6710, 6790, 6730, 6750]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Leomord`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead067_08.png`
@@ -99,7 +99,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Lunox  (id 68, cost 4)
 
-- **Class synergy:** r7 (unnamed)  ·  **Faction synergy:** r56 (unnamed)
+- **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [6800, 6860]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_balancemagic`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead068_08.png`
@@ -112,7 +112,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Pharsa  (id 52, cost 4)
 
-- **Class synergy:** r7 (unnamed)  ·  **Faction synergy:** r55 (unnamed)
+- **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [5200, 5230, 5240]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_fasha`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead052_10.png`
@@ -125,7 +125,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Terizla  (id 82, cost 4)
 
-- **Class synergy:** Defender (r3)  ·  **Faction synergy:** r54 (unnamed)
+- **Class synergy:** Defender (r3)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [8200, 8230]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_terizla`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead082_05.png`
@@ -138,7 +138,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Vexana  (id 38, cost 4)
 
-- **Class synergy:** Mage (r6)  ·  **Faction synergy:** r57 (unnamed)
+- **Class synergy:** Mage (r6)  ·  **Faction synergy:** Enchanted Tales (r57)
 - **Skills:** [3800, 3830, 3840]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 0, 2]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_Vexana`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead038_06.png`
@@ -151,7 +151,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Yu Zhong  (id 95, cost 4)
 
-- **Class synergy:** r1 (unnamed)  ·  **Faction synergy:** Dragon Altar / Dragoncaller (r51)
+- **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [9500, 9540]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 1 (as carry)
 - **codename:** `hero_BlackDragon`  ·  **nameSource:** manual  ·  **icon:** `icons/heroes/SkinHead095_04.png`

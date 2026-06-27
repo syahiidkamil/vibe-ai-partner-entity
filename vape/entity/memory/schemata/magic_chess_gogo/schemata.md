@@ -43,7 +43,7 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   stat blocks of (attr, value), one set, no recipe tree. Won from creep rounds and the Go Go
   Box. See [[equipment_and_economy]].
 - **Go Go Cards** (Commander Power Cards) — a chosen, run-shaping power (augment-like): e.g.
-  three free 3-star heroes, or lifesteal for the whole team. See [[gogo_cards]].
+  three free 3-star heroes, or lifesteal for the whole team. See [[gogo_cards/index]].
 
 ## The round types (the rhythm)
 

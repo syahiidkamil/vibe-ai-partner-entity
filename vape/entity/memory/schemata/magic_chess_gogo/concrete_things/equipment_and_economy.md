@@ -36,6 +36,32 @@ component ids are not in the base table; they live in a separate/season table.) 
 Not bought in the gold shop. It drops from **creep (PvE) rounds** (pick 1 of a few) and the
 **Go Go Box** shared stage. See [[game_rules_and_round_flow]].
 
+## Named items and UI categories (from the in-game UI)
+
+The datamine gives item stats and ids but not names/effects (effects are templated formula strings
+in the lang tables, e.g. `Unique Passive - {0}:`). The in-game UI supplies the readable names and
+effects; captured here from screenshots (`storage/magic-chess-gogo/ui_reference/equipment_all.png`
+and `equipment_inspire_enhanced.png`, 2026-06-27). Item NAMES are also confirmed present in the lang
+storage (Inspire, Aegis, Purify, Retribution, Revitalize), so names are recoverable; the clean
+per-item EFFECTS are best taken from the UI.
+
+- **UI category tabs:** Regular · Magic Crystal · Synergy Exclusive · Commander Exclusive · Special.
+- **Type groups:** Basic · Physical · Magic.
+- **Basic / Enhanced:** each item has a Basic and an Enhanced version; Enhanced adds one extra
+  Unique Passive.
+
+**Basic items (captured):**
+- **Inspire** (Increase ATK Speed): Unique Passive - Inspire: provide 20/25/30/40% ATK Speed
+  (increases with Stage progression). Enhanced Inspire adds Unique Passive - Swift: gain 20% ATK
+  Speed.
+- **Revitalize · Purify · Aegis · Retribution**: names confirmed (UI + lang storage); effects not
+  yet captured.
+
+**Physical items:** four seen in the UI, names not readable in the crop. Partial.
+
+Status: partial. Feed more equipment tabs to complete the named list; a full programmatic pull needs
+the Windows-client datamine (name resolution + effect formulas).
+
 ## The shop/gold economy (`HeroQuality_MC`) — column meanings reliable, numbers NOT
 This table sets the **shared hero pool** (how many copies of each hero exist for all 8
 Commanders to draw from, the contention that makes contested heroes scarce). Columns, inferred:

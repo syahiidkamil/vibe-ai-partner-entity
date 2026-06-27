@@ -10,9 +10,13 @@ os.makedirs(OUT, exist_ok=True)
 d = json.load(open(ROOT))
 heroes = d["heroes"]
 
-# synergy id -> display name, from the dataset, plus plan.md ground-truth names
-KNOWN = {3: "Defender", 5: "Marksman", 6: "Mage", 8: "Assassin",
-         51: "Dragon Altar / Dragoncaller"}
+# synergy id -> display name, resolved 2026-06-27 from in-game UI icons (corrects plan.md:
+# 51 is Exorcist, 54 is Dragoncaller). High confidence; icon match + member-roster cross-check.
+KNOWN = {1: "Bruiser", 2: "Dauntless", 3: "Defender", 4: "Weapon Master", 5: "Marksman",
+         6: "Mage", 7: "Stargazer", 8: "Assassin", 9: "Scavenger", 10: "Phasewarper",
+         50: "Emberlord", 51: "Exorcist", 52: "Heartbond", 53: "Astro Power", 54: "Dragoncaller",
+         55: "Neobeasts", 56: "Kishin", 57: "Enchanted Tales", 58: "Mystic Meow",
+         59: "Northern Vale"}
 synname = {}
 synaxis = {}
 for s in d.get("synergies", []):
@@ -89,11 +93,9 @@ for c in range(1, 6):
     body = [HEADER, f"# Cost {c} Heroes (MCGG S6)", ""]
     body.append(f"{COST_NOTE[c]}  {len(hs)} heroes at this cost.")
     body.append("")
-    body.append("Synergy ids: class = r1-r10, faction = r50-r59. Only "
-                "Defender(3), Marksman(5), Mage(6), Assassin(8), Dragoncaller(51) are "
-                "name-resolved in the client; the rest show as `r{id} (unnamed)` and are "
-                "Kamil's to name. Stats are per star level (1/2/3). See ../concrete_things/"
-                "synergies.md for rosters and ../schemata.md for the loop.")
+    body.append("Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game "
+                "UI; see ../concrete_things/synergies.md for rosters, tiers, and icons). Stats are "
+                "per star level (1/2/3). See ../schemata.md for the loop.")
     body.append("")
     for h in hs:
         body.append(hero_block(h))
@@ -107,8 +109,8 @@ body.append("")
 for h in specials:
     body.append(hero_block(h))
     if h["id"] == 179:
-        body.append("> Summoned by the Dragon Altar / Dragoncaller faction (r51); scales with "
-                    "that synergy's tier. Note: 4 star tiers, not 3.\n")
+        body.append("> Summoned by the Dragoncaller faction (r54); scales with that synergy's "
+                    "tier. Note: 4 star tiers, not 3.\n")
 open(f"{OUT}/special_units.md", "w").write("\n".join(body).rstrip() + "\n")
 
 # --- index ---
