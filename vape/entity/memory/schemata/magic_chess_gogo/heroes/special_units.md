@@ -18,7 +18,7 @@ Units outside the normal shop roster: summons and special entries. They have no 
 | 3 | 9000 | 220 | 220 | 24 | 24 | 1.0 | 400 | 0 | 560 | 10000 | 90 |
 | 4 | 35000 | 1500 | 1500 | 24 | 24 | 1.0 | 400 | 0 | 3200 | 35000 | 50 |
 
-> Summoned by the Dragon Altar / Dragoncaller faction (r51); scales with that synergy's tier. Note: 4 star tiers, not 3.
+> Summoned by the Dragoncaller faction (r54); scales with that synergy's tier. Note: 4 star tiers, not 3.
 
 ### Claude (special)  (id 180, cost 5)
 

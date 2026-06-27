@@ -4,11 +4,11 @@
 
 Cheapest tier: many copies in the shared pool, the early-game backbone.  8 heroes at this cost.
 
-Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), Mage(6), Assassin(8), Dragoncaller(51) are name-resolved in the client; the rest show as `r{id} (unnamed)` and are Kamil's to name. Stats are per star level (1/2/3). See ../concrete_things/synergies.md for rosters and ../schemata.md for the loop.
+Synergy ids: class = r1-r10, faction = r50-r59 (all 20 named from the in-game UI; see ../concrete_things/synergies.md for rosters, tiers, and icons). Stats are per star level (1/2/3). See ../schemata.md for the loop.
 
 ### Alucard  (id 7, cost 1)
 
-- **Class synergy:** r4 (unnamed)  ·  **Faction synergy:** r52 (unnamed)
+- **Class synergy:** Weapon Master (r4)  ·  **Faction synergy:** Heartbond (r52)
 - **Skills:** [700, 730]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_alucard`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead007_05.png`
@@ -21,7 +21,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Brody  (id 100, cost 1)
 
-- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** r55 (unnamed)
+- **Class synergy:** Marksman (r5)  ·  **Faction synergy:** Neobeasts (r55)
 - **Skills:** [10000, 10040]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_chargingshooter`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead100_07.png`
@@ -34,7 +34,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Cecilion  (id 91, cost 1)
 
-- **Class synergy:** Mage (r6)  ·  **Faction synergy:** r50 (unnamed)
+- **Class synergy:** Mage (r6)  ·  **Faction synergy:** Emberlord (r50)
 - **Skills:** [9100, 9110, 9190]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 2, 0]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_couplemage`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead091_06.png`
@@ -47,7 +47,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Dyrroth  (id 85, cost 1)
 
-- **Class synergy:** r1 (unnamed)  ·  **Faction synergy:** r56 (unnamed)
+- **Class synergy:** Bruiser (r1)  ·  **Faction synergy:** Kishin (r56)
 - **Skills:** [8500, 8565, 8580]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [0, 2, 1]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_diyasi`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead085_06.png`
@@ -60,7 +60,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Eudora  (id 15, cost 1)
 
-- **Class synergy:** r7 (unnamed)  ·  **Faction synergy:** r54 (unnamed)
+- **Class synergy:** Stargazer (r7)  ·  **Faction synergy:** Dragoncaller (r54)
 - **Skills:** [1500, 1510]  ·  **Role:** non-tank  ·  **Equip priority (slot order):** [1, 0, 2]
 - **Meta signals:** compCount 5 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_eudora`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead015_08.png`
@@ -73,7 +73,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Minotaur  (id 19, cost 1)
 
-- **Class synergy:** Defender (r3)  ·  **Faction synergy:** r53 (unnamed)
+- **Class synergy:** Defender (r3)  ·  **Faction synergy:** Astro Power (r53)
 - **Skills:** [1900, 1920, 1930]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
 - **Meta signals:** compCount 4 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_minotaur`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead019_04.png`
@@ -86,7 +86,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Phoveus  (id 106, cost 1)
 
-- **Class synergy:** r9 (unnamed)  ·  **Faction synergy:** Dragon Altar / Dragoncaller (r51)
+- **Class synergy:** Scavenger (r9)  ·  **Faction synergy:** Exorcist (r51)
 - **Skills:** [10600, 10610]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 0, 1]
 - **Meta signals:** compCount 3 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_Phoveus`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead106_04.png`
@@ -99,7 +99,7 @@ Synergy ids: class = r1-r10, faction = r50-r59. Only Defender(3), Marksman(5), M
 
 ### Silvanna  (id 90, cost 1)
 
-- **Class synergy:** r2 (unnamed)  ·  **Faction synergy:** r58 (unnamed)
+- **Class synergy:** Dauntless (r2)  ·  **Faction synergy:** Mystic Meow (r58)
 - **Skills:** [9000, 9030]  ·  **Role:** Tank  ·  **Equip priority (slot order):** [2, 1, 0]
 - **Meta signals:** compCount 2 (in recommended comps)  ·  carryCount 0 (as carry)
 - **codename:** `hero_nvqishi`  ·  **nameSource:** lang  ·  **icon:** `icons/heroes/SkinHead090_09.png`

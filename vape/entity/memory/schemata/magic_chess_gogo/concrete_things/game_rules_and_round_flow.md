@@ -41,7 +41,7 @@ play; held in pencil per [[disclaimer]]).
   Commanders pick in turn from lowest to highest Commander HP** (a catch-up mechanic for whoever
   is losing). "Go Go Box Stage provides random Equipment and Heroes." **[seen]**
 - **Power Card selection** — at set points you choose a **Go Go Card** (Commander Power Card).
-  See [[gogo_cards]]. **[seen]**
+  See [[gogo_cards/index]]. **[seen]**
 
 ## Where it connects
 Heroes (full roster + per-star stats): [[heroes/index]]. Synergies (the team bonuses that
