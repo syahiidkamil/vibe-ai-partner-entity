@@ -1,0 +1,574 @@
+{
+ "51": {
+  "skill": "Deadly Stinger",
+  "effect": "Helcurt gains 50% ATK Speed Boost for 4s, and fires 5 Deadly Stinger(s) forward, each dealing (+75% Total Physical ATK) Physical DMG to enemies. On first skill cast, Helcurt blinks to the furthest enemy within 3 tiles (prioritizes ranged Heroes).",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "75%",
+   "75%",
+   "110%"
+  ],
+  "equipment": []
+ },
+ "35": {
+  "skill": "Power of Wildness",
+  "effect": "Hilda slashes powerfully, dealing (+260% Total Physical ATK) Physical DMG to the target and surrounding enemies (DMG decreases with the number of enemies hit), and gaining a Shield equal to 10% of Max HP for 4s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "260%",
+   "260%",
+   "320%"
+  ],
+  "equipment": []
+ },
+ "19": {
+  "skill": "Motivation Roar",
+  "effect": "Minotaur heals himself and the ally with the lowest HP for 20% of the target's Max HP. Passive: When battle starts, grants 350 Shield to himself and allies to his left and right.",
+  "scalingLabel": "HP Regen",
+  "scaling": [
+   "20%",
+   "20%",
+   "30%"
+  ],
+  "equipment": []
+ },
+ "46": {
+  "skill": "Swan Song",
+  "effect": "Odette dances, gaining 500 Shield and dealing (+95% Total Magic ATK) Magic DMG to nearby enemies in a large area every 0.5s for 5s (DMG decreases with the number of enemies hit). She is immune to control effects during the skill. At 3-Star, when casting the skill, she releases 5 swan(s) every 0.5s to deal (+65% Total Magic ATK) Magic DMG to enemies in a [...]",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "95%",
+   "100%",
+   "350%"
+  ],
+  "equipment": []
+ },
+ "36": {
+  "skill": "Hailstone Blast",
+  "effect": "Aurora summons an Icy Meteorite, dealing (+200% Total Magic ATK) Magic DMG to enemies within medium range. (DMG decreases with the number of enemies hit.) Multiple Meteorites then fall, dealing (+75% Total Magic ATK) Magic DMG 5 time(s). (DMG decreases with the number of enemies hit.)",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "200%",
+   "210%",
+   "500%"
+  ],
+  "equipment": []
+ },
+ "58": {
+  "skill": "Decimation",
+  "effect": "Martis deals (+365% Total Physical ATK) Physical DMG to the target and gains a Shield equal to 8% of his Max HP for 3s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "365%",
+   "365%",
+   "450%"
+  ],
+  "equipment": []
+ },
+ "56": {
+  "skill": "Shadowblade Slaughter",
+  "effect": "Gusion throws multiple daggers forward and recalls them, each dealing (+90% Total Magic ATK) Magic DMG on hit. After the first skill cast, he dashes to the enemy with the highest DMG output within 4 tiles and recalls the daggers, dealing the same amount of Magic DMG.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "90%",
+   "90%",
+   "235%"
+  ],
+  "equipment": []
+ },
+ "77": {
+  "skill": "Fist Crack",
+  "effect": "Badang punches forward 8 Fist Wind(s), each dealing (+50% Total Physical ATK) Physical DMG to enemies (DMG decreases with the number of enemies hit). Badang gains Control Immunity while punching. When taking DMG, Badang has a 50% probability to punch the target once, dealing (+85% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "50%",
+   "50%",
+   "225%"
+  ],
+  "equipment": []
+ },
+ "2": {
+  "skill": "Cyclone Sweep",
+  "effect": "Balmond gains 10 Hybrid DEF and launches 14 strike(s) within 3s, each dealing (+45% Total Physical ATK) Physical DMG to adjacent enemies.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "45%",
+   "55%",
+   "70%"
+  ],
+  "equipment": []
+ },
+ "82": {
+  "skill": "Penalty Zone",
+  "effect": "Terizla leaps up and slams down forcefully, dealing (+300% Total Physical ATK) Physical DMG to adjacent enemies and knocking them airborne for 0.6s, while gaining a Shield equal to 12% of his Max HP for 4s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "300%",
+   "300%",
+   "1300%"
+  ],
+  "equipment": []
+ },
+ "13": {
+  "skill": "Quick Draw",
+  "effect": "Clint rapidly shoots 5 bullets at the target, each dealing (+125% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "125%",
+   "125%",
+   "200%"
+  ],
+  "equipment": []
+ },
+ "15": {
+  "skill": "Forked Lightning",
+  "effect": "Eudora casts Forked Lightning, dealing (+430% Total Magic ATK) Magic DMG to the target and inflicting Vulnerability for 4s, increasing their DMG taken by 5%.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "430%",
+   "430%",
+   "520%"
+  ],
+  "equipment": []
+ },
+ "69": {
+  "skill": "Ninjutsu: Demon Feast",
+  "effect": "Hanzo deals (+220% Total Physical ATK) Physical DMG to the target, restores 20% lost HP, and increases Skill DMG by 20% (up to 60%).",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "220%",
+   "220%",
+   "280%"
+  ],
+  "equipment": []
+ },
+ "88": {
+  "skill": "Thunderclap",
+  "effect": "Masha deals (+330% Total Physical ATK) Basic ATK Physical DMG to the current target and adjacent enemies (DMG decreases with the number of enemies hit), gaining 70% ATK Speed and 5% Lifesteal for 3s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "330%",
+   "330%",
+   "410%"
+  ],
+  "equipment": []
+ },
+ "6": {
+  "skill": "Implosion",
+  "effect": "Tigreal unleashes the power of his hammer, gaining a Shield equal to 10% of his Max HP for 4s. He then smashes adjacent enemies, dealing (+315% Total Physical ATK) Physical DMG and stunning them for 0.6s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "315%",
+   "315%",
+   "460%"
+  ],
+  "equipment": []
+ },
+ "91": {
+  "skill": "Bat Impact",
+  "effect": "Cecilion commands a bat-like beast to assault the target, dealing (+735% Total Magic ATK) Magic DMG. Passive: When battle starts, provide 10 Mana to himself and allies to his left and right.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "735%",
+   "735%",
+   "885%"
+  ],
+  "equipment": []
+ },
+ "43": {
+  "skill": "Strafe",
+  "effect": "Irithel launches flaming arrows at the target, dealing (+135% Total Physical ATK) Physical DMG, enhancing the next 3 Basic ATK(s). On hit, the enhanced Basic ATK deals (+320% Total Physical ATK) Physical DMG. Passive: Each Basic ATK deals 3 hit(s) of (+35% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "135%",
+   "135%",
+   "400%"
+  ],
+  "equipment": []
+ },
+ "28": {
+  "skill": "Force Swing",
+  "effect": "Unleashes 2 sweeping slashes in a fan-shaped area in the front, dealing (+200% Total Physical ATK) Physical DMG to enemies. (DMG decreases for each enemy hit.) From the third cast onward, additionally releases 3 linear energy waves forward at different angles, each dealing (+110% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "200%",
+   "220%",
+   "900%"
+  ],
+  "equipment": []
+ },
+ "70": {
+  "skill": "Nature's Strike",
+  "effect": "Belerick enhances his next Basic ATK. It deals (+350% Total Magic ATK) Magic DMG to the target and restores HP equal to 10% of his lost HP.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "350%",
+   "350%",
+   "450%"
+  ],
+  "equipment": []
+ },
+ "38": {
+  "skill": "Eternal Guard",
+  "effect": "Vexana locks onto the target with the most nearby enemies and summons Eternal Guard to devastate the battlefield, dealing (+210% Total Magic ATK) Magic DMG to enemies in range and knocking them airborne for 0.6s. Eternal Guard's Basic ATK deals (+195% Total Magic ATK) Magic DMG. As Protagonist, skill hits trigger an extra shockwave at the target [...]",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "210%",
+   "210%",
+   "545%"
+  ],
+  "equipment": []
+ },
+ "63": {
+  "skill": "Abyssal Trap",
+  "effect": "Selena summons an Abyssal Devil to bite the target, dealing (+800% Total Magic ATK) Magic DMG.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "800%",
+   "800%",
+   "950%"
+  ],
+  "equipment": []
+ },
+ "67": {
+  "skill": "Momentum",
+  "effect": "Leomord charges briefly to deal (+480% Total Physical ATK) Physical DMG to enemies in front. He gains Control Immunity and 40% DMG Reduction while charging. When he is the Protagonist, the skill changes to Phantom Steed when battle starts: Leomord becomes briefly untargetable and enters Mounted State.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "480%",
+   "480%",
+   "1425%"
+  ],
+  "equipment": []
+ },
+ "3": {
+  "skill": "Orbiting Swords",
+  "effect": "Saber releases 5 Orbiting Sword(s) that circle around him, dealing (+130% Total Physical ATK) Physical DMG 5 times to surrounding enemies. (DMG decreases with the number of enemies hit.)",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "130%",
+   "130%",
+   "210%"
+  ],
+  "equipment": []
+ },
+ "95": {
+  "skill": "Soul Grip",
+  "effect": "Yu Zhong unleashes 3 Dragon Soul ATKs. The first 2 ATKs deal (+210% Total Physical ATK) Physical DMG to enemies in front. The 3rd ATK has enhanced range and deals (+290% Total Physical ATK) Physical DMG. DMG decreases with the number of enemies hit. Passive: Dragon Soul ATK counts as Basic ATK and has a [...]",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "210%",
+   "210%",
+   "580%"
+  ],
+  "equipment": []
+ },
+ "29": {
+  "skill": "Don't Run, Wolf King!",
+  "effect": "Ruby dashes to the position within 3 tile(s) with the most enemies. She then deals (+160% Total Physical ATK) Physical DMG twice to surrounding enemies and taunts them for 3s. Passive: When taking DMG, Ruby has a 25% chance to deal (+50% Total Physical ATK) Physical DMG twice to surrounding enemies and gains 2% Hybrid Lifesteal (Max Stacks: 5). At [...]",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "160%",
+   "170%",
+   "600%"
+  ],
+  "equipment": []
+ },
+ "25": {
+  "skill": "Yin Yang Overturn",
+  "effect": "Kagura releases Seimei Umbrella, dealing (+770% Total Magic ATK) AoE Magic DMG. (DMG decreases with the number of enemies hit.) Allies in the area gain a 350 Shield for 4s.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "770%",
+   "770%",
+   "1700%"
+  ],
+  "equipment": []
+ },
+ "79": {
+  "skill": "Rhapsody",
+  "effect": "Granger rapidly fires 3 shots at the target, each dealing (+200% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "200%",
+   "200%",
+   "275%"
+  ],
+  "equipment": []
+ },
+ "106": {
+  "skill": "Demonic Force",
+  "effect": "Phoveus enhances the next Basic ATK, dealing (+250% Total Physical ATK) Physical DMG and reducing the target's Hybrid ATK by 10% for 10s. He also gains a Shield equal to 8% of Max HP for 4s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "250%",
+   "250%",
+   "340%"
+  ],
+  "equipment": []
+ },
+ "81": {
+  "skill": "Falling Starmoon",
+  "effect": "Esmeralda coheres the power of Astrospace, gaining Shield equal to 8% of Max HP for 4s. She deals (+400% Total Magic ATK) Magic DMG (DMG decreases with the number of enemies hit) to nearby enemies and stuns them for 0.5s. Passive: Basic ATK deals (+50% Total Physical ATK) Physical DMG and (+50% Total Magic ATK) Magic DMG.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "400%",
+   "400%",
+   "1320%"
+  ],
+  "equipment": []
+ },
+ "78": {
+  "skill": "Khufra's Embrace",
+  "effect": "Khufra gains 300 Shield for 4s and sweeps targets within range in front, dealing (+510% Total Physical ATK) Physical DMG (DMG decreases with the number of enemies hit) and stunning them for 1s.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "510%",
+   "570%",
+   "970%"
+  ],
+  "equipment": []
+ },
+ "1": {
+  "skill": "Moon Arrow",
+  "effect": "Miya gains 35% ATK Speed for 5s. During this time, she shoots 1 extra Split Arrow(s) to deal 50% DMG and trigger ATK Effects.",
+  "scalingLabel": "Split Arrows",
+  "scaling": [
+   "1",
+   "2",
+   "3"
+  ],
+  "equipment": []
+ },
+ "17": {
+  "skill": "Tornado Strike",
+  "effect": "Fanny whirls her blades, dealing (+550% Total Physical ATK) Physical DMG to nearby enemies (DMG decreases with the number of enemies hit) and reducing their healing received by 30%.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "550%",
+   "550%",
+   "695%"
+  ],
+  "equipment": []
+ },
+ "65": {
+  "skill": "Blazing Duet",
+  "effect": "Claude dashes to the current target and shoots for 3s, then returns to his original position. Each shot deals (+90% Total Physical ATK) Physical DMG to enemies and triggers ATK Effects. He gains Control Immunity during skill cast. Passive: When deployed, Claude summons Dexter. Dexter inherits Claude's basic attributes and casts skill when Claude [...]",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "90%",
+   "90%",
+   "325%"
+  ],
+  "equipment": []
+ },
+ "7": {
+  "skill": "Groundsplitter",
+  "effect": "Alucard deals (+500% Total Physical ATK) Physical DMG to the target.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "500%",
+   "500%",
+   "650%"
+  ],
+  "equipment": []
+ },
+ "85": {
+  "skill": "Spectre Step",
+  "effect": "Dyrroth enhances his next Basic ATK, dealing (+270% Total Physical ATK) Physical DMG to the target. Passive: When battle starts, Dyrroth and allies to his left and right gain 5% Hybrid Lifesteal.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "270%",
+   "270%",
+   "340%"
+  ],
+  "equipment": []
+ },
+ "10": {
+  "skill": "Hook Shock",
+  "effect": "Franco launches an iron hook towards the furthest enemy, dealing (+55% Total Physical ATK) Physical DMG. He then drags the enemy back and gains a Shield equal to 10% of his Max HP. Afterward, he deals (+230% Total Physical ATK) Physical DMG to surrounding enemies (DMG decreases with the number of enemies hit).",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "55%",
+   "55%",
+   "85%"
+  ],
+  "equipment": []
+ },
+ "40": {
+  "skill": "Speedy Lightwheel",
+  "effect": "Karrie enters Dual Wield state for the next 6s, gaining 80% ATK Speed. Every ATK releases 2 lightwheels (triggering ATK Effects), each dealing (+70% Total Physical ATK) Physical DMG. Passive: Basic ATKs apply a stack of Lightwheel Mark. Targets with 5 stacks of Lightwheel Mark are pierced for (+130% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "ATK Speed Bonus",
+  "scaling": [
+   "80%",
+   "80%",
+   "120%"
+  ],
+  "equipment": []
+ },
+ "47": {
+  "skill": "Phantom Execution",
+  "effect": "Lancelot dashes, dealing (+170% Total Physical ATK) Physical DMG to enemies along the path. Each cast grants 1 additional dash on the next cast. Max dashes: 3. Passive: After dashing 3 time(s), each dash leaves behind a phantom that deals (+170% Total Physical ATK) Physical DMG to enemies along the path.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "170%",
+   "195%",
+   "450%"
+  ],
+  "equipment": []
+ },
+ "55": {
+  "skill": "Love Waves",
+  "effect": "Angela releases Love Energy toward her current target, dealing (+570% Total Magic ATK) Magic DMG to enemies. Allies hit by the skill restore (+240% Total Magic ATK) HP.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "570%",
+   "570%",
+   "695%"
+  ],
+  "equipment": []
+ },
+ "68": {
+  "skill": "Power of Chaos: Darkening",
+  "effect": "Lunox dashes to a safe location and releases 3 Chaos Assault(s), each dealing (+380% Total Magic ATK) Magic DMG. Killing an enemy grants 1 additional cast of Chaos Assault.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "380%",
+   "410%",
+   "1100%"
+  ],
+  "equipment": []
+ },
+ "90": {
+  "skill": "Knightess' Resolve",
+  "effect": "Silvanna awakens her will, gaining 250 Shield and 30% ATK Speed for 3s.",
+  "scalingLabel": "Shield Bonus",
+  "scaling": [
+   "250",
+   "360",
+   "430"
+  ],
+  "equipment": []
+ },
+ "116": {
+  "skill": "Enhanced Scythe",
+  "effect": "Julian hurls a powerful scythe forward, dealing (+200% Total Magic ATK) Magic DMG to the first enemy hit. The scythe remains in place, dealing (+30% Total Magic ATK) Magic DMG to nearby units every 0.25s for 2s. Upon skill cast, Julian also gains a Shield equal to 15% of Max HP for 4s.",
+  "scalingLabel": "Base DMG",
+  "scaling": [
+   "200%",
+   "200%",
+   "350%"
+  ],
+  "equipment": []
+ },
+ "53": {
+  "skill": "Ultimate Snipe",
+  "effect": "Lesley fires a fatal bullet at a target, dealing (+200% Total Physical ATK) Physical DMG, and summons 4 Leonin(s) to attack random enemies, each dealing (+100% Total Physical ATK) Physical DMG. (All DMG can trigger ATK Effects.) Passive: Lesley gains 45% Crit Chance. Every 1% of extra ATK Speed converts to 3% Crit DMG (Max Crit DMG: 500%). Her [...]",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "200%",
+   "200%",
+   "1000%"
+  ],
+  "equipment": []
+ },
+ "84": {
+  "skill": "Soaring Plume",
+  "effect": "When battle starts, Ling summons a Skyscraper and stands atop it, restoring 20 Mana every 0.5s. Upon reaching full Mana, he charges to the area with the most enemies, dealing (+135% Total Physical ATK) Physical DMG in a small area (DMG decreases with the number of enemies hit) and summons the Skyscraper at a new location. If Ling has no allies, he charges directly to the [...]",
+  "scalingLabel": "AoE DMG",
+  "scaling": [
+   "135%",
+   "145%",
+   "205%"
+  ],
+  "equipment": []
+ },
+ "41": {
+  "skill": "Blast Iron Fist",
+  "effect": "Gatotkaca performs a heavy strike, launching an Enhanced Basic ATK that restores 400 HP and deals (+400% Total Magic ATK) Magic DMG.",
+  "scalingLabel": "Enhanced Basic ATK",
+  "scaling": [
+   "400%",
+   "400%",
+   "550%"
+  ],
+  "equipment": []
+ },
+ "86": {
+  "skill": "Magic Shockwave",
+  "effect": "Lylia summons Gloom to charge forward, dealing (+720% Total Magic ATK) Magic DMG to enemies along the path. (DMG decreases for each enemy penetrated.)",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "720%",
+   "720%",
+   "875%"
+  ],
+  "equipment": []
+ },
+ "100": {
+  "skill": "Abyss Corrosion",
+  "effect": "Passive: When battle starts, Brody grants 10% ATK Speed to himself and allies within 1 tile to his left and right. His Basic ATK causes enemies to take (+20% Total Physical ATK) extra Physical DMG from his subsequent Basic ATKs for 4s. Max Stacks: 5.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "20%",
+   "25%",
+   "30%"
+  ],
+  "equipment": []
+ },
+ "52": {
+  "skill": "Feathered Air Strike",
+  "effect": "Pharsa floats into mid-air. Over the next 4s, she launches up to 4 bombardments prioritizing the location with the most enemies, each dealing (+370% Total Magic ATK) Magic DMG to enemies in range. (DMG decreases with the number of enemies hit.)",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "370%",
+   "370%",
+   "870%"
+  ],
+  "equipment": []
+ },
+ "117": {
+  "skill": "Piercing Strike",
+  "effect": "Fredrinn thrusts his sword forward, dealing (+280% Total Physical ATK) Physical DMG (DMG decreases with the number of enemies hit) and gaining a Shield equal to 10% of his Max HP for 4s. Fredrinn also enhances the next Basic ATK, increasing its range and dealing (+420% Total Physical ATK) Physical DMG.",
+  "scalingLabel": "Physical Bonus",
+  "scaling": [
+   "280%",
+   "280%",
+   "410%"
+  ],
+  "equipment": []
+ },
+ "118": {
+  "skill": "Ha, Electrifying Beats!",
+  "effect": "Joy moves to the tile with the most nearby enemies, dealing (+75% Total Magic ATK) Magic DMG 8 time(s) to enemies on adjacent tiles and gaining Control Immunity. Enemies hit also have 24 Hybrid DEF reduced for 4s (this effect cannot stack).",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "75%",
+   "80%",
+   "100%"
+  ],
+  "equipment": []
+ },
+ "11": {
+  "skill": "Deadly Catch",
+  "effect": "Bane summons a swarm of sharks to sprint forward, dealing (+240% Total Magic ATK) Magic DMG to enemies hit, knocking them airborne and freezing them for 1.2s. Passive: At 3-Star, the number of summoned sharks is greatly increased.",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "240%",
+   "260%",
+   "1100%"
+  ],
+  "equipment": []
+ },
+ "96": {
+  "skill": "Duality",
+  "effect": "Luo Yi summons Energy of Yin, immediately dealing (+275% Total Magic ATK) AoE Magic DMG and stunning enemies for 0.5s. She then applies Energy of Yang, dealing (+135% Total Magic ATK) Magic DMG 3 time(s) to enemies around the target position. (DMG decreases with the number of enemies hit.) Each time Energy of Yin disappears, gain 10% Skill DMG Increase, up...",
+  "scalingLabel": "Magic Bonus",
+  "scaling": [
+   "275%",
+   "280%",
+   "405%"
+  ],
+  "equipment": []
+ }
+}

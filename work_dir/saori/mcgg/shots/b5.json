@@ -1,0 +1,73 @@
+[
+  {
+    "hero": "Karrie",
+    "skill": "Speedy Lightwheel",
+    "effect": "Karrie enters Dual Wield state for the next 6s, gaining 80% ATK Speed. Every ATK releases 2 lightwheels (triggering ATK Effects), each dealing (+70%Total Physical ATK) Physical DMG. Passive: Basic ATKs apply a stack of Lightwheel Mark. Targets with 5 stacks of Lightwheel Mark are pierced for (+130%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "ATK Speed Bonus",
+    "scaling": ["80%", "80%", "120%"],
+    "notes": "Basic ATK DMG: 70%/70%/210%; Physical Bonus: 130%/130%/500%",
+    "equipment": []
+  },
+  {
+    "hero": "Lancelot",
+    "skill": "Phantom Execution",
+    "effect": "Lancelot dashes, dealing (+170%Total Physical ATK) Physical DMG to enemies along the path. Each cast grants 1 additional dash on the next cast. Max dashes: 3. Passive: After dashing 3 time(s), each dash leaves behind a phantom that deals (+170%Total Physical ATK) Physical DMG to enemies along the path.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["170%", "195%", "450%"],
+    "notes": "Path DMG: 170%/195%/450%",
+    "equipment": []
+  },
+  {
+    "hero": "Angela",
+    "skill": "Love Waves",
+    "effect": "Angela releases Love Energy toward her current target, dealing (+570%Total Magic ATK) Magic DMG to enemies. Allies hit by the skill restore (+240%Total Magic ATK) HP.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["570%", "570%", "695%"],
+    "notes": "Magic Bonus on Restore: 240%/240%/300%",
+    "equipment": []
+  },
+  {
+    "hero": "Lunox",
+    "skill": "Power of Chaos: Darkening",
+    "effect": "Lunox dashes to a safe location and releases 3 Chaos Assault(s), each dealing (+380%Total Magic ATK) Magic DMG. Killing an enemy grants 1 additional cast of Chaos Assault.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["380%", "410%", "1100%"],
+    "equipment": []
+  },
+  {
+    "hero": "Silvanna",
+    "skill": "Knightess' Resolve",
+    "effect": "Silvanna awakens her will, gaining 250 Shield and 30% ATK Speed for 3s.",
+    "scalingLabel": "Shield Bonus",
+    "scaling": ["250", "360", "430"],
+    "notes": "ATK Speed Bonus: 30%/40%/60%",
+    "equipment": []
+  },
+  {
+    "hero": "Julian",
+    "skill": "Enhanced Scythe",
+    "effect": "Julian hurls a powerful scythe forward, dealing (+200%Total Magic ATK) Magic DMG to the first enemy hit. The scythe remains in place, dealing (+30%Total Magic ATK) Magic DMG to nearby units every 0.25s for 2s. Upon skill cast, Julian also gains a Shield equal to 15% of Max HP for 4s.",
+    "scalingLabel": "Base DMG",
+    "scaling": ["200%", "200%", "350%"],
+    "notes": "DMG Per Hit: 30%/30%/50%",
+    "equipment": []
+  },
+  {
+    "hero": "Lesley",
+    "skill": "Ultimate Snipe",
+    "effect": "Lesley fires a fatal bullet at a target, dealing (+200%Total Physical ATK) Physical DMG, and summons 4 Leonin(s) to attack random enemies, each dealing (+100%Total Physical ATK) Physical DMG. (All DMG can trigger ATK Effects.) Passive: Lesley gains 45% Crit Chance. Every 1% of extra ATK Speed converts to 3% Crit DMG (Max Crit DMG: 500%). Her",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["200%", "200%", "1000%"],
+    "notes": "Second Physical Bonus row (Leonin): 100%/100%/200%; effect text cut off at bottom (passive continues)",
+    "equipment": []
+  },
+  {
+    "hero": "Ling",
+    "skill": "Soaring Plume",
+    "effect": "When battle starts, Ling summons a Skyscraper and stands atop it, restoring 20 Mana every 0.5s. Upon reaching full Mana, he charges to the area with the most enemies, dealing (+135%Total Physical ATK) Physical DMG in a small area (DMG decreases with the number of enemies hit) and summons the Skyscraper at a new location. If Ling has no allies, he charges directly to the",
+    "scalingLabel": "AoE DMG",
+    "scaling": ["135%", "145%", "205%"],
+    "notes": "Physical Bonus: 340%/380%/1105%; Piercing DMG: 415%/450%// (3-star value shown as '/'); effect text cut off at bottom",
+    "equipment": []
+  }
+]

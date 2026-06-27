@@ -1,0 +1,71 @@
+[
+  {
+    "hero": "Gatotkaca",
+    "skill": "Blast Iron Fist",
+    "effect": "Gatotkaca performs a heavy strike, launching an Enhanced Basic ATK that restores 400 HP and deals (+400%Total Magic ATK) Magic DMG.",
+    "scalingLabel": "Enhanced Basic ATK",
+    "scaling": ["400%", "400%", "550%"],
+    "notes": "HP Regen: 400/700/1500",
+    "equipment": []
+  },
+  {
+    "hero": "Lylia",
+    "skill": "Magic Shockwave",
+    "effect": "Lylia summons Gloom to charge forward, dealing (+720%Total Magic ATK) Magic DMG to enemies along the path. (DMG decreases for each enemy penetrated.)",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["720%", "720%", "875%"],
+    "equipment": []
+  },
+  {
+    "hero": "Brody",
+    "skill": "Abyss Corrosion",
+    "effect": "Passive: When battle starts, Brody grants 10% ATK Speed to himself and allies within 1 tile to his left and right. His Basic ATK causes enemies to take (+20%Total Physical ATK) extra Physical DMG from his subsequent Basic ATKs for 4s. Max Stacks: 5.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["20%", "25%", "30%"],
+    "equipment": []
+  },
+  {
+    "hero": "Pharsa",
+    "skill": "Feathered Air Strike",
+    "effect": "Pharsa floats into mid-air. Over the next 4s, she launches up to 4 bombardments prioritizing the location with the most enemies, each dealing (+370%Total Magic ATK) Magic DMG to enemies in range. (DMG decreases with the number of enemies hit.)",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["370%", "370%", "870%"],
+    "equipment": []
+  },
+  {
+    "hero": "Fredrinn",
+    "skill": "Piercing Strike",
+    "effect": "Fredrinn thrusts his sword forward, dealing (+280%Total Physical ATK) Physical DMG (DMG decreases with the number of enemies hit) and gaining a Shield equal to 10% of his Max HP for 4s. Fredrinn also enhances the next Basic ATK, increasing its range and dealing (+420%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["280%", "280%", "410%"],
+    "notes": "Percentage Shield: 10%/10%/12%; Basic ATK DMG: 420%/420%/575%",
+    "equipment": []
+  },
+  {
+    "hero": "Joy",
+    "skill": "Ha, Electrifying Beats!",
+    "effect": "Joy moves to the tile with the most nearby enemies, dealing (+75%Total Magic ATK) Magic DMG 8 time(s) to enemies on adjacent tiles and gaining Control Immunity. Enemies hit also have 24 Hybrid DEF reduced for 4s (this effect cannot stack).",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["75%", "80%", "100%"],
+    "notes": "Hybrid DEF Reduction: 24/24/24",
+    "equipment": []
+  },
+  {
+    "hero": "Bane",
+    "skill": "Deadly Catch",
+    "effect": "Bane summons a swarm of sharks to sprint forward, dealing (+240%Total Magic ATK) Magic DMG to enemies hit, knocking them airborne and freezing them for 1.2s. Passive: At 3-Star, the number of summoned sharks is greatly increased.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["240%", "260%", "1100%"],
+    "notes": "Control Duration: 1.2/2/3.2",
+    "equipment": []
+  },
+  {
+    "hero": "Luo Yi",
+    "skill": "Duality",
+    "effect": "Luo Yi summons Energy of Yin, immediately dealing (+275%Total Magic ATK) AoE Magic DMG and stunning enemies for 0.5s. She then applies Energy of Yang, dealing (+135%Total Magic ATK) Magic DMG 3 time(s) to enemies around the target position. (DMG decreases with the number of enemies hit.) Each time Energy of Yin disappears, gain 10% Skill DMG Increase, up...",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["275%", "280%", "405%"],
+    "notes": "Second Magic Bonus row (Energy of Yang): 135%/140%/200%; effect text is cut off at the bottom of the screenshot after 'up'",
+    "equipment": []
+  }
+]

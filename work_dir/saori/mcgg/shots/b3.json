@@ -1,0 +1,80 @@
+[
+  {
+    "hero": "Belerick",
+    "skill": "Nature's Strike",
+    "effect": "Belerick enhances his next Basic ATK. It deals (+350%Total Magic ATK) Magic DMG to the target and restores HP equal to 10% of his lost HP.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["350%", "350%", "450%"],
+    "notes": "HP Regen: 10% / 10% / 10%",
+    "equipment": []
+  },
+  {
+    "hero": "Vexana",
+    "skill": "Eternal Guard",
+    "effect": "Vexana locks onto the target with the most nearby enemies and summons Eternal Guard to devastate the battlefield, dealing (+210%Total Magic ATK) Magic DMG to enemies in range and knocking them airborne for 0.6s. Eternal Guard's Basic ATK deals (+195%Total Magic ATK) Magic DMG. As Protagonist, skill hits trigger an extra shockwave at the target",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["210%", "210%", "545%"],
+    "notes": "DMG Increase: 245% / 250% / 545%; Basic ATK DMG: 195% / 210% / 595%; Sustained DMG: 450% / 450% / 1000%",
+    "equipment": []
+  },
+  {
+    "hero": "Selena",
+    "skill": "Abyssal Trap",
+    "effect": "Selena summons an Abyssal Devil to bite the target, dealing (+800%Total Magic ATK) Magic DMG.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["800%", "800%", "950%"],
+    "equipment": []
+  },
+  {
+    "hero": "Leomord",
+    "skill": "Momentum",
+    "effect": "Leomord charges briefly to deal (+480%Total Physical ATK) Physical DMG to enemies in front. He gains Control Immunity and 40% DMG Reduction while charging. When he is the Protagonist, the skill changes to Phantom Steed when battle starts: Leomord becomes briefly untargetable and enters Mounted State.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["480%", "480%", "1425%"],
+    "notes": "ATK Speed: 35% / 50% / 100%; second Physical Bonus row: 180% / 180% / 1085%",
+    "equipment": []
+  },
+  {
+    "hero": "Saber",
+    "skill": "Orbiting Swords",
+    "effect": "Saber releases 5 Orbiting Sword(s) that circle around him, dealing (+130%Total Physical ATK) Physical DMG 5 times to surrounding enemies. (DMG decreases with the number of enemies hit.)",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["130%", "130%", "210%"],
+    "equipment": []
+  },
+  {
+    "hero": "Yu Zhong",
+    "skill": "Soul Grip",
+    "effect": "Yu Zhong unleashes 3 Dragon Soul ATKs. The first 2 ATKs deal (+210%Total Physical ATK) Physical DMG to enemies in front. The 3rd ATK has enhanced range and deals (+290%Total Physical ATK) Physical DMG. DMG decreases with the number of enemies hit. Passive: Dragon Soul ATK counts as Basic ATK and has a",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["210%", "210%", "580%"],
+    "notes": "Enhanced DMG: 290% / 290% / 770%",
+    "equipment": []
+  },
+  {
+    "hero": "Ruby",
+    "skill": "Don't Run, Wolf King!",
+    "effect": "Ruby dashes to the position within 3 tile(s) with the most enemies. She then deals (+160%Total Physical ATK) Physical DMG twice to surrounding enemies and taunts them for 3s. Passive: When taking DMG, Ruby has a 25% chance to deal (+50%Total Physical ATK) Physical DMG twice to surrounding enemies and gains 2% Hybrid Lifesteal (Max Stacks: 5). At",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["160%", "170%", "600%"],
+    "notes": "second Physical Bonus row: 50% / 55% / 160%",
+    "equipment": []
+  },
+  {
+    "hero": "Kagura",
+    "skill": "Yin Yang Overturn",
+    "effect": "Kagura releases Seimei Umbrella, dealing (+770%Total Magic ATK) AoE Magic DMG. (DMG decreases with the number of enemies hit.) Allies in the area gain a 350 Shield for 4s.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["770%", "770%", "1700%"],
+    "notes": "Shield: 350 / 500 / 1300",
+    "equipment": []
+  },
+  {
+    "hero": "Granger",
+    "skill": "Rhapsody",
+    "effect": "Granger rapidly fires 3 shots at the target, each dealing (+200%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["200%", "200%", "275%"],
+    "equipment": []
+  }
+]

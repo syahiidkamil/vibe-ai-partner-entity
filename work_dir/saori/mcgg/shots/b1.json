@@ -1,0 +1,81 @@
+[
+  {
+    "hero": "Helcurt",
+    "skill": "Deadly Stinger",
+    "effect": "Helcurt gains 50% ATK Speed Boost for 4s, and fires 5 Deadly Stinger(s) forward, each dealing (+75%Total Physical ATK) Physical DMG to enemies. On first skill cast, Helcurt blinks to the furthest enemy within 3 tiles (prioritizes ranged Heroes).",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["75%", "75%", "110%"],
+    "notes": "ATK Speed Bonus: 50% / 50% / 50%",
+    "equipment": []
+  },
+  {
+    "hero": "Hilda",
+    "skill": "Power of Wildness",
+    "effect": "Hilda slashes powerfully, dealing (+260%Total Physical ATK) Physical DMG to the target and surrounding enemies (DMG decreases with the number of enemies hit), and gaining a Shield equal to 10% of Max HP for 4s.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["260%", "260%", "320%"],
+    "notes": "Shield: 10% / 10% / 12%",
+    "equipment": []
+  },
+  {
+    "hero": "Minotaur",
+    "skill": "Motivation Roar",
+    "effect": "Minotaur heals himself and the ally with the lowest HP for 20% of the target's Max HP. Passive: When battle starts, grants 350 Shield to himself and allies to his left and right.",
+    "scalingLabel": "HP Regen",
+    "scaling": ["20%", "20%", "30%"],
+    "notes": "Shield: 350 / 630 / 1880",
+    "equipment": []
+  },
+  {
+    "hero": "Odette",
+    "skill": "Swan Song",
+    "effect": "Odette dances, gaining 500 Shield and dealing (+95%Total Magic ATK) Magic DMG to nearby enemies in a large area every 0.5s for 5s (DMG decreases with the number of enemies hit). She is immune to control effects during the skill. At 3-Star, when casting the skill, she releases 5 swan(s) every 0.5s to deal (+65%Total Magic ATK) Magic DMG to enemies in a",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["95%", "100%", "350%"],
+    "notes": "Shield: 500 / 900 / 9685. Effect text truncated at bottom of screenshot (the 3-Star clause is cut off mid-sentence).",
+    "equipment": []
+  },
+  {
+    "hero": "Aurora",
+    "skill": "Hailstone Blast",
+    "effect": "Aurora summons an Icy Meteorite, dealing (+200%Total Magic ATK) Magic DMG to enemies within medium range. (DMG decreases with the number of enemies hit.) Multiple Meteorites then fall, dealing (+75%Total Magic ATK) Magic DMG 5 time(s). (DMG decreases with the number of enemies hit.)",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["200%", "210%", "500%"],
+    "notes": "Second Magic Bonus row (the falling meteorites): 75% / 75% / 190%",
+    "equipment": []
+  },
+  {
+    "hero": "Martis",
+    "skill": "Decimation",
+    "effect": "Martis deals (+365%Total Physical ATK) Physical DMG to the target and gains a Shield equal to 8% of his Max HP for 3s.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["365%", "365%", "450%"],
+    "notes": "Shield: 8% / 8% / 10%",
+    "equipment": []
+  },
+  {
+    "hero": "Gusion",
+    "skill": "Shadowblade Slaughter",
+    "effect": "Gusion throws multiple daggers forward and recalls them, each dealing (+90%Total Magic ATK) Magic DMG on hit. After the first skill cast, he dashes to the enemy with the highest DMG output within 4 tiles and recalls the daggers, dealing the same amount of Magic DMG.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["90%", "90%", "235%"],
+    "equipment": []
+  },
+  {
+    "hero": "Badang",
+    "skill": "Fist Crack",
+    "effect": "Badang punches forward 8 Fist Wind(s), each dealing (+50%Total Physical ATK) Physical DMG to enemies (DMG decreases with the number of enemies hit). Badang gains Control Immunity while punching. When taking DMG, Badang has a 50% probability to punch the target once, dealing (+85%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["50%", "50%", "225%"],
+    "notes": "DMG Increase: 85% / 90% / 420%",
+    "equipment": []
+  },
+  {
+    "hero": "Balmond",
+    "skill": "Cyclone Sweep",
+    "effect": "Balmond gains 10 Hybrid DEF and launches 14 strike(s) within 3s, each dealing (+45%Total Physical ATK) Physical DMG to adjacent enemies.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["45%", "55%", "70%"],
+    "equipment": []
+  }
+]

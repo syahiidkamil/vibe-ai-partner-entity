@@ -1,0 +1,78 @@
+[
+  {
+    "hero": "Terizla",
+    "skill": "Penalty Zone",
+    "effect": "Terizla leaps up and slams down forcefully, dealing (+300%Total Physical ATK) Physical DMG to adjacent enemies and knocking them airborne for 0.6s, while gaining a Shield equal to 12% of his Max HP for 4s.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["300%", "300%", "1300%"],
+    "notes": "Percentage Shield: 12% / 15% / 20%",
+    "equipment": []
+  },
+  {
+    "hero": "Clint",
+    "skill": "Quick Draw",
+    "effect": "Clint rapidly shoots 5 bullets at the target, each dealing (+125%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["125%", "125%", "200%"],
+    "equipment": []
+  },
+  {
+    "hero": "Eudora",
+    "skill": "Forked Lightning",
+    "effect": "Eudora casts Forked Lightning, dealing (+430%Total Magic ATK) Magic DMG to the target and inflicting Vulnerability for 4s, increasing their DMG taken by 5%.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["430%", "430%", "520%"],
+    "equipment": []
+  },
+  {
+    "hero": "Hanzo",
+    "skill": "Ninjutsu: Demon Feast",
+    "effect": "Hanzo deals (+220%Total Physical ATK) Physical DMG to the target, restores 20% lost HP, and increases Skill DMG by 20% (up to 60%).",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["220%", "220%", "280%"],
+    "equipment": []
+  },
+  {
+    "hero": "Masha",
+    "skill": "Thunderclap",
+    "effect": "Masha deals (+330%Total Physical ATK) Basic ATK Physical DMG to the current target and adjacent enemies (DMG decreases with the number of enemies hit), gaining 70% ATK Speed and 5% Lifesteal for 3s.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["330%", "330%", "410%"],
+    "equipment": []
+  },
+  {
+    "hero": "Tigreal",
+    "skill": "Implosion",
+    "effect": "Tigreal unleashes the power of his hammer, gaining a Shield equal to 10% of his Max HP for 4s. He then smashes adjacent enemies, dealing (+315%Total Physical ATK) Physical DMG and stunning them for 0.6s.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["315%", "315%", "460%"],
+    "notes": "Stun Duration: 0.6 / 0.8 / 1.2; Percentage Shield: 10% / 12% / 16%",
+    "equipment": []
+  },
+  {
+    "hero": "Cecilion",
+    "skill": "Bat Impact",
+    "effect": "Cecilion commands a bat-like beast to assault the target, dealing (+735%Total Magic ATK) Magic DMG. Passive: When battle starts, provide 10 Mana to himself and allies to his left and right.",
+    "scalingLabel": "Magic Bonus",
+    "scaling": ["735%", "735%", "885%"],
+    "equipment": []
+  },
+  {
+    "hero": "Irithel",
+    "skill": "Strafe",
+    "effect": "Irithel launches flaming arrows at the target, dealing (+135%Total Physical ATK) Physical DMG, enhancing the next 3 Basic ATK(s). On hit, the enhanced Basic ATK deals (+320%Total Physical ATK) Physical DMG. Passive: Each Basic ATK deals 3 hit(s) of (+35%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["135%", "135%", "400%"],
+    "notes": "Basic ATK DMG: 320% / 320% / 850%",
+    "equipment": []
+  },
+  {
+    "hero": "Alpha",
+    "skill": "Force Swing",
+    "effect": "Unleashes 2 sweeping slashes in a fan-shaped area in the front, dealing (+200%Total Physical ATK) Physical DMG to enemies. (DMG decreases for each enemy hit.) From the third cast onward, additionally releases 3 linear energy waves forward at different angles, each dealing (+110%Total Physical ATK) Physical DMG.",
+    "scalingLabel": "Physical Bonus",
+    "scaling": ["200%", "220%", "900%"],
+    "notes": "Second Physical Bonus row (energy waves): 110% / 115% / 470%",
+    "equipment": []
+  }
+]
