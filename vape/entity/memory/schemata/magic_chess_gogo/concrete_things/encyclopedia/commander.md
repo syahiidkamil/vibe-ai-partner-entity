@@ -1,54 +1,57 @@
-# Encyclopedia: Commander (Level & EXP, Skills, Commander DMG)
+# Encyclopedia: Commander
 
-Verbatim, in-app Encyclopedia > **Commander** tab, plus the first-party Commander-DMG model.
+Transcribed from the in-app Encyclopedia screenshots (commander_01/02.png), 2026-06-28, live
+client v1.2.88.302.2. The screenshots are the source of truth; this captures the Commander tab
+in full. The tab has three sections, in this order: EXP, Upgrade Cost, Commander DMG.
 
-## Level & EXP (id `3003307285`)
+## EXP
+
 > 1. At the start of each round, the Commander will obtain 2 EXP.
 > 2. Players can use Gold to exchange for the equivalent amount of EXP.
 > 3. The Commander reaches the next level by gaining enough EXP.
 > 4. At a higher Commander level, you can deploy more Heroes to battle.
 > 5. The chance to get high-quality Heroes from the Shop also increases with Commander Level.
 
-Level gates **Hero Capacity** (board size) and shifts the shop's per-tier appearance odds. The
-exact level->capacity and level->tier-odds tables are data-driven and not in the localization
-prose (the shop-probability grid is a numeric table); treat both as **unknown** until pulled clean.
+So Commander level does two things beyond unlocking the next level: it raises how many Heroes
+deploy to battle, and it improves the Shop's odds of higher-quality Heroes. The exact
+level-to-capacity and level-to-shop-odds numbers are not shown on this tab.
 
-## Commander Skills (id `3003307286`)
-> 1. Each Commander has 3 unique skills.
-> 2. The first skill will be unlocked when obtaining the Commander. The other 2 skills can be
->    unlocked by using the Commander to play more battles.
-> 3. These 2 skills can also be unlocked by purchasing the skin of the Commander.
+## Upgrade Cost
 
-The Commander roster and skills: [[commanders/index]].
+Gold required to advance the Commander one level (shown as current level ">>" next level):
 
-## Commander DMG (the player-vs-player damage model)
-First-party, ids `2912711205` / `2912711204` / `2912711203`:
+| Level     | 3 >> 4 | 4 >> 5 | 5 >> 6 | 6 >> 7 | 7 >> 8 | 8 >> 9 | 9 >> 10 (Max) |
+|-----------|--------|--------|--------|--------|--------|--------|---------------|
+| Gold req. | 3      | 8      | 20     | 32     | 40     | 54     | 74            |
+
+Level 10 is the Max. The table starts at level 3 >> 4, so the cost of the first two upgrades
+(1 >> 2 and 2 >> 3) is not shown on this tab.
+
+## Commander DMG
 
 > Commander DMG: After each round, the winning Commander deals a certain amount of DMG to the
 > losing Commander. DMG varies by round and the number of surviving units.
-> **Commander DMG = Round Base DMG + Total Star Levels of Surviving Units**
+> Commander DMG = Round Base DMG + Total Star Levels of Surviving Units
 
-> Special Case: Certain surviving non-Hero units increase Commander DMG by **1**. If the round ends
-> in a draw, **both sides deal DMG to each other**.
+Round Base DMG by round range (round labels as shown in-app, e.g. III-4), start ">>" end:
 
-So a lost PvP round costs HP equal to: the round's base DMG, plus the sum of the winner's surviving
-units' star levels, plus 1 per surviving non-Hero (summoned) unit.
+| Rounds         | Base DMG |
+|----------------|----------|
+| I-2 >> I-4     | 3        |
+| II-1 >> II-4   | 5        |
+| II-5 >> II-6   | 6        |
+| III-1 >> III-3 | 7        |
+| III-4 >> III-6 | 11       |
+| IV-1 >> IV-3   | 13       |
+| IV-4 >> IV-6   | 14       |
+| V-1 >> V-5     | 15       |
 
-**Round Base DMG** (first-party, `MCClassicsBattleConfig_S6.txt` `<SRoundExtraDamage>`):
+> Special Case: Certain surviving non-Hero units increase Commander DMG by 1. If the round ends
+> in a draw, both sides deal DMG to each other.
 
-| Rounds | Base DMG | Stage |
-|--------|----------|-------|
-| 2-4    | 3        | I     |
-| 5-8    | 5        | II    |
-| 9-10   | 6        | II    |
-| 11-13  | 7        | III   |
-| 14-16  | 11       | III   |
-| 17-19  | 13       | IV    |
-| 20-22  | 14       | IV    |
-| 23-27+ | 15       | IV    |
+So a lost PvP round costs HP equal to: the round's base DMG, plus the sum of the winner's
+surviving units' star levels, plus 1 for each surviving non-Hero unit. Base DMG climbs from 3 in
+stage I to a flat 15 by stage V, so a clean late-game board is a big HP swing per loss. The table
+starts at I-2, so the first round (I-1) deals no Commander DMG.
 
-(Round 1 has no entry. Values are flat at 15 from round 23 onward. This is why a clean board late
-ends games fast: base 15 + a full late-game board of 3-stars is a large HP swing each loss.)
-
-Note: a separate **Arena** side-mode uses a flat **-25 HP per loss** instead of this scaling
-(id `2912711204`); see [[season_information]].
+The roster of Commanders and their skills lives at [[commanders/index]].

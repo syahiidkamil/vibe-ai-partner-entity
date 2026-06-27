@@ -1,5 +1,8 @@
 # Encyclopedia: Game Rules
 
+Transcribed from the in-app Encyclopedia screenshot (game_rules.png), 2026-06-28, live client
+v1.2.88.302.2.
+
 Verbatim, in-app Encyclopedia > **Game Rules** tab. Source: localization id `3003306606`.
 
 > 1. All players purchase to recruit Heroes from the **Shared Hero Pool** to build their battle
