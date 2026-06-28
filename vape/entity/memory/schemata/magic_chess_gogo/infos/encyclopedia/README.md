@@ -35,5 +35,6 @@ Information. (A "Special Attack" label, id 1982040856, also sits in the strip.)
 - [[mode_and_feature_guides]] — the other MCGG guides NOT on the tab bar (Go Go Auction, Draft
   Pick, Commander Power Card, Crystal Dice, Magic Crystal/Rune, Auto Buy, Lock Shop, Collection
   Points, the Heartbond synergy tutorial) + an honest list of the image/interactive/UI-only ones.
+- [[source_map]]: provenance for every claim (names, effects, numbers, the item-name wall).
 
 Expiry and scope: [[disclaimer]].
