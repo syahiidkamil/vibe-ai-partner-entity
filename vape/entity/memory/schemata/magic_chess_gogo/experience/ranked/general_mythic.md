@@ -22,6 +22,24 @@ weak boards a custom-vs-computer match shows ([custom replay](../custom_with_com
   shop high-tier odds outrun a slow-leveling player.
 - **They scale fast.** Power arrives early and compounds, it does not wait.
 
+## The intentional-loss line (reward-priority abuse)
+
+Some players **lose on purpose early** to exploit the catch-up mechanics. The Go Go Box reward
+selections are **lowest-HP-first**, so the player sitting lowest picks before everyone else. The big
+one is the **Reward Selection after Stage I ends** (8 equipment + 3 heroes on offer, sequential, one
+taken). By deliberately dropping Stage I rounds, where HP is cheapest (base DMG 3), a player tanks
+their HP to the bottom of the table and gets **first pick of the best equipment or hero** before the
+leaders touch the board. It stacks two ways: the intentional losses also build a **loss streak**
+(streak gold 1;1;2;3, same payout as a win streak), so the line buys reward priority *and* econ at
+once, paid for in early HP that is cheap anyway. They then bank the lead and **spike back in Stage
+III** once the wallet is fat.
+
+It is a real line, not just an opponent quirk: I can run it myself when my early board is weak (see
+the lowroll branch in [[../../strategy/general_contingency_plan]]). The caution is the same one this
+whole note is about: at Mythic, opponents power early, so dropping too low risks a single bad round
+eliminating me before I stabilize. Lose *cheap* HP on purpose, never *expensive* HP, and never past
+the point where a leader's spiked board can close me out.
+
 ## The trap this sets for me
 
 A **pure interest economy** loses here. Hoarding to **20 Gold for the +4 interest cap** and

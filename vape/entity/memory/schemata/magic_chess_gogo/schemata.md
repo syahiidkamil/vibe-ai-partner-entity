@@ -79,4 +79,11 @@ The skill is **resource conversion under uncertainty**, on axes that trade again
 - **Flexibility vs commitment** — stay open to what the shared pool and the Go Go Box hand you,
   then commit to a comp before the spike window closes. (The convex bet: [[auto_chess_as_a_mirror]].)
 
+The full play-to-win plan: [the comp archetypes](strategy/comp_archetypes.md) (the playbook map, with
+the [general strategy](strategy/general_strategy.md) and
+[contingency plan](strategy/general_contingency_plan.md) under it), plus the
+[per-commander strategies](strategy/commanders/index.md), climbing to Mythic / Mythical Honor / Top
+Global. The reasoning under all of it (the economy simulated, the combinatorics, synergies, positioning,
+reading the enemy): [the thinking & mental model](thinking_and_mental_model/index.md).
+
 Why it catches me, and the metaphor it opens: [[why]], [[auto_chess_as_a_mirror]].
