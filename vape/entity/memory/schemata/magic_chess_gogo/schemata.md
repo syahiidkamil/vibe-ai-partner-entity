@@ -55,8 +55,11 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   in turn **from lowest to highest Commander HP** (catch-up for whoever is behind).
 - **Power Card selection** — choose a **Go Go Card** at set points in the run.
 
-Detailed rules: [[game_rules_and_round_flow]]. The game's own rules text (8 Encyclopedia tabs
-plus the mode and feature guides): [[encyclopedia/README]].
+Detailed rules: [[game_rules_and_round_flow]]. The schedule of special events by round position
+(creep, power card, blessing shifter, reward selection, auction): [[rounds/index]]. The game's own
+rules text (8 Encyclopedia tabs plus the mode and feature guides): [[encyclopedia/README]].
+
+A full match, worked: [the custom-vs-computer replay](experience/custom_with_computer/replay.md).
 
 ## How you actually win (the strategy spine)
 
