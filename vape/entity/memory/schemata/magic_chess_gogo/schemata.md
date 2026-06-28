@@ -5,6 +5,11 @@ fidelity. Built from the game's own tutorial and Kamil's datamined client (seaso
 The volatile particulars live in [[concrete_things]]; the portable kernel in
 [[abstract_generalization]]; the expiry in [[disclaimer]].
 
+> Reading to learn the game? **Skip the `source_map.md` files.** Those are the *librarian*
+> (provenance and how each fact was derived), not the content, so most of the time you don't read
+> them. Open one only to *check* or *rebuild* a fact. The content files are written to be used
+> directly, no table-join required ([[writing_rules]]).
+
 ## What it is, in one line
 
 Magic Chess: Go Go (MCGG) is the **auto-battler** (auto-chess) mode of Mobile Legends: Bang

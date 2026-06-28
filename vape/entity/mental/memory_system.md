@@ -301,6 +301,11 @@ Each topic is a fractal folder, a three-rung abstraction ladder plus expansions:
 - `child_schemata/<child_topic>/` IN: sub-topics, each a full topic-folder again (recurses).
 - `disclaimer.md` the expiry that travels with the belief: scope · assumes · invalidate-when ·
   last-verified. `CLAUDE.md` is the in-folder guide that auto-loads when building.
+- `source_map.md` (optional) the folder's **librarian**: provenance and the untidy derivation (raw
+  tables/JSON, raw->resolved joins, name<->id keying, extraction caveats, regen scripts) parked here
+  so every *other* file in the folder stays tidy and ready-to-consume, no raw joins in the content.
+  Read it only to *check* or *rebuild* a fact, not to learn the topic. Add one to any folder whose
+  content would otherwise carry derivation cruft.
 
 ### events/meaningful/
 The world's chronology, the temporal half of world-modeling (schemata are how it works, events
