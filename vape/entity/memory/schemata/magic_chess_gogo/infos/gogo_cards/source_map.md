@@ -36,3 +36,13 @@ pass for effects/rarity; it remains only as the name-fragment record.
 The internal card-quality scaling table (the engine numbers behind the `I/II/III` tiering) is not
 decoded, but every **displayed** output is captured from the UI, so nothing player-visible is
 missing. Re-capture on a season patch.
+
+## Observed-in-play assumptions (not datamined)
+
+The "Observed in play" block in [index](index.md) (offerings synergy-biased toward deployed/benched
+heroes; the commander's own Power Card always in the I-2 offer; 2 refreshes per selection, one card
+each) is **play-derived**, from the custom-vs-computer
+[replay](../../experience/custom_with_computer/replay.md) and Kamil's play. Held as high-confidence
+assumptions, not data facts; verify and adjust as more matches are seen. The refresh count and the
+commander-card guarantee are directly visible in the replay screenshots; the synergy bias is an
+inference from offering patterns and is the softest of the three.
