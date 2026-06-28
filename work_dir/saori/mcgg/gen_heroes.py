@@ -15,12 +15,12 @@ import json, collections, os
 
 ROOT = "vape/entity/storage/magic-chess-gogo/game-client-from-friend/dataset_s6.json"
 SHOTS = "work_dir/saori/mcgg/screenshot_heroes.json"   # optional, from the screenshot pass
-OUT = "vape/entity/memory/schemata/magic_chess_gogo/concrete_things/heroes"
+OUT = "vape/entity/memory/schemata/magic_chess_gogo/infos/heroes"
 os.makedirs(OUT, exist_ok=True)
 
 # The 20 synergy names, first-party confirmed 2026-06-28 (loc name-bands + FX_Fetter + m_Sort).
 KNOWN = {1: "Bruiser", 2: "Dauntless", 3: "Defender", 4: "Weapon Master", 5: "Marksman",
-         6: "Mage", 7: "Stargazer", 8: "Assassin", 9: "Scavenger", 10: "Phasewarper",
+         6: "Mage", 7: "Stargazer", 8: "Swiftblade", 9: "Scavenger", 10: "Phasewarper",
          50: "Emberlord", 51: "Exorcist", 52: "Heartbond", 53: "Astro Power", 54: "Dragoncaller",
          55: "Neobeasts", 56: "Kishin", 57: "Enchanted Tales", 58: "Mystic Meow",
          59: "Northern Vale"}

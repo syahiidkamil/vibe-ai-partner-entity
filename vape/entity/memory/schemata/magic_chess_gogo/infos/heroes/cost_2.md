@@ -78,7 +78,7 @@ Low tier: still common, the bridge into mid-game synergy.  11 heroes at this cos
 
 ### Hanzo  (id 69, cost 2)
 
-- **Class:** Assassin  ·  **Faction:** Emberlord  ·  **Position:** Front-row
+- **Class:** Swiftblade  ·  **Faction:** Emberlord  ·  **Position:** Front-row
 - **Skill (Ninjutsu: Demon Feast):** Hanzo deals (+220% Total Physical ATK) Physical DMG to the target, restores 20% lost HP, and increases Skill DMG by 20% (up to 60%).
 - **Physical Bonus (1/2/3 star):** 220% / 220% / 280%
 
@@ -90,7 +90,7 @@ Low tier: still common, the bridge into mid-game synergy.  11 heroes at this cos
 
 ### Joy  (id 118, cost 2)
 
-- **Class:** Assassin  ·  **Faction:** Northern Vale  ·  **Position:** Back-row
+- **Class:** Swiftblade  ·  **Faction:** Northern Vale  ·  **Position:** Back-row
 - **Skill (Ha, Electrifying Beats!):** Joy moves to the tile with the most nearby enemies, dealing (+75% Total Magic ATK) Magic DMG 8 time(s) to enemies on adjacent tiles and gaining Control Immunity. Enemies hit also have 24 Hybrid DEF reduced for 4s (this effect cannot stack).
 - **Magic Bonus (1/2/3 star):** 75% / 80% / 100%
 

@@ -42,7 +42,7 @@ Mid tier: the contested workhorses, common 3-star targets.  12 heroes at this co
 
 ### Helcurt  (id 51, cost 3)
 
-- **Class:** Assassin  ·  **Faction:** Astro Power  ·  **Position:** Front-row
+- **Class:** Swiftblade  ·  **Faction:** Astro Power  ·  **Position:** Front-row
 - **Skill (Deadly Stinger):** Helcurt gains 50% ATK Speed Boost for 4s, and fires 5 Deadly Stinger(s) forward, each dealing (+75% Total Physical ATK) Physical DMG to enemies. On first skill cast, Helcurt blinks to the furthest enemy within 3 tiles (prioritizes ranged Heroes).
 - **Physical Bonus (1/2/3 star):** 75% / 75% / 110%
 
@@ -126,7 +126,7 @@ Mid tier: the contested workhorses, common 3-star targets.  12 heroes at this co
 
 ### Saber  (id 3, cost 3)
 
-- **Class:** Assassin  ·  **Faction:** Exorcist  ·  **Position:** Front-row
+- **Class:** Swiftblade  ·  **Faction:** Exorcist  ·  **Position:** Front-row
 - **Skill (Orbiting Swords):** Saber releases 5 Orbiting Sword(s) that circle around him, dealing (+130% Total Physical ATK) Physical DMG 5 times to surrounding enemies. (DMG decreases with the number of enemies hit.)
 - **Physical Bonus (1/2/3 star):** 130% / 130% / 210%
 

@@ -30,7 +30,7 @@ High tier: strong carries, scarce in the pool.  12 heroes at this cost.
 
 ### Gusion  (id 56, cost 4)
 
-- **Class:** Assassin  ·  **Faction:** Dragoncaller  ·  **Position:** Front-row
+- **Class:** Swiftblade  ·  **Faction:** Dragoncaller  ·  **Position:** Front-row
 - **Skill (Shadowblade Slaughter):** Gusion throws multiple daggers forward and recalls them, each dealing (+90% Total Magic ATK) Magic DMG on hit. After the first skill cast, he dashes to the enemy with the highest DMG output within 4 tiles and recalls the daggers, dealing the same amount of Magic DMG.
 - **Magic Bonus (1/2/3 star):** 90% / 90% / 235%
 

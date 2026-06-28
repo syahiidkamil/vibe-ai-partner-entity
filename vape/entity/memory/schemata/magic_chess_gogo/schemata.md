@@ -39,7 +39,7 @@ rounds, you do not control it in the fight. Last Commander standing wins.
   [[heroes/index]] (the `heroes/` folder, organized by cost tier).
 - **Synergies** ("Sort"/relations) — team bonuses that switch on at **member-count thresholds**
   (2/4/6, some factions reaching 10). 20 total: 10 **class** (role-pure: Marksman, Mage,
-  Defender, Assassin, ...) and 10 **faction** (origin-mixed: Dragoncaller, ...). List:
+  Defender, Swiftblade, ...) and 10 **faction** (origin-mixed: Dragoncaller, ...). List:
   [[synergies]].
 - **Equipment** — stat items held on heroes (up to 3 gear slots each). 61 distinct items (97
   rows: each has a Basic and often an Enhanced variant), stat blocks of (attr, value), won from

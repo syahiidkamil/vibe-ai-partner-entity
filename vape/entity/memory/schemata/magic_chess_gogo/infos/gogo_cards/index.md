@@ -32,7 +32,7 @@ The card picker shows tabs: **All, Power Cards, Orange Cards, Purple Cards, Blue
   the start of Round II-3). At maximum quality, the upgrade pays out a random **Black Dragon
   Treasure** instead (`loc[2212550713]`, `loc[2212545908]`).
 - **Interaction with comps.** A lifesteal card rewards a sustain board; a free-star-up card rewards
-  committing to those heroes' [[../synergies]]; an economy card funds a later spike
+  committing to those heroes' [[../synergies/synergies]]; an economy card funds a later spike
   ([[../equipment_and_economy]]). The Go Go Box round ([[../game_rules_and_round_flow]]) supplies
   the pedestal rewards; cards bend the whole run.
 

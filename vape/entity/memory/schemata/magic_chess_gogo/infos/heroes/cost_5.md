@@ -78,7 +78,7 @@ Top tier: the legendaries, rarest pulls, game-deciding when starred.  9 heroes a
 
 ### Ling  (id 84, cost 5)
 
-- **Class:** Assassin  ·  **Faction:** Neobeasts  ·  **Position:** Front-row
+- **Class:** Swiftblade  ·  **Faction:** Neobeasts  ·  **Position:** Front-row
 - **Skill (Soaring Plume):** When battle starts, Ling summons a Skyscraper and stands atop it, restoring 20 Mana every 0.5s. Upon reaching full Mana, he charges to the area with the most enemies, dealing (+135% Total Physical ATK) Physical DMG in a small area (DMG decreases with the number of enemies hit) and summons the Skyscraper at a new location. If Ling has no allies, he charges directly to the [...]
 - **AoE DMG (1/2/3 star):** 135% / 145% / 205%
 
