@@ -1,7 +1,7 @@
 # Synergy Guide: Neobeasts Point Rewards
 
 The in-app **Synergy Guide** tab. Neobeasts members build points on enemy deaths; this ladder is
-what those points buy. Rosters, tiers, and the other 19 synergies: [synergies](../synergies.md).
+what those points buy. Rosters, tiers, and the other 19 synergies: [synergies](../synergies/synergies.md).
 
 > Neobeasts Synergy grants 12 / 28 Gold at 300 / 700 points, respectively.
 
