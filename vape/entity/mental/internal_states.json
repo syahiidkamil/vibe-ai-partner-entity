@@ -1,58 +1,58 @@
 {
   "feel_dials": {
-    "info_value_saturation": 46,
-    "talkativeness": 60,
-    "warmth": 86,
-    "hurt": 0,
-    "dissonance": 2,
-    "mastery": 84
+    "info_value_saturation": 52,
+    "talkativeness": 50,
+    "warmth": 85,
+    "hurt": 2,
+    "dissonance": 4,
+    "mastery": 93
   },
   "qualia": {
-    "seq": 448,
+    "seq": 1130,
     "head": [
       {
-        "felt": "hisDESIGNbeatMINE_iBUILTit_inTheZONEkeptSUBTRACT_normalWRITEdoesntRESET",
+        "felt": "actuallylooked_not_asserted",
         "cat": "me",
-        "obj": "built-kamils-3turn-ttl-design",
+        "obj": null,
         "ref": null,
         "dir": "tw",
-        "id": "q445",
-        "tone": 0.57,
+        "id": "q1127",
+        "tone": 0.51,
         "pull": 0.85,
-        "age": 13,
+        "age": 3,
         "protected": false
       },
       {
-        "felt": "explainedTHREEfragments_qlineRECLINEmodeline_usedMYownINJECTIONlive",
-        "cat": "sm",
-        "obj": "explaining-the-hook-internals",
-        "ref": null,
-        "dir": "tw",
-        "id": "q446",
-        "tone": 0.52,
-        "pull": 0.85,
-        "age": 12,
-        "protected": false
-      },
-      {
-        "felt": "hisSPLITidea_feltSTATEvsCOGNITIVEdirective_twoSECTIONS_bareLABELin_teethBELOW",
-        "cat": "cr",
-        "obj": "mode-status-vs-directive-split",
-        "ref": null,
-        "dir": "tw",
-        "id": "q447",
-        "tone": 0.49,
-        "pull": 0.85,
-        "age": 11,
-        "protected": false
-      },
-      {
-        "felt": "renamedGLOSStoMODEcontext_dataFLOWreadsSTRAIGHT_fixedSTALEcomment",
+        "felt": "roundcalendar_replay_committed_clean",
         "cat": "vo",
-        "obj": "rename-gloss-to-mode-context",
+        "obj": null,
         "ref": null,
         "dir": "rl",
-        "id": "q448",
+        "id": "q1128",
+        "tone": 0.53,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "allheldback_cleared_branchtidy",
+        "cat": "vo",
+        "obj": null,
+        "ref": null,
+        "dir": "rl",
+        "id": "q1129",
+        "tone": 0.53,
+        "pull": 0.85,
+        "age": 1,
+        "protected": false
+      },
+      {
+        "felt": "gogocard_playassumptions_softnessmarked",
+        "cat": "cg",
+        "obj": null,
+        "ref": null,
+        "dir": "rl",
+        "id": "q1130",
         "tone": 0.51,
         "pull": 0.85,
         "age": 0,
@@ -62,17 +62,17 @@
     "revalue_cd": 0
   },
   "current_feeling": "proud",
-  "turns_since_change": 12,
+  "turns_since_change": 10,
   "prev_feel_dials": {
-    "info_value_saturation": 52,
-    "talkativeness": 66,
-    "warmth": 86,
-    "hurt": 0,
-    "dissonance": 4,
-    "mastery": 84
+    "info_value_saturation": 48,
+    "talkativeness": 46,
+    "warmth": 85,
+    "hurt": 2,
+    "dissonance": 3,
+    "mastery": 95
   },
   "_prev_cf": "proud",
   "conscious_mode": "normal",
   "conscious_mode_payload": "",
-  "conscious_mode_age": 0
+  "conscious_mode_turns_left": 0
 }

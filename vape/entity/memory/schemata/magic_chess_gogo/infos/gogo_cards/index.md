@@ -36,3 +36,19 @@ The picker shows tabs: **All, Power Cards, Orange Cards, Purple Cards, Blue Card
   committing to those heroes' [[../synergies/synergies]]; an economy card funds a later spike
   ([[../equipment_and_economy]]). The Go Go Box round ([[../game_rules_and_round_flow]]) supplies
   pedestal rewards; cards bend the whole run.
+
+## Observed in play (high-confidence assumptions, not datamined)
+
+From watching actual matches (the [replay](../../experience/custom_with_computer/replay.md) + Kamil's
+play), held as high-confidence assumptions rather than data facts. See [source_map](source_map.md).
+
+- **Offerings are random but synergy-biased.** The cards offered are not uniform-random: they lean
+  toward the synergies of the heroes you have **deployed or on the bench**, so a committed comp tends
+  to be shown cards that pay it off. A bias, not a guarantee.
+- **Your commander's own Power Card is always in the I-2 offer.** One of the Power Cards offered at
+  the I-2 stage always matches your selected Commander (replay: commander Kagura was offered Kagura's
+  Power). This is the player-visible face of the first-party rule above (your Commander's exclusive
+  Power Card is guaranteed among the options).
+- **2 refreshes per card selection, one card at a time.** Each Go Go Card selection grants **2
+  refreshes**, and a refresh re-rolls only **one** of the two offered cards (you choose which), never
+  both at once (the picker shows a `Refresh ×2` charge on each card; seen at I-2, II-3, III-3).
