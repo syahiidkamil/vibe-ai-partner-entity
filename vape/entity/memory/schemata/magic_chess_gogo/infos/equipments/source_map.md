@@ -1,28 +1,68 @@
 # Source Map: where the equipment facts come from
 
-Provenance for [index](index.md), [regular_items](regular_items.md), and
-[exclusive_and_special_items](exclusive_and_special_items.md), kept here so those stay
-essentials-only. Two sources: the in-game Equipment UI (names + effects) and the parsed base table
-(exact stats, by id). Governed by [[disclaimer]].
+Provenance for the per-tab files — [regular](regular.md), [magic_crystal](magic_crystal.md),
+[synergy_exclusive](synergy_exclusive.md), [commander_exclusive](commander_exclusive.md),
+[special](special.md) — and [index](index.md), kept here so those stay essentials-only. Two
+sources: the in-game Equipment UI (names + effects + per-item Basic/Enhanced detail panels) and the
+parsed base table (exact stats, by id). Governed by [[disclaimer]].
 
-## Names: in localization, but not keyed to the stat rows
+## Names: keyed to stat rows by UI position, anchored (the bridge)
 
-The item names DO exist in the parsed data, in the localization pool (e.g. Demon Hunter Sword =
-stringId `149526013`, Glowing Wand = `179074841`; 22 of the 28 regular names resolve to a unique
-stringId, the rest are common words with several). What is missing is the **key** from a name to its
-equip stat-row: `m_mItemName` is null across all 97 rows, the icon code is just the id
-(`Atlas_EquipIcon_MC/2006`), and no equip field holds the name's stringId (verified exhaustively:
-0/97 rows contain any item-name stringId). The loc name-ids are MLBB item-series ids, not ordered by
-MCGG equip id, so they don't map positionally either. So names exist in data but cannot be attached
-to specific stat rows from this dump.
+**The data wall stands:** the parsed tables do not key names to stat rows. `m_mItemName` is null
+across all 97 rows, the icon code is just the id (`Atlas_EquipIcon_MC/2006`), and no equip field
+holds a name stringId (verified: 0/97). The names DO exist in the localization pool but as
+MLBB-series stringIds not ordered by MCGG equip id, so they don't map by stringId either.
 
-The named catalogs therefore use the in-game Equipment UI, captured per tab (S6, 2026-06-28):
+**The bridge that works (Regular tab):** sort each UI stat-group's origin-0 ids ascending and align
+them to the UI's in-group order. This is **anchor-validated** — 6 items whose stats are confirmed by
+a UI detail panel each land at exactly their positional slot:
+
+| Anchor item | id | confirmed stat | slot in its group |
+|---|---|---|---|
+| Demon Hunter Sword | 2006 | +10% ATK Speed | Physical #1 |
+| War Axe | 2013 | +10% Phys, +15% Spell Vamp | Physical #3 |
+| Berserker's Fury | 3003 | +10% Phys, +20% Crit Ch, +40% Crit DMG | Physical #5 |
+| Glowing Wand | 3102 | +15% Magic ATK | Magic #2 |
+| Blade Armor | 2207 | +50 Physical DEF | Defense #1 |
+| Claude's Theft Device | 3999 | +10% Phys +10% Magic (= +10% Hybrid) | Hybrid #5 |
+
+Six anchors across four groups all hitting their slot validates the positional key. So: the **stat
+values are exact** (by id, from data) and **name↔id is anchor-certain for those 6, positional for
+the other 17** (stats right, name-pairing inferred by id-order, not each panel-checked).
+
+**Lifesteal tension RESOLVED:** id `2013` (+10% Phys, +15% Spell Vamp) is **War Axe** — confirmed by
+its UI panel (subtitle "Spell Vamp"). My earlier MLBB-lore doubt (that lifesteal should be Haas'
+Claws) was wrong; the positional key held. All four groups now map cleanly.
+
+Source: in-game Equipment UI, captured per tab (S6, 2026-06-28):
 `storage/magic-chess-gogo/equipment_samples/{regular,magic_crystal,synergy_exclusive,
-commander_exclusive,special}/*.png`, plus loose detail shots `inspire.png`, `demon_hunter_sword.png`,
-`glowing_wand.png`. The UI is preferred over the raw loc band because it gives the **current** per-tab
-grouping (the loc band includes stale items not in the live tabs). Effects are transcribed from the
-right-side detail panel; only items whose panel was on screen have effect text (the rest are
-name-confirmed, effect pending a per-item capture).
+commander_exclusive,special}/*.png`, plus detail shots `inspire.png`, `demon_hunter_sword.png`,
+`glowing_wand.png`, `war_axe` (basic + enhanced). The 5 Basic actives (Inspire, Revitalize, Purify,
+Aegis, Retribution) are NOT in the 97-row table (a separate active-item system); the 23 origin-0 rows
+are exactly the 23 combat items (Physical 7, Magic 4, Defense 7, Hybrid 5).
+
+## Enhanced form: values come from the UI panels, not the static tables
+
+The passive **numbers** (War Axe Fighting Spirit 4→6 Hybrid DEF / +10%→+30% DMG; Purple Buff Malefic
++20% Hybrid ATK; etc.) are **not in the decoded tables** — they live behind composite effect-ids the
+client resolves at runtime (proven three ways: the `81xxx` enhanced-passive skills have no definition
+row anywhere; the basic-passive tokens point at composite effect-ids like `2507100` that never appear
+as a flat int32 row; every "gain N% …" loc string is `<Num>`-templated). Same wall as the synergy
+per-tier values. **So the UI detail panels are the canonical value source — and they are now captured
+per item** (Basic + Enhanced) under `storage/magic-chess-gogo/equipments/`, transcribed into the
+per-tab files. The data still supplies the exact **stat block** and *that* an enhance happens; the
+enhance *mechanism* it can see (skill id basic→enh):
+- **Stat gain on enhance:** Thunder Belt (+20% Max HP), and the exclusive/synergy items whose stat
+  block rises Basic→Enhanced.
+- **Adds a 2nd Unique Passive `812xx`:** Sea Halberd (Pierce), Berserker's Fury (Valiant), Haas'
+  Claws (Frenzy), Divine Glaive (Spellbreaker), Ice Queen Wand (Extract), Blade Armor (Defiance),
+  Guardian Helmet (Titan), Purple Buff (Malefic) — names+values now from the panels.
+- **Skill id changes:** Oracle `28130→28135`, Spellblade `25950→25954`, Feline Blade
+  `27999→2027999`, Claude's `28040→28041` — deltas now from the panels.
+- **Same skill id, scaling that was INVISIBLE in data:** Demon Hunter Sword (Engulf 2→4%), Golden
+  Staff (Impulsive 2→3.5%), War Axe, Blade of Despair (Despair 25→50%), Glowing Wand (Scorch
+  2.5→5%), Holy Crystal (Mystery 10→30%), Antique Cuirass (Deter 4→7%), Dominance Ice (25→50% mana),
+  Ancient Wrath (10→18 DEF), Winter Crown — all confirmed scaling, captured from the Enhanced panels.
 
 ## Completeness (this pass, 2026-06-28)
 
@@ -55,9 +95,12 @@ the base table is authoritative for exact stats.
 
 Stat values are exact via `AttrbuteDescribe_MC` (`m_ChangePara` x raw, `m_ShowType` format). Per 1000
 raw: `1021`,`1031`,`1001`,`1042`,`62`,`1180` = **10%** (ChangePara 0.0001, `0%` format); `1062`,`1072`
-= **flat integers** (ChangePara 1). Pattern-inferred: `1021`/`1031` = physical/magic damage %, `1001`
-HP %, `1042` ATK Speed %. Attribute *names* are localized hash lookups with no in-table stringId, so
-stats are recorded by attrId. `m_Slot` is `[1,2,3]` on almost every item (id 9999 sits in slot 4);
+= **flat integers** (ChangePara 1). **AttrId legend now resolved from the UI panels:** `1021` Physical
+ATK %, `1031` Magic ATK %, `1001` Max HP %, `1042` ATK Speed %, `62` Spell Vamp %, `18` Crit Chance %,
+`22` Crit DMG %, `1062` Physical DEF (flat), `1072` Magic DEF (flat), `1180` **DMG Reduction %** (not
+CDR), `EXC12` **Physical Penetration %**, `EXC13` **Magic Penetration %**, `EXC92` **Lifesteal %**.
+Attribute *names* are localized hash lookups with no in-table stringId, so the table records by attrId
+and the panels supply the names. `m_Slot` is `[1,2,3]` on almost every item (id 9999 sits in slot 4);
 `m_EquipUpgradeState` 0 = Basic, 1 = Enhanced. `EquipSuit_MC` has one set, id 1001: components
 [1101, 1102] grant skill 25950.
 
