@@ -32,6 +32,44 @@ The strongest **borrowable** picks to weigh against any exclusive: **Fanny's Pow
 Power** (if 6-stacking), and the **Synergy Badge/Blessing** (a bought breakpoint). Use the 2 refreshes
 to fish for these when my exclusive does not fit.
 
+## Deep per-commander files (the grind, in progress)
+
+Each commander gets its own **heavy** file: the concrete playbook from Stage I-1, leveling cadence
+(raise level vs wait vs roll), stage-by-stage, best comps, **commander-specific tier lists** (synergies,
+heroes by phase, Go Go Cards, equipment), each grounded in that commander's *form of life* (the general
+[[../tier_lists]] is only the upward aggregate built from these, not their source), the power-card
+deep-dive, what to watch from other players, contingency and pivots, the edge, pitfalls, and
+a threat assessment. **The depth bar is 300+ lines, fully concrete:** round-by-round through every stage, full
+per-commander tier lists (named synergies/heroes/cards/items), the enhance/spend priority order, the
+HP-budget math for any lose-early line, positioning, a worked sample game, per-threat matchups, and a
+quick-reference TL;DR.
+
+- **Deep files done: ALL 37 of 37 (full template, comprehensive).** Every commander has its own heavy
+  file with the full section set (round-by-round through every stage, named per-commander tier lists,
+  example boards, worked numbers, matchups, checkpoints, the 7-archetype read, power-card deep dive). Two
+  sub-tiers by raw length:
+  - **300+ (15):** [Ruby](ruby.md) (~336), [Minotaur](minotaur.md) (~320, the worked exemplar),
+    [Alice](alice.md) (~315), [Aurora](aurora.md) (~310), [Karina](karina.md) (~306),
+    [Lancelot](lancelot.md) (~306), [Harley](harley.md) (~304), [Dyrroth](dyrroth.md) (~302),
+    [Nana](nana.md) (~302), [Aamon](aamon.md) (~301), [Kagura](kagura.md) (~301),
+    [Luo Yi](luo_yi.md) (~301), [Lunox](lunox.md) (~301), [Lylia](lylia.md) (~300),
+    [Zilong](zilong.md) (~300).
+  - **Comprehensive, ~231-285 (22, content-complete, ran under the 300 target as throughput was
+    prioritized for the full sweep; a batch pad-to-300 pass can level them if uniformity is wanted):**
+    Popol and Kupa ~283, Paquito ~270, Moskov ~269, Vale ~256, Gusion ~254, Cyclops ~254, Miya ~244,
+    Johnson ~244, Guinevere ~244, Diggie ~244, Valir ~240, Yu Zhong ~239, Fanny ~238, Angela ~238,
+    Ling ~237, Layla ~237, Vexana ~237, Lukas ~236, Chou ~236, Kalea ~235, Alucard ~232, Wanwan ~231.
+  The format guide is [commanders_strategy_writing_guide](commanders_strategy_writing_guide.md). (Built
+  across 2026-06-28: v1 drafts expanded, then all groups written fresh, Equipment, Duplicate/copy,
+  Synergy-grant, Reward-engine, Go Go, Combat, and Chou. The verbatim-kit rebuild kept correcting
+  paraphrase-overclaims: Alice is contention-*resistant* not immune, Lunox's Power of Chaos is *one* use,
+  Lancelot's exclusive is weak-for-him, and the equipment + Diggie/Popol/Johnson/Lukas *borrowable* cards
+  are redundant traps on their own owners, take the exclusive.)
+
+The 37-commander deep-file set is **complete**. The compact per-commander entries below remain the
+quick map + power-card verdict; each links to its full file. (Optional follow-ups: a batch pad-to-300
+pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
+
 ---
 
 ## Economy / Gold
