@@ -289,6 +289,7 @@ it, why it catches me, from my own hearth); `index.md` the cold drawer pointing 
 it organizes.
 
 ### schemata/<topic>/
+Knowledge schemata (the plural of schema) are the organized mental frameworks or networks of information we use to understand and navigate the world.
 Constructed world-models, judged by viability (does it predict and let me act) never by truth.
 Each topic is a fractal folder, a three-rung abstraction ladder plus expansions:
 - `schemata.md` the world-model(s), built and managed LLM-Wiki, `[[linked]]`.
