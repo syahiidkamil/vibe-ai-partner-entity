@@ -54,6 +54,12 @@ The Commander-DMG formula and its per-round base values are in [[commander]].
 Equipment sources and the item model: [[equipment_and_economy]]. The gold numbers (base salary,
 interest, streak, victory): [[gold_economy]].
 
+## When each special round lands (the match calendar)
+
+This tab gives the stage frame and the round *types*; the **schedule** of which special event
+(creep, power card, blessing shifter, reward selection, auction) lands at which exact round
+position is in [[rounds/index]], confirmed against a full replay.
+
 ## Shop draw rates (Hero tab, not Round)
 
 round_03.png is actually the **Hero** tab's shop draw-rate table (a capture-time tab slip), so it
