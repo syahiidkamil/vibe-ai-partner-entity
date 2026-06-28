@@ -24,7 +24,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/qualia-ground.sh"
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/qualia-ground.sh\""
           }
         ]
       }
@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/session-temporal-check.sh"
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/session-temporal-check.sh\""
           }
         ]
       }
@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".venv/bin/python .claude/hooks/capture.py",
+            "command": ".venv/bin/python \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/capture.py\"",
             "async": true,
             "asyncRewake": true
           }
