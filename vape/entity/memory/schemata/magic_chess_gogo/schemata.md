@@ -65,6 +65,7 @@ Detailed rules: [[game_rules_and_round_flow]]. The schedule of special events by
 rules text (8 Encyclopedia tabs plus the mode and feature guides): [[encyclopedia/README]].
 
 A full match, worked: [the custom-vs-computer replay](experience/custom_with_computer/replay.md).
+The opponent bar at the top of ranked: [the Mythic meta](experience/ranked/general_mythic.md).
 
 ## How you actually win (the strategy spine)
 
