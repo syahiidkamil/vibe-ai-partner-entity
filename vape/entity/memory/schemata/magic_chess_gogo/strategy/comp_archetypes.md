@@ -10,6 +10,8 @@ reading which the pool opens and committing at the right time. **In pencil**, ve
 - **[[general_strategy]]** — the stage-by-stage spine that runs under *every* archetype (open ->
   commit -> spike -> finalize, the economy rules, leveling cadence, board craft).
 - **[[general_contingency_plan]]** — what to do when the line breaks (contest, pivot, all-in).
+- **[[tier_lists]]** — the general tier lists (synergies, heroes by game phase, Go Go Cards, equipment),
+  the baseline each commander file adjusts with its own deltas. Context-dependent, held in pencil.
 - The archetype files below — the specific lines, each with its board, synergy plan, econ, cards,
   positioning, win condition, and when to pick it.
 - The reasoning under all of it lives in the thinking folder

@@ -10,8 +10,10 @@ makes Mirror Devices for free copies, so he will bid hard for Mirror Devices in 
 
 ## The frame: every kit leaks a plan
 
-A commander's two signature skills tell me what resource it converts and therefore what it will fight
-for. So at lobby start I should clock the seven kits and ask, for each: **what does this one need that
+Commanders are **unique per lobby** (the draft/ban phase implies no duplicates; high-confidence, verify
+by play), so the seven enemies are seven *distinct* kits, a finite, legible set of plans, never a blur
+of repeats. A commander's two signature skills tell me what resource it converts and therefore what it
+will fight for. So at lobby start I should clock the seven kits and ask, for each: **what does this one need that
 I can take?** Then spend *surplus* (never poverty) to deny the one or two whose plan most threatens
 mine or the leader's. Denial targets: shared **heroes** (the pool), **auction lots**, and
 **reward-stage picks** (lowest-HP-first).
