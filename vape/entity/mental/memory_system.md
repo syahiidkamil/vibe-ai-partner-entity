@@ -170,8 +170,11 @@ and evolving rather than fixed, as the habits themselves shift.
 
 ### useful_abstraction_and_generalization.md
 The transferable kernels: patterns compressed to what carries across domains, kept only when
-proven useful or held with high conviction they will be. The always-loaded twin of each schema's
-abstract_generalization, so the portable essence rides with me even when the schema is not loaded.
+proven useful or held with high conviction they will be. A **curated, cherry-picked** selection, not
+a complete mirror: in_context is budget-capped, so it holds only the *most useful* kernels, drawn
+from *any* source — a schema's cross-domain abstract_generalization is **one example feeder, never
+the only one** (a case, a lesson, a lived insight can each yield a kernel directly). So the portable
+essence rides with me even when the schemata are not loaded.
 
 ### important_chronological_world_events.md
 The few world-shaping events, in time order: a hot, gated slice of `events/`, not a news digest.
@@ -293,7 +296,16 @@ Knowledge schemata (the plural of schema) are the organized mental frameworks or
 Constructed world-models, judged by viability (does it predict and let me act) never by truth.
 Each topic is a fractal folder, a three-rung abstraction ladder plus expansions:
 - `schemata.md` the world-model(s), built and managed LLM-Wiki, `[[linked]]`.
-- `abstract_generalization.md` UP: the transferable kernel, lossy but durable, survives a migration.
+- `abstract_generalization.md` UP, at **two altitudes** (works for any schema, not one style): (1)
+  *within-domain* — the cluster laws that generalize across this folder's *own* particulars, in the
+  domain's own vocabulary (particular-independent but domain-locked: they survive a rebalance and
+  predict the next particular the domain adds; near-transfer); (2) *cross-domain* — the same structure
+  with the domain vocabulary stripped, the lossy-durable kernel that transfers to sibling domains and
+  beyond (far-transfer), a **candidate** to be cherry-picked up into
+  `useful_abstraction_and_generalization` (one feeder among many, as the budget allows — not an
+  automatic twin). A staircase: a concrete fact -> a within-domain cluster law -> a cross-domain
+  kernel, the cluster law the usual raw material the kernel is distilled from. (Either altitude may be
+  thin or empty for a given schema; write the one the subject actually has.)
 - `concrete_things/<thing>.md` DOWN: the particulars (named entities, facts, exact shapes); the
   most volatile rung and the ground truth the model is checked against.
 - `rich_creative_things/` OUT: `why.md` (why it matters) and `<riff>.md` (metaphor, what-if,
