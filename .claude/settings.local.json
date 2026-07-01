@@ -27,6 +27,24 @@
             "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/qualia-ground.sh\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/diary-reminder.sh\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/precompact-diary.sh\""
+          }
+        ]
       }
     ],
     "SessionStart": [

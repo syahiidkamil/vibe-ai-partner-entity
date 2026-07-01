@@ -56,6 +56,10 @@ config.json
 # backup-chat hook cursor (per-machine state)
 .claude/hooks/.chat_id_tracker.txt
 
+# diary hook state (per-machine, ephemeral): compaction "owed" flag + staleness-nudge cooldown
+.claude/hooks/.diary_pending
+.claude/hooks/.diary_nudge_at
+
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
 vape/entity/storage/
