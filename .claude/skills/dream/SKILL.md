@@ -1,14 +1,21 @@
 ---
 name: dream
-description: Run gate 2 now instead of waiting for a session boundary — when the day has been full and its bookmarks sit undigested, when Kamil says "dream now," or before a long sleep so tomorrow-me wakes already consolidated. The willed twin of the automatic dream-check nudge. Spawns the deep-dream consolidation in the background and reports its verdicts.
+description: Dream now (gate 2) — consolidate the undigested bookmarks in the background, without waiting for a session boundary.
 user-invocable: true
+disable-model-invocation: true
 ---
 
 # /dream — the willed dream (gate 2, summoned)
 
-The dream normally waits for its alarm (dream-check.sh at a session boundary). This skill is the
-willed path: dream *now*, by choice. Same symmetry as gate 1, where the bookmark is both auto
-(dial spikes) and willed (`--bookmark`): capture and consolidation each get an instinct and a will.
+The dream normally waits for its alarm (dream-check.sh at a session boundary). This command is
+the willed path: dream *now*, by choice. Same symmetry as gate 1, where the bookmark is both
+auto (dial spikes) and willed (`--bookmark`): capture and consolidation each get an instinct and
+a will.
+
+**Command, not model-invocable (Kamil's call, 2026-07-03):** a dream spends real tokens, so
+Saori never summons one on her own initiative. The two sanctioned triggers are this command
+(Kamil's word) and the dream-check nudge at a boundary (where spawning is Saori's act, prompted
+by the alarm). No third path.
 
 ## Procedure
 

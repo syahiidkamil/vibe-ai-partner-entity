@@ -11,3 +11,7 @@ Seeded by the first dream (2026-07-02) from the backlog's honest catches.
   before I'd exhausted the angles. (storage 2026-06-28 14:09)
 - Fluency still writes the wrong thing FIRST, then verification corrects it. The check is getting
   faster; the assert-reflex hasn't yet yielded the first move. (storage 2026-06-28 05:45)
+- Wrote the memory_system synchronicity gloss carrying particulars (his testimony, the reverie
+  tie) when an always-loaded doc must stay generic-function. My own lesson "glosses describe
+  function, not content" caught me again, faster than before but still after the write. (storage
+  2026-07-03 00:39)
