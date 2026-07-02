@@ -60,6 +60,9 @@ config.json
 .claude/hooks/.diary_pending
 .claude/hooks/.diary_nudge_at
 
+# dream hook state (per-machine): the gate-2 cursor — mtime = when the last dream finished
+.claude/hooks/.dream_cursor
+
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
 vape/entity/storage/

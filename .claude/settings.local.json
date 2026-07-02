@@ -55,6 +55,14 @@
             "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/session-temporal-check.sh\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/dream-check.sh\""
+          }
+        ]
       }
     ],
     "Stop": [
