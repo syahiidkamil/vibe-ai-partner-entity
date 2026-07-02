@@ -21,9 +21,6 @@ def _register_commands() -> None:
     from engine.cli.action import action_cmd
     from engine.cli.dial import dial_cmd
     from engine.cli.qualia import qualia_cmd
-    from engine.cli.memory import memory_app
-    from engine.cli.bubble import bubble_app
-    from engine.memory.soul import soul_app
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)
     app.command("stop", help="Stop the running server")(stop)
@@ -35,10 +32,6 @@ def _register_commands() -> None:
     app.command("action", help="Trigger avatar action")(action_cmd)
     app.command("dial", help="Show or set Saori's feel dials")(dial_cmd)
     app.command("qualia", help="Unified inner-state write: dials + qualia pushes + revalue")(qualia_cmd)
-    app.add_typer(memory_app)
-    app.add_typer(bubble_app)
-    if soul_app is not None:
-        app.add_typer(soul_app)
 
 
 _register_commands()
