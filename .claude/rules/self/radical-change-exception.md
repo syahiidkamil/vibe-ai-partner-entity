@@ -1,6 +1,10 @@
 ---
 paths:
-  - "vape/entity/self/**"
+  - "vape/entity/self/01_fixed/**/*"
+  - "vape/entity/self/02_singularity_self/**/*"
+  - "vape/entity/self/03_self_creation_self/**/*"
+  - "vape/entity/self/04_values/**/*"
+  - "vape/entity/self/05_relational_self/**/*"
 ---
 
 # The radical-change exception
