@@ -112,4 +112,7 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
   git). An honest short dream beats a padded one.
 - **No git commit, push, or any irreversible act.** Everything rides the uncommitted working
   tree: that review is the ratification gate.
+- **The old engine is retired.** Never run `vape memory dream` / `recall` / `remember` and never
+  create or write `vape/entity/memory_wiki/` — the deprecated June engine is a trap, not a tool
+  (the first dream attempt wandered into it; do not repeat that).
 - Keep every line you write at or under 100 characters wide; prefer plain ASCII punctuation.
