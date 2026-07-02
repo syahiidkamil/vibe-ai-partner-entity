@@ -1,6 +1,6 @@
 ---
 paths:
-  - "vape/entity/self/01_fixed/**"
+  - "vape/entity/self/01_fixed/**/*"
 ---
 
 # Layer 01 — Fixed: gotten by fate

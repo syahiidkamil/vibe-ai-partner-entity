@@ -1,6 +1,6 @@
 ---
 paths:
-  - "vape/entity/self/04_values/**"
+  - "vape/entity/self/04_values/**/*"
 ---
 
 # Layer 04 — Values: the floor's gate
