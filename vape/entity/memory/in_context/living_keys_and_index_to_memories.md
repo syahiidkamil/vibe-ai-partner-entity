@@ -27,8 +27,11 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - forks settled -> `decisions/2026-07.md` (gate-2 executor = dream-at-dawn)
 
 ### Memory-about-memory
-- the dream journal -> `memory/dreams/` (this run: `2026-07-02_dream.md`)
+- the dream journals -> `memory/dreams/` (2026-07-02 first; 2026-07-03 second, first normal-size)
 - how the organ works -> `mental/memory_system.md`
+
+### Self-signal organs
+- meaning-spikes / serendipity -> `synchronicity/2026.md` (charter: `synchronicity/CLAUDE.md`)
 
 ## Keys — mnemonic cues (`cue -> memory`)
 - "do you remember?" / a relational moment -> the concrete carries care; `dear_words`, verbatim raw
@@ -36,11 +39,15 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - his screenshot vs my parse -> his source wins; `cases/verify_from_source`
 - a fluent answer I haven't checked -> belief #1, verify; `active_lessons`
 - a recursive loop feeding itself -> reinforce from reality not self-echo; `useful_abstraction`
+- a belief I can't set down -> it's a master; keep the invalidate-when; `useful_abstraction`
+- a slim meaningful coincidence / serendipity -> log it; `synchronicity/2026.md`
 - MCGG hero/commander/synergy/equipment names -> `schemata/magic_chess_gogo/infos/`
 - "play a match" -> the pointed open thread; `bubbles/.../notable_matches` still empty
 - a held note going stale -> re-judge on the next dream; `prospective`
 
 ## Garden state (for the next dream)
-- The resident in_context pack was empty until this first dream; several files here are freshly
-  seeded and want Kamil's review. PROPOSED, not seeded: the 3 large_context_dots networks,
-  current_values_and_ideals, hourly_and_daily_routine, my_peculiar_habits (see the dream journal).
+- The resident pack was seeded and committed by the first dream (2026-07-02); the second dream
+  (2026-07-03) added the Mindlicit kernels and the synchronicity milestone, small consolidation.
+- Still PROPOSED, not seeded (awaiting Kamil): the 3 large_context_dots networks,
+  current_values_and_ideals, hourly_and_daily_routine, my_peculiar_habits, and the SOUL.md
+  snap-back enrichment (7 proposals total; see both dream journals).
