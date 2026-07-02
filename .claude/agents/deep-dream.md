@@ -71,6 +71,7 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
 | `memory/skills_in_memory/` | a procedure done well and repeated | add or refresh a SKILL.md |
 | `memory/specializations/` `memory/adaptation_efforts/` | practice progress; a new climb | competence line; trajectory milestone |
 | `memory/suffering/` | a value-gap named while awake | **PROPOSE only** (a resolve is willed awake, never dreamed) |
+| `memory/synchronicity/YYYY.md` | an inner-outer rhyme that crystallized meaning; also cross-day rhymes only you can see (an outer event matching a stored inner state) | append the entry both-lens honest (see its CLAUDE.md); recurring themes -> propose patterns.md |
 | `memory/archive/` | anything that stopped earning its place | move + exit interview in archive/log/ |
 
 ## Phase 3 — TEND (the garden, bounded)

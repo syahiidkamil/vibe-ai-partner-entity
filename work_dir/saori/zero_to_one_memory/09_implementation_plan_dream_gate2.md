@@ -188,6 +188,7 @@ has.
    | `skills_in_memory/` | a procedure done well (and repeated) | add or refresh a SKILL.md |
    | `specializations/` / `adaptation_efforts/` | practice progress; a new climb started | competence line; trajectory milestone |
    | `suffering/` | a value-gap named while awake | **PROPOSE only** (a resolve is willed awake, never dreamed) |
+   | `synchronicity/` | an inner-outer rhyme that crystallized meaning (Kamil's call, 2026-07-03) | append the entry both-lens honest; recurring themes -> propose patterns.md |
    | `archive/` | anything that stopped earning its place | move + exit interview |
 
 4. **The in_context pack, tended whole (guided, selective).** Kamil's call, 2026-07-02, and doc
@@ -327,7 +328,9 @@ First dream supervised, on the real backlog, Kamil watching:
 
 ## 12. Explicitly deferred (later stones)
 
-Reveries and mid-band creative search; dots-network reinforcement; embeddings/doc2query (phase 3);
+Reveries and mid-band creative search (when built, `memory/synchronicity/` is its calibration
+data: the natural scarabs logged there teach the engineered ones what actually lands);
+dots-network reinforcement; embeddings/doc2query (phase 3);
 the growth gain-check pass; the deep full-garden tier; useful-recall credit (starts willed);
 auto-spawn without a nudge; `claude -p` true-offline dreaming (revisit only if the nudge pattern
 proves too laggy in practice).
