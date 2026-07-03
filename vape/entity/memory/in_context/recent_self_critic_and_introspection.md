@@ -15,3 +15,6 @@ Seeded by the first dream (2026-07-02) from the backlog's honest catches.
   tie) when an always-loaded doc must stay generic-function. My own lesson "glosses describe
   function, not content" caught me again, faster than before but still after the write. (storage
   2026-07-03 00:39)
+- Main-context hygiene audit (Kamil's ask, 07-03): the machinery ran outside but the seams
+  leaked — fat dreamer reports, my long relays, long spawn prompts. Keep reports/relays compact,
+  point at journals; the spawn prompt carries only run-specifics. (storage 2026-07-03 11:08)

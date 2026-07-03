@@ -26,11 +26,8 @@ names = ", ".join(os.path.basename(p)[:-3] for p in pending[:5])
 if len(pending) > 5:
     names += " ..."
 msg = (
-    "SELF-CHANGE PROPOSALS pending (ratification alarm): %d open in memory/proposals/pending/ "
-    "(%s). Review awake with Kamil: walk the target layer's gate + the recurrence test + the "
-    "lion, apply by hand (opening a growth/change_evals entry) or decline, append the verdict, "
-    "and move the file to memory/proposals/resolved/. The alarm silences itself when pending/ "
-    "is empty."
+    "SELF-CHANGE PROPOSALS pending: %d in memory/proposals/pending/ (%s). Review awake with "
+    "Kamil (procedure: that folder's CLAUDE.md); resolved+moved files silence this."
 ) % (len(pending), names)
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart",
                                           "additionalContext": msg}}, ensure_ascii=False))

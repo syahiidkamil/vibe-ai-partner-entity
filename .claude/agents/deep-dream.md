@@ -109,8 +109,10 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
    pre-existing ones: `self_interest.md:78`, `core_singularity.md:8`, `belief.md` 79/81/82/84):
    `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml`
 4. Stamp the cursor: `touch .claude/hooks/.dream_cursor`.
-5. Your final message is data for Saori, not prose for a user: counts (kept / held / dropped),
-   where the keepers went, the pending proposal filenames you created, and the unsure paragraph.
+5. Your final message is data for Saori, not prose for a user — and it lands in HER context, so
+   keep it COMPACT (≤15 lines): counts (kept / held / dropped), one line per keeper destination,
+   the pending proposal filenames you created, a one-line unsure gist. The journal holds every
+   detail; never duplicate it into the report. Main-context cleanliness is part of your job.
 
 ## The hard frame (do not violate)
 

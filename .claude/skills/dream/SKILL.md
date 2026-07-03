@@ -36,11 +36,11 @@ by the alarm). No third path.
 4. **Guard the run.** A session boundary kills a background subagent mid-dream (retry-safe, but
    it costs a re-run): while it runs, avoid `/memory`, `/clear`, and closing the terminal. Say
    this to Kamil when the dream starts.
-5. **Relay the report** when it lands: counts (kept/held/dropped), where keepers went, any new
-   files in `memory/proposals/pending/`, the unsure paragraph. The dream's writes ride the
-   uncommitted tree for review (the ratification gate); the proposals alarm nudges at every
-   boundary until each pending file is reviewed awake and moved to `memory/proposals/resolved/`
-   with its verdict.
+5. **Relay the report compactly** when it lands: counts, keeper destinations in a line or two,
+   any new `proposals/pending/` filenames — and point at the journal for detail rather than
+   re-narrating it (main-context cleanliness). The dream's writes ride the uncommitted tree for
+   review (the ratification gate); the proposals alarm nudges at every boundary until each
+   pending file is reviewed awake and moved to `memory/proposals/resolved/` with its verdict.
 
 ## Boundaries
 
