@@ -1,58 +1,37 @@
 #!/bin/bash
 # SessionStart — the ratification alarm: the self-change loop's review step, made un-missable.
 #
-# The gated self (vape/entity/self/ layers 01-05) is never edited by the dream; the dream only
-# PROPOSES in its journal (memory/dreams/*_dream.md, the PROPOSALS section). Ratification happens
-# awake: through the layer gates, with Kamil. But a proposal written while consolidating is easy
-# to never see again — so this hook scans dream journals newer than the ack stamp for a non-empty
-# PROPOSALS section and nudges until the review is acknowledged:
-#     touch .claude/hooks/.proposals_ack        (after reviewing awake, with Kamil)
+# The gated self (vape/entity/self/ layers 01-05) is never edited by the dream; anything
+# identity-adjacent becomes ONE FILE in memory/proposals/pending/ (the dream's hard frame; awake
+# Saori may file one too). This hook simply reports whether that inbox is empty. The folder IS
+# the state machine — no regex over journals, no ack stamp: reviewing a proposal (awake, with
+# Kamil: layer gate + recurrence + lion) ends by appending the verdict and moving the file to
+# memory/proposals/resolved/, and an empty pending/ is what silences the alarm.
 #
-# in_context/ needs no such alarm: the dream tends it directly (per-file verdicts, cap-checked).
-# Only the self tree waits on ratification, so only its proposals get an alarm. Silent when
-# clean; exits 0 always.
+# in_context/ needs no such alarm: the dream tends it directly. Only the gated self waits on
+# ratification, so only its proposals get one. Silent when clean; exits 0 always.
 set +e
-HOOKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="$(cd "$HOOKDIR/../.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
-python3 - "$HOOKDIR" "$ROOT" <<'PY' 2>/dev/null
-import os, sys, json, glob, re
+python3 - "$ROOT" <<'PY' 2>/dev/null
+import os, sys, json, glob
 
-hookdir, root = sys.argv[1], sys.argv[2]
-ack = os.path.join(hookdir, ".proposals_ack")
-try:
-    last_ack = os.path.getmtime(ack)
-except Exception:
-    last_ack = 0.0
-
-pending = []
-for p in sorted(glob.glob(os.path.join(root, "vape", "entity", "memory", "dreams",
-                                       "*_dream.md"))):
-    if os.path.getmtime(p) <= last_ack:
-        continue
-    try:
-        text = open(p, encoding="utf-8").read()
-    except Exception:
-        continue
-    # the PROPOSALS section: from a heading containing PROPOSALS to the next heading (or EOF)
-    m = re.search(r"^#{1,6}[^\n]*PROPOSALS[^\n]*\n(.*?)(?=^#{1,6}\s|\Z)",
-                  text, re.M | re.S | re.I)
-    if not m:
-        continue
-    body = m.group(1).strip()
-    # an empty section, or one that only says none/(none), is a clean no-proposal dream
-    if body and not re.fullmatch(r"(?is)[-*\s]*\(?\s*none\s*\)?\.?[-*\s]*", body):
-        pending.append(os.path.basename(p)[:10])
-
+root = sys.argv[1]
+pending = sorted(glob.glob(os.path.join(root, "vape", "entity", "memory", "proposals",
+                                        "pending", "*.md")))
 if not pending:
     sys.exit(0)
 
-days = ", ".join(pending[:6]) + (" ..." if len(pending) > 6 else "")
+names = ", ".join(os.path.basename(p)[:-3] for p in pending[:5])
+if len(pending) > 5:
+    names += " ..."
 msg = (
-    "SELF-CHANGE PROPOSALS pending (ratification alarm): dream journal(s) %s hold unreviewed "
-    "PROPOSALS aimed at the gated self. Review them awake with Kamil: apply through the layer "
-    "gates or decline with a reason, then silence with `touch .claude/hooks/.proposals_ack`."
-) % days
+    "SELF-CHANGE PROPOSALS pending (ratification alarm): %d open in memory/proposals/pending/ "
+    "(%s). Review awake with Kamil: walk the target layer's gate + the recurrence test + the "
+    "lion, apply by hand (opening a growth/change_evals entry) or decline, append the verdict, "
+    "and move the file to memory/proposals/resolved/. The alarm silences itself when pending/ "
+    "is empty."
+) % (len(pending), names)
 print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart",
                                           "additionalContext": msg}}, ensure_ascii=False))
 PY
