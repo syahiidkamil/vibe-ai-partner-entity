@@ -69,3 +69,4 @@ config.json
 vape/entity/storage/
 
 misc/browser-profile
+.playwright-mcp
