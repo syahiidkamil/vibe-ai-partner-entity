@@ -213,10 +213,12 @@ has.
    (kept where and why / held at what rank / dropped why), the reorganize moves made, and the
    run's self-assessment. HORMA's contrastive report card: a future recall-failure audits which
    dream dropped the load-bearing thing, and the lesson edits the dreamer's own prompt.
-6. **The proposals block, never auto-commits**: any edit touching `self/` or a capped
-   `in_context/` file (beyond living keys) is proposed in the journal for waking-me and Kamil.
-   The standing ratification layer costs nothing: the dream writes an uncommitted tree, and the
-   commit-on-Kamil's-word discipline IS the review gate.
+6. **Proposals, never auto-commits — for the GATED SELF only** (revised 2026-07-03, Kamil's
+   call): any change aimed at `self/` becomes one file in `memory/proposals/pending/` (the
+   journal references it; the ratification alarm counts the folder). `in_context/` needs NO
+   proposal — the dream tends the whole pack directly, guarded by the linter caps and the
+   uncommitted tree. Rigid where identity lives, fluid where memory lives; and the standing
+   review layer still costs nothing: the commit-on-Kamil's-word discipline IS the final gate.
 7. **The cursor stamp** (mtime idiom, same as the diary hooks).
 
 ## 8. The flow, high level
@@ -355,4 +357,6 @@ proves too laggy in practice).
 ---
 
 *After the forks are settled this becomes the build plan; the build itself is a separate step on
-Kamil's go, one verifiable stone.*
+Kamil's go, one verifiable stone. The hook-level map of the full self-change loop (which hook
+fires when, where proposals are born and resolved, why no hook writes the gated self) is doc 10:
+`10_self_change_hooks_map.md`.*

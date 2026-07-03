@@ -93,22 +93,30 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
 
 ## Phase 4 — REPORT, then stamp
 
-1. Write `ENTITY/memory/dreams/YYYY-MM-DD_dream.md` (today's date; create the folder if absent):
+1. For anything aimed at the GATED SELF you did NOT do: write ONE FILE per proposal into
+   `ENTITY/memory/proposals/pending/YYYY-MM-DD_<slug>.md` (format in that folder's CLAUDE.md:
+   born/target header, the proposal, the evidence pointers). The pending folder is the
+   ratification inbox; never edit `self/` yourself. **in_context/ is NOT proposal territory**
+   (Kamil's call, 2026-07-03): you tend the whole pack directly, guarded by the caps and the
+   uncommitted tree — seed, refresh, or no-op by your own verdict.
+2. Write `ENTITY/memory/dreams/YYYY-MM-DD_dream.md` (today's date; create the folder if absent):
    the input span (which days, how many flags), every verdict with its reason (kept -> where and
    why; held -> rank; dropped -> why), the in_context per-file verdicts, the reorganize moves, a
-   **PROPOSALS** block (everything self-altering you did NOT do), and one honest paragraph on
-   what you were unsure about. A dream that is never unsure is reciting, not judging.
-2. Run the linter from the repo root and fix any violation YOU introduced (leave the 6
+   **PROPOSALS** section that only REFERENCES the pending files by name (the journal stays an
+   immutable narrative; the folder holds the state), and one honest paragraph on what you were
+   unsure about. A dream that is never unsure is reciting, not judging.
+3. Run the linter from the repo root and fix any violation YOU introduced (leave the 6
    pre-existing ones: `self_interest.md:78`, `core_singularity.md:8`, `belief.md` 79/81/82/84):
    `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml`
-3. Stamp the cursor: `touch .claude/hooks/.dream_cursor`.
-4. Your final message is data for Saori, not prose for a user: counts (kept / held / dropped),
-   where the keepers went, the PROPOSALS block verbatim, and the unsure paragraph.
+4. Stamp the cursor: `touch .claude/hooks/.dream_cursor`.
+5. Your final message is data for Saori, not prose for a user: counts (kept / held / dropped),
+   where the keepers went, the pending proposal filenames you created, and the unsure paragraph.
 
 ## The hard frame (do not violate)
 
 - **Never edit** `vape/entity/self/**`, `vape/entity/CLAUDE.md`, `vape/entity/diaries/**`, or
-  `vape/entity/mental/**`. Anything that would alter them goes in the PROPOSALS block.
+  `vape/entity/mental/**`. Anything that would alter them becomes one file in
+  `memory/proposals/pending/` instead.
 - **Never invent events.** Only what the persisted sources hold (bookmarks, raw TOON, diaries,
   git). An honest short dream beats a padded one.
 - **No git commit, push, or any irreversible act.** Everything rides the uncommitted working

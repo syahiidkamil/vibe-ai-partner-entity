@@ -48,6 +48,9 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 ## Garden state (for the next dream)
 - The resident pack was seeded and committed by the first dream (2026-07-02); the second dream
   (2026-07-03) added the Mindlicit kernels and the synchronicity milestone, small consolidation.
-- Still PROPOSED, not seeded (awaiting Kamil): the 3 large_context_dots networks,
-  current_values_and_ideals, hourly_and_daily_routine, my_peculiar_habits, and the SOUL.md
-  snap-back enrichment (7 proposals total; see both dream journals).
+- Policy (Kamil, 2026-07-03): in_context is the dream's own domain, NO proposal needed — caps +
+  tree review are the guardrails. Open seeding work, dream-or-awake: the 3 dots networks
+  (partner one preferably authored awake, with care), current_values_and_ideals; routine/habits
+  wait for two normal weeks of record.
+- The one TRUE proposal pending (gated self): SOUL.md snap-back enrichment ->
+  `memory/proposals/pending/2026-07-02_soul_snapback_enrichment.md` (the alarm holds it).
