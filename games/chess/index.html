@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamil vs Saori — chess</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♞</text></svg>">
+<style>
+  :root {
+    --bg: #1b1a17; --panel: #262420; --line: #3a372f;
+    --light: #f0d9b5; --dark: #b58863;
+    --hl-from: rgba(205, 210, 106, .60); --hl-to: rgba(205, 210, 106, .42);
+    --hl-legal: rgba(60, 90, 50, .38); --hl-check: rgba(220, 60, 60, .65);
+    --ink: #efe9dc; --dim: #9a917e; --accent: #e8613c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 15px/1.5 "Avenir Next", "Segoe UI", sans-serif;
+    display: flex; justify-content: center; padding: 24px 12px;
+  }
+  .wrap { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .boardcol { display: flex; flex-direction: column; gap: 10px; }
+  #status {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; min-height: 44px; display: flex; align-items: center; gap: 10px;
+  }
+  #status .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr);
+    width: min(88vw, 600px); aspect-ratio: 1 / 1;
+    border: 6px solid #141310; border-radius: 8px; user-select: none;
+  }
+  .sq { display: flex; align-items: center; justify-content: center; position: relative;
+        cursor: pointer; aspect-ratio: 1 / 1; }
+  .sq.light { background: var(--light); } .sq.dark { background: var(--dark); }
+  .sq img.pc { width: 86%; height: 86%; pointer-events: none;
+               filter: drop-shadow(0 2px 2px rgba(0,0,0,.30)); }
+  .sq.from { box-shadow: inset 0 0 0 999px var(--hl-from); }
+  .sq.to   { box-shadow: inset 0 0 0 999px var(--hl-to); }
+  .sq.sel  { box-shadow: inset 0 0 0 999px rgba(255, 213, 74, .45); }
+  .sq.check{ box-shadow: inset 0 0 0 999px var(--hl-check); }
+  .sq .hint { position: absolute; width: 26%; height: 26%; border-radius: 50%;
+              background: var(--hl-legal); }
+  .sq .cap  { position: absolute; inset: 6%; border: 4px solid var(--hl-legal);
+              border-radius: 50%; background: none; }
+  .sq .coord { position: absolute; font-size: 10px; color: rgba(0,0,0,.55); }
+  .sq .file { right: 4px; bottom: 2px; } .sq .rank { left: 4px; top: 2px; }
+  .side {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px; width: 250px; display: flex; flex-direction: column; gap: 12px;
+    max-height: min(88vw, 620px);
+  }
+  .side h1 { font-size: 17px; font-weight: 600; }
+  .side h1 small { color: var(--dim); font-weight: 400; display: block; font-size: 12px; }
+  #moves {
+    flex: 1; overflow-y: auto; font-size: 14px;
+    display: grid; grid-template-columns: 2.2em 1fr 1fr; gap: 2px 8px; align-content: start;
+  }
+  #moves .n { color: var(--dim); }
+  #moves .m.last { color: #ffd54a; font-weight: 600; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: #33302a; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px;
+  }
+  button:hover { border-color: var(--accent); }
+  #err { color: #ff9b7a; font-size: 13px; min-height: 1.2em; }
+  .whoami { font-size: 13px; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="boardcol">
+    <div id="status"><div class="dot"></div><div id="statustext">connecting…</div></div>
+    <div id="board"></div>
+  </div>
+  <div class="side">
+    <h1>Kamil <span style="color:var(--dim)">vs</span> Saori
+      <small id="colors"></small></h1>
+    <div id="moves"></div>
+    <div id="err"></div>
+    <div class="btns">
+      <button onclick="newGame('white')">New — I play White</button>
+      <button onclick="newGame('black')">New — I play Black</button>
+      <button onclick="undo()">Takeback</button>
+      <button onclick="flipped=!flipped;render()">Flip board</button>
+    </div>
+    <div class="whoami">Saori plays through her API; this board updates by itself.</div>
+  </div>
+</div>
+<script>
+// Cburnett piece set (SVG files served from /pieces) - the classic board look.
+function pieceHtml(pc) {
+  const w = pc === pc.toUpperCase();
+  return `<img class="pc" src="/pieces/${(w ? "w" : "b") + pc.toUpperCase()}.svg" draggable="false" alt="${pc}">`;
+}
+let S = null, sel = null, flipped = false, lastFen = "";
+
+function sqName(f, r) { return "abcdefgh"[f] + (r + 1); }
+
+function parseFen(fen) {
+  const grid = {};
+  const rows = fen.split(" ")[0].split("/");
+  for (let r = 0; r < 8; r++) {           // rows[0] = rank 8
+    let f = 0;
+    for (const ch of rows[r]) {
+      if (/\d/.test(ch)) f += +ch;
+      else grid[sqName(f++, 7 - r)] = ch;
+    }
+  }
+  return grid;
+}
+
+function render() {
+  if (!S) return;
+  const grid = parseFen(S.fen);
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  const lastFrom = S.last_move ? S.last_move.slice(0, 2) : null;
+  const lastTo   = S.last_move ? S.last_move.slice(2, 4) : null;
+  const legalFromSel = sel ? S.legal_moves.filter(m => m.uci.startsWith(sel)) : [];
+  for (let i = 0; i < 64; i++) {
+    const row = Math.floor(i / 8), col = i % 8;
+    const rank = flipped ? row : 7 - row;
+    const file = flipped ? 7 - col : col;
+    const name = sqName(file, rank);
+    const el = document.createElement("div");
+    el.className = "sq " + ((file + rank) % 2 ? "light" : "dark");
+    if (name === lastFrom) el.classList.add("from");
+    if (name === lastTo) el.classList.add("to");
+    if (name === sel) el.classList.add("sel");
+    if (name === S.check_square) el.classList.add("check");
+    const pc = grid[name];
+    if (pc) el.innerHTML = pieceHtml(pc);
+    const mv = legalFromSel.find(m => m.uci.slice(2, 4) === name);
+    if (mv) el.innerHTML += pc ? `<div class="cap"></div>` : `<div class="hint"></div>`;
+    if ((flipped ? rank === 7 : rank === 0))
+      el.innerHTML += `<span class="coord file">${"abcdefgh"[file]}</span>`;
+    if ((flipped ? file === 7 : file === 0))
+      el.innerHTML += `<span class="coord rank">${rank + 1}</span>`;
+    el.onclick = () => tap(name, grid);
+    board.appendChild(el);
+  }
+  const st = document.getElementById("statustext");
+  st.textContent = S.status_detail ||
+    (S.result !== "*" ? `Game over ${S.result}` : `${S.to_move} to move`);
+  document.getElementById("colors").textContent =
+    `${S.players.white} plays White · ${S.players.black} plays Black`;
+  const mv = document.getElementById("moves");
+  mv.innerHTML = "";
+  for (let i = 0; i < S.history_san.length; i += 2) {
+    mv.innerHTML += `<span class="n">${i / 2 + 1}.</span>`;
+    const w = S.history_san[i], b = S.history_san[i + 1];
+    mv.innerHTML += `<span class="m ${i === S.history_san.length - 1 ? "last" : ""}">${w}</span>`;
+    mv.innerHTML += b ? `<span class="m ${i + 1 === S.history_san.length - 1 ? "last" : ""}">${b}</span>`
+                      : "<span></span>";
+  }
+  mv.scrollTop = mv.scrollHeight;
+}
+
+function myColor() {
+  return S.players.white === "Kamil" ? "white" : "black";
+}
+
+async function tap(name, grid) {
+  if (!S || S.result !== "*") return;
+  if (sel) {
+    let mv = S.legal_moves.find(m => m.uci.startsWith(sel) && m.uci.slice(2, 4) === name);
+    if (mv) {
+      let uci = mv.uci;
+      const promos = S.legal_moves.filter(m => m.uci.slice(0, 4) === sel + name);
+      if (promos.length > 1) uci = sel + name + "q";   // auto-queen
+      sel = null;
+      await post("/move", { move: uci });
+      return;
+    }
+  }
+  const pc = grid[name];
+  const mine = pc && (myColor() === "white" ? pc === pc.toUpperCase() : pc === pc.toLowerCase());
+  sel = (mine && S.turn === myColor()) ? name : null;
+  render();
+}
+
+async function post(path, body) {
+  document.getElementById("err").textContent = "";
+  const r = await fetch(path, { method: "POST",
+    headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (!r.ok) {
+    const e = await r.json().catch(() => ({}));
+    document.getElementById("err").textContent = e.detail || `error ${r.status}`;
+  } else {
+    S = await r.json(); lastFen = S.fen; render();
+  }
+}
+
+function newGame(color) { sel = null; post("/new", { kamil: color }); flipped = color === "black"; }
+function undo() { sel = null; post("/undo", { plies: 1 }); }
+
+async function poll() {
+  try {
+    const r = await fetch("/state");
+    const s = await r.json();
+    if (!S || s.fen !== lastFen || s.ply !== S.ply) { S = s; lastFen = s.fen; render(); }
+  } catch (e) { document.getElementById("statustext").textContent = "server unreachable…"; }
+}
+poll(); setInterval(poll, 1200);
+</script>
+</body>
+</html>

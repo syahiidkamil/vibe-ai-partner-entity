@@ -15,6 +15,7 @@ dependencies = [
     "pgvector>=0.3.6",
     "google-genai>=1.0.0",
     "python-dotenv>=1.0.0",
+    "chess>=1.11.0",
 ]
 
 [project.optional-dependencies]
