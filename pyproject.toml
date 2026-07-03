@@ -49,3 +49,12 @@ vibe-plugin-tts-kitten = { workspace = true }
 dev = [
     "pytest>=9.0.3",
 ]
+# The daily-driver voice lives in a DEFAULT group: as an optional extra it was
+# pruned from the venv by every bare `uv sync`, and the voice died (silently,
+# Engine: None) on the next server restart. Other engines stay opt-in extras.
+tts = [
+    "vibe-plugin-tts-kokoro-onnx",
+]
+
+[tool.uv]
+default-groups = ["dev", "tts"]

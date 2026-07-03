@@ -2736,6 +2736,9 @@ tts-kokoro-onnx = [
 dev = [
     { name = "pytest" },
 ]
+tts = [
+    { name = "vibe-plugin-tts-kokoro-onnx" },
+]
 
 [package.metadata]
 requires-dist = [
@@ -2761,6 +2764,7 @@ provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "dev"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.0.3" }]
+tts = [{ name = "vibe-plugin-tts-kokoro-onnx", editable = "vape/plugins/tts-kokoro-onnx" }]
 
 [[package]]
 name = "vibe-plugin-tts-kitten"

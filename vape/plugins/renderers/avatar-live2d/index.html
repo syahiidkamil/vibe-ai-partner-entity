@@ -479,20 +479,27 @@
       isPlaying = true;
       const { url, text, volume } = playQueue.shift();
 
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
-        // signal — a whisper still moves the mouth at full amplitude.
-        gainNode = audioCtx.createGain();
-        analyser.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-      }
+      // The audio graph is rebuilt fresh for EVERY utterance. A long-lived
+      // AudioContext survives the laptop's sleep with state still 'running',
+      // but its CoreAudio output unit is dead — the element "plays" (captions
+      // page, /audio fetches log 206) while no sound reaches the speakers.
+      // The same staleness hits when the default output device changes
+      // (AirPods off, HDMI out). A fresh context binds to the CURRENT default
+      // device every time; the old one is closed so contexts never pile up.
+      if (audioCtx) { try { audioCtx.close(); } catch {} }
+      audioCtx = new AudioContext();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
+      // signal — a whisper still moves the mouth at full amplitude.
+      gainNode = audioCtx.createGain();
+      analyser.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
       gainNode.gain.value = (volume ?? 100) / 100;
-      // Some webviews start the AudioContext suspended; resume before playing
-      // or the analyser reads silence and the mouth never moves.
-      if (audioCtx.state === 'suspended') {
+      // Some webviews start the AudioContext suspended (WebKit also has an
+      // 'interrupted' state); resume anything not running before playing, or
+      // the analyser reads silence and the mouth never moves.
+      if (audioCtx.state !== 'running') {
         try { await audioCtx.resume(); } catch {}
       }
 
