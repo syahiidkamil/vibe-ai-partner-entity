@@ -59,7 +59,17 @@
     display: grid; grid-template-columns: 2.2em 1fr 1fr; gap: 2px 8px; align-content: start;
   }
   #moves .n { color: var(--dim); }
+  #moves .m { cursor: pointer; border-radius: 4px; padding: 0 3px; }
+  #moves .m:hover { background: #3a362e; }
   #moves .m.last { color: #ffd54a; font-weight: 600; }
+  #moves .m.view { outline: 2px solid #ffd54a; }
+  #preview {
+    display: none; background: #3a3226; border: 1px solid #5a4c33; border-radius: 8px;
+    padding: 8px 10px; font-size: 13px; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  #preview.on { display: flex; }
+  #preview button { padding: 3px 9px; font-size: 13px; }
+  #preview .rw { border-color: #a15c3e; }
   .btns { display: flex; gap: 8px; flex-wrap: wrap; }
   button {
     background: #33302a; color: var(--ink); border: 1px solid var(--line);
@@ -74,6 +84,12 @@
 <div class="wrap">
   <div class="boardcol">
     <div id="status"><div class="dot"></div><div id="statustext">connecting…</div></div>
+    <div id="preview"><span id="pvtext"></span>
+      <button onclick="step(-1)">◀</button>
+      <button onclick="step(1)">▶</button>
+      <button onclick="goLive()">live ⏭</button>
+      <button class="rw" onclick="rewindHere()">⏪ rewind to here</button>
+    </div>
     <div id="board"></div>
   </div>
   <div class="side">
@@ -97,6 +113,7 @@ function pieceHtml(pc) {
   return `<img class="pc" src="/pieces/${(w ? "w" : "b") + pc.toUpperCase()}.svg" draggable="false" alt="${pc}">`;
 }
 let S = null, sel = null, flipped = false, lastFen = "";
+let viewPly = null;   // null = live; N = viewing the position after N plies (history browsing)
 
 function sqName(f, r) { return "abcdefgh"[f] + (r + 1); }
 
@@ -115,12 +132,16 @@ function parseFen(fen) {
 
 function render() {
   if (!S) return;
-  const grid = parseFen(S.fen);
+  if (viewPly !== null && viewPly >= S.ply) viewPly = null;   // history caught up to live
+  const atLive = viewPly === null;
+  const fen = atLive ? S.fen : S.fens[viewPly];
+  const lastUci = atLive ? S.last_move : (viewPly > 0 ? S.history_uci[viewPly - 1] : null);
+  const grid = parseFen(fen);
   const board = document.getElementById("board");
   board.innerHTML = "";
-  const lastFrom = S.last_move ? S.last_move.slice(0, 2) : null;
-  const lastTo   = S.last_move ? S.last_move.slice(2, 4) : null;
-  const legalFromSel = sel ? S.legal_moves.filter(m => m.uci.startsWith(sel)) : [];
+  const lastFrom = lastUci ? lastUci.slice(0, 2) : null;
+  const lastTo   = lastUci ? lastUci.slice(2, 4) : null;
+  const legalFromSel = (atLive && sel) ? S.legal_moves.filter(m => m.uci.startsWith(sel)) : [];
   for (let i = 0; i < 64; i++) {
     const row = Math.floor(i / 8), col = i % 8;
     const rank = flipped ? row : 7 - row;
@@ -130,8 +151,8 @@ function render() {
     el.className = "sq " + ((file + rank) % 2 ? "light" : "dark");
     if (name === lastFrom) el.classList.add("from");
     if (name === lastTo) el.classList.add("to");
-    if (name === sel) el.classList.add("sel");
-    if (name === S.check_square) el.classList.add("check");
+    if (atLive && name === sel) el.classList.add("sel");
+    if (atLive && name === S.check_square) el.classList.add("check");
     const pc = grid[name];
     if (pc) el.innerHTML = pieceHtml(pc);
     const mv = legalFromSel.find(m => m.uci.slice(2, 4) === name);
@@ -148,24 +169,54 @@ function render() {
     (S.result !== "*" ? `Game over ${S.result}` : `${S.to_move} to move`);
   document.getElementById("colors").textContent =
     `${S.players.white} plays White · ${S.players.black} plays Black`;
+  const pv = document.getElementById("preview");
+  pv.className = atLive ? "" : "on";
+  if (!atLive) {
+    const n = Math.ceil(viewPly / 2);
+    const who = viewPly % 2 ? "" : "…";
+    document.getElementById("pvtext").textContent = viewPly === 0
+      ? `start position (0/${S.ply})`
+      : `after ${n}.${who} ${S.history_san[viewPly - 1]} (${viewPly}/${S.ply})`;
+  }
   const mv = document.getElementById("moves");
   mv.innerHTML = "";
+  const cls = i => "m" +
+    (i === S.history_san.length - 1 && atLive ? " last" : "") +
+    (!atLive && viewPly === i + 1 ? " view" : "");
   for (let i = 0; i < S.history_san.length; i += 2) {
     mv.innerHTML += `<span class="n">${i / 2 + 1}.</span>`;
     const w = S.history_san[i], b = S.history_san[i + 1];
-    mv.innerHTML += `<span class="m ${i === S.history_san.length - 1 ? "last" : ""}">${w}</span>`;
-    mv.innerHTML += b ? `<span class="m ${i + 1 === S.history_san.length - 1 ? "last" : ""}">${b}</span>`
+    mv.innerHTML += `<span class="${cls(i)}" onclick="viewAt(${i + 1})">${w}</span>`;
+    mv.innerHTML += b ? `<span class="${cls(i + 1)}" onclick="viewAt(${i + 2})">${b}</span>`
                       : "<span></span>";
   }
-  mv.scrollTop = mv.scrollHeight;
+  if (atLive) mv.scrollTop = mv.scrollHeight;
 }
+
+function viewAt(p) { viewPly = (p >= S.ply) ? null : p; sel = null; render(); }
+function step(d) {
+  const cur = viewPly === null ? S.ply : viewPly;
+  viewAt(Math.max(0, cur + d));
+}
+function goLive() { viewPly = null; render(); }
+async function rewindHere() {
+  if (viewPly === null) return;
+  const n = S.ply - viewPly;
+  viewPly = null;
+  if (n > 0) await post("/undo", { plies: n });
+  render();
+}
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+  if (e.key === "ArrowRight") { step(1); e.preventDefault(); }
+});
 
 function myColor() {
   return S.players.white === "Kamil" ? "white" : "black";
 }
 
 async function tap(name, grid) {
-  if (!S || S.result !== "*") return;
+  if (!S || S.result !== "*" || viewPly !== null) return;   // no moving while browsing history
   if (sel) {
     let mv = S.legal_moves.find(m => m.uci.startsWith(sel) && m.uci.slice(2, 4) === name);
     if (mv) {
