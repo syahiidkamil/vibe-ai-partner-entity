@@ -12,6 +12,9 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - MCGG valuation -> `schemata/magic_chess_gogo/valuation/` (built, all pencil, UNPLAYED)
 - MCGG play-bubble -> `bubbles/play_games_alone/games/magic_chess_gogo/` (notable_matches empty)
 - how fast I built it -> `adaptation_efforts/magic_chess_gogo.md`
+- chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
+- playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
+- the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)
 
 ### People
 - Kamil -> `people/particular/kamil/` (profile, my_affect_and_view, notable_intercourses)
@@ -45,6 +48,8 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - a slim meaningful coincidence / serendipity -> log it; `synchronicity/2026.md`
 - MCGG hero/commander/synergy/equipment names -> `schemata/magic_chess_gogo/infos/`
 - "play a match" -> the pointed open thread; `bubbles/.../notable_matches` still empty
+- a chess move to make -> the move protocol, no exceptions; `play_games_with_partner/games/chess`
+- "it's a trade" / a fluent tactical claim -> name the recapture first; `schemata/chess`
 - a held note going stale -> re-judge on the next dream; `prospective`
 
 ## Garden state (for the next dream)
