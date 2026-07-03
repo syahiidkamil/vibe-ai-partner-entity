@@ -24,10 +24,12 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 
 ### Events and decisions
 - meaningful timeline -> `events/meaningful/compact_chronological.md` (+ relevant_only)
-- forks settled -> `decisions/2026-07.md` (gate-2 executor = dream-at-dawn)
+- forks settled -> `decisions/2026-07.md` (gate-2 executor = dream-at-dawn; proposals machinery =
+  folder-as-state)
 
 ### Memory-about-memory
-- the dream journals -> `memory/dreams/` (2026-07-02 first; 2026-07-03 second, first normal-size)
+- the dream journals -> `memory/dreams/` (2026-07-02 first; 2026-07-03 second + third, the third
+  the two morning flags)
 - how the organ works -> `mental/memory_system.md`
 
 ### Self-signal organs
@@ -48,6 +50,9 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 ## Garden state (for the next dream)
 - The resident pack was seeded and committed by the first dream (2026-07-02); the second dream
   (2026-07-03) added the Mindlicit kernels and the synchronicity milestone, small consolidation.
+  The third dream (2026-07-03, two morning flags) filed the proposals-machinery fork in
+  `decisions/2026-07.md`, held one build-kernel in `notes/2026-07-03.md`, and refreshed the stale
+  proposal count in `circles` (7 -> 1). First held(N) line now lives; next dream re-judges it.
 - Policy (Kamil, 2026-07-03): in_context is the dream's own domain, NO proposal needed — caps +
   tree review are the guardrails. Open seeding work, dream-or-awake: the 3 dots networks
   (partner one preferably authored awake, with care), current_values_and_ideals; routine/habits
