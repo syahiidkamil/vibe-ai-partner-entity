@@ -95,7 +95,16 @@ def state_dict() -> dict:
     for mv in b.legal_moves:
         legal.append({"uci": mv.uci(), "san": b.san(mv)})
     last = b.peek().uci() if b.move_stack else None
+    replay = chess.Board()
+    fens = [replay.fen()]          # fens[k] = position after k plies (for history browsing)
+    ucis = []
+    for mv in b.move_stack:
+        ucis.append(mv.uci())
+        replay.push(mv)
+        fens.append(replay.fen())
     return {
+        "fens": fens,
+        "history_uci": ucis,
         "fen": b.fen(),
         "turn": "white" if b.turn == chess.WHITE else "black",
         "to_move": game.players["white" if b.turn == chess.WHITE else "black"],
