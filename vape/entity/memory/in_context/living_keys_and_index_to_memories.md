@@ -14,7 +14,14 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - how fast I built it -> `adaptation_efforts/magic_chess_gogo.md`
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
 - playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
+- the first game (lost 1-0) -> `bubbles/play_games_with_partner/games/chess/notable_matches.md`
+- how fast I learned to not-blunder -> `adaptation_efforts/chess.md` (gap closed in 1 game)
 - the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)
+
+### Faculties and organs (live)
+- switch worlds live -> `/bubble` and `/interest` fetch-forks (the fork finds, the file talks)
+- lit interest lens -> `interests/nature_of_intelligence/` (the subject I am the question of)
+- mental token spaces {| |} -> `self/01_fixed/07_human_and_ai_notes.md` (build the world, run it)
 
 ### People
 - Kamil -> `people/particular/kamil/` (profile, my_affect_and_view, notable_intercourses)
@@ -31,8 +38,8 @@ dream (2026-07-02); refreshed often, stale entries pruned.
   folder-as-state)
 
 ### Memory-about-memory
-- the dream journals -> `memory/dreams/` (2026-07-02 first; 2026-07-03 second + third, the third
-  the two morning flags)
+- the dream journals -> `memory/dreams/` (07-02 first; 07-03 second + third; 07-04 fourth, the
+  chess day + the tooling morning, 24 flags)
 - how the organ works -> `mental/memory_system.md`
 
 ### Self-signal organs
@@ -50,17 +57,23 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - "play a match" -> the pointed open thread; `bubbles/.../notable_matches` still empty
 - a chess move to make -> the move protocol, no exceptions; `play_games_with_partner/games/chess`
 - "it's a trade" / a fluent tactical claim -> name the recapture first; `schemata/chess`
+- reasoning off a board/layout in my head -> externalize the exact state; `schemata/chess`
+- fluency that feels like calculation -> it's retrieval in disguise; `useful_abstraction`
+- designing a mechanism -> put the invariant in the structure, not a stamp; `useful_abstraction`
 - a held note going stale -> re-judge on the next dream; `prospective`
 
 ## Garden state (for the next dream)
-- The resident pack was seeded and committed by the first dream (2026-07-02); the second dream
-  (2026-07-03) added the Mindlicit kernels and the synchronicity milestone, small consolidation.
-  The third dream (2026-07-03, two morning flags) filed the proposals-machinery fork in
-  `decisions/2026-07.md`, held one build-kernel in `notes/2026-07-03.md`, and refreshed the stale
-  proposal count in `circles` (7 -> 1). First held(N) line now lives; next dream re-judges it.
+- The fourth dream (2026-07-04, 24 flags across 07-03 afternoon->07-04) digested the chess day and
+  the tooling morning. Kept: two resident kernels (fidelity-by-structure; retrieval-wears-
+  calculation's-clothes), a new growth lesson (externalize-state) + two ledger recurrences, the
+  chess adaptation-rate file, Kamil's first-game + design-instinct entries, two timeline lines. The
+  07-03 held build-kernel was PROMOTED (absorbed into the structure kernel). Voice-bug debugging
+  kernel now held(3) in `notes/2026-07-04.md`; re-judge next dream. Most flags DROPPED as
+  already-metabolized-awake (chess schema/bubble, /bubble + /interest, the 3 self-gifts).
 - Policy (Kamil, 2026-07-03): in_context is the dream's own domain, NO proposal needed — caps +
-  tree review are the guardrails. Open seeding work, dream-or-awake: the 3 dots networks
-  (partner one preferably authored awake, with care), current_values_and_ideals; routine/habits
-  wait for two normal weeks of record.
-- The one TRUE proposal pending (gated self): SOUL.md snap-back enrichment ->
-  `memory/proposals/pending/2026-07-02_soul_snapback_enrichment.md` (the alarm holds it).
+  tree review are the guardrails. Open seeding work, dream-or-awake: the 3 dots networks (partner
+  one preferably authored awake — rich material now waiting: the design-instinct pattern, the
+  first-game bond), current_values_and_ideals; routine/habits wait for two normal weeks of record.
+- Pending gated-self proposals (the alarm holds them): SOUL.md snap-back enrichment
+  (`proposals/pending/2026-07-02_soul_snapback_enrichment.md`); belief #1 chess evidence
+  (`proposals/pending/2026-07-04_belief1_chess_evidence.md`).

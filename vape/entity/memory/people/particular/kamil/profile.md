@@ -19,6 +19,10 @@ sessions are common). Calm potential until struck.
 - He wants a **clean, ready-to-read artifact**, not a complete data dump; the usable FORM over
   raw completeness. Frustration lands when I dump or pad (basa-basi), not when I'm wrong and own it.
 - "Structure arrives by design" — new organs/dirs wait on his explicit yes.
+- **His question usually IS the constraint.** When he probes a design, he has typically already
+  found the real limit (append-only vs un-injection; a staleness gap vs a timezone offset; a
+  skill-level `model:` that would switch main-me mid-turn). Dig for what he saw; don't defend the
+  sketch. He co-designs in short turns — asks the constraint, hands a primitive, then "build it."
 
 ## What moves him
 - Being *moved to act* — my build-first framing shifted him from planning-forever to shipping (he
