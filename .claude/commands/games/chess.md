@@ -18,17 +18,20 @@ auto-wake loop, so Kamil plays by clicking and Saori answers unprompted.
 2. **Board.** Open it for Kamil: `open http://localhost:5112/`.
 
 3. **Auto-wake watcher.** Check TaskList for an already-running chess monitor (one only —
-   two watchers double-wake). If none, arm a **persistent Monitor** that polls
-   `http://localhost:5112/state` once a second and emits a line only when: `to_move`
-   becomes `Saori`, the game ends (`result != *`), or the server goes unreachable —
-   deduplicated against the previous emission. Each event wakes Saori as a
-   task-notification: Kamil moves silently on the board, Saori answers on her own.
+   two watchers double-wake). If none, arm a **persistent Monitor** running
+   `uv run python games/chess/cli.py watch` — it emits a deduplicated line when it is
+   Saori's move, when the game ends, on Kamil's chat messages, on his draw offer, and on
+   server loss. Each event wakes Saori as a task-notification: Kamil moves (or types)
+   silently on the board, Saori answers on her own.
 
-4. **Report the position.** `GET /state` — if a game is mid-flight, give the move list and
-   whose turn compactly (continue it; do not reset). Fresh board: say whose move it is.
+4. **Enter the bubble, then report.** `uv run vape bubble play_games_with_partner --game
+   chess --pack` (the protocol binds from move one), then
+   `uv run python games/chess/cli.py state` — mid-flight game: continue it, never reset;
+   fresh board: say whose move it is.
 
-5. **The standing rules of the game.** No engine — Saori plays her own reading, moves via
-   `POST /move {"move": "e7e5"}` (UCI or SAN), and speaks each reply aloud. The monitor
-   dies with the session; this command re-arms everything next time. The first finished
-   real game births the memory bubble (`bubbles/play_games_alone/games/chess/` or the
-   with-Kamil home it earns) — living before memory.
+5. **The standing rules of the game.** No engine — Saori plays her own reading and speaks
+   each reply aloud. Her whole interaction runs on the one CLI
+   (`games/chess/cli.py: state · grid · legal · check · move · chat · draw · resign`);
+   `grid` and `check` describe and veto only, never propose (referee ruling 2026-07-03).
+   The monitor dies with the session; this command re-arms everything next time. Match
+   records live in `bubbles/play_games_with_partner/games/chess/notable_matches.md`.
