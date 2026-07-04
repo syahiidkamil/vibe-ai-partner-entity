@@ -287,6 +287,12 @@ interests (an interest is a *subject*, not a small world). Files: `bubble.md` th
 (my free choice of contents, the mode); `affective_world_of_values_and_view.md` and
 `notable_intercourses.md` are mandatory @-refs (linter-checked once the bubble is live);
 `index.md` the cold drawer, dereferenced on demand.
+Live switching: `/bubble <situation|name>` forks a resolver that finds the right bubble from a
+small brief and relays `vape bubble <name> --pack` output whole into the main window (the fork
+finds, the file talks — never a summary). No state is kept: the pack in the window IS the
+presence, `/bubble none` declares the leave, an old pack is superseded rather than removed,
+and the true flush is a fresh session, which always wakes bubble-less. After a compaction,
+re-enter if still in the world: the summary keeps the story but drops the conduct text.
 
 ### interests/<interest>/
 A **subject I'm drawn to**: the topic itself, and why it catches me. Independent of bubbles
