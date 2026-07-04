@@ -18,16 +18,29 @@
     }
     /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
+      /* width matches the avatar panel (85%, centered) so the drag strip and its
+         hint don't overflow the card into the transparent margins; translate3d
+         also promotes it to a clean GPU layer during a drag. */
+      position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
+      width: 85%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
+      /* Faint always-visible hint + frosted blur so a first-time user can SEE
+         where to grab; a white top line keeps it visible on dark backdrops. */
+      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      border-top: 2px solid rgba(255,255,255,0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s;
     }
-    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
+    .titlebar:hover {
+      background: linear-gradient(rgba(0,0,0,0.22), transparent);
+      border-top-color: rgba(255,255,255,0.85);
+    }
     .controls {
-      /* glued to the panel's right edge with % offsets so it tracks the panel at
-         any window size without a CSS transform (panel = 170/200 wide, centered →
-         right edge sits 7.5% in from the window's right edge; ~30px ≈ 13.5% down) */
-      position: fixed; top: 13.5%; right: calc(7.5% + 2px);
-      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+      /* in the titlebar strip, top-right (strip spans 85% centered, so its
+         right edge sits 7.5% in from the window's right edge) */
+      position: fixed; top: 6px; right: calc(7.5% + 4px);
+      display: flex; gap: 4px; z-index: 102; -webkit-app-region: no-drag;
     }
     .ctrl-btn {
       width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
@@ -38,6 +51,39 @@
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* Volume popover: custom vertical slider (a rotated <input> needs a CSS
+       transform, which ghosts on the transparent window — so honest DOM: track
+       + fill). Absolute child of .controls, so it's outside the flex row and
+       must be added to the click-through zone list when open. */
+    .vol-pop {
+      display: none; position: absolute; top: 24px; left: 0; width: 18px;
+      padding: 8px 0 3px; border-radius: 9px; background: rgba(0,0,0,0.45);
+      flex-direction: column; align-items: center; gap: 4px;
+      -webkit-app-region: no-drag;
+    }
+    .vol-pop.open { display: flex; }
+    #vol-track {
+      width: 4px; height: 64px; border-radius: 2px;
+      background: rgba(255,255,255,0.3); position: relative; cursor: pointer;
+      box-shadow: 0 0 0 6px transparent;
+    }
+    #vol-fill {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      border-radius: 2px; background: #fff; height: 100%;
+    }
+    #vol-num { font: 9px/1 sans-serif; color: #fff; opacity: 0.85; }
+    /* Onboarding flash: for the first seconds after launch the chrome shows
+       itself, then fades back to hover-only. */
+    #drag-hint {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      height: 28px; line-height: 28px; white-space: nowrap;
+      font: 11px sans-serif; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    body.intro #drag-hint { opacity: 1; }
+    body.intro .ctrl-btn { opacity: 1; }
     /* Sizes are % of the window so the SVG (vector, viewBox) scales crisply when
        the −/+ controls resize the OS window — no CSS transform needed. */
     #bg-panel {
@@ -47,7 +93,7 @@
       transform: translateX(-50%);
       width: 85%;
       height: 88.46%;
-      background: rgba(128, 128, 128, 0.12);
+      background: transparent;
       border-radius: 18px 18px 10px 10px;
     }
     #avatar-svg {
@@ -71,15 +117,15 @@
       padding: 6px 12px;
       font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
       font-size: 11px;
-      max-width: 180px;
+      max-width: 86%;   /* proportional: the bubble grows with the window */
       text-align: center;
       opacity: 0;
       transition: opacity 0.3s;
-      z-index: 10;
+      z-index: 101;   /* above the titlebar (100) so its backdrop blur does not frost the bubble */
       pointer-events: none;
       display: -webkit-box;
-      line-clamp: 3;
-      -webkit-line-clamp: 3;
+      line-clamp: 4;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
       color: #4a2a5a;
@@ -170,14 +216,158 @@
     .eye-white, .iris, .pupil-el, .eye-highlight { transition: all 0.3s; }
     #blush-left, #blush-right { transition: opacity 0.3s; }
     #eyebrow-left, #eyebrow-right { transition: transform 0.3s; }
+
+    /* ─── Actions (self-expressions) ────────────────
+       The whole puppet animates via #rig (a <g> wrapping all SVG content), so
+       the svg element's own centering translateX is never clobbered. Each
+       action is a class on #container; JS removes it after the animation. */
+    #rig { transform-origin: 140px 260px; }
+    .hand { display: none; }
+    #sparkles { display: none; }
+    .sp { transform-box: fill-box; transform-origin: center; }
+    .tear { fill: #8FD3F4; opacity: 0; animation: tear-fall 1.3s ease-in forwards; }
+    @keyframes tear-fall {
+      0% { opacity: 0; transform: translateY(0); }
+      15% { opacity: 0.95; }
+      85% { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(46px); }
+    }
+
+    @keyframes act-nod {
+      0%, 100% { transform: translateY(0); }
+      25%, 75% { transform: translateY(8px); }
+      50% { transform: translateY(1px); }
+    }
+    .action-nod #rig { animation: act-nod 1.2s ease-in-out; }
+
+    @keyframes act-shake {
+      0%, 100% { transform: translateX(0); }
+      16%, 50%, 83% { transform: translateX(-8px); }
+      33%, 66% { transform: translateX(8px); }
+    }
+    .action-head_shake #rig { animation: act-shake 1.1s ease-in-out; }
+
+    @keyframes act-tilt {
+      0%, 100% { transform: rotate(0deg); }
+      20%, 80% { transform: rotate(9deg); }
+    }
+    .action-head_tilt #rig { animation: act-tilt 2s ease-in-out; }
+    .action-think #rig { animation: act-tilt 2.2s ease-in-out; }
+    .action-think .pupil-el, .action-think .iris { transform: translate(2px, -4px); }
+
+    @keyframes act-bounce {
+      0%, 100% { transform: translateY(0); }
+      17%, 50%, 83% { transform: translateY(-7px); }
+      33%, 66% { transform: translateY(0); }
+    }
+    .action-laugh #rig { animation: act-bounce 1.3s ease-in-out; }
+    .action-giggle #rig { animation: act-bounce 1.1s ease-in-out; }
+    /* laugh borrows the happy arcs; giggle keeps the eyes, adds blush */
+    .action-laugh #eyes-group { animation: none; }
+    .action-laugh .eye-white, .action-laugh .iris, .action-laugh .pupil-el,
+    .action-laugh .eye-highlight, .action-laugh .eye-highlight-sm { display: none; }
+    .action-laugh #happy-eyes { display: block; }
+    .action-giggle #blush-left, .action-giggle #blush-right { opacity: 0.9; }
+
+    @keyframes act-gasp {
+      0%, 100% { transform: scale(1); }
+      30% { transform: scale(1.05) translateY(-4px); }
+      60% { transform: scale(1.02) translateY(-1px); }
+    }
+    .action-gasp #rig { animation: act-gasp 1.2s ease-out; }
+    .action-gasp #eyes-group { animation: none; }
+    .action-gasp .eye-white { rx: 18; ry: 23; }
+    .action-gasp .pupil-el { rx: 4; ry: 7; }
+
+    @keyframes act-big-bounce {
+      0%, 100% { transform: translateY(0); }
+      25%, 75% { transform: translateY(-13px); }
+      50% { transform: translateY(0); }
+    }
+    .action-celebrate #rig { animation: act-big-bounce 1.6s ease-in-out; }
+    .action-celebrate #eyes-group { animation: none; }
+    .action-celebrate .eye-white, .action-celebrate .iris, .action-celebrate .pupil-el,
+    .action-celebrate .eye-highlight, .action-celebrate .eye-highlight-sm { display: none; }
+    .action-celebrate #happy-eyes { display: block; }
+    .action-celebrate #blush-left, .action-celebrate #blush-right { opacity: 0.9; }
+    .action-celebrate #sparkles, .action-starry #sparkles { display: block; }
+    .action-celebrate .sp { animation: sp-pop 1.6s ease-out; }
+    .action-starry .sp { animation: sp-pop 2s ease-out; }
+    @keyframes sp-pop {
+      0% { opacity: 0; transform: scale(0.3) rotate(0deg); }
+      30% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.4) rotate(45deg); }
+    }
+    .action-starry .eye-highlight { transform: scale(1.6); transform-box: fill-box; transform-origin: center; }
+
+    @keyframes act-wave-arm {
+      0%, 100% { transform: rotate(0deg); }
+      20%, 60% { transform: rotate(-16deg); }
+      40%, 80% { transform: rotate(12deg); }
+    }
+    .action-wave #hand-right {
+      display: block; transform-origin: 232px 330px;
+      animation: act-wave-arm 1.6s ease-in-out;
+    }
+
+    @keyframes act-bow {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      30%, 70% { transform: rotate(9deg) translateY(7px); }
+    }
+    .action-bow #rig { transform-origin: 140px 400px; animation: act-bow 1.8s ease-in-out; }
+
+    @keyframes act-clap-l {
+      0%, 100% { transform: translateX(0); }
+      20%, 50%, 80% { transform: translateX(26px); }
+      35%, 65% { transform: translateX(6px); }
+    }
+    @keyframes act-clap-r {
+      0%, 100% { transform: translateX(0); }
+      20%, 50%, 80% { transform: translateX(-26px); }
+      35%, 65% { transform: translateX(-6px); }
+    }
+    .action-clap #hand-left { display: block; animation: act-clap-l 1.4s ease-in-out; }
+    .action-clap #hand-right { display: block; animation: act-clap-r 1.4s ease-in-out; }
+
+    /* hands rise toward the face and tremble; used by cry_hands and the cry burst */
+    @keyframes act-hands-face-l {
+      0%, 100% { transform: translate(0, 0); }
+      25%, 85% { transform: translate(42px, -52px); }
+      45%, 65% { transform: translate(44px, -54px); }
+    }
+    @keyframes act-hands-face-r {
+      0%, 100% { transform: translate(0, 0); }
+      25%, 85% { transform: translate(-42px, -52px); }
+      45%, 65% { transform: translate(-44px, -54px); }
+    }
+    .action-cry_hands #hand-left, .action-cry #hand-left {
+      display: block; animation: act-hands-face-l 2.4s ease-in-out;
+    }
+    .action-cry_hands #hand-right, .action-cry #hand-right {
+      display: block; animation: act-hands-face-r 2.4s ease-in-out;
+    }
+    .action-cry #hand-left { animation-duration: 5s; }
+    .action-cry #hand-right { animation-duration: 5s; }
+    /* the crying face rides the burst */
+    .action-cry #eyes-group { animation: none; }
+    .action-cry #eyebrow-left { transform: rotate(-8deg); transform-origin: 100px 160px; }
+    .action-cry #eyebrow-right { transform: rotate(8deg); transform-origin: 180px 160px; }
+    .action-cry .eye-white { ry: 14; }
   </style>
 </head>
 <body>
-  <div class="titlebar" data-tauri-drag-region></div>
+  <div class="titlebar" data-tauri-drag-region>
+    <div id="drag-hint">⟵ This is Drag Area ⟶</div>
+  </div>
   <div class="controls">
+    <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
     <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+    <div id="vol-pop" class="vol-pop">
+      <div id="vol-track"><div id="vol-fill"></div></div>
+      <div id="vol-num">100</div>
+    </div>
   </div>
   <div id="container">
     <div id="bg-panel"></div>
@@ -201,6 +391,11 @@
           <stop offset="100%" stop-color="#EBF5FB"/>
         </linearGradient>
       </defs>
+
+      <!-- The rig: everything animatable rides in this group so action
+           animations never fight the svg element's own centering transform -->
+      <g id="rig">
+
 
       <!-- Hair back -->
       <path d="M 70 150 C 20 200 10 300 40 400 L 240 400 C 270 300 260 200 210 150 Z" fill="url(#hairBackGrad)"/>
@@ -281,6 +476,29 @@
       <path d="M 215 105 Q 195 85 180 100 Q 190 120 215 105 Z" fill="#FF8DA1"/>
       <path d="M 215 105 Q 225 135 235 145 Q 220 135 215 105 Z" fill="#FF8DA1"/>
       <circle cx="215" cy="105" r="6" fill="#FF4D6D"/>
+
+      <!-- Tears (JS-spawned ellipses land here; falls via .tear animation) -->
+      <g id="tears"></g>
+
+      <!-- Hands (hidden; shown + animated by wave / clap / cry actions) -->
+      <g id="hand-left" class="hand">
+        <path d="M 48 330 Q 35 300 40 282" stroke="#D8E4EE" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <circle cx="40" cy="274" r="11" fill="#FFE5D4" stroke="#E0B49A" stroke-width="1.5"/>
+      </g>
+      <g id="hand-right" class="hand">
+        <path d="M 232 330 Q 245 300 240 282" stroke="#D8E4EE" stroke-width="14" fill="none" stroke-linecap="round"/>
+        <circle cx="240" cy="274" r="11" fill="#FFE5D4" stroke="#E0B49A" stroke-width="1.5"/>
+      </g>
+
+      <!-- Sparkles (hidden; celebrate / starry pop them) -->
+      <g id="sparkles">
+        <path class="sp" d="M 55 95 l 4 8 8 4 -8 4 -4 8 -4 -8 -8 -4 8 -4 Z" fill="#FFD966"/>
+        <path class="sp" d="M 228 75 l 4 8 8 4 -8 4 -4 8 -4 -8 -8 -4 8 -4 Z" fill="#FFD966"/>
+        <path class="sp" d="M 245 155 l 3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3 Z" fill="#FFE8A3"/>
+        <path class="sp" d="M 32 175 l 3 6 6 3 -6 3 -3 6 -3 -6 -6 -3 6 -3 Z" fill="#FFE8A3"/>
+      </g>
+
+      </g><!-- /rig -->
     </svg>
   </div>
 
@@ -294,11 +512,87 @@
     const speechBubble = document.getElementById('speech-bubble');
     const container = document.getElementById('container');
 
+    let currentFeeling = 'normal';
+
     function setFeeling(name) {
-      container.className = '';
+      // Swap only feeling-* classes so a playing action-* class survives.
+      [...container.classList].filter(c => c.startsWith('feeling-'))
+        .forEach(c => container.classList.remove(c));
       if (name && name !== 'normal') {
         container.classList.add(`feeling-${name}`);
       }
+      currentFeeling = name;
+      // Tears follow the feeling: gentle track on sad, off on anything else
+      // (a real cry-burst escalates this via triggerCry / the cry action).
+      if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
+      else { clearTimeout(cryTimer); setTearMode('off'); }
+    }
+
+    // ─── Tears (conditional: gentle on sad, full on cry) ───
+    // JS spawns SVG ellipses under #tears; CSS animates the fall, and each
+    // tear removes itself on animationend, so nothing accumulates.
+    const tearsG = document.getElementById('tears');
+    const TEAR_EYES = [[100, 214], [180, 214]];
+    let tearMode = 'off', tearIv = null, tearAlt = 0, cryTimer = null;
+
+    function spawnTear([x, y]) {
+      const e = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+      e.setAttribute('cx', String(x + (Math.random() * 6 - 3)));
+      e.setAttribute('cy', String(y));
+      e.setAttribute('rx', '3'); e.setAttribute('ry', '4.5');
+      e.setAttribute('class', 'tear');
+      tearsG.appendChild(e);
+      e.addEventListener('animationend', () => e.remove());
+    }
+
+    function setTearMode(mode) {
+      if (mode === tearMode) return;
+      tearMode = mode;
+      clearInterval(tearIv); tearIv = null;
+      if (mode === 'off') return;
+      tearIv = setInterval(() => {
+        if (tearMode === 'cry') TEAR_EYES.forEach(spawnTear);
+        else spawnTear(TEAR_EYES[(tearAlt++) % 2]);
+      }, mode === 'cry' ? 250 : 1400);
+    }
+
+    // ─── Actions (self-expressions) ─────────────────
+    // Each action is a class on #container for the animation's length; the
+    // server passes unresolvable alias names through, so map the known ones.
+    const ACTION_MS = {
+      nod: 1200, head_shake: 1100, head_tilt: 2000, laugh: 1300, giggle: 1100,
+      gasp: 1200, think: 2200, celebrate: 1600, wave: 1600, bow: 1800,
+      starry: 2000, clap: 1400, cry_hands: 2400,
+    };
+    const ACTION_ALIAS = { bounce: 'giggle', fist_pump: 'starry' };
+    let actionTimer = null;
+
+    function clearActionClasses() {
+      [...container.classList].filter(c => c.startsWith('action-'))
+        .forEach(c => container.classList.remove(c));
+    }
+
+    function playAction(name) {
+      if (name === 'cry') return triggerCry();
+      name = ACTION_ALIAS[name] || name;
+      if (!(name in ACTION_MS)) return;
+      clearActionClasses();
+      void container.offsetWidth;   // reflow so a repeated action restarts its animation
+      container.classList.add(`action-${name}`);
+      clearTimeout(actionTimer);
+      actionTimer = setTimeout(clearActionClasses, ACTION_MS[name]);
+    }
+
+    function triggerCry() {
+      setFeeling('sad');                       // the crying face
+      setTearMode('cry');
+      clearActionClasses();
+      void container.offsetWidth;
+      container.classList.add('action-cry');   // hands to the face for the burst
+      clearTimeout(actionTimer);
+      actionTimer = setTimeout(clearActionClasses, 5000);
+      clearTimeout(cryTimer);
+      cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
     }
 
     // ─── Audio queue + lip sync ────────────────────
@@ -349,12 +643,83 @@
       mouth.setAttribute('stroke-width', '2.5');
     }
 
+    // ─── Bubble caption: page a long utterance so it never clips ──
+    // The VOICE stays one natural utterance; only the CAPTION pages, advancing
+    // in sync with the clip's playback, weighted by syllables. Pages are sized
+    // by MEASURING true content height against the bubble's line budget, with
+    // the clamp toggled OFF during measurement so scrollHeight reports whole.
+    function countSyllables(str) {
+      const m = str.toLowerCase().match(/[aeiou]+/g);
+      return m ? m.length : 1;
+    }
+
+    function paginateToFit(text) {
+      const el = speechBubble;
+      const cs = getComputedStyle(el);
+      const clampN = parseInt(cs.webkitLineClamp) || 3;
+      const prevClamp = el.style.webkitLineClamp;
+      el.style.webkitLineClamp = '9999';                 // measure true height
+      const lineH = parseFloat(cs.lineHeight) || 15;
+      const padV = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const budget = lineH * clampN + padV + 1;
+      // Pass 1 — greedy fill by MEASURED height, only to COUNT pages needed.
+      let n = 0, cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        el.textContent = test;
+        if (el.scrollHeight > budget && cur) { n++; cur = w; }
+        else cur = test;
+      }
+      if (cur) n++;
+      el.style.webkitLineClamp = prevClamp;              // restore display clamp
+      if (n <= 1) return [text];
+      // Pass 2 — balance into n EVEN pages by char target, so no tiny orphan.
+      const target = Math.ceil(text.length / n);
+      const pages = [];
+      cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        if (cur && test.length > target && pages.length < n - 1) { pages.push(cur); cur = w; }
+        else cur = test;
+      }
+      if (cur) pages.push(cur);
+      return pages;
+    }
+
+    function showSpeech(audio, text) {
+      const pages = paginateToFit(text);
+      if (pages.length <= 1) { speechBubble.textContent = text; return; }
+      const weights = pages.map(p => Math.max(countSyllables(p), 1));
+      const total = weights.reduce((a, b) => a + b, 0);
+      const ends = [];                                   // cumulative end-fraction per page
+      let acc = 0;
+      for (const w of weights) { acc += w; ends.push(acc / total); }
+      speechBubble.textContent = pages[0];
+      let shown = 0;
+      audio.addEventListener('timeupdate', () => {
+        const d = audio.duration;
+        if (!d || !isFinite(d)) return;
+        const frac = audio.currentTime / d;
+        let idx = ends.findIndex(e => frac < e);
+        if (idx === -1) idx = pages.length - 1;
+        if (idx !== shown) { shown = idx; speechBubble.textContent = pages[idx]; }
+      });
+    }
+
     async function processQueue() {
       if (playQueue.length === 0) {
         isPlaying = false;
         stopLipSync();
         setTimeout(() => {
-          if (!isPlaying) speechBubble.classList.remove('visible');
+          if (!isPlaying) {
+            speechBubble.classList.remove('visible');
+            // After the opacity fade, drop the element entirely so the
+            // transparent window can't retain a stale composited copy of it —
+            // the empty "ghost bubble". Re-shown via display='' next utterance.
+            setTimeout(() => {
+              if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+            }, 350);
+          }
         }, 500);
         return;
       }
@@ -362,31 +727,42 @@
       isPlaying = true;
       const { url, text, volume } = playQueue.shift();
 
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
-        // signal — a whisper still moves the mouth at full amplitude.
-        gainNode = audioCtx.createGain();
-        analyser.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-      }
+      // The audio graph is rebuilt fresh for EVERY utterance. A long-lived
+      // AudioContext survives the laptop's sleep with state still 'running',
+      // but its CoreAudio output unit is dead — the element "plays" while no
+      // sound reaches the speakers. Same staleness when the default output
+      // device changes. A fresh context binds to the CURRENT default device
+      // every time; the old one is closed so contexts never pile up.
+      if (audioCtx) { try { audioCtx.close(); } catch {} }
+      audioCtx = new AudioContext();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
+      // signal — a whisper still moves the mouth at full amplitude.
+      gainNode = audioCtx.createGain();
+      analyser.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
       gainNode.gain.value = (volume ?? 100) / 100;
-      // Some webviews start the AudioContext suspended; resume before playing
-      // or the analyser reads silence and the mouth never moves.
-      if (audioCtx.state === 'suspended') {
+      // Some webviews start the AudioContext suspended (WebKit also has an
+      // 'interrupted' state); resume anything not running before playing, or
+      // the analyser reads silence and the mouth never moves.
+      if (audioCtx.state !== 'running') {
         try { await audioCtx.resume(); } catch {}
-      }
-
-      if (text) {
-        speechBubble.textContent = text;
-        speechBubble.classList.add('visible');
       }
 
       const audio = new Audio(url);
       const source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
+
+      // Caption set up AFTER the audio exists, so a long sentence pages its
+      // caption in sync with this clip's playback (see showSpeech).
+      if (text) {
+        speechBubble.style.display = '';   // restore — display:none'd on hide to kill the ghost
+        showSpeech(audio, text);           // measures scrollHeight, so must run while displayed
+        void speechBubble.offsetHeight;    // reflow so the opacity fade-in plays from 0
+        speechBubble.classList.add('visible');
+      }
+
       startLipSync();
 
       audio.addEventListener('ended', processQueue);
@@ -405,6 +781,7 @@
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.type === 'feeling') setFeeling(msg.name);
+        else if (msg.type === 'action') playAction(msg.name);
       };
       ws.onclose = () => setTimeout(connectStatusWS, 2000);
       ws.onerror = () => ws.close();
@@ -476,18 +853,81 @@
 
     // Tauri can't forward mouse moves while click-through, so the renderer
     // reports its interactive rects and the shell hit-tests the cursor itself.
+    // (.vol-pop reports 0x0 while hidden — harmless; re-reported on toggle.)
+    let reportZonesFn = null;
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, .controls')].map((el) => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls, .vol-pop')].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });
         window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
       };
+      reportZonesFn = reportZones;
       reportZones();
       setTimeout(reportZones, 500);
       window.addEventListener('resize', reportZones);
     }
+
+    // ─── Volume popover: the STANDING volume, by hand ──────
+    // The slider reads/writes /api/volume (config tts.volume) — same knob as
+    // `vape volume`, so CLI and chrome never disagree. Dragging also live-sets
+    // the gain so a playing utterance responds instantly.
+    const volPop = document.getElementById('vol-pop');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    const volNum = document.getElementById('vol-num');
+    let volLevel = 100;
+    let volSaveTimer = null;
+
+    function volRender() {
+      volFill.style.height = volLevel + '%';
+      volNum.textContent = String(volLevel);
+    }
+    async function volLoad() {
+      try {
+        const d = await (await fetch('/api/volume')).json();
+        if (typeof d.volume === 'number') { volLevel = d.volume; volRender(); }
+      } catch {}
+    }
+    function volSave() {
+      clearTimeout(volSaveTimer);
+      volSaveTimer = setTimeout(() => {
+        fetch('/api/volume', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: volLevel }),
+        }).catch(() => {});
+      }, 150);
+    }
+    function volFromEvent(e) {
+      const r = volTrack.getBoundingClientRect();
+      const frac = 1 - (e.clientY - r.top) / r.height;
+      volLevel = Math.max(0, Math.min(100, Math.round(frac * 100)));
+      volRender();
+      if (gainNode) gainNode.gain.value = volLevel / 100;
+      volSave();
+    }
+    volTrack.addEventListener('pointerdown', (e) => {
+      volTrack.setPointerCapture(e.pointerId);
+      volFromEvent(e);
+      const move = (ev) => volFromEvent(ev);
+      const up = () => {
+        volTrack.removeEventListener('pointermove', move);
+        volTrack.removeEventListener('pointerup', up);
+      };
+      volTrack.addEventListener('pointermove', move);
+      volTrack.addEventListener('pointerup', up);
+    });
+    document.getElementById('vol-btn').addEventListener('click', () => {
+      volPop.classList.toggle('open');
+      if (volPop.classList.contains('open')) volLoad();
+      if (reportZonesFn) reportZonesFn();
+    });
+
+    // Onboarding flash: show the controls and the drag-area hint for the
+    // first 3 seconds after launch, then fade back to the hover-only chrome.
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 3000);
   </script>
 </body>
 </html>
