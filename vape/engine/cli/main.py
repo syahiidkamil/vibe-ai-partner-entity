@@ -22,6 +22,7 @@ def _register_commands() -> None:
     from engine.cli.dial import dial_cmd
     from engine.cli.qualia import qualia_cmd
     from engine.cli.bubble import bubble_cmd
+    from engine.cli.interest import interest_cmd
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)
     app.command("stop", help="Stop the running server")(stop)
@@ -34,6 +35,7 @@ def _register_commands() -> None:
     app.command("dial", help="Show or set Saori's feel dials")(dial_cmd)
     app.command("qualia", help="Unified inner-state write: dials + qualia pushes + revalue")(qualia_cmd)
     app.command("bubble", help="Enter/switch/leave the active bubble; bare = status")(bubble_cmd)
+    app.command("interest", help="Raise an interest lens (pack print); bare = the shelf")(interest_cmd)
 
 
 _register_commands()
