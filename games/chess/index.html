@@ -78,6 +78,25 @@
   button:hover { border-color: var(--accent); }
   #err { color: #ff9b7a; font-size: 13px; min-height: 1.2em; }
   .whoami { font-size: 13px; color: var(--dim); }
+  .captray { display: flex; align-items: center; gap: 1px; min-height: 24px;
+             padding: 0 4px; font-size: 13px; color: var(--dim); }
+  .captray img { width: 20px; height: 20px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
+  .captray .who { margin-right: 8px; }
+  .captray .adv { margin-left: 6px; color: #ffd54a; font-weight: 600; }
+  #drawbar { display: none; background: #3a3226; border: 1px solid #5a4c33; border-radius: 8px;
+             padding: 6px 10px; font-size: 13px; align-items: center; gap: 8px; flex-wrap: wrap; }
+  #drawbar.on { display: flex; }
+  #chatbox { border-top: 1px solid var(--line); padding-top: 8px; display: flex;
+             flex-direction: column; gap: 6px; }
+  #chatlog { max-height: 140px; overflow-y: auto; font-size: 13px; display: flex;
+             flex-direction: column; gap: 3px; }
+  #chatlog .cm b { color: #ffd54a; font-weight: 600; }
+  #chatlog .cm.saori b { color: #7ec8e3; }
+  #chatlog .cm small { color: var(--dim); font-size: 11px; margin-left: 4px; }
+  #chatrow { display: flex; gap: 6px; }
+  #chatrow input { flex: 1; background: #33302a; border: 1px solid var(--line);
+                   color: var(--ink); border-radius: 8px; padding: 6px 9px; font-size: 13px; }
+  button.danger:hover { border-color: #d64545; color: #ff9b7a; }
 </style>
 </head>
 <body>
@@ -90,18 +109,32 @@
       <button onclick="goLive()">live ⏭</button>
       <button class="rw" onclick="rewindHere()">⏪ rewind to here</button>
     </div>
+    <div class="captray" id="captop"></div>
     <div id="board"></div>
+    <div class="captray" id="capbot"></div>
   </div>
   <div class="side">
     <h1>Kamil <span style="color:var(--dim)">vs</span> Saori
       <small id="colors"></small></h1>
     <div id="moves"></div>
+    <div id="drawbar"></div>
     <div id="err"></div>
+    <div class="btns">
+      <button onclick="offerDraw()" id="drawbtn">Offer draw</button>
+      <button class="danger" onclick="resign()">Resign</button>
+      <button onclick="undo()">Takeback</button>
+      <button onclick="flipped=!flipped;render()">Flip board</button>
+    </div>
     <div class="btns">
       <button onclick="newGame('white')">New — I play White</button>
       <button onclick="newGame('black')">New — I play Black</button>
-      <button onclick="undo()">Takeback</button>
-      <button onclick="flipped=!flipped;render()">Flip board</button>
+    </div>
+    <div id="chatbox">
+      <div id="chatlog"></div>
+      <div id="chatrow">
+        <input id="chatinput" placeholder="say something to Saori…" maxlength="500">
+        <button onclick="sendChat()">Send</button>
+      </div>
     </div>
     <div class="whoami">Saori plays through her API; this board updates by itself.</div>
   </div>
@@ -191,6 +224,55 @@ function render() {
                       : "<span></span>";
   }
   if (atLive) mv.scrollTop = mv.scrollHeight;
+  renderCaptured();
+  renderChat();
+  renderDraw();
+}
+
+// Captured trays — beside each player, the enemy pieces they have taken, lichess-style,
+// with the material advantage on the leading side.
+function renderCaptured() {
+  const cap = S.captured || { by_white: [], by_black: [], material: { diff: 0 } };
+  const topIsWhite = flipped;                 // unflipped board shows Black at top
+  const tray = (who, isWhite) => {
+    const taken = isWhite ? cap.by_white : cap.by_black;   // symbols of ENEMY pieces taken
+    const imgs = taken.map(p =>
+      `<img src="/pieces/${(isWhite ? "b" : "w") + p.toUpperCase()}.svg" alt="${p}">`).join("");
+    const d = cap.material.diff;
+    const adv = (isWhite && d > 0) ? `<span class="adv">+${d}</span>`
+              : (!isWhite && d < 0) ? `<span class="adv">+${-d}</span>` : "";
+    return `<span class="who">${who}</span>${imgs}${adv}`;
+  };
+  const w = S.players.white, b = S.players.black;
+  document.getElementById("captop").innerHTML = topIsWhite ? tray(w, true) : tray(b, false);
+  document.getElementById("capbot").innerHTML = topIsWhite ? tray(b, false) : tray(w, true);
+}
+
+function renderChat() {
+  const log = document.getElementById("chatlog");
+  const atEnd = log.scrollTop + log.clientHeight >= log.scrollHeight - 8;
+  log.innerHTML = (S.chat || []).map(m =>
+    `<div class="cm ${m.who === "Saori" ? "saori" : ""}"><b>${m.who}</b>` +
+    `<small>${m.time}</small> ${esc(m.text)}</div>`).join("");
+  if (atEnd) log.scrollTop = log.scrollHeight;
+}
+function esc(t) { const d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+
+function renderDraw() {
+  const bar = document.getElementById("drawbar");
+  const btn = document.getElementById("drawbtn");
+  btn.disabled = !!S.draw_offer || S.result !== "*";
+  if (S.draw_offer === "Saori") {
+    bar.className = "on";
+    bar.innerHTML = `Saori offers a draw &nbsp;` +
+      `<button onclick="drawAct('accept')">Accept ½–½</button>` +
+      `<button onclick="drawAct('decline')">Decline</button>`;
+  } else if (S.draw_offer === "Kamil") {
+    bar.className = "on";
+    bar.innerHTML = "Draw offered — waiting for Saori…";
+  } else {
+    bar.className = ""; bar.innerHTML = "";
+  }
 }
 
 function viewAt(p) { viewPly = (p >= S.ply) ? null : p; sel = null; render(); }
@@ -248,12 +330,34 @@ async function post(path, body) {
 
 function newGame(color) { sel = null; post("/new", { kamil: color }); flipped = color === "black"; }
 function undo() { sel = null; post("/undo", { plies: 1 }); }
+function resign() {
+  if (confirm("Resign this game?")) post("/resign", { who: "Kamil" });
+}
+function offerDraw() { post("/draw", { who: "Kamil", action: "offer" }); }
+function drawAct(a) { post("/draw", { who: "Kamil", action: a }); }
+function sendChat() {
+  const inp = document.getElementById("chatinput");
+  const t = inp.value.trim();
+  if (!t) return;
+  inp.value = "";
+  post("/chat", { who: "Kamil", text: t });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("chatinput").addEventListener("keydown", e => {
+    if (e.key === "Enter") sendChat();
+  });
+});
 
+// Poll signature covers everything that should redraw — not just the position:
+// chat, a draw offer, and game-end all change the page without moving a piece.
+function sig(s) {
+  return [s.fen, s.ply, (s.chat || []).length, s.draw_offer, s.result].join("|");
+}
 async function poll() {
   try {
     const r = await fetch("/state");
     const s = await r.json();
-    if (!S || s.fen !== lastFen || s.ply !== S.ply) { S = s; lastFen = s.fen; render(); }
+    if (!S || sig(s) !== sig(S)) { S = s; lastFen = s.fen; render(); }
   } catch (e) { document.getElementById("statustext").textContent = "server unreachable…"; }
 }
 poll(); setInterval(poll, 1200);

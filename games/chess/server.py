@@ -43,6 +43,9 @@ class Game:
         self.kamil_color = kamil_color  # "white" | "black"
         self.started = datetime.now()
         self.pgn_path = MATCHES / f"{self.started:%Y-%m-%d_%H%M%S}.pgn"
+        self.chat: list[dict] = []            # {"who","text","time"} — the in-game channel
+        self.draw_offer: str | None = None    # who has a draw offer standing ("Kamil"/"Saori")
+        self.override: tuple[str, str] | None = None  # (result, reason): resignation/agreed draw
 
     @property
     def players(self) -> dict:
@@ -52,6 +55,8 @@ class Game:
 
     def status(self) -> tuple[str, str]:
         b = self.board
+        if self.override:
+            return "over", self.override[1]
         if b.is_checkmate():
             winner = self.players["black" if b.turn == chess.WHITE else "white"]
             return "checkmate", f"Checkmate — {winner} wins"
@@ -67,6 +72,27 @@ class Game:
             return "check", f"{self.players['white' if b.turn == chess.WHITE else 'black']} is in check"
         return "playing", ""
 
+    def result(self) -> str:
+        if self.override:
+            return self.override[0]
+        return self.board.result(claim_draw=True)
+
+    # Pieces each side has CAPTURED (missing from the enemy's starting set) and
+    # the material score — promotion can make a count negative; clamp to 0.
+    _START = {chess.PAWN: 8, chess.KNIGHT: 2, chess.BISHOP: 2, chess.ROOK: 2, chess.QUEEN: 1}
+    _VAL = {chess.PAWN: 1, chess.KNIGHT: 3, chess.BISHOP: 3, chess.ROOK: 5, chess.QUEEN: 9}
+    _SYM = {chess.PAWN: "p", chess.KNIGHT: "n", chess.BISHOP: "b", chess.ROOK: "r", chess.QUEEN: "q"}
+
+    def captured(self) -> dict:
+        out = {"by_white": [], "by_black": []}
+        score = {"white": 0, "black": 0}
+        for color, key in ((chess.BLACK, "by_white"), (chess.WHITE, "by_black")):
+            for pt in (chess.QUEEN, chess.ROOK, chess.BISHOP, chess.KNIGHT, chess.PAWN):
+                missing = max(0, self._START[pt] - len(self.board.pieces(pt, color)))
+                out[key] += [self._SYM[pt]] * missing
+                score["white" if color == chess.BLACK else "black"] += missing * self._VAL[pt]
+        return {**out, "material": {**score, "diff": score["white"] - score["black"]}}
+
     def save_pgn(self) -> None:
         MATCHES.mkdir(parents=True, exist_ok=True)
         game = chess.pgn.Game()
@@ -75,7 +101,9 @@ class Game:
         game.headers["Date"] = f"{self.started:%Y.%m.%d}"
         game.headers["White"] = self.players["white"]
         game.headers["Black"] = self.players["black"]
-        game.headers["Result"] = self.board.result(claim_draw=True)
+        game.headers["Result"] = self.result()
+        if self.override:
+            game.headers["Termination"] = self.override[1]
         node = game
         replay = chess.Board()
         for san in self.san_history:
@@ -115,9 +143,13 @@ def state_dict() -> dict:
         "last_move": last,
         "status": status,
         "status_detail": detail,
-        "result": b.result(claim_draw=True) if status in ("checkmate", "stalemate", "draw") else "*",
+        "result": game.result() if status in ("checkmate", "stalemate", "draw", "over") else "*",
         "check_square": chess.square_name(b.king(b.turn)) if b.is_check() else None,
         "pgn_file": str(game.pgn_path.relative_to(HERE)),
+        "captured": game.captured(),
+        "chat": game.chat[-200:],
+        "draw_offer": game.draw_offer,
+        "end_reason": game.override[1] if game.override else None,
     }
 
 
@@ -131,6 +163,29 @@ class NewIn(BaseModel):
 
 class UndoIn(BaseModel):
     plies: int = 1
+
+
+class WhoIn(BaseModel):
+    who: str  # "Kamil" | "Saori"
+
+
+class DrawIn(BaseModel):
+    who: str
+    action: str  # offer | accept | decline
+
+
+class ChatIn(BaseModel):
+    who: str
+    text: str
+
+
+def _check_who(who: str) -> str:
+    if who not in ("Kamil", "Saori"):
+        raise HTTPException(400, "who must be 'Kamil' or 'Saori'")
+    return who
+
+
+GAME_OVER_STATES = ("checkmate", "stalemate", "draw", "over")
 
 
 @app.get("/")
@@ -164,7 +219,7 @@ def board_txt():
 def move(body: MoveIn):
     with _lock:
         b = game.board
-        if game.status()[0] in ("checkmate", "stalemate", "draw"):
+        if game.status()[0] in GAME_OVER_STATES:
             raise HTTPException(409, "game is over — POST /new to start another")
         raw = body.move.strip()
         mv = None
@@ -182,6 +237,7 @@ def move(body: MoveIn):
         san = b.san(mv)
         b.push(mv)
         game.san_history.append(san)
+        game.draw_offer = None  # making a move declines any standing offer
         game.save_pgn()
         return state_dict()
 
@@ -201,11 +257,62 @@ def new_game(body: NewIn):
 @app.post("/undo")
 def undo(body: UndoIn):
     with _lock:
+        if not game.board.move_stack:
+            raise HTTPException(400, "nothing to take back — the board is at the start")
         n = max(1, min(body.plies, len(game.board.move_stack)))
         for _ in range(n):
             game.board.pop()
             game.san_history.pop()
+        game.override = None      # a takeback reopens a resigned/agreed game
+        game.draw_offer = None
         game.save_pgn()
+        return state_dict()
+
+
+@app.post("/resign")
+def resign(body: WhoIn):
+    with _lock:
+        who = _check_who(body.who)
+        if game.status()[0] in GAME_OVER_STATES:
+            raise HTTPException(409, "game is already over")
+        result = "0-1" if game.players["white"] == who else "1-0"
+        game.override = (result, f"{who} resigns")
+        game.draw_offer = None
+        game.save_pgn()
+        return state_dict()
+
+
+@app.post("/draw")
+def draw(body: DrawIn):
+    with _lock:
+        who = _check_who(body.who)
+        if game.status()[0] in GAME_OVER_STATES:
+            raise HTTPException(409, "game is already over")
+        if body.action == "offer":
+            game.draw_offer = who
+        elif body.action == "accept":
+            if not game.draw_offer or game.draw_offer == who:
+                raise HTTPException(409, "no draw offer from the other side to accept")
+            game.override = ("1/2-1/2", "Draw agreed")
+            game.draw_offer = None
+            game.save_pgn()
+        elif body.action == "decline":
+            if not game.draw_offer or game.draw_offer == who:
+                raise HTTPException(409, "no draw offer from the other side to decline")
+            game.draw_offer = None
+        else:
+            raise HTTPException(400, "action must be offer, accept, or decline")
+        return state_dict()
+
+
+@app.post("/chat")
+def chat(body: ChatIn):
+    with _lock:
+        who = _check_who(body.who)
+        text = body.text.strip()
+        if not text:
+            raise HTTPException(400, "empty message")
+        game.chat.append({"who": who, "text": text[:500], "time": f"{datetime.now():%H:%M}"})
         return state_dict()
 
 
