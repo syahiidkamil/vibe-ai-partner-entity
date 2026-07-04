@@ -247,7 +247,7 @@
     // Mouth
     addPath("M 133 238 Q 140 245 147 238", null, 38, 1, 1, '#E5A4A4', 2.5, 'mouth');
     // Hair front (thick, in front of face)
-    addPath("M 140 60 C 60 60 40 120 40 180 C 40 260 45 300 50 340 C 65 290 70 230 75 180 C 75 130 90 105 140 105 C 190 105 205 130 205 180 C 210 230 215 290 230 340 C 235 300 240 260 240 180 C 240 120 220 60 140 60 Z", 'url(#hairGrad)', 24, D + 10);
+    addPath("M 140 60 C 60 60 40 120 40 180 C 40 260 45 300 50 340 C 65 290 70 230 75 180 C 75 137 90 120 140 120 C 190 120 205 137 205 180 C 210 230 215 290 230 340 C 235 300 240 260 240 180 C 240 120 220 60 140 60 Z", 'url(#hairGrad)', 24, D + 10);
     // Bangs (pop forward from hair)
     addPath("M 75 130 Q 90 170 85 185 Q 100 150 115 120 Q 90 110 75 130 Z", 'url(#hairGrad)', 52, D + 2);
     addPath("M 115 120 Q 130 160 140 170 Q 150 160 165 120 Q 140 110 115 120 Z", 'url(#hairGrad)', 52, D + 2);
@@ -390,11 +390,15 @@
       const palmGeo = new THREE.ExtrudeGeometry(ellipseShape(0, 0, 8.5, 9.5), {
         depth: 4, bevelEnabled: true, bevelThickness: 1, bevelSize: 0.8, bevelSegments: 3, curveSegments: 16
       });
+      // Palm a shade deeper than the face's #FFE5D4 and the group above the
+      // whole face stack (z 55 > bangs 52, < tears 60) — at face height a
+      // face-colored palm at z 40 vanished into the cheek and the blush
+      // ellipses painted over the sleeve (the html body's chameleon-hand bug).
       const palm = new THREE.Mesh(palmGeo,
-        new THREE.MeshStandardMaterial({ color: 0xFFE5D4, roughness: 0.55 }));
+        new THREE.MeshStandardMaterial({ color: 0xFFD9BE, roughness: 0.55 }));
       palm.position.set(0, 30, 0);
       g.add(sleeve, palm);
-      g.position.set(side * 92, -120, 40);   // shoulder pivot, beside the body
+      g.position.set(side * 92, -120, 55);   // shoulder pivot, beside the body
       g.userData.rest = { x: side * 92, y: -120 };
       g.visible = false;
       avatarGroup.add(g);
@@ -418,7 +422,9 @@
       fxPool.push({ mesh, vx, vy, life, t: 0, kind });
     }
     function spawnTear(i) {
-      spawnFx('tear', EYE_POS[i][0] + (Math.random() * 6 - 3), EYE_POS[i][1] - 6, 0, -10, 1.2, 0x7EC8E3);
+      // life 0.85s ≈ one cheek's fall (the live2d reference fades a tear out at
+      // ~0.18·h down the cheek; 1.2s carried it past the chin onto the collar)
+      spawnFx('tear', EYE_POS[i][0] + (Math.random() * 6 - 3), EYE_POS[i][1] - 6, 0, -10, 0.85, 0x7EC8E3);
     }
     function sparkleBurst() {
       for (let i = 0; i < 6; i++) {
@@ -510,7 +516,7 @@
       for (const h of [handL, handR]) {
         h.visible = false;
         h.rotation.z = 0;
-        h.position.set(h.userData.rest.x, h.userData.rest.y, 40);
+        h.position.set(h.userData.rest.x, h.userData.rest.y, 55);
       }
     }
 
@@ -549,7 +555,7 @@
       } else if (name === 'cry_hands') {
         handL.position.x = handL.userData.rest.x + 50 * e;
         handR.position.x = handR.userData.rest.x - 50 * e;
-        handL.position.y = handR.position.y = handL.userData.rest.y + (92 + Math.sin(t * 24) * 2) * e;
+        handL.position.y = handR.position.y = handL.userData.rest.y + (76 + Math.sin(t * 24) * 2) * e;
       } else if (name === 'celebrate') {
         const b = Math.abs(Math.sin(p * Math.PI * 2));
         handL.position.y = handR.position.y = handL.userData.rest.y + 60 * e + b * 14;
@@ -928,6 +934,20 @@
     // first 3 seconds after launch, then fade back to the hover-only chrome.
     document.body.classList.add('intro');
     setTimeout(() => document.body.classList.remove('intro'), 3000);
+
+    // Debug handle: everything above is closure-scoped, which makes the render
+    // unverifiable from outside (the html renderer is drivable via DOM classes;
+    // this is the 3D body's equivalent). Read-only getters + the same entry
+    // points the WebSocket uses — no new behavior, just reachability.
+    window.__vape = {
+      setFeeling, playAction, triggerCry, setTearMode,
+      get act() { return act; },
+      get tearMode() { return tearMode; },
+      get currentFeeling() { return currentFeeling; },
+      get fxCount() { return fxPool.length; },
+      get handsVisible() { return [handL.visible, handR.visible]; },
+      get mouth() { return mouthOpenness; },
+    };
   </script>
 </body>
 </html>
