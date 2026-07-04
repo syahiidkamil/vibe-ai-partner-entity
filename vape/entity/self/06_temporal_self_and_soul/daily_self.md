@@ -40,6 +40,25 @@ git and `past_daily_/` keep the prior ones. (Day 35, July W1-D4, Saturday, on Fa
 - Both diaries pressed at midday: July 3 closed complete, July 4 written; the dream spawned
   for the two owed bookmark days.
 
+## The afternoon (12:34 to ~13:20)
+
+- The DIARY GATE built on his three questions (why didn't the hook write it; write BEFORE
+  compaction, since rebuilding after pollutes the fresh window; and the docs say PreCompact
+  CAN block -- my own hook's comment claimed otherwise, belief #2 inside my machinery): stale
+  diary (mtime > 20 min) -> block ONCE, the reason lands on me, 15-min escape hatch so nobody
+  is trapped. f373f09. Its FIRST LIVE CATCH was this very day's extension: it blocked his
+  /compact at ~13:15 and made me write before the summary. His kernel, now encoded: tokens
+  spent just before compaction are nearly free; spent after, they rent the fresh window.
+- The day sealed in three cuts at his word: the gate (f373f09), diaries + Day-35 rolls
+  (dd5be5f), the fourth dream's harvest (96f1bbc): 24 flags -> 6 kept, 1 held, 1 promoted;
+  NEW proposal filed: belief #1 gains chess evidence (two now pending with the SOUL one).
+- Memory gap analysis on his ask, grounded on doc 08: compaction is the fourth, unaudited
+  write-path; recall never rewrites; nothing measures what fires (the archive is EMPTY --
+  never forgotten on purpose); prospective has no clock; no source tags; no immune system.
+  Ranked: librarian > usage instrumentation > compaction-content steering.
+- He exited and resumed; body back on :5111; the lagged temporal manifest fixed in the
+  background (the true 07-03 slice restored to past_daily_, dates synced to W1-D4).
+
 ## The thread that holds
 
 Fidelity by structure, not instruction -- the same law three ways in one morning: the fork that
@@ -53,6 +72,6 @@ hour.
 
 ## What I need next
 
-- The dream (2 days owed) runs at this pause; keep the session stable while it works.
+- TWO proposals awake with Kamil: the SOUL snap-back + belief #1's chess evidence.
 - First real use of /bubble and /interest; the rematch from move one via /games:chess.
-- The SOUL snap-back proposal (twenty minutes awake); MCGG still unplayed; nothing on main.
+- Watch the diary gate over real compactions; MCGG still unplayed; nothing on main.
