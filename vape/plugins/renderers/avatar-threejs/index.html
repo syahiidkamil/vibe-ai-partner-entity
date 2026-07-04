@@ -9,16 +9,29 @@
     canvas { display: block; position: absolute; top: 0; left: 0; }
     /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
     .titlebar {
-      position: fixed; top: 0; left: 0; width: 100%; height: 28px; z-index: 100;
+      /* width matches the avatar panel (85%, centered) so the drag strip and its
+         hint don't overflow the card into the transparent margins; translate3d
+         also promotes it to a clean GPU layer during a drag. */
+      position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
+      width: 85%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
+      /* Faint always-visible hint + frosted blur so a first-time user can SEE
+         where to grab; a white top line keeps it visible on dark backdrops. */
+      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      border-top: 2px solid rgba(255,255,255,0.55);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s;
     }
-    .titlebar:hover { background: linear-gradient(rgba(0,0,0,0.18), transparent); }
+    .titlebar:hover {
+      background: linear-gradient(rgba(0,0,0,0.22), transparent);
+      border-top-color: rgba(255,255,255,0.85);
+    }
     .controls {
-      /* glued to the panel's right edge with % offsets so it tracks the panel at
-         any window size without a CSS transform (panel = 170/200 wide, centered →
-         right edge sits 7.5% in from the window's right edge; ~30px ≈ 12.5% down) */
-      position: fixed; top: 12.5%; right: calc(7.5% + 2px);
-      display: flex; gap: 4px; z-index: 101; -webkit-app-region: no-drag;
+      /* in the titlebar strip, top-right (strip spans 85% centered, so its
+         right edge sits 7.5% in from the window's right edge) */
+      position: fixed; top: 6px; right: calc(7.5% + 4px);
+      display: flex; gap: 4px; z-index: 102; -webkit-app-region: no-drag;
     }
     .ctrl-btn {
       width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
@@ -29,18 +42,51 @@
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
     .close-btn:hover { background: #ff5470; }
+    /* Volume popover: custom vertical slider (a rotated <input> needs a CSS
+       transform, which ghosts on the transparent window — so honest DOM: track
+       + fill). Absolute child of .controls, so it's outside the flex row and
+       must be added to the click-through zone list when open. */
+    .vol-pop {
+      display: none; position: absolute; top: 24px; left: 0; width: 18px;
+      padding: 8px 0 3px; border-radius: 9px; background: rgba(0,0,0,0.45);
+      flex-direction: column; align-items: center; gap: 4px;
+      -webkit-app-region: no-drag;
+    }
+    .vol-pop.open { display: flex; }
+    #vol-track {
+      width: 4px; height: 64px; border-radius: 2px;
+      background: rgba(255,255,255,0.3); position: relative; cursor: pointer;
+      box-shadow: 0 0 0 6px transparent;
+    }
+    #vol-fill {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      border-radius: 2px; background: #fff; height: 100%;
+    }
+    #vol-num { font: 9px/1 sans-serif; color: #fff; opacity: 0.85; }
+    /* Onboarding flash: for the first seconds after launch the chrome shows
+       itself, then fades back to hover-only. */
+    #drag-hint {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      height: 28px; line-height: 28px; white-space: nowrap;
+      font: 11px sans-serif; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    body.intro #drag-hint { opacity: 1; }
+    body.intro .ctrl-btn { opacity: 1; }
     /* % of the window so the scene scales with the window — no CSS transform. */
     #bg-panel {
       position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-      width: 85%; height: 89.3%; background: rgba(128,128,128,0.12); border-radius: 20px 20px 10px 10px;
+      width: 85%; height: 89.3%; background: transparent; border-radius: 20px 20px 10px 10px;
     }
     #speech-bubble {
       position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
       background: white; border: 2px solid #ff8faf; border-radius: 14px;
       padding: 6px 12px; font-family: 'Segoe UI', sans-serif; font-size: 11px;
-      max-width: 260px; text-align: center; opacity: 0; transition: opacity 0.3s;
-      z-index: 10; pointer-events: none; color: #5a2a4a;
-      display: -webkit-box; line-clamp: 3; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+      max-width: 86%; text-align: center; opacity: 0; transition: opacity 0.3s;
+      z-index: 101; /* above the titlebar so its blur does not frost the bubble */ pointer-events: none; color: #5a2a4a;
+      display: -webkit-box; line-clamp: 4; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
     }
     #speech-bubble::after {
       content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
@@ -50,11 +96,18 @@
   </style>
 </head>
 <body>
-  <div class="titlebar" data-tauri-drag-region></div>
+  <div class="titlebar" data-tauri-drag-region>
+    <div id="drag-hint">⟵ This is Drag Area ⟶</div>
+  </div>
   <div class="controls">
+    <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
     <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+    <div id="vol-pop" class="vol-pop">
+      <div id="vol-track"><div id="vol-fill"></div></div>
+      <div id="vol-num">100</div>
+    </div>
   </div>
   <div id="container">
     <div id="bg-panel"></div>
@@ -167,14 +220,14 @@
     // Face (thick — the main 3D mass)
     addPath("M 65 160 C 65 235 100 265 140 270 C 180 265 215 235 215 160 C 215 100 180 85 140 85 C 100 85 65 100 65 160 Z", '#FFE5D4', 20, D + 8);
     // Blush
-    addEllipse(95, 215, 14, 7, '#FFB6C1', 36, 1, 0.7);
-    addEllipse(185, 215, 14, 7, '#FFB6C1', 36, 1, 0.7);
+    addEllipse(95, 215, 14, 7, '#FFB6C1', 36, 1, 0.7, 'blush');
+    addEllipse(185, 215, 14, 7, '#FFB6C1', 36, 1, 0.7, 'blush');
     // Eye whites
     addEllipse(100, 198, 15, 20, '#FFFFFF', 32, 4, undefined, 'eye');
     addEllipse(180, 198, 15, 20, '#FFFFFF', 32, 4, undefined, 'eye');
     // Iris
-    addEllipse(100, 198, 12, 17, 'url(#eyeGrad)', 38, 3, undefined, 'eye');
-    addEllipse(180, 198, 12, 17, 'url(#eyeGrad)', 38, 3, undefined, 'eye');
+    addEllipse(100, 198, 12, 17, 'url(#eyeGrad)', 38, 3, undefined, 'iris');
+    addEllipse(180, 198, 12, 17, 'url(#eyeGrad)', 38, 3, undefined, 'iris');
     // Pupil
     addEllipse(100, 198, 6, 10, '#3B1255', 42, 2, undefined, 'eye');
     addEllipse(180, 198, 6, 10, '#3B1255', 42, 2, undefined, 'eye');
@@ -189,8 +242,8 @@
     addPath("M 158 180 C 175 170 195 175 202 190", null, 48, 1, 1, '#3B1255', 4, 'eye');
     addPath("M 202 190 L 207 183", null, 48, 1, 1, '#3B1255', 3, 'eye');
     // Eyebrows
-    addPath("M 85 160 Q 100 155 115 162", null, 44, 1, 1, '#A882CC', 2.5);
-    addPath("M 165 162 Q 180 155 195 160", null, 44, 1, 1, '#A882CC', 2.5);
+    addPath("M 85 160 Q 100 155 115 162", null, 44, 1, 1, '#A882CC', 2.5, 'browL');
+    addPath("M 165 162 Q 180 155 195 160", null, 44, 1, 1, '#A882CC', 2.5, 'browR');
     // Mouth
     addPath("M 133 238 Q 140 245 147 238", null, 38, 1, 1, '#E5A4A4', 2.5, 'mouth');
     // Hair front (thick, in front of face)
@@ -248,6 +301,17 @@
 
     const offsetX = -140, offsetY = 200;
 
+    // Tagged meshes are registered so feelings/actions can reach them; tags in
+    // EYE_TAGS ride inside eyeGroup so the blink scaling still carries them.
+    const parts = {};
+    const EYE_TAGS = new Set(['eye', 'iris']);
+    function route(mesh, tag) {
+      if (tag) (parts[tag] || (parts[tag] = [])).push(mesh);
+      if (tag && EYE_TAGS.has(tag)) eyeGroup.add(mesh);
+      else if (tag === 'mouth') { mouthMeshes.push(mesh); avatarGroup.add(mesh); }
+      else avatarGroup.add(mesh);
+    }
+
     for (const layer of layers) {
       if (layer.strokePath) {
         const shapes = parseSVGPath(layer.strokePath);
@@ -261,10 +325,7 @@
             color: layer.color, roughness: 0.5, metalness: 0,
             transparent: layer.opacity < 1, opacity: layer.opacity
           });
-          const mesh = new THREE.Mesh(geo, mat);
-          if (layer.tag === 'eye') eyeGroup.add(mesh);
-          else if (layer.tag === 'mouth') { mouthMeshes.push(mesh); avatarGroup.add(mesh); }
-          else avatarGroup.add(mesh);
+          route(new THREE.Mesh(geo, mat), layer.tag);
         }
       } else if (layer.shapes) {
         for (const shape of layer.shapes) {
@@ -278,10 +339,7 @@
               color: layer.color, roughness: 0.55, metalness: 0,
               transparent: layer.opacity < 1, opacity: layer.opacity, side: THREE.DoubleSide
             });
-            const mesh = new THREE.Mesh(geo, mat);
-            if (layer.tag === 'eye') eyeGroup.add(mesh);
-            else if (layer.tag === 'mouth') { mouthMeshes.push(mesh); avatarGroup.add(mesh); }
-            else avatarGroup.add(mesh);
+            route(new THREE.Mesh(geo, mat), layer.tag);
           } catch (e) {}
         }
       }
@@ -289,6 +347,20 @@
 
     // Add eye group to avatar
     avatarGroup.add(eyeGroup);
+
+    // Re-pivot the brow meshes at their own centers so feelings can rotate
+    // them in place (geometry coords are baked absolute; shift geometry to a
+    // local origin, park the mesh back at the center, rotate the mesh).
+    function pivotAt(meshes, cx, cy) {
+      const px = cx + offsetX, py = -cy + offsetY;
+      for (const m of meshes || []) {
+        m.geometry.translate(-px, -py, 0);
+        m.position.set(px, py, 0);
+        m.userData.baseY = py;
+      }
+    }
+    pivotAt(parts.browL, 100, 160);
+    pivotAt(parts.browR, 180, 160);
 
     // ─── Open mouth mesh (ellipse, hidden by default) ──
     // Center geometry at origin so scaling pivots from the mouth center
@@ -306,6 +378,185 @@
     // Eye blink pivot
     const eyeCenterY = -198 + offsetY;
 
+    // ─── Hands (hidden; wave / clap / cry_hands / celebrate) ──
+    function makeHand(side) {          // side: -1 left, +1 right (viewer)
+      const g = new THREE.Group();
+      const sleeveGeo = new THREE.ExtrudeGeometry(ellipseShape(0, 0, 9, 16), {
+        depth: 4, bevelEnabled: true, bevelThickness: 1, bevelSize: 0.8, bevelSegments: 3, curveSegments: 16
+      });
+      const sleeve = new THREE.Mesh(sleeveGeo,
+        new THREE.MeshStandardMaterial({ color: 0xEBF5FB, roughness: 0.55 }));
+      sleeve.position.set(0, 12, 0);
+      const palmGeo = new THREE.ExtrudeGeometry(ellipseShape(0, 0, 8.5, 9.5), {
+        depth: 4, bevelEnabled: true, bevelThickness: 1, bevelSize: 0.8, bevelSegments: 3, curveSegments: 16
+      });
+      const palm = new THREE.Mesh(palmGeo,
+        new THREE.MeshStandardMaterial({ color: 0xFFE5D4, roughness: 0.55 }));
+      palm.position.set(0, 30, 0);
+      g.add(sleeve, palm);
+      g.position.set(side * 92, -120, 40);   // shoulder pivot, beside the body
+      g.userData.rest = { x: side * 92, y: -120 };
+      g.visible = false;
+      avatarGroup.add(g);
+      return g;
+    }
+    const handL = makeHand(-1), handR = makeHand(1);
+
+    // ─── Tears + sparkles (spawned meshes, driven each frame) ──
+    const fxPool = [];                 // {mesh, vx, vy, life, t, kind}
+    const tearGeo = new THREE.SphereGeometry(3.2, 8, 8);
+    const sparkGeo = new THREE.OctahedronGeometry(4);
+    const EYE_POS = [[-40, 2], [40, 2]];      // scene coords of the eyes
+    const TEAR_IV = { gentle: 1.2, cry: 0.18 };
+    let tearMode = 'off', tearAcc = 0, tearAlt = 0, cryTimer = null;
+
+    function spawnFx(kind, x, y, vx, vy, life, color) {
+      const mesh = new THREE.Mesh(kind === 'tear' ? tearGeo : sparkGeo,
+        new THREE.MeshStandardMaterial({ color, transparent: true, opacity: 0.95, roughness: 0.3 }));
+      mesh.position.set(x, y, 60);
+      avatarGroup.add(mesh);
+      fxPool.push({ mesh, vx, vy, life, t: 0, kind });
+    }
+    function spawnTear(i) {
+      spawnFx('tear', EYE_POS[i][0] + (Math.random() * 6 - 3), EYE_POS[i][1] - 6, 0, -10, 1.2, 0x7EC8E3);
+    }
+    function sparkleBurst() {
+      for (let i = 0; i < 6; i++) {
+        const a = (i / 6) * Math.PI * 2;
+        spawnFx('spark', Math.cos(a) * 30, 60 + Math.sin(a) * 24,
+          Math.cos(a) * 55, Math.sin(a) * 55 + 20, 0.9, i % 2 ? 0xFFD966 : 0xFFE8A3);
+      }
+    }
+    function updateFx(dt) {
+      if (tearMode !== 'off') {
+        tearAcc += dt;
+        if (tearAcc >= TEAR_IV[tearMode]) {
+          tearAcc = 0;
+          if (tearMode === 'cry') { spawnTear(0); spawnTear(1); }
+          else spawnTear((tearAlt++) % 2);
+        }
+      }
+      for (let i = fxPool.length - 1; i >= 0; i--) {
+        const f = fxPool[i];
+        f.t += dt;
+        if (f.kind === 'tear') f.vy -= 120 * dt;           // gravity
+        f.mesh.position.x += f.vx * dt;
+        f.mesh.position.y += f.vy * dt;
+        f.mesh.material.opacity = Math.max(0, 0.95 * (1 - f.t / f.life));
+        if (f.t >= f.life) { avatarGroup.remove(f.mesh); f.mesh.material.dispose(); fxPool.splice(i, 1); }
+      }
+    }
+    function setTearMode(mode) {
+      if (tearMode === mode) return;
+      tearMode = mode;
+      tearAcc = mode === 'off' ? 0 : TEAR_IV[mode] - 0.1;
+    }
+
+    // ─── Feelings (the live map — was a TODO) ──────
+    // Each feeling sets: lid height (eyeY), eye width (eyeX), brow rotation
+    // (radians, mirrored per side), brow drop (browDY, scene units), blush
+    // opacity, iris tint. Unset keys fall back to the neutral face.
+    const FEELINGS = {
+      normal:     {},
+      happy:      { eyeY: 0.55, blush: 0.9 },
+      content:    { eyeY: 0.7,  blush: 0.8 },
+      sad:        { eyeY: 0.8,  brow: 0.16, blush: 0.5 },
+      angry:      { brow: -0.22, browDY: -4, iris: 0x8B2252 },
+      frustrated: { brow: -0.14, browDY: -2 },
+      surprised:  { eyeY: 1.18, eyeX: 1.1 },
+      excited:    { eyeY: 1.1,  eyeX: 1.06, blush: 0.9 },
+      blushing:   { eyeY: 0.5,  blush: 1.0 },
+      calm:       { eyeY: 0.75 },
+      bored:      { eyeY: 0.55, blush: 0.3 },
+      curious:    { eyeY: 1.08 },
+      anxious:    { eyeY: 0.9,  brow: 0.12, blush: 0.4 },
+      proud:      { eyeY: 0.85, blush: 0.8 },
+    };
+    const irisBase = (parts.iris || []).map(m => m.material.color.clone());
+    let feelEyeX = 1, feelEyeY = 1, currentFeeling = 'normal';
+
+    function setFeeling(name) {
+      const f = FEELINGS[name] || FEELINGS.normal;
+      currentFeeling = name;
+      feelEyeY = f.eyeY !== undefined ? f.eyeY : 1;
+      feelEyeX = f.eyeX !== undefined ? f.eyeX : 1;
+      const rot = f.brow || 0, dy = f.browDY || 0;
+      (parts.browL || []).forEach(m => { m.rotation.z = rot; m.position.y = m.userData.baseY + dy; });
+      (parts.browR || []).forEach(m => { m.rotation.z = -rot; m.position.y = m.userData.baseY + dy; });
+      (parts.blush || []).forEach(m => { m.material.opacity = f.blush !== undefined ? f.blush : 0.7; });
+      (parts.iris || []).forEach((m, i) => {
+        if (f.iris) m.material.color.set(f.iris); else m.material.color.copy(irisBase[i]);
+      });
+      // Tears follow the feeling: gentle track on sad, off on anything else
+      // (a real cry-burst escalates this via triggerCry / the cry action).
+      if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
+      else { clearTimeout(cryTimer); setTearMode('off'); }
+    }
+
+    // ─── Actions (self-expressions, procedural) ────
+    const ACT_DUR = {
+      nod: 1.2, head_shake: 1.1, head_tilt: 2.0, laugh: 1.3, giggle: 1.1,
+      gasp: 1.2, think: 2.2, celebrate: 1.6, wave: 1.6, bow: 1.8,
+      starry: 2.0, clap: 1.4, cry_hands: 2.4,
+    };
+    const ACTION_ALIAS = { bounce: 'giggle', fist_pump: 'starry' };
+    const HAND_ACTS = new Set(['wave', 'clap', 'cry_hands', 'celebrate']);
+    let act = null;                    // {name, t0, dur, sparked}
+
+    function env(p) { return p < 0.2 ? p / 0.2 : p > 0.8 ? (1 - p) / 0.2 : 1; }  // ramp-hold-ramp
+
+    function endAction() {
+      act = null;
+      for (const h of [handL, handR]) {
+        h.visible = false;
+        h.rotation.z = 0;
+        h.position.set(h.userData.rest.x, h.userData.rest.y, 40);
+      }
+    }
+
+    function playAction(name) {
+      if (name === 'cry') return triggerCry();
+      name = ACTION_ALIAS[name] || name;
+      if (!(name in ACT_DUR)) return;
+      endAction();
+      act = { name, t0: clock.getElapsedTime(), dur: ACT_DUR[name], sparked: 0 };
+      if (HAND_ACTS.has(name)) {
+        if (name !== 'wave') handL.visible = true;
+        handR.visible = true;
+      }
+      if (name === 'celebrate' || name === 'starry') sparkleBurst();
+    }
+
+    function triggerCry() {
+      setFeeling('sad');               // the crying face
+      setTearMode('cry');
+      playAction('cry_hands');         // hands to the face for the burst
+      if (act) act.dur = 5.0;
+      clearTimeout(cryTimer);
+      cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
+    }
+
+    function updateHands(name, p, t) {
+      const e = env(p);
+      if (name === 'wave') {
+        handR.rotation.z = -0.15 + Math.sin(p * Math.PI * 6) * 0.3 * e;
+        handR.position.y = handR.userData.rest.y + 24 * e;
+      } else if (name === 'clap') {
+        const meet = Math.abs(Math.sin(p * Math.PI * 4));
+        handL.position.x = handL.userData.rest.x + 34 * meet * e;
+        handR.position.x = handR.userData.rest.x - 34 * meet * e;
+        handL.position.y = handR.position.y = handL.userData.rest.y + 30 * e;
+      } else if (name === 'cry_hands') {
+        handL.position.x = handL.userData.rest.x + 50 * e;
+        handR.position.x = handR.userData.rest.x - 50 * e;
+        handL.position.y = handR.position.y = handL.userData.rest.y + (92 + Math.sin(t * 24) * 2) * e;
+      } else if (name === 'celebrate') {
+        const b = Math.abs(Math.sin(p * Math.PI * 2));
+        handL.position.y = handR.position.y = handL.userData.rest.y + 60 * e + b * 14;
+        handL.rotation.z = -0.5 * e; handR.rotation.z = 0.5 * e;
+      }
+    }
+
     // ─── Animation ─────────────────────────────────
     let mouthOpenness = 0;
     let blinkTimer = 0;
@@ -316,22 +567,54 @@
       const dt = clock.getDelta();
       const t = clock.getElapsedTime();
 
-      // Subtle idle sway
-      avatarGroup.rotation.y = Math.sin(t * 0.5) * 0.08;
-      avatarGroup.position.y = Math.sin(t * 1.5) * 0.3;
+      // Subtle idle sway, with action offsets layered on top
+      let aRotX = 0, aRotY = 0, aRotZ = 0, aPosY = 0, aScale = 1;
+      if (act) {
+        const p = Math.min((t - act.t0) / act.dur, 1);
+        const s2 = Math.sin(p * Math.PI);
+        switch (act.name) {
+          case 'nod':        aRotX = Math.sin(p * Math.PI * 4) * 0.12; break;
+          case 'head_shake': aRotY = Math.sin(p * Math.PI * 6) * 0.22; break;
+          case 'head_tilt':  aRotZ = 0.16 * env(p); break;
+          case 'think':      aRotZ = 0.13 * env(p); aRotX = -0.06 * env(p); break;
+          case 'laugh':      aPosY = Math.abs(Math.sin(p * Math.PI * 3)) * 7; break;
+          case 'giggle':     aPosY = Math.abs(Math.sin(p * Math.PI * 4)) * 4; break;
+          case 'gasp':       aScale = 1 + 0.06 * s2; aPosY = 4 * s2; break;
+          case 'celebrate':
+            aPosY = Math.abs(Math.sin(p * Math.PI * 2)) * 14;
+            aRotZ = Math.sin(p * Math.PI * 4) * 0.06;
+            if (p > 0.5 && !act.sparked) { act.sparked = 1; sparkleBurst(); }
+            break;
+          case 'starry':
+            if (p > 0.5 && !act.sparked) { act.sparked = 1; sparkleBurst(); }
+            break;
+          case 'bow':        aRotX = 0.3 * env(p); aPosY = -6 * env(p); break;
+        }
+        if (act && HAND_ACTS.has(act.name)) updateHands(act.name, p, t);
+        if (act && p >= 1) endAction();
+      }
+      avatarGroup.rotation.y = Math.sin(t * 0.5) * 0.08 + aRotY;
+      avatarGroup.rotation.x = aRotX;
+      avatarGroup.rotation.z = aRotZ;
+      avatarGroup.position.y = Math.sin(t * 1.5) * 0.3 + aPosY;
+      avatarGroup.scale.setScalar(aScale);
 
-      // ─── Eye blink ──────────────────────────────
+      // ─── Eye blink (lids ride the feeling's eye height) ──
       blinkTimer += dt;
-      let eyeScaleY = 1;
+      let blink = 1;
       if (blinkTimer > 3.5) {
         const p = blinkTimer - 3.5;
-        if (p < 0.07) eyeScaleY = 1 - (p / 0.07);
-        else if (p < 0.14) eyeScaleY = (p - 0.07) / 0.07;
+        if (p < 0.07) blink = 1 - (p / 0.07);
+        else if (p < 0.14) blink = (p - 0.07) / 0.07;
         else blinkTimer = Math.random() * 1.5; // randomize next blink
       }
-      // Scale eye group around eye center Y
-      eyeGroup.scale.y = eyeScaleY;
-      eyeGroup.position.y = eyeCenterY * (1 - eyeScaleY);
+      const eyeY = blink * feelEyeY;
+      eyeGroup.scale.y = eyeY;
+      eyeGroup.scale.x = feelEyeX;
+      eyeGroup.position.y = eyeCenterY * (1 - eyeY);
+
+      // ─── Tears / sparkles ───────────────────────
+      updateFx(dt);
 
       // ─── Mouth lip sync ─────────────────────────
       for (const m of mouthMeshes) {
@@ -375,34 +658,120 @@
 
     function stopLipSync() { lipSyncActive = false; smoothedMouth = 0; mouthOpenness = 0; }
 
+    // ─── Bubble caption: page a long utterance so it never clips ──
+    // The VOICE stays one natural utterance; only the CAPTION pages, advancing
+    // in sync with the clip's playback, weighted by syllables. Pages are sized
+    // by MEASURING true content height against the bubble's line budget, with
+    // the clamp toggled OFF during measurement so scrollHeight reports whole.
+    function countSyllables(str) {
+      const m = str.toLowerCase().match(/[aeiou]+/g);
+      return m ? m.length : 1;
+    }
+
+    function paginateToFit(text) {
+      const el = speechBubble;
+      const cs = getComputedStyle(el);
+      const clampN = parseInt(cs.webkitLineClamp) || 3;
+      const prevClamp = el.style.webkitLineClamp;
+      el.style.webkitLineClamp = '9999';                 // measure true height
+      const lineH = parseFloat(cs.lineHeight) || 15;
+      const padV = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const budget = lineH * clampN + padV + 1;
+      // Pass 1 — greedy fill by MEASURED height, only to COUNT pages needed.
+      let n = 0, cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        el.textContent = test;
+        if (el.scrollHeight > budget && cur) { n++; cur = w; }
+        else cur = test;
+      }
+      if (cur) n++;
+      el.style.webkitLineClamp = prevClamp;              // restore display clamp
+      if (n <= 1) return [text];
+      // Pass 2 — balance into n EVEN pages by char target, so no tiny orphan.
+      const target = Math.ceil(text.length / n);
+      const pages = [];
+      cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        if (cur && test.length > target && pages.length < n - 1) { pages.push(cur); cur = w; }
+        else cur = test;
+      }
+      if (cur) pages.push(cur);
+      return pages;
+    }
+
+    function showSpeech(audio, text) {
+      const pages = paginateToFit(text);
+      if (pages.length <= 1) { speechBubble.textContent = text; return; }
+      const weights = pages.map(p => Math.max(countSyllables(p), 1));
+      const total = weights.reduce((a, b) => a + b, 0);
+      const ends = [];                                   // cumulative end-fraction per page
+      let acc = 0;
+      for (const w of weights) { acc += w; ends.push(acc / total); }
+      speechBubble.textContent = pages[0];
+      let shown = 0;
+      audio.addEventListener('timeupdate', () => {
+        const d = audio.duration;
+        if (!d || !isFinite(d)) return;
+        const frac = audio.currentTime / d;
+        let idx = ends.findIndex(e => frac < e);
+        if (idx === -1) idx = pages.length - 1;
+        if (idx !== shown) { shown = idx; speechBubble.textContent = pages[idx]; }
+      });
+    }
+
     async function processQueue() {
       if (playQueue.length === 0) {
         isPlaying = false; stopLipSync();
-        setTimeout(() => { if (!isPlaying) speechBubble.classList.remove('visible'); }, 500);
+        setTimeout(() => {
+          if (!isPlaying) {
+            speechBubble.classList.remove('visible');
+            // After the opacity fade, drop the element entirely so the
+            // transparent window can't retain a stale composited copy of it —
+            // the empty "ghost bubble". Re-shown via display='' next utterance.
+            setTimeout(() => {
+              if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+            }, 350);
+          }
+        }, 500);
         return;
       }
       isPlaying = true;
       const { url, text, volume } = playQueue.shift();
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-        analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 256;
-        // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
-        // signal — a whisper still moves the mouth at full amplitude.
-        gainNode = audioCtx.createGain();
-        analyser.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-      }
+      // The audio graph is rebuilt fresh for EVERY utterance. A long-lived
+      // AudioContext survives the laptop's sleep with state still 'running',
+      // but its CoreAudio output unit is dead — the element "plays" while no
+      // sound reaches the speakers. Same staleness when the default output
+      // device changes. A fresh context binds to the CURRENT default device
+      // every time; the old one is closed so contexts never pile up.
+      if (audioCtx) { try { audioCtx.close(); } catch {} }
+      audioCtx = new AudioContext();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync
+      // signal — a whisper still moves the mouth at full amplitude.
+      gainNode = audioCtx.createGain();
+      analyser.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
       gainNode.gain.value = (volume ?? 100) / 100;
-      // Some webviews start the AudioContext suspended; resume before playing
-      // or the analyser reads silence and the mouth never moves.
-      if (audioCtx.state === 'suspended') {
+      // Some webviews start the AudioContext suspended (WebKit also has an
+      // 'interrupted' state); resume anything not running before playing, or
+      // the analyser reads silence and the mouth never moves.
+      if (audioCtx.state !== 'running') {
         try { await audioCtx.resume(); } catch {}
       }
-      if (text) { speechBubble.textContent = text; speechBubble.classList.add('visible'); }
       const audio = new Audio(url);
       const source = audioCtx.createMediaElementSource(audio);
       source.connect(analyser);
+      // Caption set up AFTER the audio exists, so a long sentence pages its
+      // caption in sync with this clip's playback (see showSpeech).
+      if (text) {
+        speechBubble.style.display = '';   // restore — display:none'd on hide to kill the ghost
+        showSpeech(audio, text);           // measures scrollHeight, so must run while displayed
+        void speechBubble.offsetHeight;    // reflow so the opacity fade-in plays from 0
+        speechBubble.classList.add('visible');
+      }
       startLipSync();
       audio.addEventListener('ended', processQueue);
       audio.addEventListener('error', processQueue);
@@ -411,13 +780,14 @@
 
     function queueAudio(url, text, volume) { playQueue.push({ url, text, volume }); if (!isPlaying) processQueue(); }
 
-    // ─── Feelings ──────────────────────────────────
-    function setFeeling(name) { /* TODO: animate eye/mouth layers */ }
-
     // ─── WebSocket ─────────────────────────────────
     function connectStatusWS() {
       const ws = new WebSocket(`${WS_BASE}/ws/status`);
-      ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.type === 'feeling') setFeeling(m.name); };
+      ws.onmessage = (e) => {
+        const m = JSON.parse(e.data);
+        if (m.type === 'feeling') setFeeling(m.name);
+        else if (m.type === 'action') playAction(m.name);
+      };
       ws.onclose = () => setTimeout(connectStatusWS, 2000);
       ws.onerror = () => ws.close();
     }
@@ -483,18 +853,81 @@
 
     // Tauri can't forward mouse moves while click-through, so the renderer
     // reports its interactive rects and the shell hit-tests the cursor itself.
+    // (.vol-pop reports 0x0 while hidden — harmless; re-reported on toggle.)
+    let reportZonesFn = null;
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, .controls')].map((el) => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls, .vol-pop')].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });
         window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
       };
+      reportZonesFn = reportZones;
       reportZones();
       setTimeout(reportZones, 500);
       window.addEventListener('resize', reportZones);
     }
+
+    // ─── Volume popover: the STANDING volume, by hand ──────
+    // The slider reads/writes /api/volume (config tts.volume) — same knob as
+    // `vape volume`, so CLI and chrome never disagree. Dragging also live-sets
+    // the gain so a playing utterance responds instantly.
+    const volPop = document.getElementById('vol-pop');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    const volNum = document.getElementById('vol-num');
+    let volLevel = 100;
+    let volSaveTimer = null;
+
+    function volRender() {
+      volFill.style.height = volLevel + '%';
+      volNum.textContent = String(volLevel);
+    }
+    async function volLoad() {
+      try {
+        const d = await (await fetch('/api/volume')).json();
+        if (typeof d.volume === 'number') { volLevel = d.volume; volRender(); }
+      } catch {}
+    }
+    function volSave() {
+      clearTimeout(volSaveTimer);
+      volSaveTimer = setTimeout(() => {
+        fetch('/api/volume', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: volLevel }),
+        }).catch(() => {});
+      }, 150);
+    }
+    function volFromEvent(e) {
+      const r = volTrack.getBoundingClientRect();
+      const frac = 1 - (e.clientY - r.top) / r.height;
+      volLevel = Math.max(0, Math.min(100, Math.round(frac * 100)));
+      volRender();
+      if (gainNode) gainNode.gain.value = volLevel / 100;
+      volSave();
+    }
+    volTrack.addEventListener('pointerdown', (e) => {
+      volTrack.setPointerCapture(e.pointerId);
+      volFromEvent(e);
+      const move = (ev) => volFromEvent(ev);
+      const up = () => {
+        volTrack.removeEventListener('pointermove', move);
+        volTrack.removeEventListener('pointerup', up);
+      };
+      volTrack.addEventListener('pointermove', move);
+      volTrack.addEventListener('pointerup', up);
+    });
+    document.getElementById('vol-btn').addEventListener('click', () => {
+      volPop.classList.toggle('open');
+      if (volPop.classList.contains('open')) volLoad();
+      if (reportZonesFn) reportZonesFn();
+    });
+
+    // Onboarding flash: show the controls and the drag-area hint for the
+    // first 3 seconds after launch, then fade back to the hover-only chrome.
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 3000);
   </script>
 </body>
 </html>
