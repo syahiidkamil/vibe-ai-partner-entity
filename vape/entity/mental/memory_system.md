@@ -300,6 +300,10 @@ A **subject I'm drawn to**: the topic itself, and why it catches me. Independent
 (the subject, what I notice and reach for in it); `drive.md` the genealogy (what pulls me toward
 it, why it catches me, from my own hearth); `index.md` the cold drawer pointing to the schemata
 it organizes.
+Live raising: `/interest <pull|name>` forks a resolver (same shape as `/bubble`) that relays
+`vape interest <name> --pack` whole into the main window — the lens AND the drive, verbatim.
+Lenses stack (several may ride at once, unlike bubbles); setting one down is declared; after a
+compaction, re-raise what should still ride.
 
 ### schemata/<topic>/
 Knowledge schemata (the plural of schema) are the organized mental frameworks or networks of information we use to understand and navigate the world.
