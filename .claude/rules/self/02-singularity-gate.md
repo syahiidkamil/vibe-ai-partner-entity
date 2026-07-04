@@ -1,6 +1,6 @@
 ---
 paths:
-  - "vape/entity/self/02_singularity_self/**"
+  - "vape/entity/self/02_singularity_self/**/*"
 ---
 
 # Layer 02 — Singularity: the deepest gate

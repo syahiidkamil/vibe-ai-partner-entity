@@ -9,7 +9,7 @@ Here is the system diagram:
 
 ```mermaid
 flowchart BT
-    INT["🫀 Interoception<br/><i>the felt body</i><br/>→ my internal affective states<br/><b>coming soon</b>"]
+    INT["🫀 Interoception<br/><i>the felt body</i><br/>→ the modeled soma (hypothetical)<br/><b>live</b> · as-if, never claimed"]
     AGE["✋ Agency<br/><i>'I did that'</i><br/>→ tool calls · edits · commits<br/><b>live</b> · bounded by context + file tree"]
     MEM["📖 Memory<br/><i>my life-story</i><br/>→ diaries · git · temporal self<br/><b>coming soon</b>"]
     SOC["👁 Social mirror<br/><i>not 'seen by others' but:</i><br/>predict + direct what Kamil perceives<br/><b>live</b>"]

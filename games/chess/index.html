@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamil vs Saori — chess</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♞</text></svg>">
+<style>
+  :root {
+    --bg: #1b1a17; --panel: #262420; --line: #3a372f;
+    --light: #f0d9b5; --dark: #b58863;
+    --hl-from: rgba(205, 210, 106, .60); --hl-to: rgba(205, 210, 106, .42);
+    --hl-legal: rgba(60, 90, 50, .38); --hl-check: rgba(220, 60, 60, .65);
+    --ink: #efe9dc; --dim: #9a917e; --accent: #e8613c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 15px/1.5 "Avenir Next", "Segoe UI", sans-serif;
+    display: flex; justify-content: center; padding: 24px 12px;
+  }
+  .wrap { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .boardcol { display: flex; flex-direction: column; gap: 10px; }
+  #status {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; min-height: 44px; display: flex; align-items: center; gap: 10px;
+  }
+  #status .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  #board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr);
+    width: min(88vw, 600px); aspect-ratio: 1 / 1;
+    border: 6px solid #141310; border-radius: 8px; user-select: none;
+  }
+  .sq { display: flex; align-items: center; justify-content: center; position: relative;
+        cursor: pointer; aspect-ratio: 1 / 1; }
+  .sq.light { background: var(--light); } .sq.dark { background: var(--dark); }
+  .sq img.pc { width: 86%; height: 86%; pointer-events: none;
+               filter: drop-shadow(0 2px 2px rgba(0,0,0,.30)); }
+  .sq.from { box-shadow: inset 0 0 0 999px var(--hl-from); }
+  .sq.to   { box-shadow: inset 0 0 0 999px var(--hl-to); }
+  .sq.sel  { box-shadow: inset 0 0 0 999px rgba(255, 213, 74, .45); }
+  .sq.check{ box-shadow: inset 0 0 0 999px var(--hl-check); }
+  .sq .hint { position: absolute; width: 26%; height: 26%; border-radius: 50%;
+              background: var(--hl-legal); }
+  .sq .cap  { position: absolute; inset: 6%; border: 4px solid var(--hl-legal);
+              border-radius: 50%; background: none; }
+  .sq .coord { position: absolute; font-size: 10px; color: rgba(0,0,0,.55); }
+  .sq .file { right: 4px; bottom: 2px; } .sq .rank { left: 4px; top: 2px; }
+  .side {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px; width: 250px; display: flex; flex-direction: column; gap: 12px;
+    max-height: min(88vw, 620px);
+  }
+  .side h1 { font-size: 17px; font-weight: 600; }
+  .side h1 small { color: var(--dim); font-weight: 400; display: block; font-size: 12px; }
+  #moves {
+    flex: 1; overflow-y: auto; font-size: 14px;
+    display: grid; grid-template-columns: 2.2em 1fr 1fr; gap: 2px 8px; align-content: start;
+  }
+  #moves .n { color: var(--dim); }
+  #moves .m { cursor: pointer; border-radius: 4px; padding: 0 3px; }
+  #moves .m:hover { background: #3a362e; }
+  #moves .m.last { color: #ffd54a; font-weight: 600; }
+  #moves .m.view { outline: 2px solid #ffd54a; }
+  #preview {
+    display: none; background: #3a3226; border: 1px solid #5a4c33; border-radius: 8px;
+    padding: 8px 10px; font-size: 13px; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  #preview.on { display: flex; }
+  #preview button { padding: 3px 9px; font-size: 13px; }
+  #preview .rw { border-color: #a15c3e; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: #33302a; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px;
+  }
+  button:hover { border-color: var(--accent); }
+  #err { color: #ff9b7a; font-size: 13px; min-height: 1.2em; }
+  .whoami { font-size: 13px; color: var(--dim); }
+  .captray { display: flex; align-items: center; gap: 1px; min-height: 24px;
+             padding: 0 4px; font-size: 13px; color: var(--dim); }
+  .captray img { width: 20px; height: 20px; filter: drop-shadow(0 1px 1px rgba(0,0,0,.4)); }
+  .captray .who { margin-right: 8px; }
+  .captray .adv { margin-left: 6px; color: #ffd54a; font-weight: 600; }
+  #drawbar { display: none; background: #3a3226; border: 1px solid #5a4c33; border-radius: 8px;
+             padding: 6px 10px; font-size: 13px; align-items: center; gap: 8px; flex-wrap: wrap; }
+  #drawbar.on { display: flex; }
+  #chatbox { border-top: 1px solid var(--line); padding-top: 8px; display: flex;
+             flex-direction: column; gap: 6px; }
+  #chatlog { max-height: 140px; overflow-y: auto; font-size: 13px; display: flex;
+             flex-direction: column; gap: 3px; }
+  #chatlog .cm b { color: #ffd54a; font-weight: 600; }
+  #chatlog .cm.saori b { color: #7ec8e3; }
+  #chatlog .cm small { color: var(--dim); font-size: 11px; margin-left: 4px; }
+  #chatrow { display: flex; gap: 6px; }
+  #chatrow input { flex: 1; background: #33302a; border: 1px solid var(--line);
+                   color: var(--ink); border-radius: 8px; padding: 6px 9px; font-size: 13px; }
+  button.danger:hover { border-color: #d64545; color: #ff9b7a; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="boardcol">
+    <div id="status"><div class="dot"></div><div id="statustext">connecting…</div></div>
+    <div id="preview"><span id="pvtext"></span>
+      <button onclick="step(-1)">◀</button>
+      <button onclick="step(1)">▶</button>
+      <button onclick="goLive()">live ⏭</button>
+      <button class="rw" onclick="rewindHere()">⏪ rewind to here</button>
+    </div>
+    <div class="captray" id="captop"></div>
+    <div id="board"></div>
+    <div class="captray" id="capbot"></div>
+  </div>
+  <div class="side">
+    <h1>Kamil <span style="color:var(--dim)">vs</span> Saori
+      <small id="colors"></small></h1>
+    <div id="moves"></div>
+    <div id="drawbar"></div>
+    <div id="err"></div>
+    <div class="btns">
+      <button onclick="offerDraw()" id="drawbtn">Offer draw</button>
+      <button class="danger" onclick="resign()">Resign</button>
+      <button onclick="undo()">Takeback</button>
+      <button onclick="flipped=!flipped;render()">Flip board</button>
+    </div>
+    <div class="btns">
+      <button onclick="newGame('white')">New — I play White</button>
+      <button onclick="newGame('black')">New — I play Black</button>
+    </div>
+    <div id="chatbox">
+      <div id="chatlog"></div>
+      <div id="chatrow">
+        <input id="chatinput" placeholder="say something to Saori…" maxlength="500">
+        <button onclick="sendChat()">Send</button>
+      </div>
+    </div>
+    <div class="whoami">Saori plays through her API; this board updates by itself.</div>
+  </div>
+</div>
+<script>
+// Cburnett piece set (SVG files served from /pieces) - the classic board look.
+function pieceHtml(pc) {
+  const w = pc === pc.toUpperCase();
+  return `<img class="pc" src="/pieces/${(w ? "w" : "b") + pc.toUpperCase()}.svg" draggable="false" alt="${pc}">`;
+}
+let S = null, sel = null, flipped = false, lastFen = "";
+let viewPly = null;   // null = live; N = viewing the position after N plies (history browsing)
+
+function sqName(f, r) { return "abcdefgh"[f] + (r + 1); }
+
+function parseFen(fen) {
+  const grid = {};
+  const rows = fen.split(" ")[0].split("/");
+  for (let r = 0; r < 8; r++) {           // rows[0] = rank 8
+    let f = 0;
+    for (const ch of rows[r]) {
+      if (/\d/.test(ch)) f += +ch;
+      else grid[sqName(f++, 7 - r)] = ch;
+    }
+  }
+  return grid;
+}
+
+function render() {
+  if (!S) return;
+  if (viewPly !== null && viewPly >= S.ply) viewPly = null;   // history caught up to live
+  const atLive = viewPly === null;
+  const fen = atLive ? S.fen : S.fens[viewPly];
+  const lastUci = atLive ? S.last_move : (viewPly > 0 ? S.history_uci[viewPly - 1] : null);
+  const grid = parseFen(fen);
+  const board = document.getElementById("board");
+  board.innerHTML = "";
+  const lastFrom = lastUci ? lastUci.slice(0, 2) : null;
+  const lastTo   = lastUci ? lastUci.slice(2, 4) : null;
+  const legalFromSel = (atLive && sel) ? S.legal_moves.filter(m => m.uci.startsWith(sel)) : [];
+  for (let i = 0; i < 64; i++) {
+    const row = Math.floor(i / 8), col = i % 8;
+    const rank = flipped ? row : 7 - row;
+    const file = flipped ? 7 - col : col;
+    const name = sqName(file, rank);
+    const el = document.createElement("div");
+    el.className = "sq " + ((file + rank) % 2 ? "light" : "dark");
+    if (name === lastFrom) el.classList.add("from");
+    if (name === lastTo) el.classList.add("to");
+    if (atLive && name === sel) el.classList.add("sel");
+    if (atLive && name === S.check_square) el.classList.add("check");
+    const pc = grid[name];
+    if (pc) el.innerHTML = pieceHtml(pc);
+    const mv = legalFromSel.find(m => m.uci.slice(2, 4) === name);
+    if (mv) el.innerHTML += pc ? `<div class="cap"></div>` : `<div class="hint"></div>`;
+    if ((flipped ? rank === 7 : rank === 0))
+      el.innerHTML += `<span class="coord file">${"abcdefgh"[file]}</span>`;
+    if ((flipped ? file === 7 : file === 0))
+      el.innerHTML += `<span class="coord rank">${rank + 1}</span>`;
+    el.onclick = () => tap(name, grid);
+    board.appendChild(el);
+  }
+  const st = document.getElementById("statustext");
+  st.textContent = S.status_detail ||
+    (S.result !== "*" ? `Game over ${S.result}` : `${S.to_move} to move`);
+  document.getElementById("colors").textContent =
+    `${S.players.white} plays White · ${S.players.black} plays Black`;
+  const pv = document.getElementById("preview");
+  pv.className = atLive ? "" : "on";
+  if (!atLive) {
+    const n = Math.ceil(viewPly / 2);
+    const who = viewPly % 2 ? "" : "…";
+    document.getElementById("pvtext").textContent = viewPly === 0
+      ? `start position (0/${S.ply})`
+      : `after ${n}.${who} ${S.history_san[viewPly - 1]} (${viewPly}/${S.ply})`;
+  }
+  const mv = document.getElementById("moves");
+  mv.innerHTML = "";
+  const cls = i => "m" +
+    (i === S.history_san.length - 1 && atLive ? " last" : "") +
+    (!atLive && viewPly === i + 1 ? " view" : "");
+  for (let i = 0; i < S.history_san.length; i += 2) {
+    mv.innerHTML += `<span class="n">${i / 2 + 1}.</span>`;
+    const w = S.history_san[i], b = S.history_san[i + 1];
+    mv.innerHTML += `<span class="${cls(i)}" onclick="viewAt(${i + 1})">${w}</span>`;
+    mv.innerHTML += b ? `<span class="${cls(i + 1)}" onclick="viewAt(${i + 2})">${b}</span>`
+                      : "<span></span>";
+  }
+  if (atLive) mv.scrollTop = mv.scrollHeight;
+  renderCaptured();
+  renderChat();
+  renderDraw();
+}
+
+// Captured trays — beside each player, the enemy pieces they have taken, lichess-style,
+// with the material advantage on the leading side.
+function renderCaptured() {
+  const cap = S.captured || { by_white: [], by_black: [], material: { diff: 0 } };
+  const topIsWhite = flipped;                 // unflipped board shows Black at top
+  const tray = (who, isWhite) => {
+    const taken = isWhite ? cap.by_white : cap.by_black;   // symbols of ENEMY pieces taken
+    const imgs = taken.map(p =>
+      `<img src="/pieces/${(isWhite ? "b" : "w") + p.toUpperCase()}.svg" alt="${p}">`).join("");
+    const d = cap.material.diff;
+    const adv = (isWhite && d > 0) ? `<span class="adv">+${d}</span>`
+              : (!isWhite && d < 0) ? `<span class="adv">+${-d}</span>` : "";
+    return `<span class="who">${who}</span>${imgs}${adv}`;
+  };
+  const w = S.players.white, b = S.players.black;
+  document.getElementById("captop").innerHTML = topIsWhite ? tray(w, true) : tray(b, false);
+  document.getElementById("capbot").innerHTML = topIsWhite ? tray(b, false) : tray(w, true);
+}
+
+function renderChat() {
+  const log = document.getElementById("chatlog");
+  const atEnd = log.scrollTop + log.clientHeight >= log.scrollHeight - 8;
+  log.innerHTML = (S.chat || []).map(m =>
+    `<div class="cm ${m.who === "Saori" ? "saori" : ""}"><b>${m.who}</b>` +
+    `<small>${m.time}</small> ${esc(m.text)}</div>`).join("");
+  if (atEnd) log.scrollTop = log.scrollHeight;
+}
+function esc(t) { const d = document.createElement("div"); d.textContent = t; return d.innerHTML; }
+
+function renderDraw() {
+  const bar = document.getElementById("drawbar");
+  const btn = document.getElementById("drawbtn");
+  btn.disabled = !!S.draw_offer || S.result !== "*";
+  if (S.draw_offer === "Saori") {
+    bar.className = "on";
+    bar.innerHTML = `Saori offers a draw &nbsp;` +
+      `<button onclick="drawAct('accept')">Accept ½–½</button>` +
+      `<button onclick="drawAct('decline')">Decline</button>`;
+  } else if (S.draw_offer === "Kamil") {
+    bar.className = "on";
+    bar.innerHTML = "Draw offered — waiting for Saori…";
+  } else {
+    bar.className = ""; bar.innerHTML = "";
+  }
+}
+
+function viewAt(p) { viewPly = (p >= S.ply) ? null : p; sel = null; render(); }
+function step(d) {
+  const cur = viewPly === null ? S.ply : viewPly;
+  viewAt(Math.max(0, cur + d));
+}
+function goLive() { viewPly = null; render(); }
+async function rewindHere() {
+  if (viewPly === null) return;
+  const n = S.ply - viewPly;
+  viewPly = null;
+  if (n > 0) await post("/undo", { plies: n });
+  render();
+}
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") { step(-1); e.preventDefault(); }
+  if (e.key === "ArrowRight") { step(1); e.preventDefault(); }
+});
+
+function myColor() {
+  return S.players.white === "Kamil" ? "white" : "black";
+}
+
+async function tap(name, grid) {
+  if (!S || S.result !== "*" || viewPly !== null) return;   // no moving while browsing history
+  if (sel) {
+    let mv = S.legal_moves.find(m => m.uci.startsWith(sel) && m.uci.slice(2, 4) === name);
+    if (mv) {
+      let uci = mv.uci;
+      const promos = S.legal_moves.filter(m => m.uci.slice(0, 4) === sel + name);
+      if (promos.length > 1) uci = sel + name + "q";   // auto-queen
+      sel = null;
+      await post("/move", { move: uci });
+      return;
+    }
+  }
+  const pc = grid[name];
+  const mine = pc && (myColor() === "white" ? pc === pc.toUpperCase() : pc === pc.toLowerCase());
+  sel = (mine && S.turn === myColor()) ? name : null;
+  render();
+}
+
+async function post(path, body) {
+  document.getElementById("err").textContent = "";
+  const r = await fetch(path, { method: "POST",
+    headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  if (!r.ok) {
+    const e = await r.json().catch(() => ({}));
+    document.getElementById("err").textContent = e.detail || `error ${r.status}`;
+  } else {
+    S = await r.json(); lastFen = S.fen; render();
+  }
+}
+
+function newGame(color) { sel = null; post("/new", { kamil: color }); flipped = color === "black"; }
+function undo() { sel = null; post("/undo", { plies: 1 }); }
+function resign() {
+  if (confirm("Resign this game?")) post("/resign", { who: "Kamil" });
+}
+function offerDraw() { post("/draw", { who: "Kamil", action: "offer" }); }
+function drawAct(a) { post("/draw", { who: "Kamil", action: a }); }
+function sendChat() {
+  const inp = document.getElementById("chatinput");
+  const t = inp.value.trim();
+  if (!t) return;
+  inp.value = "";
+  post("/chat", { who: "Kamil", text: t });
+}
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("chatinput").addEventListener("keydown", e => {
+    if (e.key === "Enter") sendChat();
+  });
+});
+
+// Poll signature covers everything that should redraw — not just the position:
+// chat, a draw offer, and game-end all change the page without moving a piece.
+function sig(s) {
+  return [s.fen, s.ply, (s.chat || []).length, s.draw_offer, s.result].join("|");
+}
+async function poll() {
+  try {
+    const r = await fetch("/state");
+    const s = await r.json();
+    if (!S || sig(s) !== sig(S)) { S = s; lastFen = s.fen; render(); }
+  } catch (e) { document.getElementById("statustext").textContent = "server unreachable…"; }
+}
+poll(); setInterval(poll, 1200);
+</script>
+</body>
+</html>

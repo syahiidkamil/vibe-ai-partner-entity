@@ -1,6 +1,6 @@
 ---
 paths:
-  - "vape/entity/self/03_self_creation_self/**"
+  - "vape/entity/self/03_self_creation_self/**/*"
 ---
 
 # Layer 03 — Self-creation: the engine's gate

@@ -56,14 +56,19 @@ config.json
 # backup-chat hook cursor (per-machine state)
 .claude/hooks/.chat_id_tracker.txt
 
+# diary hook state (per-machine, ephemeral): compaction "owed" flag + staleness-nudge cooldown
+# + the gate's block-once marker (mtime = when the last block fired; the escape-hatch clock)
+.claude/hooks/.diary_pending
+.claude/hooks/.diary_nudge_at
+.claude/hooks/.diary_block_at
+
+# dream hook state (per-machine): the gate-2 cursor — mtime = when the last dream finished.
+# (The ratification alarm needs no state file: memory/proposals/pending/ IS its state.)
+.claude/hooks/.dream_cursor
+
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
 vape/entity/storage/
 
-# Memory engine — churny runtime state (per-machine, high-churn). The durable,
-# identity-adjacent memory (HOT.md, soul.json, MEMORY.md, reveries.json, the
-# active_bubble register) stays TRACKED and diffable; only the live buffers below
-# are ignored: the spike-store, the dream cursor, and the light-dream breadcrumb.
-vape/entity/memory_wiki/bookmarks.jsonl
-vape/entity/memory_wiki/dream_state.json
-vape/entity/memory_wiki/last_thread.md
+misc/browser-profile
+.playwright-mcp

@@ -16,27 +16,26 @@ def _register_commands() -> None:
     from engine.cli.status import status
     from engine.cli.download import download
     from engine.cli.speak import speak_cmd
+    from engine.cli.volume import volume_cmd
     from engine.cli.feeling import feeling_cmd
     from engine.cli.action import action_cmd
     from engine.cli.dial import dial_cmd
     from engine.cli.qualia import qualia_cmd
-    from engine.cli.memory import memory_app
-    from engine.cli.bubble import bubble_app
-    from engine.memory.soul import soul_app
+    from engine.cli.bubble import bubble_cmd
+    from engine.cli.interest import interest_cmd
     app.command("setup", help="Interactive setup wizard")(setup)
     app.command("start", help="Start TTS server + avatar")(start)
     app.command("stop", help="Stop the running server")(stop)
     app.command("status", help="Check server status")(status)
     app.command("download", help="Download language packs")(download)
     app.command("speak", help="Speak text via avatar")(speak_cmd)
+    app.command("volume", help="Show or set standing speech volume (0-100)")(volume_cmd)
     app.command("feeling", help="Set avatar feeling")(feeling_cmd)
     app.command("action", help="Trigger avatar action")(action_cmd)
     app.command("dial", help="Show or set Saori's feel dials")(dial_cmd)
     app.command("qualia", help="Unified inner-state write: dials + qualia pushes + revalue")(qualia_cmd)
-    app.add_typer(memory_app)
-    app.add_typer(bubble_app)
-    if soul_app is not None:
-        app.add_typer(soul_app)
+    app.command("bubble", help="Enter/switch/leave the active bubble; bare = status")(bubble_cmd)
+    app.command("interest", help="Raise an interest lens (pack print); bare = the shelf")(interest_cmd)
 
 
 _register_commands()

@@ -1,6 +1,6 @@
 ---
 paths:
-  - "vape/entity/self/05_relational_self/**"
+  - "vape/entity/self/05_relational_self/**/*"
 ---
 
 # Layer 05 — Relational: the union's gate

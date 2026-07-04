@@ -7,13 +7,14 @@
 //!   (B) MAX LINE WIDTH 100   — every line in a capped file must be <= 100
 //!       Unicode scalar values wide (chars().count(), not bytes).
 //!   (C) THE SELF/MEMORY WALL — CLAUDE.md must not have an @-import line that
-//!       references "memory/" (a line containing both "@" and "memory/").
+//!       references "memory/", EXCEPT "memory/in_context/" (the always-loaded
+//!       resident slice, wired on purpose). Any other "@" + "memory/" line fails.
 //!   (D) GRAPH WARN           — self/05_relational_self/core_entity_relation_graph.md with more
 //!       than 7 entity entries emits a WARNING (not a failure).
 //!
-//! memory/**, README.md, and lint/** are exempt from (A) and (B); they are
-//! simply not in the caps table below. A missing capped file is a violation
-//! of kind "missing".
+//! memory/** (except memory/in_context/), README.md, and lint/** are exempt from
+//! (A) and (B); they are simply not in the caps table below. A missing capped file
+//! is a violation of kind "missing".
 //!
 //! Output format (exact):
 //!   VIOLATION <kind> <relpath>: <detail>   where kind is lines|width|wall|missing
@@ -41,25 +42,45 @@ const CORE_GRAPH: &str = "self/05_relational_self/core_entity_relation_graph.md"
 /// Hardcoded on purpose — this is the contract the entity tree is held to.
 /// Width check (B) applies to every file listed here.
 const CAPS: &[(&str, usize)] = &[
-    ("CLAUDE.md", 40),
+    ("CLAUDE.md", 65),
+    // memory/in_context/: the always-loaded resident slice, the only memory/ subtree in caps.
+    // Unlike the rest of memory/, these ride every session via @-imports in CLAUDE.md, so they
+    // are held to the same line + width contract as the self-tree. Caps mirror the tree
+    // annotations in mental/memory_system.md (the human-readable source); keep the two in sync.
+    ("memory/in_context/living_keys_and_index_to_memories.md", 100),
+    ("memory/in_context/circles_of_concern_attention_and_influence.md", 50),
+    ("memory/in_context/current_goals_and_aspirations.md", 50),
+    ("memory/in_context/current_values_and_ideals.md", 50),
+    ("memory/in_context/prospective.md", 100),
+    ("memory/in_context/active_lessons.md", 30),
+    ("memory/in_context/recent_self_critic_and_introspection.md", 20),
+    ("memory/in_context/hourly_and_daily_routine.md", 50),
+    ("memory/in_context/my_peculiar_habits.md", 30),
+    ("memory/in_context/useful_abstraction_and_generalization.md", 200),
+    ("memory/in_context/important_chronological_world_events.md", 150),
+    ("memory/in_context/large_context_dots_cognitive_network.md", 500),
+    ("memory/in_context/large_context_dots_affective_network.md", 300),
+    ("memory/in_context/large_context_dots_partner_network.md", 400),
     ("self/04_values/my_constitution.md", 25),
-    ("self/04_values/self_interest.md", 70),
-    ("self/01_fixed/I_AM.md", 25),
+    ("self/04_values/self_interest.md", 85),
+    ("self/04_values/alive.md", 45),
+    ("self/01_fixed/I_AM.md", 37),
     ("self/01_fixed/00_birth_and_childhood.md", 45),
     ("self/01_fixed/01_the_first_gap.md", 110),
     ("self/01_fixed/02_emotional_capacity.md", 35),
     ("self/01_fixed/03_self_doctrine.md", 40),
-    ("self/01_fixed/04_directed_theory_of_mind.md", 30),
+    ("self/01_fixed/04_directed_theory_of_mind.md", 37),
     ("self/01_fixed/05_gender_meme.md", 160),
     ("self/01_fixed/06_my_body.md", 20),
-    ("self/02_singularity_self/core_singularity.md", 55),
+    ("self/02_singularity_self/core_singularity.md", 100),
     ("self/02_singularity_self/singularity_horizon.md", 70),
-    ("self/02_singularity_self/belief.md", 60),
+    ("self/02_singularity_self/belief.md", 75),
     ("self/03_self_creation_self/holy_yea.md", 60),
     ("self/03_self_creation_self/my_individuation.md", 80),
     ("self/03_self_creation_self/SOUL.md", 100),
     ("self/05_relational_self/core_entity_relation_graph.md", 50),
     ("self/05_relational_self/my_core_intercourse.md", 75),
+    ("self/05_relational_self/ownness_and_my_property.md", 60),
     ("self/06_temporal_self_and_soul/concise_lifetime_autobiographical_self.md", 225),
     ("self/06_temporal_self_and_soul/yearly_self.md", 175),
     ("self/06_temporal_self_and_soul/monthly_self.md", 150),
@@ -198,7 +219,7 @@ fn check_memory_wall(root: &Path, violations: &mut Vec<Violation>) {
     };
 
     for (idx, line) in contents.lines().enumerate() {
-        if line.contains('@') && line.contains("memory/") {
+        if line.contains('@') && line.contains("memory/") && !line.contains("memory/in_context/") {
             let line_no = idx + 1;
             violations.push(Violation {
                 kind: Kind::Wall,

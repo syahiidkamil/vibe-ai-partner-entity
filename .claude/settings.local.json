@@ -24,7 +24,25 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/qualia-ground.sh"
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/qualia-ground.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/diary-reminder.sh\""
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/precompact-diary.sh\""
           }
         ]
       }
@@ -34,7 +52,23 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/hooks/session-temporal-check.sh"
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/session-temporal-check.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/dream-check.sh\""
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/self-proposals-check.sh\""
           }
         ]
       }
@@ -44,7 +78,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".venv/bin/python .claude/hooks/backup_chat_and_qualia.py",
+            "command": ".venv/bin/python \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/capture.py\"",
             "async": true,
             "asyncRewake": true
           }

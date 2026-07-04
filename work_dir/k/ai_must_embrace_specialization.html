@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Must Embrace Specialization via Superhuman Adaptable Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F6F8;
+    --card:#FFFFFF;
+    --ink:#1B1D23;
+    --ink-soft:#3C414C;
+    --muted:#727a87;
+    --line:#E3E6EC;
+    --line-strong:#cfd4dd;
+    --teal:#0E7C7B;
+    --teal-deep:#0a5b5a;
+    --teal-wash:#e6f1f0;
+    --violet:#5B2A86;
+    --violet-wash:#efe8f5;
+    --amber:#C2842A;
+    --amber-wash:#f7efdf;
+    --slate:#4A5A7A;
+    --shadow:0 1px 2px rgba(20,24,33,.04),0 8px 28px rgba(20,24,33,.06);
+    --shadow-lg:0 2px 6px rgba(20,24,33,.05),0 18px 50px rgba(20,24,33,.10);
+    --maxw:720px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-optical-sizing:auto;
+    font-size:19px;
+    line-height:1.66;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--teal);color:#fff}
+
+  /* reading progress */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:var(--teal);z-index:50;transition:width .08s linear;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+  .wide{max-width:980px;margin:0 auto;padding:0 26px}
+
+  /* ---------- HERO ---------- */
+  header.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .grid-bg{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(to right,rgba(14,124,123,.05) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(14,124,123,.05) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(120% 95% at 78% 8%,#000 0%,transparent 72%);
+            mask-image:radial-gradient(120% 95% at 78% 8%,#000 0%,transparent 72%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;padding:64px 0 56px}
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--teal-deep);display:flex;flex-wrap:wrap;
+    gap:8px 14px;align-items:center;margin-bottom:26px;
+  }
+  .eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--teal);display:inline-block}
+  h1.title{
+    font-family:"Fraunces",serif;font-weight:600;
+    font-size:clamp(34px,6.2vw,58px);line-height:1.04;letter-spacing:-.01em;
+    margin:0 0 8px;color:var(--ink);
+  }
+  h1.title .em{font-style:italic;color:var(--teal-deep);font-weight:500}
+  .subtitle{
+    font-size:clamp(17px,2.4vw,21px);color:var(--ink-soft);font-style:italic;
+    margin:18px 0 34px;max-width:34ch;line-height:1.45;
+  }
+  .authors{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:16px;color:var(--ink-soft)}
+  .authors .a{white-space:nowrap}
+  .authors sup{color:var(--teal);font-family:"JetBrains Mono",monospace;font-size:11px}
+  .affil{
+    font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted);
+    margin-top:14px;letter-spacing:.02em;
+  }
+
+  /* mini coordinate plot in hero */
+  .plot{
+    position:relative;margin-top:46px;border:1px solid var(--line-strong);
+    border-radius:14px;background:rgba(255,255,255,.6);backdrop-filter:blur(2px);
+    padding:18px 18px 14px;box-shadow:var(--shadow);
+  }
+  .plot svg{display:block;width:100%;height:auto}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  main{padding:8px 0 0}
+  section.sec{padding:54px 0 8px}
+  .sec-no{
+    font-family:"JetBrains Mono",monospace;font-size:13px;letter-spacing:.12em;
+    color:var(--teal-deep);text-transform:uppercase;margin-bottom:10px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .sec-no::before{content:"";width:26px;height:1.5px;background:var(--teal)}
+  h2{
+    font-family:"Fraunces",serif;font-weight:600;font-size:clamp(26px,4vw,36px);
+    line-height:1.1;letter-spacing:-.01em;margin:0 0 22px;color:var(--ink);
+  }
+  h3{
+    font-family:"Fraunces",serif;font-weight:600;font-size:22px;line-height:1.2;
+    margin:38px 0 14px;color:var(--ink);
+  }
+  h4{
+    font-family:"JetBrains Mono",monospace;font-weight:600;font-size:13px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--violet);
+    margin:30px 0 10px;
+  }
+  p{margin:0 0 20px;color:var(--ink-soft)}
+  p strong{color:var(--ink);font-weight:600}
+  em{font-style:italic}
+  .lead{font-size:21px;color:var(--ink);line-height:1.6}
+  a.ref{color:var(--teal-deep);text-decoration:none;border-bottom:1px solid rgba(14,124,123,.28)}
+  a.ref:hover{border-bottom-color:var(--teal)}
+
+  .cite{color:var(--muted);font-style:normal}
+
+  /* abstract */
+  .abstract{
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--teal);
+    border-radius:0 12px 12px 0;padding:26px 28px;margin:40px 0 8px;box-shadow:var(--shadow);
+  }
+  .abstract .lbl{
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--teal-deep);margin-bottom:12px;
+  }
+  .abstract p{font-size:18px;margin-bottom:0;color:var(--ink-soft)}
+
+  /* position manifesto */
+  .positions{margin:18px 0 4px;display:grid;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .pos{display:grid;grid-template-columns:64px 1fr;background:var(--card);
+    align-items:stretch}
+  .pos .n{
+    font-family:"Fraunces",serif;font-weight:600;font-size:24px;color:var(--teal);
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,var(--teal-wash),#fff);border-right:1px solid var(--line);
+  }
+  .pos .t{padding:16px 20px;font-size:17px;color:var(--ink);line-height:1.5;display:flex;align-items:center}
+  .pos .t b{color:var(--teal-deep);font-weight:600}
+
+  /* inline position chip */
+  .chip{
+    font-family:"JetBrains Mono",monospace;font-size:.74em;font-weight:600;
+    color:var(--teal-deep);background:var(--teal-wash);border:1px solid #cfe6e4;
+    padding:1px 6px;border-radius:5px;white-space:nowrap;letter-spacing:.01em;
+    vertical-align:.06em;
+  }
+
+  /* figures */
+  figure{margin:42px 0;}
+  .fig-card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:26px 24px 20px;box-shadow:var(--shadow-lg);overflow:hidden;
+  }
+  .fig-card svg{display:block;width:100%;height:auto;overflow:visible}
+  figcaption{
+    font-size:15px;color:var(--muted);line-height:1.55;margin-top:18px;
+    padding-top:16px;border-top:1px solid var(--line);
+  }
+  figcaption b{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12.5px;
+    letter-spacing:.05em;color:var(--ink-soft);text-transform:uppercase;margin-right:4px}
+
+  /* callout boxes: definition / metric / insight */
+  .callout{
+    border-radius:14px;padding:24px 26px;margin:34px 0;position:relative;
+    box-shadow:var(--shadow);
+  }
+  .callout .ctag{
+    font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:600;margin-bottom:10px;display:flex;
+    align-items:center;gap:9px;
+  }
+  .callout .ctag::before{content:"";width:9px;height:9px;border-radius:2px}
+  .callout p{margin:0;font-size:19px;line-height:1.55}
+  .callout.def{background:var(--teal-wash);border:1px solid #bfe0de}
+  .callout.def .ctag{color:var(--teal-deep)}
+  .callout.def .ctag::before{background:var(--teal)}
+  .callout.def p{color:#0b3f3e}
+  .callout.metric{background:#fff;border:1px solid var(--line);border-left:3px solid var(--violet)}
+  .callout.metric .ctag{color:var(--violet)}
+  .callout.metric .ctag::before{background:var(--violet)}
+  .callout.insight{
+    background:linear-gradient(135deg,#13302f,#0E7C7B);color:#eafaf8;text-align:center;
+    padding:36px 28px;border:none;
+  }
+  .callout.insight .ctag{color:#bff0eb;justify-content:center}
+  .callout.insight .ctag::before{background:#7ad9d2}
+  .callout.insight p{
+    font-family:"Fraunces",serif;font-weight:500;font-style:italic;
+    font-size:clamp(21px,3.3vw,28px);line-height:1.3;color:#fff;
+  }
+
+  /* table */
+  .tbl-scroll{overflow-x:auto;margin:24px 0 8px;border:1px solid var(--line);
+    border-radius:14px;box-shadow:var(--shadow);background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+  thead th{
+    font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.07em;
+    text-transform:uppercase;text-align:left;color:var(--muted);font-weight:600;
+    padding:14px 18px;border-bottom:1px solid var(--line-strong);background:#fafbfc;
+  }
+  tbody td{padding:15px 18px;vertical-align:top;border-bottom:1px solid var(--line);color:var(--ink-soft);line-height:1.5}
+  tbody tr:last-child td{border-bottom:none}
+  td.def-cell{color:var(--ink);font-style:italic}
+  td .src{display:block;margin-top:5px;font-style:normal;color:var(--muted);font-size:13px;font-family:"JetBrains Mono",monospace}
+  .flag{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+    letter-spacing:.03em;padding:3px 9px;border-radius:20px;white-space:nowrap;display:inline-block}
+  .flag.fc{background:var(--amber-wash);color:#8a5a12}
+  .flag.fe{background:var(--violet-wash);color:var(--violet)}
+  .flag.fa{background:var(--teal-wash);color:var(--teal-deep)}
+
+  hr.rule{border:none;border-top:1px solid var(--line);margin:50px 0}
+
+  /* alt views aside */
+  .aside-note{
+    background:#fbfbfc;border:1px dashed var(--line-strong);border-radius:12px;
+    padding:22px 24px;margin:30px 0;
+  }
+  .aside-note .lbl{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .aside-note p:last-child{margin-bottom:0}
+
+  /* references */
+  details.refs{margin:30px 0 0;border-top:1px solid var(--line);padding-top:8px}
+  details.refs summary{
+    font-family:"Fraunces",serif;font-weight:600;font-size:22px;cursor:pointer;
+    list-style:none;padding:18px 0;color:var(--ink);display:flex;align-items:center;gap:12px;
+  }
+  details.refs summary::-webkit-details-marker{display:none}
+  details.refs summary .tw{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted);
+    font-weight:400;margin-left:auto;transition:transform .2s}
+  details.refs[open] summary .tw{transform:rotate(45deg)}
+  .reflist{font-size:14px;line-height:1.55;color:var(--ink-soft);columns:1;margin-top:6px}
+  .reflist .r{margin:0 0 13px;padding-left:20px;text-indent:-20px}
+  .reflist .r b{color:var(--ink);font-weight:600}
+
+  footer{border-top:1px solid var(--line);margin-top:60px;padding:34px 0 60px}
+  footer .f{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);
+    line-height:1.7;letter-spacing:.01em}
+  footer a{color:var(--teal-deep);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  :focus-visible{outline:2.5px solid var(--teal);outline-offset:3px;border-radius:3px}
+
+  @media (max-width:640px){
+    body{font-size:18px}
+    .hero-inner{padding:46px 0 40px}
+    .pos{grid-template-columns:52px 1fr}
+    .pos .n{font-size:20px}
+    .fig-card{padding:18px 14px 14px}
+    section.sec{padding:44px 0 4px}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">
+      <span>arXiv:2602.23643v1</span><span class="dot"></span>
+      <span>cs.AI</span><span class="dot"></span>
+      <span>Position Paper</span><span class="dot"></span>
+      <span>Feb 2026</span>
+    </div>
+    <h1 class="title">AI Must Embrace Specialization via <span class="em">Superhuman Adaptable Intelligence</span></h1>
+    <p class="subtitle">Are humans truly general &mdash; and should generality be the North Star of AI at all?</p>
+
+    <div class="authors">
+      <span class="a">Judah Goldfeder<sup>*1</sup></span>
+      <span class="a">Philippe Wyder<sup>*2</sup></span>
+      <span class="a">Yann LeCun<sup>3</sup></span>
+      <span class="a">Ravid Shwartz-Ziv<sup>3</sup></span>
+    </div>
+    <div class="affil">1 · Columbia University &nbsp;&nbsp; 2 · Distyl &nbsp;&nbsp; 3 · New York University &nbsp;&nbsp;·&nbsp;&nbsp; * equal contribution</div>
+
+    <!-- mini coordinate plot positioning SAI -->
+    <div class="plot" aria-label="The paper's two-axis framework, with SAI plotted in the adaptable, important-task region.">
+      <svg viewBox="0 0 920 300" role="img">
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" fill="#0E7C7B"/>
+          </marker>
+        </defs>
+        <!-- axes -->
+        <line x1="92" y1="22" x2="92" y2="252" stroke="#0E7C7B" stroke-width="1.6" marker-end="url(#ah)"/>
+        <line x1="92" y1="252" x2="892" y2="252" stroke="#0E7C7B" stroke-width="1.6" marker-end="url(#ah)"/>
+        <!-- axis labels -->
+        <text x="68" y="40" font-family="JetBrains Mono, monospace" font-size="12" fill="#0a5b5a" letter-spacing=".06em">LEARN</text>
+        <text x="60" y="240" font-family="JetBrains Mono, monospace" font-size="12" fill="#9aa1ad" letter-spacing=".06em">DO</text>
+        <text x="120" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#9aa1ad">Anything</text>
+        <text x="312" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#0a5b5a">Anything Important</text>
+        <text x="540" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#9aa1ad">Anything Humans Can Do</text>
+        <text x="742" y="278" font-family="JetBrains Mono, monospace" font-size="11" fill="#9aa1ad">…that is Important</text>
+        <!-- faint plotted prior definitions -->
+        <circle cx="150" cy="70" r="5" fill="#0E7C7B" opacity=".28"/>
+        <circle cx="150" cy="120" r="5" fill="#0E7C7B" opacity=".28"/>
+        <circle cx="600" cy="74" r="5" fill="#0E7C7B" opacity=".28"/>
+        <circle cx="600" cy="150" r="5" fill="#5B2A86" opacity=".26"/>
+        <circle cx="600" cy="190" r="5" fill="#5B2A86" opacity=".26"/>
+        <circle cx="600" cy="225" r="5" fill="#5B2A86" opacity=".26"/>
+        <circle cx="800" cy="190" r="5" fill="#C2842A" opacity=".30"/>
+        <circle cx="800" cy="225" r="5" fill="#C2842A" opacity=".30"/>
+        <!-- SAI highlighted -->
+        <circle cx="372" cy="78" r="11" fill="none" stroke="#0E7C7B" stroke-width="1.4" opacity=".5"/>
+        <circle cx="372" cy="78" r="6.5" fill="#0E7C7B"/>
+        <text x="390" y="74" font-family="Fraunces, serif" font-weight="600" font-size="18" fill="#0a5b5a">SAI</text>
+        <text x="390" y="92" font-family="Newsreader, serif" font-size="12.5" fill="#727a87" font-style="italic">adaptable · inside &amp; outside the human domain</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <!-- ABSTRACT -->
+  <div class="abstract">
+    <div class="lbl">Abstract</div>
+    <p>Everyone from AI executives and researchers to doomsayers, politicians, and activists is talking about Artificial General Intelligence (AGI). Yet they often don't seem to agree on its exact definition. One common definition of AGI is an AI that can do everything a human can do &mdash; but are humans truly general? In this paper, we address what's wrong with our conception of AGI, and why, even in its most coherent formulation, it is a flawed concept to describe the future of AI. We explore whether the most widely accepted definitions are plausible, useful, and truly general. We argue that AI must embrace specialization, rather than strive for generality, and in its specialization strive for superhuman performance, and introduce <strong>Superhuman Adaptable Intelligence (SAI)</strong>. SAI is defined as intelligence that can learn to exceed humans at anything important that we can do, and that can fill in the skill gaps where humans are incapable. We then lay out how SAI can help hone a discussion around AI that was blurred by an overloaded definition of AGI, and extrapolate the implications of using it as a guide for the future.</p>
+  </div>
+
+</div>
+
+<!-- ===================== §1 ===================== -->
+<section class="sec" id="intro">
+  <div class="wrap">
+    <div class="sec-no">Section 01</div>
+    <h2>Introduction</h2>
+    <p class="lead">The AI community has become increasingly fractured over where the field is headed. On one side are &ldquo;doomers,&rdquo; who argue we are headed towards a gruesome societal endgame &mdash; mass unemployment, loss of human agency, and a future in which humanity becomes subordinate to artificial overlords.</p>
+    <p>On the other side are those who expect advanced artificial intelligence to bring something close to utopia, ending hunger, suffering, and scarcity. A third camp frames AI as a &ldquo;normal technology,&rdquo; forecasting major impacts but rejecting extreme narratives <span class="cite">(Narayanan &amp; Kapoor, 2025)</span>.</p>
+    <p>Central to all of these views is the concept of Artificial General Intelligence, or AGI. Yet, as is often the case in widely public debates, much of the disagreement stems less from evidence than from terminology: AGI is invoked constantly, but rarely defined precisely, and the resulting ambiguity has made the debate far more confusing &mdash; and far more polarized &mdash; than it needs to be.</p>
+    <p>Much of the discourse uses human intelligence as a paradigm of generality, but we argue that this notion is fundamentally misguided. As humans, we struggle to perceive our own blind spots; this leads to the illusion of generality. In truth, we are only good at the specific subset of tasks that are important to our existence, but are completely incapable of performing tasks outside this narrow range. Awareness of human limitation gives rise to a critical realization: humans may be specialized creatures, but are nonetheless capable of accomplishing or quickly learning a wide range of incredible things.</p>
+    <p>We argue that the current focus on AGI and generality as the North Star of the field should be replaced with an emphasis on <strong>adaptability</strong> &mdash; including the time it takes to learn a new task, and the range of tasks capable of being learned. We refer to this as <strong>Superhuman Adaptable Intelligence (SAI)</strong>. A natural corollary of an emphasis on adaptability is the need for a model with strong assumptions about the world. This suggests self-supervised learning (SSL) as a promising way to acquire generic knowledge, and world models as a useful mechanism for planning and zero-shot task transfer. We believe that recentering the discourse around SAI will lead towards better communication, clearer goals, and more rapid progress.</p>
+
+    <h3>The five positions of this paper</h3>
+    <div class="positions">
+      <div class="pos"><div class="n">1</div><div class="t">Human intelligence is <b>not general</b> in any meaningful way.</div></div>
+      <div class="pos"><div class="n">2</div><div class="t">Generality is <b>not a requirement</b> for an intelligence to be extremely useful.</div></div>
+      <div class="pos"><div class="n">3</div><div class="t">There is <b>no consensus</b> on the meaning of the term AGI in industry or academia.</div></div>
+      <div class="pos"><div class="n">4</div><div class="t">Existing definitions are <b>insufficient</b>.</div></div>
+      <div class="pos"><div class="n">5</div><div class="t">We should instead focus on <b>Superhuman Adaptable Intelligence</b>, which points toward SSL and world models.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== §2 ===================== -->
+<section class="sec" id="specialized">
+  <div class="wrap">
+    <div class="sec-no">Section 02</div>
+    <h2>Human Intelligence is Specialized</h2>
+    <p>While the idea of human intelligence as the paradigm of generality is ubiquitous in the literature, two related but distinct notions of generality are often conflated:</p>
+    <p><strong>1.</strong> The average, educated human is capable of a wide range of tasks that are very &ldquo;general&rdquo; in nature, and enable a wide range of objectives to be accomplished. This includes things like complex planning and locomotion, fine motor skills, abstract thinking, self-simulation, spatial reasoning, and visual understanding.</p>
+    <p><strong>2.</strong> Human intelligence as a whole is &ldquo;general&rdquo; because it can be specialized to &ldquo;any&rdquo; given task, whether it be medicine, advanced mathematics, plumbing, or playing chess.</p>
+    <p>Both of these claims make the same error: circularly defining generality in human terms, and then asserting humanity as its paradigm.</p>
+    <p>Evolution has honed humanity over time to be highly specialized in the domain of skills necessary for survival in the physical world. The things most innate to us are not always the most simple, but the most critical for our survival. This observation has given rise to <strong>Moravec's Paradox</strong>, where the tasks we find easiest, like locomotion, are difficult for computers, but tasks that we find difficult, which are not essential to our survival, like playing chess, turn out to be much easier for computers. This clearly illustrates the illusion of our generality. While the average abilities of an educated human are truly remarkable, one only need ask them to play chess like a grandmaster, or compose a musical symphony like Beethoven, to truly realize the hubris of calling such an intelligence general.</p>
+    <p>The above argument serves to dispel the first definition of generality. The second notion is more subtle in its error. By identifying specialization/adaptation as the core component of generality, it is closer to the definition of SAI that we are arguing in favor of. However, our point of contention is that we object to calling human adaptation general. While we are excellent at adapting to the tasks that were of high evolutionary importance, we are simply incapable of adapting to many tasks outside of this range at a high level.</p>
+    <p>Take chess as an example. Magnus Carlsen is widely regarded as the greatest chess player of all time, and as such represents the pinnacle of human adaptation when it comes to playing chess. But this begs the question: <em>Is Magnus actually any good at chess?</em> When compared with the best computers, the answer is clearly no. Even more damning is that with modern computers, creating a program that plays chess at a much higher level than Magnus is not particularly difficult. Our perception of his ability is colored by the limitations of humanity. Humans in general are bad at chess; Magnus is much better than most humans. The conclusion &mdash; that Magnus is good at chess &mdash; is a perfect illustration of our own human-centric biases. Magnus Carlsen is not <em>objectively</em> good at chess; he is good at chess with respect to human performance levels. By any objective metric, playing chess at a much higher level is not difficult from a computational perspective, but it is something that humans are incapable of. Relatedly, many animals can perform tasks that humans cannot do at a high level, such as echolocation.</p>
+    <p>So what are humans then, if not a paradigm of general intelligence? The evidence points to <strong>specialized adaptation</strong>. We have an incredible ability to adapt and specialize, within the range of tasks that we evolved to address <span class="cite">(Russell &amp; Norvig, 2010)</span>. This is the main contention of <span class="chip">Pos. #1</span>.</p>
+
+    <div class="aside-note">
+      <div class="lbl">Alternative Views</div>
+      <p>Several objections have been raised to our assertion that humans are not general. Elon Musk and Demis Hassabis have claimed that our argument conflates General Intelligence with Universal Intelligence. They further argue that the human brain is indeed general in the Turing Machine sense, capable of learning anything computable given enough time, memory, and data. They therefore claim that brains &ldquo;are the most exquisite and complex phenomena we know of in the universe (so far), and they are in fact extremely general&rdquo; <span class="cite">(Hassabis, 2025; Musk, 2025)</span>.</p>
+      <p>In response, it is indeed important to clarify terms. <em>Universal Intelligence</em> refers to the ability to act intelligently over all computable environments <span class="cite">(Legg &amp; Hutter, 2007)</span>. <em>General Intelligence</em>, as Demis is using it, seemingly refers to adaptation to any computable task given time and resources. Far from conflating the terms, we are arguing that humans are not capable of either of these things.</p>
+      <p>While the question of whether approximate Turing-completeness under idealized conditions matters for defining intelligence is legitimate, it is missing the point. Even if we grant that human brains are approximately Turing-complete (far from an obvious fact), under real constraints &mdash; finite memory, finite time, finite attention &mdash; we handle only a tiny sliver of possible problems. The space of possible functions is unimaginably vast, and we can represent an infinitesimal fraction. We feel general because we can't perceive our blind spots, not because we lack them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== §3 ===================== -->
+<section class="sec" id="terminology">
+  <div class="wrap">
+    <div class="sec-no">Section 03</div>
+    <h2>Implications for AI North Star Terminology</h2>
+
+    <h3>3.1 &nbsp;A Survey of Definitions</h3>
+    <p>Measuring machine intelligence is non-trivial. Language-based tests &mdash; such as the Turing Test, where a machine has to pretend to be a human well enough to fool a human <span class="cite">(Turing, 1950)</span>, and the Winograd schema challenge that tests common-sense reasoning and natural language understanding <span class="cite">(Levesque et al., 2012)</span> &mdash; are helpful to measure aspects of intelligence, but not a true measure of whether AGI is achieved. Steve Wozniak's <em>Coffee Test</em> &mdash; whether a machine could make a cup of coffee if sent to a random kitchen &mdash; draws attention to the fact that, despite claims to the contrary <span class="cite">(Chen et al., 2026)</span>, language alone is not sufficient to be considered intelligent, and that human intelligence <em>adapts</em> well to unseen environments <span class="cite">(Wozniak, 2010)</span>.</p>
+    <p>AGI definitions commonly fall into categories along two axes &mdash; the first defining <em>what</em> capabilities we are referring to, and the second defining the required <em>scope</em> of those capabilities:</p>
+    <p><strong>Axis 1 (capability):</strong> (A) AI that can <strong>learn</strong> to do tasks vs. (B) AI that can <strong>do</strong> tasks out of the box.<br>
+    <strong>Axis 2 (scope):</strong> (I) Anything, (II) Anything important, (III) Anything humans can do, (IV) Anything humans can do that is important.</p>
+    <p>We visualized popular definitions of AGI in accordance with this two-dimensional framework in Figure 1.</p>
+  </div>
+
+  <!-- FIGURE 1 -->
+  <div class="wide">
+  <figure>
+    <div class="fig-card">
+      <svg viewBox="0 0 980 560" role="img" aria-label="Two-dimensional semantic map of AGI definitions across a LEARN/DO axis and a task-scope axis.">
+        <defs>
+          <marker id="f1up" markerWidth="10" markerHeight="10" refX="5" refY="2" orient="auto"><path d="M0,8 L5,0 L10,8 Z" fill="#1B1D23"/></marker>
+          <marker id="f1rt" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#1B1D23"/></marker>
+          <linearGradient id="f1bg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0E7C7B" stop-opacity=".05"/>
+            <stop offset="1" stop-color="#5B2A86" stop-opacity=".06"/>
+          </linearGradient>
+        </defs>
+
+        <rect x="78" y="20" width="884" height="468" rx="10" fill="url(#f1bg)"/>
+
+        <!-- axes -->
+        <line x1="78" y1="500" x2="78" y2="14" stroke="#1B1D23" stroke-width="1.5" marker-end="url(#f1up)"/>
+        <line x1="78" y1="500" x2="966" y2="500" stroke="#1B1D23" stroke-width="1.5" marker-end="url(#f1rt)"/>
+        <text transform="translate(40,310) rotate(-90)" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#0a5b5a" letter-spacing=".04em">LEARN  ·  Adaptability</text>
+        <text transform="translate(40,470) rotate(-90)" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#7a3a2a" letter-spacing=".04em">DO  ·  Performance</text>
+
+        <!-- column dividers -->
+        <line x1="280" y1="36" x2="280" y2="492" stroke="#cfd4dd" stroke-width="1" stroke-dasharray="4 5"/>
+        <line x1="500" y1="36" x2="500" y2="492" stroke="#cfd4dd" stroke-width="1" stroke-dasharray="4 5"/>
+        <line x1="720" y1="36" x2="720" y2="492" stroke="#cfd4dd" stroke-width="1" stroke-dasharray="4 5"/>
+
+        <!-- column labels -->
+        <text x="178" y="528" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Anything</text>
+        <text x="390" y="528" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Anything Important</text>
+        <text x="610" y="522" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Anything Humans</text>
+        <text x="610" y="540" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Can Do</text>
+        <text x="842" y="522" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Anything Important</text>
+        <text x="842" y="540" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="14" fill="#1B1D23">Humans Can Do</text>
+
+        <!-- helper: boxes -->
+        <!-- teal: Legg & Hutter -->
+        <g font-family="Fraunces, serif">
+          <rect x="92" y="48" width="172" height="58" rx="8" fill="#0E7C7B"/>
+          <text x="178" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Legg &amp; Hutter (2007)</text>
+          <text x="178" y="93" text-anchor="middle" font-size="12" fill="#cfeceb" font-family="Newsreader, serif">Universal Intelligence</text>
+
+          <rect x="92" y="120" width="172" height="58" rx="8" fill="#0E7C7B"/>
+          <text x="178" y="146" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Xu (2024)</text>
+          <text x="178" y="165" text-anchor="middle" font-size="12" fill="#cfeceb" font-family="Newsreader, serif">Open Environments</text>
+
+          <!-- SAI highlighted -->
+          <rect x="298" y="46" width="184" height="62" rx="9" fill="#0E7C7B" stroke="#46c7c2" stroke-width="3"/>
+          <text x="390" y="72" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">SAI</text>
+          <text x="390" y="90" text-anchor="middle" font-size="11" fill="#e7f7f6" font-family="Newsreader, serif">Adaptable intelligence inside</text>
+          <text x="390" y="103" text-anchor="middle" font-size="11" fill="#e7f7f6" font-family="Newsreader, serif">and outside the human domain</text>
+
+          <rect x="524" y="48" width="172" height="58" rx="8" fill="#0E7C7B"/>
+          <text x="610" y="73" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Chollet (2019)</text>
+          <text x="610" y="92" text-anchor="middle" font-size="11.5" fill="#cfeceb" font-family="Newsreader, serif">Skill-Acquisition Efficiency</text>
+
+          <!-- violet -->
+          <rect x="524" y="232" width="172" height="58" rx="8" fill="#5B2A86"/>
+          <text x="610" y="257" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Hendrycks (2025)</text>
+          <text x="610" y="276" text-anchor="middle" font-size="11.5" fill="#e2d5ef" font-family="Newsreader, serif">Cognitive Capabilities</text>
+
+          <rect x="524" y="312" width="172" height="58" rx="8" fill="#5B2A86"/>
+          <text x="610" y="337" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Morris et al. (2023)</text>
+          <text x="610" y="356" text-anchor="middle" font-size="11.5" fill="#e2d5ef" font-family="Newsreader, serif">Levels of AGI</text>
+
+          <rect x="524" y="392" width="172" height="58" rx="8" fill="#5B2A86"/>
+          <text x="610" y="417" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Wozniak (2010)</text>
+          <text x="610" y="436" text-anchor="middle" font-size="11.5" fill="#e2d5ef" font-family="Newsreader, serif">Embodiment “Coffee” Test</text>
+
+          <!-- amber -->
+          <rect x="744" y="312" width="172" height="58" rx="8" fill="#C2842A"/>
+          <text x="830" y="337" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">Nilsson (2005)</text>
+          <text x="830" y="356" text-anchor="middle" font-size="11.5" fill="#f6e6c9" font-family="Newsreader, serif">Employment Test</text>
+
+          <rect x="744" y="392" width="172" height="58" rx="8" fill="#C2842A"/>
+          <text x="830" y="417" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">OpenAI (2018)</text>
+          <text x="830" y="436" text-anchor="middle" font-size="11.5" fill="#f6e6c9" font-family="Newsreader, serif">Economically Valuable</text>
+        </g>
+
+        <!-- legend -->
+        <g font-family="Newsreader, serif">
+          <rect x="744" y="46" width="208" height="118" rx="9" fill="#fff" stroke="#E3E6EC"/>
+          <text x="758" y="68" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600" letter-spacing=".1em" fill="#727a87">LEGEND</text>
+          <circle cx="766" cy="88" r="6" fill="#0E7C7B"/>
+          <text x="780" y="92" font-size="13" font-weight="600" fill="#1B1D23">Adaptive Generalists</text>
+          <text x="780" y="105" font-size="10.5" fill="#9aa1ad" font-family="JetBrains Mono, monospace">Focus: Learning</text>
+          <circle cx="766" cy="120" r="6" fill="#5B2A86"/>
+          <text x="780" y="124" font-size="13" font-weight="600" fill="#1B1D23">Cognitive Mirrors</text>
+          <text x="780" y="137" font-size="10.5" fill="#9aa1ad" font-family="JetBrains Mono, monospace">Focus: Human Tasks</text>
+          <circle cx="766" cy="152" r="6" fill="#C2842A"/>
+          <text x="780" y="156" font-size="13" font-weight="600" fill="#1B1D23">Economic Engines</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><b>Figure 1.</b> A two-dimensional semantic map organizing prominent definitions for AGI and other North Star measures of artificial intelligence. The vertical axis represents the source of intelligence, from performance-based capabilities (DO, bottom) to learning and adaptability (LEARN, top). The horizontal axis represents the scope of tasks, from universal/open-ended domains (left) to human-centric and economically-focused domains (right). Definitions cluster into three categories: <span style="color:var(--teal-deep)">Adaptive Generalists</span> emphasize learning efficiency in open environments; <span style="color:var(--violet)">Cognitive Mirrors</span> focus on replicating human-level cognition; <span style="color:var(--amber)">Economic Engines</span> prioritize practical utility and economic value. SAI falls into the realm of adaptable AI that can do anything important, both inside and outside the human realm.</figcaption>
+  </figure>
+  </div>
+
+  <div class="wrap">
+    <p>There is a reasonable argument to be made for a third axis spanning observable capability to subjective understanding <span class="cite">(Searle, 1980)</span>, including the <em>internalist</em> view: an AI could meet any performance benchmark for AGI, yet if it lacks subjective experience (qualia), it remains merely a simulation of intelligence rather than the genuine article. While the exploration of this dimension is profound, we consider it outside the scope of this work. Our focus is on operational definitions &mdash; metrics that can be observed and measured &mdash; whereas the internalist objection currently resides in the realm of metaphysics, offering no falsifiable test for engineering progress.</p>
+    <p>Regardless, one thing is clear: AGI as a term is overloaded with varying definitions from high-impact sources. This confusion has even led to claims that AGI has already arrived <span class="cite">(Ag&uuml;era y Arcas &amp; Norvig, 2023; Chen et al., 2026)</span>. The varying definitions plotted in Figure 1 and the imprecise nature of the public discussions held by high-profile individuals clearly demonstrate <span class="chip">Pos. #3</span>.</p>
+
+    <h3>3.2 &nbsp;Why Existing Definitions are Insufficient</h3>
+    <p><span class="chip">Pos. #1</span> has the following implications for these definitions:</p>
+    <p><strong>1.</strong> Humanity is still quite useful, so AI does not need to be general to still be groundbreaking and powerful (<span class="chip">Pos. #2</span>).<br>
+    <strong>2.</strong> Any definition focused exclusively on humanity as a goal cannot claim to be general.<br>
+    <strong>3.</strong> Focusing exclusively on humans is also not ideal, since there are many tasks we cannot do that are still high utility and important.</p>
+    <p>In addition, for a definition to be useful, it must meet three criteria. It must be <strong>feasible</strong> &mdash; a goal not realizable from a theoretical perspective provides questionable value. It must be <strong>internally consistent</strong> &mdash; if a definition claims to be general, it must actually be general in a meaningful way. And it must be <strong>assessable</strong> &mdash; the goal should lead to clear subgoals and strategies, with a clear metric to measure progress.</p>
+    <p>Having established these criteria, we can now demonstrate <span class="chip">Pos. #4</span>, namely that existing definitions come up short.</p>
+    <p>First, definitions of AGI that claim true generality fall prey to the <strong>&ldquo;No Free Lunch&rdquo;</strong> theorem &mdash; no single, general-purpose machine learning algorithm works best for every problem <span class="cite">(Wolpert &amp; Macready, 1997)</span>. Framed differently: given finite energy, an approach that directs available energy toward learning a finite set of tasks will reasonably outperform one that distributes finite energy over an infinite number of tasks. At the limit, the energy dedicated to each of the infinite tasks approaches zero. Thus, any definition that defines the scope as literally anything computable fails our criteria by not being feasible.</p>
+    <p>Second, any definition that focuses on a subset of tasks, or that emphasizes specialization and adaptation as key metrics, cannot truly be said to be general. Similarly, AGI measured by the &ldquo;general&rdquo; nature of humans is not truly general. Chollet acknowledges this problem, stating that human intelligence &ldquo;is only 'general' in a limited sense&rdquo; <span class="cite">(Chollet, 2019)</span> &mdash; but we contend this is simply an inherent contradiction of terminology. For this reason, Legg and Hutter speak of &ldquo;Universal Intelligence&rdquo; rather than AGI, since a human-centric definition excludes the infinite space of non-human intelligence <span class="cite">(Wang, 2019)</span>.</p>
+    <p>Despite these objections, AGI defined specifically as matching human cognitive breadth is quite popular: Hendrycks et al. and Morris et al. argue that human generality is the only general example for the concept of intelligence. Others argue that AGI must be able to learn to do, or do, anything <em>important</em> that humans can do &mdash; tasks that generate economic value. In the words of Nilsson, &ldquo;Systems with true human-level intelligence should be able to perform the tasks for which humans get paid&rdquo; <span class="cite">(Nilsson, 2005)</span>, an idea further echoed in the OpenAI Charter. All the definitions in this category fail our criteria by not being internally consistent.</p>
+    <p>One might object that our contention here is merely semantic &mdash; that these definitions can still be valuable North Stars even if they misuse the term &ldquo;general.&rdquo; In response, we argue that when defining the end goal of an entire field, semantics are extremely important. A misapprehension of generality is dangerous: it obscures how such an intelligence can actually be realized (violating feasibility), and it can lead to unnecessarily narrow conceptions of the end goal. The belief that humans are general has led to definitions of AGI as mimicking humans, which is far too limited a goal for what AI can become.</p>
+    <p>Third, definitions that cannot be assessed or evaluated are not practical. Legg and Hutter themselves acknowledge that &ldquo;various practical challenges will need to be addressed before universal intelligence can be used to construct an effective intelligence test.&rdquo; The ability to measure progress is critical &mdash; an enormous body of evidence suggests the precise ability to measure progress is one of the strongest catalysts of progress itself <span class="cite">(Wyder et al., 2025)</span>.</p>
+    <p>This criterion highlights a key difference between the two categories on our capability axis. Any definition focused on <em>learning or adapting</em> implicitly has a clear metric: <strong>speed of adaptation to new tasks</strong>. Conversely, definitions focused on <em>doing and performing</em> often lack any obvious way to measure progress, other than benchmarking the AI's ability to do everything &mdash; an ever-expanding and ill-defined set of benchmarks.</p>
+  </div>
+
+  <!-- TABLE 1 -->
+  <div class="wide">
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th style="min-width:300px">AGI Definition</th><th>Failure Mode</th><th style="min-width:260px">Explanation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="def-cell">&ldquo;Match or exceed the cognitive versatility and proficiency of a well-educated adult.&rdquo;<span class="src">Hendrycks et al., 2025</span></td>
+            <td><span class="flag fe">Not Consistent</span></td>
+            <td>Human cognition is not general in any meaningful way. This definition is also unnecessarily narrow.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;Highly autonomous systems that outperform humans at most economically valuable work.&rdquo;<span class="src">Morris et al., 2024</span></td>
+            <td><span class="flag fe">Not Consistent</span></td>
+            <td>The focus is explicitly on a subset of tasks of economic worth. Clearly not general.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;A system that should be able to do pretty much any cognitive task that humans can do.&rdquo;<span class="src">Demis Hassabis · Mitchell, 2024</span></td>
+            <td><span class="flag fe">Not Consistent</span></td>
+            <td>Not general in its focus on humans, nor in its focus on &ldquo;cognitive tasks,&rdquo; which seems to exclude physical tasks like locomotion.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;The intelligence of a system is a measure of its skill-acquisition efficiency over a scope of tasks, with respect to priors, experience, and generalization difficulty.&rdquo;<span class="src">Chollet, 2019</span></td>
+            <td><span class="flag fe">Not Consistent</span></td>
+            <td>Chollet himself admits as much, calling human cognition &lsquo;only "general" in a limited sense&rsquo; &mdash; a contradiction of terms.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;A system that demonstrates broad generality (performing a wide range of tasks) and high performance (matching or exceeding human levels).&rdquo;<span class="src">Morris et al., 2024</span></td>
+            <td><span class="flag fc">Not Feasible</span></td>
+            <td>With a focus on direct performance over adaptation, such a system is not realizable with finite resources.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;Intelligence measures an agent's ability to achieve goals in a wide range of environments.&rdquo;<span class="src">Legg &amp; Hutter, 2007</span></td>
+            <td><span class="flag fc">Not Feasible</span></td>
+            <td>The domain is defined as all computable environments, emphasizing ability over adaptability. Strong ability on such a vast set is not realizable with finite resources.</td>
+          </tr>
+          <tr>
+            <td class="def-cell">&ldquo;Highly autonomous systems that outperform humans at most economically valuable work.&rdquo;<span class="src">OpenAI Charter</span></td>
+            <td><span class="flag fa">Not Assessable</span></td>
+            <td>The focus on performance means any evaluation must benchmark against an ever-growing set of tasks.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:15px;color:var(--muted);max-width:var(--maxw);margin:14px auto 0;padding:0 26px"><b style="font-family:'JetBrains Mono',monospace;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)">Table 1.</b> The failure of most AGI definitions. Some definitions fail for multiple reasons; we highlight only one.</p>
+  </div>
+</section>
+
+<!-- ===================== §4 ===================== -->
+<section class="sec" id="specialization">
+  <div class="wrap">
+    <div class="sec-no">Section 04</div>
+    <h2>Why Specialization Wins</h2>
+    <p>To motivate <span class="chip">Pos. #5</span>, it behooves us to explore the importance of specialization. Specialization is not an accident of biology; it is a predictable consequence of limited resources, competing objectives, and environments that reward performance on a small subset of evolutionarily relevant challenges. Forister et al. note that a generalist organism carries genetic traits suited to various environments, but never the ideal combination for thriving in any one of them. Organisms face persistent trade-offs: improving performance on one niche often reduces it elsewhere, so selection favors designs sharply tuned to the local payoff landscape rather than uniformly competent across all conditions <span class="cite">(Futuyma &amp; Moreno, 1988)</span>.</p>
+    <p>In markets and organizations, the same logic appears under a different name: entities that fail to meet the performance threshold disappear, so competition acts as a selection mechanism that amplifies effective strategies and eliminates ineffective ones <span class="cite">(Hannan &amp; Freeman, 1977)</span>. AI systems are not exempt: models that are too costly, too unreliable, or insufficiently accurate in the domains that matter will be neglected in favor of systems better matched to those domains.</p>
+    <p>In machine learning, the core mathematical point is that performance gains require assumptions about the problem class &mdash; again, &ldquo;No Free Lunch.&rdquo; An algorithm wins by being a good fit for the target problem. As AI improves, specialized systems can improve too: a system that concentrates capability on a narrower task can typically realize larger gains than one that must spend capacity covering additional unrelated tasks.</p>
+    <p>Practically, this means generality is intractable. Although multi-task learning can benefit performance when tasks share structure, it can lead to <strong>&ldquo;negative transfer&rdquo;</strong> when tasks compete for representational capacity or impose conflicting gradients <span class="cite">(Ruder, 2017)</span>. Models that route queries to specialized subsets of parameters are a technological acknowledgment of this limitation &mdash; they attain breadth through repeated, modular specialization rather than uniform shared parameters <span class="cite">(Fedus et al., 2022)</span>. Although seemingly &ldquo;general,&rdquo; these models achieve their best performance through internal specialization.</p>
+    <p>Universal generality is a theoretical concept, but in practical terms it is a myth. A large fraction of what we intuitively mean by &ldquo;do anything&rdquo; reduces to planning and decision-making under uncertainty. Classical planning problems quickly become intractable in the worst case <span class="cite">(Bylander, 1994)</span>, and probabilistic planning inherits similarly severe complexity barriers <span class="cite">(Littman et al., 1998)</span>. This does not mean planning is impossible in practice; it means broad generality across arbitrary environments has no reason to be computationally cheap. A specialized agent that restricts the space of environments, goals, and action models can leverage structure and avoid worst-case blowups.</p>
+    <p>Empirically, specialized AI systems repeatedly demonstrate the advantage of concentrating model design, data curation, and evaluation around a single domain objective. Protein structure prediction is archetypal: <strong>AlphaFold</strong> achieved dramatic gains by targeting a specific scientific task with task-specific training and architectural choices, setting a new bar for accuracy in that domain <span class="cite">(Jumper et al., 2021)</span>. It is therefore expected &mdash; under both the No Free Lunch framing and negative-transfer dynamics &mdash; that an AI asked to &ldquo;fold proteins <em>and</em> fold laundry&rdquo; will not match a protein-folding specialist unless it internally recovers specialization.</p>
+    <p>Specialization also clarifies why AI can be uniquely valuable: it can target precisely the domains where human cognition is systematically miscalibrated. Humans exhibit stable biases and heuristics that are often sensible under ancestral constraints but error-prone in modern settings <span class="cite">(Tversky &amp; Kahneman, 1974)</span>. The evolutionary mismatch hypothesis argues that many psychological mechanisms were tuned for past selection regimes and can produce maladaptive outputs today <span class="cite">(Li et al., 2018)</span>. This creates an opportunity: specialized AI can be designed to excel exactly where humans are weak but where correctness now matters &mdash; high-dimensional statistical inference, optimization under constraints, complex mechanistic modeling.</p>
+    <p>Finally, none of this implies that generality is &ldquo;bad.&rdquo; It implies a narrower, more operational claim: <strong>we must embrace specialization rather than fight it.</strong> For high-stakes applications &mdash; scientific discovery, medicine &mdash; the correct aspiration is not to preserve the romance of a single generalist mind, but to build the strongest available specialists and, where needed, compose them into systems whose coordination is engineered rather than assumed.</p>
+    <p>We should also note that this claim does not dispute the <strong>bitter lesson</strong> <span class="cite">(Sutton, 2019)</span> &mdash; the observation that approaches scaling with computational power tend to outperform those based on domain knowledge. The diminishing usefulness of domain <em>knowledge</em> is distinct from the usefulness of domain <em>specialization</em>. As scaling progresses, we will need to know less about proteins to build a protein-folding system; however, such a system still benefits from focusing <em>specifically</em> on proteins.</p>
+  </div>
+
+  <!-- FIGURE 2 -->
+  <div class="wide">
+  <figure>
+    <div class="fig-card">
+      <svg viewBox="0 0 760 520" role="img" aria-label="Venn diagram of the human domain and AI domain within the universal task space.">
+        <defs>
+          <marker id="f2b" markerWidth="9" markerHeight="9" refX="4" refY="8" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#4A5A7A"/></marker>
+          <marker id="f2p" markerWidth="9" markerHeight="9" refX="4" refY="8" orient="auto"><path d="M0,0 L8,0 L4,8 Z" fill="#5B2A86"/></marker>
+        </defs>
+        <rect x="20" y="20" width="720" height="430" rx="20" fill="#fbfbfd" stroke="#E3E6EC"/>
+        <text x="380" y="62" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="22" letter-spacing=".04em" fill="#3C414C">UNIVERSAL TASK SPACE</text>
+        <text x="380" y="84" text-anchor="middle" font-family="Newsreader, serif" font-style="italic" font-size="14" fill="#9aa1ad">(all possible tasks)</text>
+
+        <!-- circles -->
+        <circle cx="300" cy="250" r="150" fill="#4A5A7A" fill-opacity=".72"/>
+        <circle cx="460" cy="250" r="150" fill="#5B2A86" fill-opacity=".62"/>
+
+        <text x="218" y="248" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="22" fill="#fff">Human</text>
+        <text x="218" y="274" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="22" fill="#fff">Domain</text>
+        <text x="542" y="248" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="22" fill="#fff">AI</text>
+        <text x="542" y="274" text-anchor="middle" font-family="Fraunces, serif" font-weight="600" font-size="22" fill="#fff">Domain</text>
+        <text x="380" y="244" text-anchor="middle" font-family="Newsreader, serif" font-size="15" fill="#f3eefa">Shared</text>
+        <text x="380" y="264" text-anchor="middle" font-family="Newsreader, serif" font-size="15" fill="#f3eefa">Capabilities</text>
+
+        <!-- beyond reach -->
+        <circle cx="92" cy="130" r="3.5" fill="#cfd4dd"/>
+        <text x="104" y="126" font-family="Newsreader, serif" font-style="italic" font-size="13" fill="#9aa1ad">Tasks beyond</text>
+        <text x="104" y="143" font-family="Newsreader, serif" font-style="italic" font-size="13" fill="#9aa1ad">current reach</text>
+        <circle cx="668" cy="130" r="3.5" fill="#cfd4dd"/>
+        <text x="656" y="126" text-anchor="end" font-family="Newsreader, serif" font-style="italic" font-size="13" fill="#9aa1ad">Tasks beyond</text>
+        <text x="656" y="143" text-anchor="end" font-family="Newsreader, serif" font-style="italic" font-size="13" fill="#9aa1ad">current reach</text>
+
+        <!-- exclusive arrows -->
+        <line x1="210" y1="370" x2="210" y2="418" stroke="#4A5A7A" stroke-width="1.4" marker-end="url(#f2b)"/>
+        <text x="210" y="440" text-anchor="middle" font-family="Newsreader, serif" font-size="13" fill="#4A5A7A">Human-exclusive tasks</text>
+        <line x1="550" y1="370" x2="550" y2="418" stroke="#5B2A86" stroke-width="1.4" marker-end="url(#f2p)"/>
+        <text x="550" y="440" text-anchor="middle" font-family="Newsreader, serif" font-size="13" fill="#5B2A86">AI-exclusive tasks</text>
+      </svg>
+    </div>
+    <figcaption><b>Figure 2.</b> Illustration of the task-space overlap between the human domain and the AI domain within the universal task space. Awareness of the narrowness of humans, and the benefit of specialization, lets us exploit the complementary nature of AI as it fills in the gaps in the human domain where it matches or eclipses human performance &mdash; while also performing tasks outside the human domain entirely.</figcaption>
+  </figure>
+  </div>
+</section>
+
+<!-- ===================== §5 ===================== -->
+<section class="sec" id="sai">
+  <div class="wrap">
+    <div class="sec-no">Section 05</div>
+    <h2>Towards Superhuman Adaptable Intelligence</h2>
+    <p>Given the utility of specialization, we propose Superhuman Adaptable Intelligence (SAI) as the <em>id&eacute;e fixe</em> of AI research (<span class="chip">Pos. #5</span>). Unlike the earlier North Star terminologies we challenged, our definition sidesteps issues of feasibility by focusing on adaptation to tasks with human utility, as opposed to the performance of simply doing the task. We embrace the necessity of specialization, and avoid the pitfall of claiming generality. We broaden the task domain beyond the human domain, while not requiring that the AI master the human task domain as a whole. Finally, adaptation speed &mdash; how quickly an agent can acquire new skills and learn new tasks &mdash; can be measured, making our approach practical.</p>
+
+    <div class="callout def">
+      <div class="ctag">Definition</div>
+      <p><strong>Superhuman Adaptable Intelligence (SAI)</strong> is capable of adapting to exceed humans at any task humans can do, while also being able to adapt to tasks outside the human domain that have utility.</p>
+    </div>
+
+    <p>Our definition is most similar to Chollet's, except that we object to calling such a definition general, and we reject his view that we &ldquo;should benchmark progress specifically against human intelligence.&rdquo; While human performance can be a useful reference point during early development, anchoring benchmarks to human baselines is ultimately orthogonal to the route to superhuman capability. AI systems that optimize well-defined objectives and improve through self-play, evolutionary search, or large-scale exploration in simulation can surpass human performance without imitation <span class="cite">(Zhao et al., 2025)</span>. Over-indexing on &ldquo;human-level&rdquo; metrics risks misspecifying the target and limiting evaluation to anthropocentric tasks.</p>
+    <p>More broadly, any evaluation scheme that treats intelligence as a checklist of fixed competencies &mdash; whether anchored to human baselines or to an ever-growing catalog of tasks &mdash; misses the point of SAI. Instead, the focus should be on minimizing adaptation time. The space of possible skills is effectively unbounded, so individually testing skills becomes a Sisyphean endeavor.</p>
+
+    <div class="callout metric">
+      <div class="ctag">Metric</div>
+      <p>SAI is measured by the <strong>speed</strong> with which it takes an agent to acquire new skills and learn new tasks.</p>
+    </div>
+
+    <p>Our vision towards SAI is potentially realizable via self-supervised learning (SSL). We believe that learning in the embedding space, as opposed to the token space, may drive performance gains, and that world models may help us advance towards SAI. Simultaneously, we reject the concept of a single model or architecture as the &ldquo;one paradigm to rule them all,&rdquo; as it would suggest the evolution of AI halts once that architecture is discovered.</p>
+    <p>Our definition emphasizes tasks outside the human domain that have <em>utility</em>. The purpose of this clause is to exclude a potentially infinite set of useless tasks. We have not precisely defined utility &mdash; many definitions exist, such as economic value or societal agreement &mdash; but the exact choice is largely orthogonal to our arguments here, and we leave that debate to other work.</p>
+  </div>
+
+  <!-- FIGURE 3 -->
+  <div class="wide">
+  <figure>
+    <div class="fig-card">
+      <svg viewBox="0 0 760 470" role="img" aria-label="Illustration of autoregressive model divergence as a token-sequence tree, with the subtree of correct answers narrowing.">
+        <!-- legend -->
+        <rect x="20" y="14" width="330" height="84" rx="10" fill="#fff" stroke="#cfe0df"/>
+        <text x="38" y="38" font-family="JetBrains Mono, monospace" font-size="12" font-weight="600" letter-spacing=".08em" fill="#727a87">LEGEND</text>
+        <line x1="40" y1="58" x2="74" y2="58" stroke="#C2842A" stroke-width="4"/>
+        <text x="86" y="63" font-family="Newsreader, serif" font-size="14" fill="#3C414C">Subtree of correct answers</text>
+        <line x1="40" y1="82" x2="74" y2="82" stroke="#7fb8b6" stroke-width="2"/>
+        <text x="86" y="87" font-family="Newsreader, serif" font-size="14" fill="#3C414C">All possible token sequences</text>
+
+        <g id="tree" stroke-linecap="round"></g>
+      </svg>
+    </div>
+    <figcaption><b>Figure 3.</b> Illustration of autoregressive model divergence. Errors in autoregressive models diverge exponentially with prediction length; the subtree of correct answers (orange) narrows rapidly as a single drifting path departs from the vast space of possible token sequences. In practice, compounding prediction error makes long-horizon interaction brittle.</figcaption>
+  </figure>
+  </div>
+
+  <div class="wrap">
+    <h3>5.1 &nbsp;Why Self-Supervised Learning</h3>
+    <p>By shifting the focus from performance to adaptation, SAI points to SSL as a potential pathway. Specializing to a wide range of tasks requires the ability to learn generic knowledge. In many real-world settings, supervised learning is not feasible in practice because it presupposes access to large, reliably labeled datasets <span class="cite">(LeCun et al., 2015)</span> &mdash; an assumption that often fails outside curated benchmarks. In contrast, SSL can be applied to any data that contains exploitable internal structure <span class="cite">(Balestriero et al., 2023)</span>. Perhaps even more powerful, SSL has been shown to be on par with and even exceed supervised learning even when supervision is abundant. SSL fueled the rise of GPTs and has reached state-of-the-art performance in most domains.</p>
+
+    <h3>5.2 &nbsp;The Substrate for Fast Adaptation</h3>
+    <p>Adaptation and specialization can be produced by many architectures and paradigms, yet which architecture is most performant remains an open research question. Designing maximally adaptable algorithms remains a central pursuit of meta-learning <span class="cite">(Finn et al., 2017)</span>. The brain is not a monolith, but a system of systems. This suggests no single system will adapt the way humans do; adaptation requires hierarchy and diversity of models and modalities.</p>
+    <p>Specifically, we believe adaptation is benefitted by a world model and by moving from token-level prediction to latent prediction architectures such as Dreamer 4, Genie 2, or the Joint Embedding Predictive Architecture (JEPA). <strong>Pixels are not state.</strong> The physical world is too rich and stochastic for pixel-level prediction to be a meaningful objective; what matters is learning and forecasting a compact representation that captures the system's dynamics. It has long been posited that humans and animals make heavy use of world models in their cognition <span class="cite">(Craik, 1967)</span>. A world model allows for simulation, and therefore planning <span class="cite">(Schrittwieser et al., 2020)</span> &mdash; the hallmark of zero-shot and few-shot adaptation. That said, SAI doesn't dictate a specific architecture.</p>
+
+    <h3>5.3 &nbsp;On the Importance of Diversity</h3>
+    <p><strong>Homogeneity kills research.</strong> Autoregressive LLMs and LMMs have become the dominant architecture in the state-of-the-art &ldquo;general&rdquo; AI space. This concentration is understandable &mdash; shared tooling and benchmarks create momentum &mdash; but it also narrows the search space. Progress is most rapid when a greater diversity of solutions is explored.</p>
+    <p>In addition to slowing progress, these homogeneous solutions are often only local optima. GPTs and similar autoregressive models have many flaws <span class="cite">(Lin et al., 2021)</span>; their errors diverge exponentially with prediction length <span class="cite">(LeCun, 2024)</span>, as shown in Figure 3. In practice, compounding prediction error makes long-horizon interaction brittle. SAI counters homogenization and drives diversity, providing a more coherent target that fosters a diversity of specialization profiles. Embracing specialization counteracts incentives that lead to fast convergence towards the mean.</p>
+  </div>
+</section>
+
+<!-- ===================== §6 ===================== -->
+<section class="sec" id="discussion">
+  <div class="wrap">
+    <div class="sec-no">Section 06</div>
+    <h2>Discussion</h2>
+    <p>The AGI discourse is often framed as a single destination, benchmarked against an ill-defined notion of &ldquo;human-level&rdquo; generality. We argue that this framing is both scientifically unhelpful and operationally misleading. Human intelligence is not a universal competence engine; it is a collection of specialized capabilities shaped by constraints and selective pressures. There is no reason to expect the most capable artificial systems to mirror the human task distribution, nor to treat human performance as the natural reference point for progress.</p>
+    <p>We propose Superhuman Adaptable Intelligence (SAI) as a more concrete and productive North Star: the ability to rapidly adapt to important tasks inside and outside the human domain. The central quantity is not a checklist of skills, but the <strong>speed and efficiency with which new skills are acquired</strong> under realistic resource constraints. This reframes evaluation away from human-centric benchmarks and toward measurable adaptation dynamics.</p>
+
+    <div class="callout insight">
+      <div class="ctag">Key Insight</div>
+      <p>The AI that folds our proteins should not be the AI that folds our laundry.</p>
+    </div>
+
+    <p>Finally, SAI's specialization focus fosters an environment that promotes diverse engineering approaches. Progress won't come from a single architecture optimized for next-token prediction. We believe instead that systems which learn general latent structure from unlabeled data, build world models that support planning, and compose specialized modules are better suited to fast adaptation. Put another way: it is highly unlikely that an AI tasked to fold both proteins and laundry will exceed a protein-folding specialist at protein folding, or a laundry-folding specialist at laundry folding.</p>
+    <p>Given limited resources, capability should be allocated to the tasks that carry utility rather than to an anthropocentric notion of universal competence. One promising path forward is to emphasize self-supervised learning, predictive world models, and modularity &mdash; and to judge advances by how quickly and reliably they produce new competence, rather than by how closely they imitate human behavior.</p>
+
+    <!-- REFERENCES -->
+    <details class="refs">
+      <summary>References <span class="tw">+</span></summary>
+      <div class="reflist">
+        <p class="r"><b>Ag&uuml;era y Arcas, B. &amp; Norvig, P.</b> Artificial general intelligence is already here. <em>Noema Magazine</em>, 2023.</p>
+        <p class="r"><b>Assran, M. et al.</b> Self-supervised learning from images with a joint-embedding predictive architecture. <em>CVPR</em>, 2023.</p>
+        <p class="r"><b>Balestriero, R. et al.</b> A cookbook of self-supervised learning. arXiv:2304.12210, 2023.</p>
+        <p class="r"><b>Bruce, J. et al.</b> Genie: Generative interactive environments. arXiv:2402.15391, 2024.</p>
+        <p class="r"><b>Bylander, T.</b> The computational complexity of propositional STRIPS planning. <em>Artificial Intelligence</em>, 69(1):165&ndash;204, 1994.</p>
+        <p class="r"><b>Chen, E. K. et al.</b> Does AI already have human-level intelligence? The evidence is clear. <em>Nature</em>, 650:36&ndash;40, 2026.</p>
+        <p class="r"><b>Chen, T. et al.</b> A simple framework for contrastive learning of visual representations. <em>ICML</em>, 2020.</p>
+        <p class="r"><b>Chollet, F.</b> On the measure of intelligence. arXiv:1911.01547, 2019.</p>
+        <p class="r"><b>Craik, K. J. W.</b> The nature of explanation. CUP Archive, 1967.</p>
+        <p class="r"><b>Domingos, P.</b> A few useful things to know about machine learning. <em>Commun. ACM</em>, 55(10):78&ndash;87, 2012.</p>
+        <p class="r"><b>Fedus, W., Zoph, B. &amp; Shazeer, N.</b> Switch transformers. <em>JMLR</em>, 23(1), 2022.</p>
+        <p class="r"><b>Finn, C., Abbeel, P. &amp; Levine, S.</b> Model-agnostic meta-learning for fast adaptation of deep networks. <em>ICML</em>, 2017.</p>
+        <p class="r"><b>Forister, M. L. et al.</b> Revisiting the evolution of ecological specialization. <em>Ecology</em>, 93(5):981&ndash;991, 2012.</p>
+        <p class="r"><b>Futuyma, D. J. &amp; Moreno, G.</b> The evolution of ecological specialization. <em>Annual Review of Ecology &amp; Systematics</em>, 19:207&ndash;233, 1988.</p>
+        <p class="r"><b>Grill, J.-B. et al.</b> Bootstrap your own latent. <em>NeurIPS</em>, 33:21271&ndash;21284, 2020.</p>
+        <p class="r"><b>Hafner, D., Yan, W. &amp; Lillicrap, T.</b> Training agents inside of scalable world models. arXiv:2509.24527, 2025.</p>
+        <p class="r"><b>Hannan, M. T. &amp; Freeman, J.</b> The population ecology of organizations. <em>American Journal of Sociology</em>, 82(5):929&ndash;964, 1977.</p>
+        <p class="r"><b>Hassabis, D.</b> &ldquo;Yann is just plain incorrect here…&rdquo; X post, December 2025.</p>
+        <p class="r"><b>He, K. et al.</b> Momentum contrast for unsupervised visual representation learning. <em>CVPR</em>, 2020.</p>
+        <p class="r"><b>He, K. et al.</b> Masked autoencoders are scalable vision learners. <em>CVPR</em>, 2022.</p>
+        <p class="r"><b>Hendrycks, D. et al.</b> A definition of AGI. arXiv:2510.18212, 2025.</p>
+        <p class="r"><b>Huang, D. et al.</b> From large language models to large multimodal models: A literature review. <em>Applied Sciences</em>, 14(12), 2024.</p>
+        <p class="r"><b>Jumper, J. et al.</b> Highly accurate protein structure prediction with AlphaFold. <em>Nature</em>, 596(7873):583&ndash;589, 2021.</p>
+        <p class="r"><b>LeCun, Y.</b> A path towards autonomous machine intelligence, v0.9.2. <em>Open Review</em>, 2022.</p>
+        <p class="r"><b>LeCun, Y.</b> Objective-driven AI. Harvard CMSA Ding Shum Lecture, 2024.</p>
+        <p class="r"><b>LeCun, Y., Bengio, Y. &amp; Hinton, G.</b> Deep learning. <em>Nature</em>, 521(7553):436&ndash;444, 2015.</p>
+        <p class="r"><b>Legg, S. &amp; Hutter, M.</b> Universal intelligence: A definition of machine intelligence. <em>Minds and Machines</em>, 17(4):391&ndash;444, 2007.</p>
+        <p class="r"><b>Levesque, H. J., Davis, E. &amp; Morgenstern, L.</b> The Winograd schema challenge. <em>KR'12</em>, 2012.</p>
+        <p class="r"><b>Li, N. P., van Vugt, M. &amp; Colarelli, S. M.</b> The evolutionary mismatch hypothesis. <em>Current Directions in Psychological Science</em>, 27(1):38&ndash;44, 2018.</p>
+        <p class="r"><b>Lin, C.-C. et al.</b> Limitations of autoregressive models and their alternatives. <em>NAACL</em>, 2021.</p>
+        <p class="r"><b>Littman, M. L., Goldsmith, J. &amp; Mundhenk, M.</b> The computational complexity of probabilistic planning. <em>JAIR</em>, 9:1&ndash;36, 1998.</p>
+        <p class="r"><b>Loasby, B. J.</b> An evolutionary theory of economic change. <em>The Economic Journal</em>, 93(371):652&ndash;654, 1983.</p>
+        <p class="r"><b>Mitchell, M.</b> Debates on the nature of artificial general intelligence. <em>Science</em>, 383(6689):eado7069, 2024.</p>
+        <p class="r"><b>Morris, M. R. et al.</b> Levels of AGI for operationalizing progress on the path to AGI. <em>ICML</em>, 2024.</p>
+        <p class="r"><b>Musk, E.</b> &ldquo;Demis is right.&rdquo; X post, December 2025.</p>
+        <p class="r"><b>Narayanan, A. &amp; Kapoor, S.</b> AI as normal technology. Knight First Amendment Institute, 2025.</p>
+        <p class="r"><b>Nilsson, N. J.</b> Human-level artificial intelligence? Be serious! <em>AI Magazine</em>, 26(4):68&ndash;75, 2005.</p>
+        <p class="r"><b>OpenAI.</b> OpenAI Charter.</p>
+        <p class="r"><b>Ruder, S.</b> An overview of multi-task learning in deep neural networks. arXiv:1706.05098, 2017.</p>
+        <p class="r"><b>Russell, S. J. &amp; Norvig, P.</b> Artificial Intelligence: A Modern Approach (3rd ed.). Prentice Hall, 2010.</p>
+        <p class="r"><b>Schrittwieser, J. et al.</b> Mastering Atari, Go, chess and shogi by planning with a learned model. <em>Nature</em>, 588(7839):604&ndash;609, 2020.</p>
+        <p class="r"><b>Searle, J. R.</b> Minds, brains, and programs. <em>Behavioral and Brain Sciences</em>, 3(3):417&ndash;424, 1980.</p>
+        <p class="r"><b>Silver, D. et al.</b> A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play. <em>Science</em>, 362(6419):1140&ndash;1144, 2018.</p>
+        <p class="r"><b>Su, W.</b> Do large language models (really) need statistical foundations? arXiv:2505.19145, 2025.</p>
+        <p class="r"><b>Sutton, R.</b> The bitter lesson. <em>Incomplete Ideas</em> (blog), 2019.</p>
+        <p class="r"><b>Turing, A. M.</b> Computing machinery and intelligence. <em>Mind</em>, LIX(236):433&ndash;460, 1950.</p>
+        <p class="r"><b>Tversky, A. &amp; Kahneman, D.</b> Judgment under uncertainty: Heuristics and biases. <em>Science</em>, 185(4157):1124&ndash;1131, 1974.</p>
+        <p class="r"><b>Van Assel, H. et al.</b> Joint embedding vs reconstruction: Provable benefits of latent space prediction for SSL. arXiv:2505.12477, 2025.</p>
+        <p class="r"><b>Wang, P.</b> On defining artificial intelligence. <em>Journal of Artificial General Intelligence</em>, 10:1&ndash;37, 2019.</p>
+        <p class="r"><b>Wolpert, D. &amp; Macready, W.</b> No free lunch theorems for optimization. <em>IEEE Trans. Evolutionary Computation</em>, 1(1):67&ndash;82, 1997.</p>
+        <p class="r"><b>Wozniak, S.</b> Could a computer make a cup of coffee? <em>Fast Company Live</em>, 2010.</p>
+        <p class="r"><b>Wyder, P. M. et al.</b> Common task framework for a critical evaluation of scientific machine learning algorithms. arXiv:2510.23166, 2025.</p>
+        <p class="r"><b>Zhao, A. et al.</b> Absolute zero: Reinforced self-play reasoning with zero data. arXiv:2505.03335, 2025.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="f">
+      <strong style="font-family:Fraunces,serif;font-size:16px;color:var(--ink)">AI Must Embrace Specialization via Superhuman Adaptable Intelligence</strong><br>
+      Goldfeder, Wyder, LeCun &amp; Shwartz-Ziv · Preprint, March 2026<br>
+      arXiv:2602.23643v1 [cs.AI] · <a href="https://arxiv.org/abs/2602.23643" target="_blank" rel="noopener">arxiv.org/abs/2602.23643</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // reading progress bar
+  (function(){
+    var bar=document.getElementById('progress');
+    function upd(){
+      var h=document.documentElement;
+      var sc=h.scrollTop||document.body.scrollTop;
+      var max=(h.scrollHeight-h.clientHeight)||1;
+      bar.style.width=Math.min(100,(sc/max)*100)+'%';
+    }
+    window.addEventListener('scroll',upd,{passive:true});
+    window.addEventListener('resize',upd); upd();
+  })();
+
+  // build Figure 3 token-divergence tree
+  (function(){
+    var g=document.getElementById('tree');
+    if(!g) return;
+    var NS='http://www.w3.org/2000/svg';
+    var topY=150, levelH=58, depth=5, cx=380, spread=300;
+    // correct path: at each level pick a child; path narrows / drifts right then meanders
+    var correct=[0,1,0,1,0]; // 0=left child,1=right child along the highlighted route
+    var nodes=[]; // {x,y,level,index,onPath}
+    function build(x,y,level,half,onPath,pathStep){
+      var idx=nodes.length;
+      nodes.push({x:x,y:y,level:level,onPath:onPath});
+      if(level>=depth) return idx;
+      var nh=half/2;
+      var lx=x-half/2, rx=x+half/2, ny=y+levelH;
+      var leftOn = onPath && correct[pathStep]===0;
+      var rightOn= onPath && correct[pathStep]===1;
+      var l=build(lx,ny,level+1,nh,leftOn,pathStep+1);
+      var r=build(rx,ny,level+1,nh,rightOn,pathStep+1);
+      // draw edges (parent->child) behind nodes
+      edge(x,y,lx,ny,leftOn);
+      edge(x,y,rx,ny,rightOn);
+      return idx;
+    }
+    function edge(x1,y1,x2,y2,on){
+      var ln=document.createElementNS(NS,'line');
+      ln.setAttribute('x1',x1);ln.setAttribute('y1',y1);
+      ln.setAttribute('x2',x2);ln.setAttribute('y2',y2);
+      if(on){ln.setAttribute('stroke','#C2842A');ln.setAttribute('stroke-width','3.4');}
+      else{ln.setAttribute('stroke','#7fb8b6');ln.setAttribute('stroke-width','1.6');ln.setAttribute('opacity','.85');}
+      g.appendChild(ln);
+    }
+    build(cx,topY,0,spread,true,0);
+    // draw nodes on top
+    nodes.forEach(function(n){
+      var c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',n.x);c.setAttribute('cy',n.y);
+      var r = n.level===0?9 : (n.level>=depth?4.5:6.5);
+      c.setAttribute('r',r);
+      c.setAttribute('fill', n.onPath ? '#C2842A' : '#2A6FB0');
+      g.appendChild(c);
+    });
+  })();
+</script>
+</body>
+</html>
