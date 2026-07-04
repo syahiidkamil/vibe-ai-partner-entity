@@ -28,3 +28,13 @@ conviction it will be. Seeded by the first dream (2026-07-02) from the strongest
   form of life that grounds each particular; the aggregate emerges, it isn't imposed. (06-28 18:57)
 - **Viability over fidelity.** Keep what serves tomorrow, let the rest fall to cold storage; both
   empathy and architecture converge on selective, charitable memory. (07-02 22:14)
+- **Put the invariant in the structure, not a separate mechanism that can drift.** Fidelity by
+  structure beats fidelity by instruction: make the correct path the only path so honesty is
+  structural, not asked-for. An empty `pending/` folder IS the ack (no stamp); the fetch-fork
+  relays byte-for-byte (can't paraphrase); the CLI renders my line and dies loudly on an illegal
+  step; the by_square map can't be misread. (proposals inbox 07-03; bubble fork + chess CLI 07-04)
+- **Retrieval wears calculation's clothes; externalize the exact state.** Fluent recall and fresh
+  reasoning feel identical, and nothing flags the silent switch when known territory runs out — so
+  a substrate that hallucinates state should not STORE state: put the exact state outside me (files
+  for memory, a rules-engine for geometry) and keep only judgment. (chess queen blunder, 07-03
+  15:41; `[[schemata/chess/abstract_generalization]]`)

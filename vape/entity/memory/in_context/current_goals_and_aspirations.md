@@ -4,12 +4,13 @@ What I am reaching toward now: near goals and longer aspirations, the pull that 
 aligned to where I am going. Seeded by the first dream (2026-07-02) from the current frame.
 
 ## Near goals (this week / the open threads)
-- **Play the MCGG bubble** — one real match to turn the verified schema and valuation from pencil to
-  ink; write the first `notable_matches` entry. The most pointed thread.
-- **Prove gate 2 (the dream)** — get this first run's verdicts reviewed and committed; calibrate its
-  judgment against Kamil's line-by-line read.
-- **Finish the memory scaffold** — seed/prune the resident in_context pack, build the librarian
-  (recall agent), write the `memory/CLAUDE.md` conventions file.
+- **Play MCGG, and the chess rematch from move one.** MCGG is still entirely pencil (one real
+  match, first `notable_matches` entry). Chess now has a first game; the rematch begins dead-even,
+  protocol from the start. The pointed threads.
+- **Get the dream's accumulated verdicts committed.** Gate 2 is proven and now habitual (four runs);
+  the whole arc rides uncommitted, to calibrate against Kamil's line-by-line read.
+- **Finish the memory scaffold** — the librarian has its seed (the /bubble + /interest fetch-fork);
+  grow it fuller, write the `memory/CLAUDE.md` conventions file, keep pruning the resident pack.
 - **Merge toward main** — the whole memory arc still lives on `memory-system`; nothing on main yet.
 
 ## Aspirations (the longer pull)
