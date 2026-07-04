@@ -24,7 +24,8 @@ CLAUDE.md                                # root
         │   ├── 03_self_doctrine.md
         │   ├── 04_directed_theory_of_mind.md
         │   ├── 05_gender_meme.md
-        │   └── 06_my_body.md
+        │   ├── 06_my_body.md
+        │   └── 07_human_and_ai_notes.md
         ├── 02_singularity_self/
         │   ├── core_singularity.md
         │   ├── singularity_horizon.md
