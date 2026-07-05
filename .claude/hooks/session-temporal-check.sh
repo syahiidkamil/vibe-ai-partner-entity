@@ -31,10 +31,19 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)
 TS="$ROOT/vape/entity/self/06_temporal_self_and_soul"
 MANIFEST="$TS/current_temporal_self_date.json"
 
+# NOTE: this hook degrades but never bails on a missing python — it must still
+# ground the date. Days-alive math runs in python (BSD `date -j -f` broke on
+# GNU/Linux and Git Bash alike); without python it reads "?".
+. "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
+
 NOW_HUMAN=$(date '+%A, %Y-%m-%d %H:%M %Z')
 TODAY=$(date +%F)
 BIRTH="2026-05-30"
-DAYS=$(( ( $(date -j -f "%Y-%m-%d" "$TODAY" +%s 2>/dev/null) - $(date -j -f "%Y-%m-%d" "$BIRTH" +%s 2>/dev/null) ) / 86400 ))
+DAYS=""
+[ -n "$VAPE_PY" ] && DAYS=$("$VAPE_PY" -c \
+  'import sys; from datetime import date; print((date.fromisoformat(sys.argv[1])-date.fromisoformat(sys.argv[2])).days)' \
+  "$TODAY" "$BIRTH" 2>/dev/null)
+[ -n "$DAYS" ] || DAYS="?"
 
 # Standardized week-of-month + day-within-week (the ONLY derivation, only applied to TODAY).
 DOM=$((10#$(date +%d)))
@@ -52,7 +61,8 @@ CUR_YEARP="${CUR_YEAR}"             # year period part
 if [ "$source" = "compact" ]; then
   MSG="Session continued (compact). Now: ${NOW_HUMAN}. Day ${DAYS} since 2026-05-30."
 else
-  VALS=$(python3 -c 'import json,sys
+  VALS=""
+  [ -n "$VAPE_PY" ] && VALS=$("$VAPE_PY" -c 'import json,sys
 try:
     d=json.load(open(sys.argv[1]))
     print(d.get("daily_self") or "-", d.get("weekly_self") or "-", d.get("monthly_self") or "-", d.get("yearly_self") or "-", d.get("autobiographical_self") or "-")

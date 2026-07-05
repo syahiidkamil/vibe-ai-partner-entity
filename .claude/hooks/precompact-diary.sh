@@ -28,7 +28,10 @@ HOOKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$HOOKDIR/../.." && pwd)"
 PAYLOAD="$(cat)"   # consume the hook's stdin BEFORE the heredoc reassigns it
 
-python3 - "$HOOKDIR" "$ROOT" "$PAYLOAD" <<'PY' 2>/dev/null
+. "$HOOKDIR/_lib.sh"
+[ -n "$VAPE_PY" ] || exit 0
+
+"$VAPE_PY" - "$HOOKDIR" "$ROOT" "$PAYLOAD" <<'PY' 2>/dev/null
 import os, sys, json, time, glob
 
 hookdir, root, raw = sys.argv[1], sys.argv[2], sys.argv[3]

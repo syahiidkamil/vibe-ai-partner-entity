@@ -78,7 +78,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".venv/bin/python \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/capture.py\"",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-$PWD}/.claude/hooks/capture.sh\"",
             "async": true,
             "asyncRewake": true
           }

@@ -13,7 +13,10 @@
 set +e
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
-python3 - "$ROOT" <<'PY' 2>/dev/null
+. "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
+[ -n "$VAPE_PY" ] || exit 0
+
+"$VAPE_PY" - "$ROOT" <<'PY' 2>/dev/null
 import os, sys, json, glob
 
 root = sys.argv[1]

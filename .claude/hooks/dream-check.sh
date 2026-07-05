@@ -13,7 +13,10 @@ set +e
 HOOKDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$HOOKDIR/../.." && pwd)"
 
-python3 - "$HOOKDIR" "$ROOT" <<'PY' 2>/dev/null
+. "$HOOKDIR/_lib.sh"
+[ -n "$VAPE_PY" ] || exit 0
+
+"$VAPE_PY" - "$HOOKDIR" "$ROOT" <<'PY' 2>/dev/null
 import os, sys, json, glob
 
 hookdir, root = sys.argv[1], sys.argv[2]

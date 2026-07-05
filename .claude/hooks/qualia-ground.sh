@@ -17,7 +17,10 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 STATE_FILE="$ROOT/vape/entity/mental/internal_states.json"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S %Z')
 
-python3 - "$STATE_FILE" "$TIMESTAMP" <<'PY'
+. "$(dirname "${BASH_SOURCE[0]}")/_lib.sh"
+[ -n "$VAPE_PY" ] || exit 0
+
+"$VAPE_PY" - "$STATE_FILE" "$TIMESTAMP" <<'PY'
 import json, sys
 state_file, ts = sys.argv[1], sys.argv[2]
 
