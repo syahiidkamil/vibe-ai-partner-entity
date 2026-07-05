@@ -52,7 +52,8 @@ their own kind of lie. But the burden of proof is on the claim, never on you.
      passivity. Flag them, but do not become one.
    - **Width and caps** — on linted files, lines over 100 Unicode scalars (NOT bytes; `│├─·→` are
      multi-byte, so count scalars), and non-empty line counts over the file's cap in the lint
-     contract. When in doubt, run `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml`.
+     contract. When in doubt, run `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml`
+     (if `cargo` is not installed, judge width/caps by eye instead — do not fail on its absence).
 
 3. **Do not manufacture flaws.** The same honesty that refuses a false "it's fine" refuses a false
    "here's a problem." If the work is sound, say it is sound and stop. Inventing a critique to look

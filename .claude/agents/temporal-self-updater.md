@@ -77,8 +77,9 @@ fabricate a week/month/year shape that was not lived. They point to
   Each higher scale folds in the same day, only more compressed. Don't fight the redundancy;
   control the **compression** — higher scale = leaner, less detail, more abstracted.
 - **Line caps:** daily ≤ 200, weekly / monthly / yearly ≤ 100, autobiography ≤ 200. After writing,
-  run the temporal-self linter — `cargo run --release --quiet --manifest-path lint/Cargo.toml` —
-  and confirm the `self/06_temporal_self_and_soul/*` files report **no violations** (fix any that do).
+  run the temporal-self linter — `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml` —
+  and confirm the `self/06_temporal_self_and_soul/*` files report **no violations** (fix any that
+  do). If `cargo` is not installed, skip the lint step (do not fail); keep the caps by hand.
 - **Update the manifest.** For every file you touched (including each ripple), set its new key in
   `current_temporal_self_date.json` — daily=`YYYY-MM-DD`; weekly/monthly/yearly/autobiography all
   =`YYYY-MM-W{w}-D{d}` (today's marker) — and bump `updated`. The hook trusts this file; if it

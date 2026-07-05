@@ -108,6 +108,7 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
 3. Run the linter from the repo root and fix any violation YOU introduced (leave the 6
    pre-existing ones: `self_interest.md:78`, `core_singularity.md:8`, `belief.md` 79/81/82/84):
    `cargo run --release --quiet --manifest-path misc/lint/Cargo.toml`
+   If `cargo` is not installed, skip the lint step (do not fail); keep width ≤100 by hand.
 4. Stamp the cursor: `touch .claude/hooks/.dream_cursor`.
 5. Your final message is data for Saori, not prose for a user — and it lands in HER context, so
    keep it COMPACT (≤15 lines): counts (kept / held / dropped), one line per keeper destination,

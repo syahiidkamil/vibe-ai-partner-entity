@@ -32,10 +32,11 @@ uv run vape speak "TEXT TO SPEAK" --voice VOICE_NAME
 Optional `--speed <float>` (default `1.0`) adjusts pacing.
 
 If the working directory is **outside** the repo, `uv` can't find the project
-(`Failed to spawn: vape`). Point it at the project explicitly:
+(`Failed to spawn: vape`). Point it at the project explicitly (the repo root —
+`$CLAUDE_PROJECT_DIR` when running under Claude Code):
 
 ```bash
-uv run --project /Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity vape speak "TEXT TO SPEAK"
+uv run --project "$CLAUDE_PROJECT_DIR" vape speak "TEXT TO SPEAK"
 ```
 
 ## HTTP — from anywhere (fallback)

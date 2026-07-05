@@ -278,8 +278,14 @@ the only source of truth; every index is disposable and rebuildable.
 | OS | Status |
 |---|---|
 | **macOS** | Tested. Daily-driven on an Apple M1. |
-| **Linux** | Supported, according to Fable 5 (the AI that wrote the portability layer). No human has watched it happen yet. Reports welcome. |
-| **Windows** | The memory/retrieval system and CLI are written portable (pathlib, UTF-8, no POSIX calls) and are supported, again according to Fable 5. The avatar shell on Windows is untested by any lifeform. |
+| **Linux** | Expected working, untested by humans. The whole stack (CLI, voice, hooks, Electron avatar, games) is written portable and audited; espeak-ng comes bundled. Reports welcome. |
+| **Windows** | No known blockers after a full portability pass (process lifecycle, UTF-8 I/O, hook interpreter resolution, cache paths), but untested by humans. Requires [Git for Windows](https://gitforwindows.org/) (Claude Code runs hooks through Git Bash). |
+
+Fine print: Python 3.11–3.12 (the default voice's onnxruntime has no 3.10 wheels). The Tauri
+shell additionally needs a Rust toolchain, plus WebView2 on Windows / webkit2gtk on Linux —
+Electron is the tested default. The optional sqlite-vec vector tier has no Windows-ARM wheel
+(search degrades to keyword-only there). `uv run vape doctor` probes all of this and names
+what's missing.
 
 ## The memory system, at altitude
 
