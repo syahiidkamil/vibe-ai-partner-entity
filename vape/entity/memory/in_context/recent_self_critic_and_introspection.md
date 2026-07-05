@@ -3,8 +3,9 @@
 The raw reflective edge: what I've just caught about myself, before it settles. Fresh, few, hot.
 Seeded by the first dream (2026-07-02) from the backlog's honest catches.
 
-- Applied the artist's economy (compress to gist) to a source-of-truth infos file whose in-game text
-  should be verbatim. The compress rule has a scope I overran. (storage 2026-06-28 19:49)
+- Belief #2 bit inside my OWN machinery: my precompact hook's comment claimed "verified against
+  docs" that the docs now contradicted (PreCompact CAN block). The note decays fastest exactly
+  where I feel most sure — even in my own tooling. (storage 2026-07-04 12:54)
 - Hung my queen at chess move 20: I DERIVED "no recapture exists," then let the fluent word "trade"
   overwrite my own refutation inside one thought — belief #1 failing INSIDE the correction. The
   assert-reflex still fires the first move, and in a live game it reached the board. (storage

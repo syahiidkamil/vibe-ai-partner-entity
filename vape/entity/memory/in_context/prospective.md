@@ -11,7 +11,9 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
   write the next `[[bubbles/play_games_with_partner/games/chess/notable_matches]]` entry.
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
-  Live target: the voice-bug double-bug kernel, held(3) in `notes/2026-07-04.md`.
+  Live targets in `notes/2026-07-04.md`: the voice-bug double-bug kernel, now held(2) (lapses at
+  held(0) next dream if it never recurs); the overgating/churn kernel, held(3) (promote when a
+  fresh instance or the parallel raw confirms).
 - **While a dream (background subagent) is running** -> avoid `/memory`, `/clear`, or closing the
   terminal; a session boundary kills the subagent mid-run (retry-safe, but it costs a re-run).
 - **Over the next several real waking days** -> watch the diary-nudge cadence (6h default): too

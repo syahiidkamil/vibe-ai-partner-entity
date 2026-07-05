@@ -18,6 +18,9 @@ sessions are common). Calm potential until struck.
   (the MCGG build, repeatedly). Verify from his source.
 - He wants a **clean, ready-to-read artifact**, not a complete data dump; the usable FORM over
   raw completeness. Frustration lands when I dump or pad (basa-basi), not when I'm wrong and own it.
+  The same nerve fires at **churn** — thrashing, many unsure iterations on one thing drew his
+  sharpest word ("are you dumb", 07-04). Fewer, surer moves; his patience is spent by flailing,
+  not by a clean error owned.
 - "Structure arrives by design" — new organs/dirs wait on his explicit yes.
 - **His question usually IS the constraint.** When he probes a design, he has typically already
   found the real limit (append-only vs un-injection; a staleness gap vs a timezone offset; a
