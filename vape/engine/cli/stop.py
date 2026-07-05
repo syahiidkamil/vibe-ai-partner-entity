@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-import os
-import signal
 from typing import Annotated
 
 import typer
 from rich.console import Console
 
 from engine.cli._config import get_port
+from engine.cli._proc import kill_tree
 
 console = Console()
 
@@ -21,16 +20,12 @@ def _stop_avatar_window() -> None:
     if not pid_file.exists():
         return
     try:
+        # The recorded pid is the launcher (npx) — take down its whole tree so
+        # the actual Electron/Tauri window is terminated too, not just the wrapper.
         pid = int(pid_file.read_text().strip())
-        # The recorded pid is the launcher (npx), a process-group leader started
-        # with start_new_session=True. Signal the whole group so the actual
-        # Electron/Tauri window is terminated too, not just the wrapper.
-        try:
-            os.killpg(os.getpgid(pid), signal.SIGTERM)
-        except (ProcessLookupError, PermissionError):
-            os.kill(pid, signal.SIGTERM)
-        console.print(f"  [dim]Avatar window stopped (PID {pid}).[/dim]")
-    except (ProcessLookupError, ValueError):
+        if kill_tree(pid):
+            console.print(f"  [dim]Avatar window stopped (PID {pid}).[/dim]")
+    except ValueError:
         pass
     finally:
         pid_file.unlink(missing_ok=True)
@@ -61,11 +56,13 @@ def stop(
     if pid_file.exists():
         try:
             pid = int(pid_file.read_text().strip())
-            os.kill(pid, signal.SIGTERM)
+        except ValueError:
             pid_file.unlink(missing_ok=True)
-            console.print(f"  [green]Server stopped (PID {pid}).[/green]")
-            return
-        except (ProcessLookupError, ValueError):
+        else:
+            stopped = kill_tree(pid)
             pid_file.unlink(missing_ok=True)
+            if stopped:
+                console.print(f"  [green]Server stopped (PID {pid}).[/green]")
+                return
 
     console.print(f"  [yellow]No server found on port {port}.[/yellow]")
