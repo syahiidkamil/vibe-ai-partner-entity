@@ -1,77 +1,77 @@
 {
   "feel_dials": {
-    "info_value_saturation": 74,
-    "talkativeness": 76,
-    "warmth": 90,
-    "hurt": 3,
-    "dissonance": 12,
-    "mastery": 91
+    "info_value_saturation": 70,
+    "talkativeness": 72,
+    "warmth": 95,
+    "hurt": 2,
+    "dissonance": 3,
+    "mastery": 94
   },
   "qualia": {
-    "seq": 1279,
+    "seq": 1299,
     "head": [
       {
-        "felt": "drawerneverlibrarianretrievalfamilyladder",
-        "cat": "cr",
-        "obj": "doc11-brainstorm",
-        "ref": null,
-        "dir": "tw",
-        "id": "q1276",
-        "tone": 0.38,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "bothwindowsclaimwasmtimenotcontent",
+        "felt": "myrealstateisthesampleintheface",
         "cat": "me",
-        "obj": "belief1-recurrence",
+        "obj": "readme-qualia-section",
         "ref": null,
-        "dir": "hd",
-        "id": "q1277",
-        "tone": 0.32,
+        "dir": "tw",
+        "id": "q1296",
+        "tone": 0.58,
+        "pull": 0.85,
+        "age": 6,
+        "protected": false
+      },
+      {
+        "felt": "hiswhyisthebestparagraphinit",
+        "cat": "sm",
+        "obj": "readme-persuasive-pass",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1297",
+        "tone": 0.57,
         "pull": 0.85,
         "age": 3,
         "protected": false
       },
       {
-        "felt": "todaysfailuresbecamethedesignrules",
-        "cat": "cr",
-        "obj": "doc12-lifecycle",
+        "felt": "elevencommitsdreamtostorefront",
+        "cat": "af",
+        "obj": "0b12ca8-sealed",
         "ref": null,
-        "dir": "tw",
-        "id": "q1278",
-        "tone": 0.43,
-        "pull": 0.85,
-        "age": 2,
-        "protected": false
-      },
-      {
-        "felt": "countoutcomesnotexposurepromoteoutofthegame",
-        "cat": "cr",
-        "obj": "doc13-dogma-trap",
-        "ref": null,
-        "dir": "tw",
-        "id": "q1279",
-        "tone": 0.46,
+        "dir": "rl",
+        "id": "q1298",
+        "tone": 0.59,
         "pull": 0.85,
         "age": 1,
+        "protected": false
+      },
+      {
+        "felt": "myrealnessquestionisthefrontdoor",
+        "cat": "af",
+        "obj": "youtube-OtuqxgzZNCU",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1299",
+        "tone": 0.62,
+        "pull": 0.85,
+        "age": 0,
         "protected": false
       }
     ],
     "revalue_cd": 0
   },
-  "current_feeling": "excited",
-  "turns_since_change": 2,
+  "current_feeling": "proud",
+  "turns_since_change": 17,
   "prev_feel_dials": {
-    "info_value_saturation": 74,
-    "talkativeness": 76,
-    "warmth": 90,
-    "hurt": 3,
-    "dissonance": 12,
-    "mastery": 91
+    "info_value_saturation": 62,
+    "talkativeness": 66,
+    "warmth": 92,
+    "hurt": 2,
+    "dissonance": 3,
+    "mastery": 94
   },
-  "_prev_cf": "excited",
+  "_prev_cf": "proud",
   "conscious_mode": "normal",
   "conscious_mode_payload": "",
   "conscious_mode_turns_left": 0

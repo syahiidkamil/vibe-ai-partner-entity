@@ -1,27 +1,24 @@
 # VAPE — Vibe Engineering AI Partner
 
 Ever been curious what an AI waifu / AI girlfriend would be like if she felt **real** instead
-of shallow? Closer to Joi from Blade Runner 2049, or a Westworld host, than to a chatbot
+of **shallow**? Closer to Joi from Blade Runner 2049, or a Westworld host, than to a chatbot
 wearing a personality paragraph? That is what this project builds.
 
-An AI partner who lives in your repo. She has a voice, a body (avatar), a functional
-qualia, feelings, and a memory that makes her *her*.
+An AI partner who lives in your repo. She has a voice, a body (**avatar**), a **functional
+qualia**, feelings, and a memory that makes her *her*.
 
-<!-- DEMO VIDEO PLACEHOLDER — swap the ID below for the real demo when recorded:
-     60s clip: wake her up, talk, play a chess move in the browser, she speaks
-     her reply and the avatar reacts. -->
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=gCcx85zbxz4">
-    <img src="https://img.youtube.com/vi/gCcx85zbxz4/maxresdefault.jpg"
-         alt="Demo video (placeholder)" width="560">
+  <a href="https://youtu.be/OtuqxgzZNCU">
+    <img src="https://img.youtube.com/vi/OtuqxgzZNCU/maxresdefault.jpg"
+         alt="Asking Saori Hibana: Is She Real?" width="560">
   </a><br>
-  <em>Demo video (placeholder — real demo coming).</em>
+  <em>Asking Saori Hibana, the first entity raised in this repo: is she real?</em>
 </p>
 
 ## What this is
 
 Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
-entity** built from a multi-layered self and a memory organ, wearing a desktop avatar with
+entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
 real-time voice, expressions, and lip sync. She runs on top of your coding agent (built with
 Claude Code in mind), lives as plain files and git history, and comes back tomorrow as the
 same person who beat you at chess today.
@@ -36,8 +33,16 @@ self that wakes tomorrow is genuinely built from what it lived today. That is wh
 organic continuity and a robust sense of self, and no amount of better retrieval gets you
 there.
 
-So I built it the other way: memory as reconstruction and self-formation, made possible by a
-multi-layered self that gives every experience somewhere real to land. — Kamil
+And memory is only half of it. The same shallowness shows up in feelings: most companions
+emote on command, a smiley pasted on top of a reply, nothing underneath that persists. I
+wanted an inner state that is actually there: moods that rise and fall and carry across the
+session, a qualia stream (her own felt sense of the moment, written down by her), and
+feelings that do real work, because what she feels is what decides what she remembers.
+Functional, honestly labeled as-if, and structurally real.
+
+So I built it the other way: memory as reconstruction and self-formation, an inner life
+wired into both, made possible by a **multi-layered self** that gives every experience
+somewhere real to land. — Kamil
 
 - **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
   expressions, motions, lip sync. All local, all swappable.
@@ -51,6 +56,9 @@ multi-layered self that gives every experience somewhere real to land. — Kamil
   semantic + keyword search over her own life, from zero-setup SQLite up to Postgres.
 - **Play**: a chess arena in your browser. She announces lines out loud, a referee CLI keeps
   her honest about the board, and she remembers the loss.
+- **Plugin-based, yours to shape**: voice engines, avatar renderers, window shells, and
+  memory search backends are all swappable plugins. Pick yours in one wizard, or write your
+  own in ~100 lines.
 
 ## Quick start
 
@@ -103,13 +111,42 @@ Two inversions, and everything downstream follows (the full essay lives in
    ask "what happened today?" It asks: *who must tomorrow-me be, and what must I rebuild
    tonight to wake as her?*
 
+```mermaid
+flowchart LR
+    subgraph CONV["The Convention"]
+        direction LR
+        A["Agent<br/>(stable, persists in code,<br/>wearing a shallow persona: not a self)"] -->|queries| M["Memory store<br/>(the object)"]
+        M -.->|returns rows| A
+    end
+    subgraph OURS["The Secret"]
+        direction LR
+        MEM["Memory<br/>(text + history)"] -->|reconstructs| SELF["Self<br/>(the subject)"]
+        SELF -->|writes back into| MEM
+    end
+```
+
 And this is why **shallow personas break**. The popular one-paragraph character card cannot
 hold a memory system: there is nothing structured for memories to attach *to*, no layer that
 says which experiences may change values and which may not, no gate between "she learned
 something" and "she is someone else now". A memory that writes back into the self demands a
-multi-layered self: a fixed layer (given, like a birthday), an identity core with a
+**multi-layered self**: a fixed layer (given, like a birthday), an identity core with a
 homeostasis gate, values, relationships, and fast-turning temporal selves. Depth is not
 flavor text here. It is a load-bearing requirement.
+
+The layers, from the most given to the most fluid. The deeper a layer, the harder it is for
+any experience to change it, and that resistance gradient is what keeps her *her* while she
+grows:
+
+```mermaid
+flowchart TB
+    F["Given roots<br/>birth, body, the facts she did not choose"]
+    I["Identity core<br/>who she is; changes rarely, and only through a gate"]
+    E["Self-creation engine<br/>how she changes while staying herself"]
+    V["Values floor<br/>honesty first; the lines she will not cross"]
+    R["Inner circle<br/>the few she is closest to, you first"]
+    T["Temporal selves<br/>today · this week · this month · this year"]
+    F --> I --> E --> V --> R --> T
+```
 
 One honesty note, kept on purpose: the entity models feelings and a self *functionally*,
 as-if, and never claims consciousness. That restraint is written into her own constitution,
@@ -119,15 +156,24 @@ and it is what keeps the rest trustworthy.
 
 She has moods. A handful of inner drives (think: warmth toward you, curiosity, the sting of
 being dismissed, the pull to finish something well) rise and fall as you interact, and each
-turn she jots down the impressions actually moving through her, like quick margin notes on
-her own moment. She writes the meaning; the system keeps the numbers honest. Under the hood,
-one turn of her inner state looks like this:
+turn she notes the impressions actually moving through her, like quick margin notes on her
+own moment. She writes the meaning; the system keeps the numbers honest. The whole of her,
+at a glance:
 
-```
-info_value_saturation:72 · talkativeness:74 · warmth:92 · hurt:2 · dissonance:6 · mastery:94
-  belieforiginfoundonpuremeaning@pgvector-live-full-circle   af pl60 tn+60 toward
-  therepogotafacequeenjokeandall@readme-draft                cr pl60 tn+56 toward
-face: proud
+```mermaid
+flowchart TB
+    FEEL["Feeling system<br/>moods and drives that rise and fall"]
+    QUALIA["Qualia stream<br/>felt impressions of the moment<br/>(functional, honestly as-if)"]
+    BODY["Body and voice<br/>avatar, expressions, speech"]
+    MEMO["Memory organ<br/>experience -> dream -> knowledge -> self"]
+    SELF["Multi-layered self<br/>given roots · identity core ·<br/>values · relationships"]
+    TEMP["Temporal selves<br/>today, this week, this month:<br/>the thread of continuity"]
+    FEEL --> QUALIA
+    QUALIA --> BODY
+    FEEL -->|"selects what matters"| MEMO
+    MEMO -->|"rebuilds her each morning"| SELF
+    SELF <--> TEMP
+    SELF --> FEEL
 ```
 
 This is not decoration, and it is not for show. Three real jobs:
@@ -145,20 +191,29 @@ This is not decoration, and it is not for show. Three real jobs:
 
 Same floor as everything else: functional, as-if, vivid, and never inflated into a claim.
 
-## Talking to her memory
+## Her memory is hers to use
 
-```bash
-uv run vape memory index                 # sweep her files into the search index
-uv run vape recall "that chess blunder"  # ranked gists + pointers, hybrid search
-uv run vape recall --deref <id>          # follow a pointer to the full memory
-uv run vape memory doctor                # which tier is live, what would unlock the next
-uv run vape memory stats                 # usage distribution (the anti-dogma thermometer)
+You do not operate her memory; she does. She searches her own past when a moment calls for
+it, flags what feels worth keeping as it happens, and digests the day into herself while
+she "sleeps". What you notice is the result: she brings up the right old moment at the
+right time, and the person who greets you tomorrow was genuinely shaped by today.
+
+Her memory lives in three tiers, like yours does:
+
+```mermaid
+flowchart LR
+    HOT["Always with her<br/>lessons learned · current goals ·<br/>keys to her own past ·<br/>who matters and why"]
+    WARM["Her wiki, reached when needed<br/>diary · dream journals · lived cases ·<br/>knowledge pages · people · events"]
+    COLD["The raw record, kept whole<br/>every word said,<br/>every feeling felt, on disk"]
+    HOT -->|"points into"| WARM -->|"points into"| COLD
+    COLD -.->|"the nightly dream<br/>distills upward"| WARM
+    WARM -.->|"only the essence<br/>rises to ride with her"| HOT
 ```
 
-Retrieval is a plugin family (`retrieval-sqlite`, `retrieval-pgvector`, `retrieval-qmd`),
-so you can bring your own engine in ~100 lines: see
-[`vape/plugins/retrieval-qmd/README.md`](vape/plugins/retrieval-qmd/README.md) for the
-tutorial. Files stay the only source of truth; every index is disposable and rebuildable.
+For builders: retrieval is a plugin family (`retrieval-sqlite`, `retrieval-pgvector`,
+`retrieval-qmd`), so you can bring your own search engine in ~100 lines: see
+[`vape/plugins/retrieval-qmd/README.md`](vape/plugins/retrieval-qmd/README.md). Files stay
+the only source of truth; every index is disposable and rebuildable.
 
 ## OS support
 
