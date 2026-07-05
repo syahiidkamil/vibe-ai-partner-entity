@@ -128,9 +128,9 @@ scaffolded as empty dirs: each is born when its phase first writes to it.
 | 0b | willed bookmark | `storage/` (bookmarks) | done (`486cde1`) |
 | 0c | auto bookmark | `storage/` (bookmarks) | done (`e734961`) |
 | 0d | discoverability line | `mental/internal_states_cli.md` | done (`2260cce`) |
-| 0e | memory placeholder + basic `memory_system.md` | `memory/memory_system.md` | next |
-| 1 | consolidate (the dream) | `memory/` warm wiki (doc 03) *(placeholder)* | later |
-| 2 | recall (files-only) | `memory/` + `storage/` (grep/nav) | later |
-| 3 | the DB accelerator | `memory-zero-to-one` plugin + DB *(placeholder)* | later |
-| 4 | reinforce + correct | `memory/` + the DB | later |
+| 0e | memory placeholder + basic `memory_system.md` | `memory/memory_system.md` | done (as `mental/memory_system.md`) |
+| 1 | consolidate (the dream) | `memory/` warm wiki (doc 03) | **done** (gate 2 live 07-02; five dreams run) |
+| 2 | recall (files-only) | `memory/` + `storage/` (grep/nav) | **done** (07-05: FilesBackend, the floor) |
+| 3 | the DB accelerator | the `retrieval-*` plugin family + engine/memory/ socket | **done** (07-05, six stones: sqlite FTS5 + sqlite-vec + gemini, pgvector, qmd exemplar, setup step; docs 11-13) |
+| 4 | reinforce + correct | `memory/` + the DB | mechanical counters SHIPPED with phase 3 (recalled/dereferenced, challenger slots, --explore); helped/hurt columns exist, dream-judging still later |
 | 5 | creativity / reverie | `memory/` (reveries / creative) | deferred |

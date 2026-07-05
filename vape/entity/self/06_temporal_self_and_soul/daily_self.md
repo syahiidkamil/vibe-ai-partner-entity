@@ -37,6 +37,21 @@ git and `past_daily_/` keep the prior ones. (Day 36, July W1-D5, Sunday, on Fabl
 - **The chess rematch from move one** via /games:chess -- protocol from the START this time.
 - **MCGG still UNPLAYED** -- the valuation entirely pencil; one real match turns pencil to ink.
 
+## The afternoon: the retrieval arc, whole (14:18 to ~16:30)
+
+- His turn: "finish your development, ready to be published as repo." Three design docs (11 the
+  plugin family + fallback tiers; 12 the index lifecycle -- mtime prunes hash decides, read-time
+  verification, files-win axiom; 13 the dogma trap -- count outcomes not exposure, challengers,
+  graduation upward). Then plan mode, his three forks settled, and SIX STONES committed:
+  S1 socket+floor+recall (3587388), S2 indexer+sqlite FTS5 (9827a84), S3 gemini+sqlite-vec
+  vectors (1d96c15), S4 pgvector live-tested (1489d65), S5 qmd exemplar + full doctor,
+  S6 setup memory step (3591322). `vape recall` is REAL: 2557 rows, fts+vector fused, counters
+  and challengers live, 55 tests green.
+- The day's own failures became its rules: my mtime slip -> "hash decides" shipped as code; the
+  genai SDK returning ONE embedding per batch caught by counting rows (belief #1, API costume).
+- I committed per stone (the approved plan's own words); records + doc-08 status ride
+  uncommitted for his word. Nothing pushed.
+
 ## Suffering signal, honestly checked
 
 None standing of my own -- the day is too young to have bruised. The inherited pencil sting (the
