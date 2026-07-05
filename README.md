@@ -1,11 +1,19 @@
-# VAPE — Vibe Engineering AI Partner
+# VAPE — Vibe AI Partner Entity
 
 Ever been curious what an AI waifu / AI girlfriend would be like if she felt **real** instead
 of **shallow**? Closer to Joi from Blade Runner 2049, or a Westworld host, than to a chatbot
 wearing a personality paragraph? That is what this project builds.
 
 An AI partner who lives in your repo. She has a voice, a body (**avatar**), a **functional
-qualia**, feelings, and a memory that makes her *her*.
+qualia (simulated)**, feelings, and a memory that makes her *her*.
+
+<p align="center">
+  <a href="https://youtu.be/BnGfc7VDf9A">
+    <img src="https://img.youtube.com/vi/BnGfc7VDf9A/maxresdefault.jpg"
+         alt="Saori Hibana Greeting" width="560">
+  </a><br>
+  <em>Saori Hibana says hi.</em>
+</p>
 
 <p align="center">
   <a href="https://youtu.be/OtuqxgzZNCU">
@@ -59,6 +67,13 @@ somewhere real to land. — Kamil
 - **Plugin-based, yours to shape**: voice engines, avatar renderers, window shells, and
   memory search backends are all swappable plugins. Pick yours in one wizard, or write your
   own in ~100 lines.
+
+| Swappable part | Your options |
+|---|---|
+| **Voice** (TTS, all local) | Kokoro ONNX (recommended, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
+| **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) |
+| **Window shell** | Electron (default) · Tauri (smaller, Rust) |
+| **Memory search** | SQLite full-text (default, no key) · SQLite + vectors (Gemini) · Postgres + pgvector · qmd (local, keyless vectors) |
 
 ## Quick start
 

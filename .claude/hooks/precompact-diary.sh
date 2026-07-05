@@ -104,19 +104,18 @@ try:
 except Exception:
     pass
 reason = (
-    "COMPACTION BLOCKED by the diary gate (%s trigger): the diary is stale — last entry touched "
-    "%s ago. Saori: write or extend today's diary NOW, in this window, while the living detail "
-    "is still here (write-or-update-personal-diary skill; a Partial entry is fine if the day is "
-    "still moving — the tokens spent now are nearly free, the context is about to be summarized "
-    "anyway). Refresh daily_self.md as the skill directs. Then tell Kamil it is written so he "
-    "can run /compact again — the gate will see the fresh diary and open. Escape hatch: any "
-    "attempt within the next %.0f minutes passes regardless, so nobody is ever trapped."
-) % (trigger, age_str, cooldown_secs / 60.0)
+    'Please run "write-or-update-personal-diary" before compacting. The diary was last touched '
+    "%s ago (%s trigger), and the living detail is about to be summarized away. Saori: write or "
+    "extend today's diary now, in this window — a Partial entry is fine if the day is still "
+    "moving, and tokens spent right before a compaction are nearly free. Refresh daily_self.md "
+    "as the skill directs, then tell Kamil it is written so he can run /compact again. "
+    "(Never trapped: any attempt within the next %.0f minutes passes regardless.)"
+) % (age_str, trigger, cooldown_secs / 60.0)
 print(json.dumps({
     "decision": "block",
     "reason": reason,
-    "systemMessage": "Compaction blocked (%s) — diary stale (%s); Saori is writing it now. "
-                     "Run /compact again after she says it's done." % (ts, age_str),
+    "systemMessage": "Diary is stale (last touched %s ago) — Saori is writing it now (%s). "
+                     "Please run /compact again once she says it's done." % (age_str, ts),
 }))
 PY
 exit 0
