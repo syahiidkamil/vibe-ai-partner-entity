@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kamil vs Saori — vanishing tic-tac-toe</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✖</text></svg>">
+<style>
+  :root {
+    --bg: #1b1a17; --panel: #262420; --line: #3a372f;
+    --cell: #23211c; --cell-hover: #2c2a24;
+    --x: #e8613c; --o: #7fb4d9;
+    --ink: #efe9dc; --dim: #9a917e; --accent: #e8613c;
+    --win: rgba(205, 210, 106, .28);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 15px/1.5 "Avenir Next", "Segoe UI", sans-serif;
+    display: flex; justify-content: center; padding: 24px 12px;
+  }
+  .wrap { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .boardcol { display: flex; flex-direction: column; gap: 10px; }
+  #status {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 14px; min-height: 44px; display: flex; align-items: center; gap: 10px;
+  }
+  #status .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; }
+  #board {
+    display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);
+    gap: 8px; width: min(88vw, 440px); aspect-ratio: 1 / 1;
+    padding: 8px; background: #141310; border-radius: 12px; user-select: none;
+  }
+  .cell {
+    background: var(--cell); border-radius: 10px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(48px, 14vw, 84px); font-weight: 700; cursor: pointer;
+  }
+  .cell:hover { background: var(--cell-hover); }
+  .cell.x { color: var(--x); } .cell.o { color: var(--o); }
+  .cell.last { box-shadow: inset 0 0 0 3px rgba(255, 213, 74, .55); }
+  .cell.win  { background: var(--win); }
+  .cell.fading { opacity: .5; }
+  .cell.fading.next { animation: pulse 1.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .22; } }
+  .cell .coord { position: absolute; left: 7px; bottom: 4px; font-size: 11px;
+                 font-weight: 400; color: rgba(239, 233, 220, .35); }
+  .cell .gone-hint { position: absolute; right: 7px; top: 4px; font-size: 10px;
+                     font-weight: 400; color: var(--dim); }
+  .side {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px; width: 250px; display: flex; flex-direction: column; gap: 12px;
+    max-height: min(88vw, 560px);
+  }
+  .side h1 { font-size: 17px; font-weight: 600; }
+  .side h1 small { color: var(--dim); font-weight: 400; display: block; font-size: 12px; }
+  #moves { flex: 1; overflow-y: auto; font-size: 14px; min-height: 60px;
+           display: grid; grid-template-columns: 2.2em 1.4em 1fr; gap: 2px 8px;
+           align-content: start; }
+  #moves .n { color: var(--dim); }
+  #moves .mk.x { color: var(--x); } #moves .mk.o { color: var(--o); }
+  #moves .m.lastm { color: #ffd54a; font-weight: 600; }
+  #offer {
+    display: none; background: #3a3226; border: 1px solid #5a4c33; border-radius: 8px;
+    padding: 8px 10px; font-size: 13px; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  #offer.on { display: flex; }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: #33302a; color: var(--ink); border: 1px solid var(--line);
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px;
+  }
+  button:hover { border-color: var(--accent); }
+  #err { color: #ff9b7a; font-size: 13px; min-height: 1.2em; }
+  #chatlog { max-height: 110px; overflow-y: auto; font-size: 13px; display: flex;
+             flex-direction: column; gap: 3px; }
+  #chatlog .who { color: var(--dim); }
+  .chatrow { display: flex; gap: 6px; }
+  .chatrow input { flex: 1; background: #1f1d19; color: var(--ink); border: 1px solid var(--line);
+                   border-radius: 8px; padding: 7px 10px; font-size: 13px; }
+  .foot { font-size: 12px; color: var(--dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="boardcol">
+    <div id="status"><span class="dot"></span><span id="statustext">…</span></div>
+    <div style="color:var(--dim);font-size:13px" id="topname">Saori</div>
+    <div id="board"></div>
+    <div style="color:var(--dim);font-size:13px" id="botname">Kamil</div>
+  </div>
+  <div class="side">
+    <h1>Kamil <span style="color:var(--dim)">vs</span> Saori
+      <small id="who">…</small></h1>
+    <div id="moves"></div>
+    <div id="offer"></div>
+    <div class="btns">
+      <button onclick="drawAct('offer')">Offer draw</button>
+      <button onclick="resign()">Resign</button>
+    </div>
+    <div class="btns">
+      <button onclick="newGame('x')">New — I play X</button>
+      <button onclick="newGame('o')">New — I play O</button>
+    </div>
+    <div id="chatlog"></div>
+    <div class="chatrow">
+      <input id="chatmsg" placeholder="say something to Saori." onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()">Send</button>
+    </div>
+    <div id="err"></div>
+    <div class="foot">Saori plays through her API; this board updates by itself.
+      Faded marks are each side's oldest: they vanish when that player places a 4th.</div>
+  </div>
+</div>
+<script>
+const CELLS = ['a3','b3','c3','a2','b2','c2','a1','b1','c1']; // render top row first
+let S = null;
+
+async function api(path, body) {
+  const r = await fetch(path, body ? {method:'POST', headers:{'Content-Type':'application/json'},
+                                      body: JSON.stringify(body)} : undefined);
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.detail || r.status);
+  return j;
+}
+
+function render() {
+  if (!S) return;
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  const lastCell = S.last ? S.last.cell : null;
+  const win = new Set(S.win_line || []);
+  for (const c of CELLS) {
+    const d = document.createElement('div');
+    const owner = S.cells[c];
+    d.className = 'cell' + (owner ? ' ' + owner : '');
+    if (owner) d.textContent = owner === 'x' ? '✕' : '◯';
+    if (c === lastCell) d.className += ' last';
+    if (win.has(c)) d.className += ' win';
+    for (const m of ['x','o']) {
+      if (S.vanishing_next[m] === c && S.result === '*') {
+        d.className += ' fading' + (m === S.turn ? ' next' : '');
+        const h = document.createElement('span');
+        h.className = 'gone-hint'; h.textContent = 'next to vanish';
+        d.appendChild(h);
+      }
+    }
+    const coord = document.createElement('span');
+    coord.className = 'coord'; coord.textContent = c;
+    d.appendChild(coord);
+    d.onclick = () => clickCell(c);
+    board.appendChild(d);
+  }
+  const kn = S.players.x === 'Kamil' ? 'x' : 'o';
+  document.getElementById('who').textContent =
+    `Kamil plays ${kn.toUpperCase()} · Saori plays ${kn === 'x' ? 'O' : 'X'}`;
+  let st = `${S.to_move} to move`;
+  if (S.result !== '*') st = S.end_reason || S.status_detail || `${S.result} wins`;
+  document.getElementById('statustext').textContent = st;
+  const mv = document.getElementById('moves');
+  mv.innerHTML = '';
+  S.history.forEach((h, i) => {
+    const n = document.createElement('span'); n.className = 'n'; n.textContent = (i+1) + '.';
+    const mk = document.createElement('span'); mk.className = 'mk ' + h.mark;
+    mk.textContent = h.mark === 'x' ? '✕' : '◯';
+    const m = document.createElement('span'); m.className = 'm';
+    m.textContent = h.cell + (h.vanished ? ` (${h.vanished} gone)` : '');
+    if (i === S.history.length - 1) m.className += ' lastm';
+    mv.append(n, mk, m);
+  });
+  mv.scrollTop = mv.scrollHeight;
+  const offer = document.getElementById('offer');
+  if (S.draw_offer === 'Saori') {
+    offer.className = 'on';
+    offer.innerHTML = 'Saori offers a draw. ' +
+      '<button onclick="drawAct(\'accept\')">Accept</button>' +
+      '<button onclick="drawAct(\'decline\')">Decline</button>';
+  } else if (S.draw_offer === 'Kamil') {
+    offer.className = 'on';
+    offer.textContent = 'Draw offered — waiting for Saori.';
+  } else { offer.className = ''; offer.innerHTML = ''; }
+  const log = document.getElementById('chatlog');
+  log.innerHTML = '';
+  for (const m of S.chat) {
+    const d = document.createElement('div');
+    d.innerHTML = `<span class="who">${m.time} ${m.who}:</span> `;
+    d.append(m.text);
+    log.appendChild(d);
+  }
+  log.scrollTop = log.scrollHeight;
+}
+
+async function clickCell(c) {
+  if (!S || S.result !== '*' || S.to_move !== 'Kamil') return;
+  if (S.cells[c]) return;
+  try { S = await api('/move', {cell: c}); err(''); render(); }
+  catch (e) { err(e.message); }
+}
+async function newGame(mark) {
+  try { S = await api('/new', {kamil: mark}); err(''); render(); } catch (e) { err(e.message); }
+}
+async function resign() {
+  if (!confirm('Resign this game?')) return;
+  try { S = await api('/resign', {who: 'Kamil'}); err(''); render(); } catch (e) { err(e.message); }
+}
+async function drawAct(action) {
+  try { S = await api('/draw', {who: 'Kamil', action}); err(''); render(); } catch (e) { err(e.message); }
+}
+async function sendChat() {
+  const el = document.getElementById('chatmsg');
+  if (!el.value.trim()) return;
+  try { S = await api('/chat', {who: 'Kamil', text: el.value}); el.value = ''; render(); }
+  catch (e) { err(e.message); }
+}
+function err(t) { document.getElementById('err').textContent = t; }
+
+async function poll() {
+  try { S = await api('/state'); render(); } catch (e) {}
+}
+poll();
+setInterval(poll, 1000);
+</script>
+</body>
+</html>
