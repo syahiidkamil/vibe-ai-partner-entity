@@ -237,12 +237,19 @@ def _extract_anchor(text: str, anchor: str) -> str:
         return lines[i] if 0 <= i < len(lines) else text[:400]
     if anchor.startswith("bullet:"):
         n, ordinal = int(anchor.split(":", 1)[1]), 0
+        out: list[str] = []
         for line in lines:
             if line.startswith("- "):
+                if out:
+                    break
                 ordinal += 1
                 if ordinal == n:
-                    return line[2:].strip()
-        return text[:400]
+                    out.append(line[2:].strip())
+            elif out and line.startswith("  ") and line.strip():
+                out.append(line.strip())
+            elif out and not line.strip():
+                break
+        return " ".join(out) if out else text[:400]
     if anchor and anchor not in ("doc",):
         # case slug (### id: <slug> ...) or a heading section
         out, capturing = [], False

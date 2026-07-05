@@ -22,6 +22,8 @@ dependencies = [
 tts-kokoro-onnx = ["vibe-plugin-tts-kokoro-onnx"]
 tts-kokoro = ["vibe-plugin-tts-kokoro"]
 tts-kitten = ["vibe-plugin-tts-kitten"]
+retrieval-sqlite = ["vibe-plugin-retrieval-sqlite"]
+retrieval-sqlite-vec = ["vibe-plugin-retrieval-sqlite[vec]"]
 dev = [
     "pytest>=8.0.0",
     "httpx>=0.27.0",
@@ -38,12 +40,13 @@ build-backend = "setuptools.build_meta"
 where = ["vape"]
 
 [tool.uv.workspace]
-members = ["vape/plugins/tts-*"]
+members = ["vape/plugins/tts-*", "vape/plugins/retrieval-*"]
 
 [tool.uv.sources]
 vibe-plugin-tts-kokoro-onnx = { workspace = true }
 vibe-plugin-tts-kokoro = { workspace = true }
 vibe-plugin-tts-kitten = { workspace = true }
+vibe-plugin-retrieval-sqlite = { workspace = true }
 
 [dependency-groups]
 dev = [
@@ -55,6 +58,16 @@ dev = [
 tts = [
     "vibe-plugin-tts-kokoro-onnx",
 ]
+# The default memory tier rides a DEFAULT group for the same reason: a bare
+# `uv sync` must never prune the sqlite index backend out from under recall.
+retrieval = [
+    "vibe-plugin-retrieval-sqlite",
+]
 
 [tool.uv]
-default-groups = ["dev", "tts"]
+default-groups = ["dev", "tts", "retrieval"]
+
+[tool.pytest.ini_options]
+testpaths = ["misc/tests"]
+markers = ["live: needs a real Postgres/Gemini (opt in with -m live)"]
+addopts = "-q -m 'not live'"

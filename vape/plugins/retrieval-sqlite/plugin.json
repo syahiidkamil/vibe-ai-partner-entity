@@ -1,0 +1,10 @@
+{
+  "name": "sqlite",
+  "displayName": "SQLite Index",
+  "description": "Full-text search over the memory index. No API key, no server, works everywhere.",
+  "tag": "recommended",
+  "category": "retrieval",
+  "uvExtra": "retrieval-sqlite",
+  "vecExtra": "retrieval-sqlite-vec",
+  "note": "Vectors arrive when sqlite-vec is installed AND a GEMINI_API_KEY exists; degrades to keyword-only otherwise."
+}

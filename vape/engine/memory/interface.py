@@ -18,7 +18,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
-INDEXER_VERSION = 1
+INDEXER_VERSION = 2   # bump on any derivation-rule change; forces a re-derive sweep
 
 # space values
 SPACE_MEMORY = "memory"   # curated/derived gist rows (the two-hop's first hop)
@@ -128,11 +128,20 @@ class Embedder(Protocol):
 
 @runtime_checkable
 class RetrievalBackend(Protocol):
-    """Constructor convention: Backend(root_dir: Path, config: dict, embedder: Embedder | None)."""
+    """Constructor convention: Backend(root_dir: Path, config: dict, embedder: Embedder | None).
+
+    index() is a per-source-file RECONCILE: rows sharing a source_path replace
+    that file's prior rows (anchors that vanished are deleted). evict_sources()
+    is the deletion path for files gone from disk (the indexer knows paths, not
+    the dead rows' ids). reset() drops and re-migrates IN-CONNECTION (never
+    delete a live db file — Windows can't unlink open files).
+    """
 
     def capabilities(self) -> Capabilities: ...
 
     def migrate(self) -> None: ...
+
+    def reset(self) -> None: ...
 
     def schema(self) -> str: ...
 
@@ -141,6 +150,8 @@ class RetrievalBackend(Protocol):
     def search(self, q: Query) -> list[Hit]: ...
 
     def evict(self, ids: list[str]) -> None: ...
+
+    def evict_sources(self, source_paths: list[str]) -> None: ...
 
 
 def rel_posix(path: Path, root: Path) -> str:

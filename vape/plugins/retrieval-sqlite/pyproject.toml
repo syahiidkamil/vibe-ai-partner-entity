@@ -1,0 +1,27 @@
+[project]
+name = "vibe-plugin-retrieval-sqlite"
+version = "0.1.0"
+description = "VAPE retrieval backend: SQLite FTS5 (optional sqlite-vec vectors)"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "vibe-ai-partner-entity",
+]
+
+[project.optional-dependencies]
+vec = [
+    "sqlite-vec>=0.1.6",
+    "google-genai>=1.0.0",
+]
+
+[project.entry-points."vibe.retrieval.providers"]
+sqlite = "vibe_plugin_retrieval_sqlite:SqliteBackend"
+
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv.sources]
+vibe-ai-partner-entity = { workspace = true }
