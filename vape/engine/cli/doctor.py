@@ -36,6 +36,9 @@ def doctor_cmd() -> None:
     console.print("\n  [bold]prereqs[/bold]")
     grades += _prereqs()
 
+    console.print("\n  [bold]platform[/bold]")
+    grades += _platform()
+
     console.print("\n  [bold]voice[/bold]")
     grades += _voice()
 
@@ -61,6 +64,7 @@ def _prereqs() -> list[str]:
     from engine.cli._prereqs import (
         check_disk_space,
         check_node_available,
+        check_npm_available,
         check_python_version,
         check_uv_available,
     )
@@ -69,9 +73,45 @@ def _prereqs() -> list[str]:
         ("Python", check_python_version()),
         ("uv", check_uv_available()),
         ("Node.js", check_node_available()),
+        ("npm", check_npm_available()),
         ("disk", check_disk_space()),
     ):
         out.append(_line(OK if good else FAIL, label, detail))
+    return out
+
+
+def _platform() -> list[str]:
+    """Cross-platform seams: do the .claude hooks have an interpreter, and can
+    a game board open a browser? Probed, never assumed — a Windows clone can
+    have a green venv and still-dead hooks if this drifts."""
+    import shutil
+
+    from engine.cli._paths import ROOT_DIR
+
+    out = []
+    # Mirrors .claude/hooks/_lib.sh resolution order — keep the two in step.
+    venv_posix = ROOT_DIR / ".venv" / "bin" / "python"
+    venv_win = ROOT_DIR / ".venv" / "Scripts" / "python.exe"
+    if venv_posix.exists() or venv_win.exists():
+        found = venv_posix if venv_posix.exists() else venv_win
+        out.append(_line(OK, "hook python", f"project venv ({found.relative_to(ROOT_DIR)})"))
+    else:
+        system_py = shutil.which("python3") or shutil.which("python")
+        if system_py:
+            out.append(_line(
+                WARN, "hook python",
+                f"{system_py} (no project venv — the Stop-hook capture no-ops; run: uv sync)"))
+        else:
+            out.append(_line(FAIL, "hook python", "no python for .claude hooks — run: uv sync"))
+
+    try:
+        import webbrowser
+        webbrowser.get()
+        out.append(_line(OK, "browser opener", "python -m webbrowser can open game boards"))
+    except Exception:
+        out.append(_line(
+            WARN, "browser opener",
+            "no browser found — open http://localhost:<port>/ by hand for game boards"))
     return out
 
 
@@ -108,6 +148,17 @@ def _voice() -> list[str]:
         out.append(_line(
             WARN, "voice (live)",
             f"server not running on :{port} (start: uv run vape start) — install checks above still hold"))
+
+    # English/multilingual G2P rides espeak-ng (bundled via espeakng-loader off-mac);
+    # a silent phonemizer failure would otherwise surface only as garbled speech.
+    try:
+        import misaki.espeak  # noqa: F401
+        out.append(_line(OK, "espeak g2p", "misaki.espeak imports (espeak-ng found)"))
+    except Exception as exc:
+        out.append(_line(
+            WARN, "espeak g2p",
+            f"misaki.espeak failed ({type(exc).__name__}) — English phonemes may break; "
+            "set PHONEMIZER_ESPEAK_LIBRARY or reinstall the voice extra"))
     return out
 
 
@@ -138,6 +189,23 @@ def _avatar() -> list[str]:
         out.append(_line(
             OK if sdir.is_dir() else FAIL, "shell",
             shell if sdir.is_dir() else f"{shell} configured but missing on disk"))
+        if shell == "tauri" and sdir.is_dir():
+            import shutil
+
+            from engine.cli.start import _find_tauri_binary
+            binary = _find_tauri_binary(sdir)
+            if binary:
+                out.append(_line(OK, "tauri binary", str(binary.relative_to(sdir))))
+            elif shutil.which("cargo") and shutil.which("rustc"):
+                out.append(_line(
+                    WARN, "tauri binary",
+                    "not built — run: uv run vape setup (Tauri also needs WebView2 on "
+                    "Windows / webkit2gtk on Linux)"))
+            else:
+                out.append(_line(
+                    FAIL, "tauri toolchain",
+                    "no cargo/rustc — install Rust (rustup.rs) or switch shell to "
+                    "electron via vape setup"))
     return out
 
 

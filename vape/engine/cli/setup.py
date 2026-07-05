@@ -213,6 +213,16 @@ def _build_tauri() -> None:
         console.print("  [dim]✓ Tauri shell already built[/dim]")
         return
 
+    # Preflight the Rust toolchain BEFORE npx tauri build — otherwise the
+    # failure arrives minutes late and half-compiled.
+    if not (shutil.which("cargo") and shutil.which("rustc")):
+        console.print(
+            "  [yellow]No Rust toolchain (cargo/rustc) — skipping Tauri build.[/yellow]\n"
+            "  [dim]Install Rust from https://rustup.rs/ and rerun setup, or pick the "
+            "Electron shell. Tauri also needs WebView2 on Windows / webkit2gtk on Linux.[/dim]"
+        )
+        return
+
     npx = shutil.which("npx")
     if not npx:
         console.print("  [yellow]npx not found — skipping Tauri build.[/yellow]")

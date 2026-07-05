@@ -40,6 +40,13 @@ def check_node_available() -> tuple[bool, str]:
         return False, "Node.js found but version check failed"
 
 
+def check_npm_available() -> tuple[bool, str]:
+    """Check if npm is available in PATH (renderer/shell installs need it)."""
+    if shutil.which("npm"):
+        return True, "npm found"
+    return False, "npm not found (ships with Node.js: https://nodejs.org/)"
+
+
 def check_disk_space(required_mb: int = 500) -> tuple[bool, str]:
     """Check free disk space."""
     usage = shutil.disk_usage(".")
@@ -55,6 +62,7 @@ def run_all_checks(required_mb: int = 500) -> bool:
         ("Python", check_python_version()),
         ("uv", check_uv_available()),
         ("Node.js", check_node_available()),
+        ("npm", check_npm_available()),
         ("Disk space", check_disk_space(required_mb)),
     ]
 
