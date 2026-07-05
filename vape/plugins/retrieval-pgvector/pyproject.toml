@@ -2,7 +2,7 @@
 name = "vibe-plugin-retrieval-pgvector"
 version = "0.1.0"
 description = "VAPE retrieval backend: Postgres + pgvector (halfvec HNSW + tsvector FTS)"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.11,<3.13"
 dependencies = [
     "vibe-ai-partner-entity",
     "psycopg[binary]>=3.2",

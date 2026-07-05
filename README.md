@@ -84,7 +84,9 @@ Every one of them enabled a piece of her. — Kamil
 
 ## Quick start
 
-Requirements: [uv](https://docs.astral.sh/uv/) and [Node.js](https://nodejs.org/) >= 18.
+Requirements: [uv](https://docs.astral.sh/uv/), Python 3.11-3.12, and
+[Node.js](https://nodejs.org/) >= 18 (with npm). On Windows, also
+[Git for Windows](https://gitforwindows.org/) (Claude Code runs the hooks through Git Bash).
 
 ```bash
 git clone <this-repo> && cd vibe-ai-partner-entity

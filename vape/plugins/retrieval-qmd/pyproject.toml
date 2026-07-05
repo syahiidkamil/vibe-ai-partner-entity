@@ -2,7 +2,7 @@
 name = "vibe-plugin-retrieval-qmd"
 version = "0.1.0"
 description = "VAPE retrieval backend: adapter over a user-installed qmd binary (keyless local vectors)"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.11,<3.13"
 dependencies = [
     "vibe-ai-partner-entity",
 ]

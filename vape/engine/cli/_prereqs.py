@@ -12,12 +12,12 @@ console = Console()
 
 
 def check_python_version() -> tuple[bool, str]:
-    """Check Python version is within 3.10-3.12."""
+    """Check Python version is within 3.11-3.12 (3.10 lacks onnxruntime wheels)."""
     v = sys.version_info
     version_str = f"{v.major}.{v.minor}.{v.micro}"
-    if v.major == 3 and 10 <= v.minor <= 12:
+    if v.major == 3 and 11 <= v.minor <= 12:
         return True, f"Python {version_str}"
-    return False, f"Python {version_str} (need 3.10-3.12)"
+    return False, f"Python {version_str} (need 3.11-3.12)"
 
 
 def check_uv_available() -> tuple[bool, str]:
