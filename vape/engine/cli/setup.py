@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shlex
 import subprocess
 from pathlib import Path
 
@@ -25,7 +26,7 @@ def _load_plugin_manifests(prefix: str = "tts-", order: dict | None = None) -> l
     for plugin_dir in sorted(PLUGINS_DIR.glob(prefix + "*")):
         manifest_path = plugin_dir / "plugin.json"
         if manifest_path.exists():
-            data = json.loads(manifest_path.read_text())
+            data = json.loads(manifest_path.read_text(encoding="utf-8"))
             data["_dir"] = str(plugin_dir)
             manifests.append(data)
     if order is None:
@@ -242,18 +243,19 @@ def _download_language_pack(lang: dict) -> None:
     # Run post-install command (e.g., UniDic download)
     post_install = lang.get("postInstall")
     if post_install:
-        # Check if already installed
+        # Check if already installed. Manifest command strings are POSIX-quoted;
+        # shlex + argv keeps them off cmd.exe (different quoting) on Windows.
         check_cmd = lang.get("postInstallCheck")
         if check_cmd:
             result = subprocess.run(
-                check_cmd, shell=True, capture_output=True, text=True, cwd=str(ROOT_DIR),
+                shlex.split(check_cmd), capture_output=True, text=True, cwd=str(ROOT_DIR),
             )
             if result.returncode == 0 and "True" in result.stdout:
                 console.print(f"  [dim]✓ {lang['name']} post-install already done[/dim]")
                 return
 
         console.print(f"  Running post-install for {lang['name']}...")
-        subprocess.run(post_install, shell=True, cwd=str(ROOT_DIR))
+        subprocess.run(shlex.split(post_install), cwd=str(ROOT_DIR))
 
 
 def _ensure_env_key(var: str, hint: str) -> None:
@@ -438,7 +440,7 @@ def setup() -> None:
     plugins = avatar_cfg.get("plugins")
     if isinstance(plugins, dict) and legacy_plugin and legacy_plugin in plugins:
         plugins.setdefault(avatar_cfg["renderer"], plugins.pop(legacy_plugin))
-    CONFIG_PATH.write_text(json.dumps(cfg, indent=2) + "\n")
+    CONFIG_PATH.write_text(json.dumps(cfg, indent=2) + "\n", encoding="utf-8")
 
     # Done
     console.print(Panel(

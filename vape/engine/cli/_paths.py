@@ -23,16 +23,30 @@ RENDERERS_DIR = PLUGINS_DIR / "renderers"
 SHELLS_DIR = PLUGINS_DIR / "shells"
 
 
+def cache_base() -> Path:
+    """Per-user cache base: XDG_CACHE_HOME > %LOCALAPPDATA% (Windows) > ~/.cache.
+
+    Downloader and every model loader must agree on this — the same branch is
+    mirrored in _progress.py and tts-kokoro-onnx/engine.py; change all three
+    together.
+    """
+    xdg = os.environ.get("XDG_CACHE_HOME")
+    if xdg:
+        return Path(xdg)
+    if os.name == "nt" and os.environ.get("LOCALAPPDATA"):
+        return Path(os.environ["LOCALAPPDATA"])
+    return Path.home() / ".cache"
+
+
 def cache_dir() -> Path:
     """Return the cache directory for model files. Creates it if needed."""
-    base = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache"))
-    d = base / "vibe-ai-partner"
+    d = cache_base() / "vibe-ai-partner"
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
 def model_cache_dir(subdir: str) -> Path:
     """Return a model-specific cache directory (e.g., 'kokoro-onnx')."""
-    d = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / subdir
+    d = cache_base() / subdir
     d.mkdir(parents=True, exist_ok=True)
     return d

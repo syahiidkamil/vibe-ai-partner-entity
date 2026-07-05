@@ -62,14 +62,14 @@ CONSCIOUS_MODE_TTL = 3
 def load() -> dict:
     """Read the whole state file (every key), or {} if it does not exist yet."""
     try:
-        return json.loads(STATE_PATH.read_text())
+        return json.loads(STATE_PATH.read_text(encoding="utf-8"))
     except FileNotFoundError:
         return {}
 
 
 def save(state: dict) -> None:
     """Write the whole state back, preserving every key. 2-space indent, trailing nl."""
-    STATE_PATH.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n")
+    STATE_PATH.write_text(json.dumps(state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 # --- dials ------------------------------------------------------------------

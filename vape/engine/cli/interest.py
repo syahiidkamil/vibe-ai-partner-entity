@@ -38,7 +38,7 @@ def _available() -> list[str]:
 def _title(interest_dir) -> str:
     """First `# ` heading of interest.md — the interest's own one-line description."""
     try:
-        for line in (interest_dir / "interest.md").read_text().splitlines():
+        for line in (interest_dir / "interest.md").read_text(encoding="utf-8").splitlines():
             if line.startswith("# "):
                 return line[2:].strip()
     except Exception:
@@ -95,7 +95,7 @@ def interest_cmd(
         fpath = interest_dir / fname
         if fpath.is_file():
             print(f"\n--- {name}/{fname} ---")
-            print(fpath.read_text().rstrip())
+            print(fpath.read_text(encoding="utf-8").rstrip())
     print(
         "\n(End of pack. A lens, not a world: it rides alongside whatever else I hold, and "
         "several interests can be up at once. I set it down by saying so. If a compaction has "

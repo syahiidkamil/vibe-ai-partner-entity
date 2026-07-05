@@ -95,7 +95,7 @@ class HookEvent(BaseModel):
 
 def _get_vocal_mode() -> str:
     try:
-        config = json.loads((ROOT_DIR / "config.json").read_text())
+        config = json.loads((ROOT_DIR / "config.json").read_text(encoding="utf-8"))
         return config.get("entity", {}).get("vocalMode", "silent")
     except (FileNotFoundError, json.JSONDecodeError):
         return os.getenv("ENTITY_VOCAL_MODE", "silent")
@@ -105,7 +105,7 @@ def _get_standing_volume() -> int:
     """Standing speech volume (0-100) from config.json; read per clip so
     `vape volume N` takes effect without a server restart."""
     try:
-        config = json.loads((ROOT_DIR / "config.json").read_text())
+        config = json.loads((ROOT_DIR / "config.json").read_text(encoding="utf-8"))
         return int(config.get("tts", {}).get("volume", 100))
     except (FileNotFoundError, json.JSONDecodeError, TypeError, ValueError):
         return 100

@@ -110,7 +110,7 @@ class Game:
             move = replay.parse_san(san)
             replay.push(move)
             node = node.add_variation(move)
-        self.pgn_path.write_text(str(game) + "\n")
+        self.pgn_path.write_text(str(game) + "\n", encoding="utf-8")
 
 
 game = Game()

@@ -22,7 +22,7 @@ def _stop_avatar_window() -> None:
     try:
         # The recorded pid is the launcher (npx) — take down its whole tree so
         # the actual Electron/Tauri window is terminated too, not just the wrapper.
-        pid = int(pid_file.read_text().strip())
+        pid = int(pid_file.read_text(encoding="utf-8").strip())
         if kill_tree(pid):
             console.print(f"  [dim]Avatar window stopped (PID {pid}).[/dim]")
     except ValueError:
@@ -55,7 +55,7 @@ def stop(
     pid_file = cache_dir() / "server.pid"
     if pid_file.exists():
         try:
-            pid = int(pid_file.read_text().strip())
+            pid = int(pid_file.read_text(encoding="utf-8").strip())
         except ValueError:
             pid_file.unlink(missing_ok=True)
         else:

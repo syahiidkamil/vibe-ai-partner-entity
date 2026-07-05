@@ -90,7 +90,16 @@ MAX_CHARS = 500
 
 
 def _cache_dir() -> Path:
-    d = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "kokoro-onnx"
+    # Mirrors engine.cli._paths.cache_base(): XDG > %LOCALAPPDATA% (nt) > ~/.cache.
+    # The downloader (_progress.py) resolves the same way; change them together.
+    xdg = os.environ.get("XDG_CACHE_HOME")
+    if xdg:
+        base = Path(xdg)
+    elif os.name == "nt" and os.environ.get("LOCALAPPDATA"):
+        base = Path(os.environ["LOCALAPPDATA"])
+    else:
+        base = Path.home() / ".cache"
+    d = base / "kokoro-onnx"
     d.mkdir(parents=True, exist_ok=True)
     return d
 

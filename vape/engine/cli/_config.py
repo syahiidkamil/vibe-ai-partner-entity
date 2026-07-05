@@ -9,7 +9,7 @@ from engine.cli._paths import CONFIG_PATH
 def read_config() -> dict:
     """Read config.json, return dict or empty dict on error."""
     try:
-        return json.loads(CONFIG_PATH.read_text())
+        return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
     except (FileNotFoundError, json.JSONDecodeError):
         return {}
 
@@ -18,7 +18,7 @@ def write_config(updates: dict) -> None:
     """Deep-merge updates into config.json and write."""
     config = read_config()
     _deep_merge(config, updates)
-    CONFIG_PATH.write_text(json.dumps(config, indent=2) + "\n")
+    CONFIG_PATH.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
 
 
 def _deep_merge(base: dict, updates: dict) -> None:

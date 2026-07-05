@@ -207,7 +207,7 @@ class StateManager:
         }
         try:
             os.makedirs(os.path.dirname(path), exist_ok=True)
-            with open(path, "w") as f:
+            with open(path, "w", encoding="utf-8") as f:
                 json.dump(data, f, indent=2)
         except OSError:
             pass  # Non-fatal — don't crash server if file write fails
@@ -218,7 +218,7 @@ class StateManager:
         if not os.path.exists(path):
             return None
         try:
-            with open(path) as f:
+            with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             for name in STATE_NAMES:
                 if name in data.get("states", {}):

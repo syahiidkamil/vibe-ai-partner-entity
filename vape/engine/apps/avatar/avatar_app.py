@@ -81,7 +81,7 @@ class AvatarPlugin:
         if not caps_path.exists():
             return None
         try:
-            return json.loads(caps_path.read_text())
+            return json.loads(caps_path.read_text(encoding="utf-8"))
         except (json.JSONDecodeError, OSError):
             return None
 
@@ -169,7 +169,7 @@ class AvatarApp:
             if not manifest_path.exists():
                 continue
             try:
-                manifest = json.loads(manifest_path.read_text())
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
                 if manifest.get("category") != "avatar":
                     continue
                 plugin = AvatarPlugin(manifest, plugin_dir)
@@ -190,7 +190,7 @@ class AvatarApp:
             if not manifest_path.exists():
                 continue
             try:
-                manifest = json.loads(manifest_path.read_text())
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
                 if manifest.get("category") != "shell":
                     continue
                 shell = AvatarShell(manifest, shell_dir)

@@ -8,6 +8,8 @@ from pathlib import Path
 import httpx
 from rich.progress import Progress, BarColumn, DownloadColumn, TransferSpeedColumn, TimeRemainingColumn
 
+from engine.cli._paths import cache_base
+
 
 def is_cached(dest: Path) -> bool:
     """Check if a file is already cached (exists and non-empty)."""
@@ -51,8 +53,8 @@ def download_file(url: str, dest: Path, label: str | None = None) -> Path:
                     f.write(chunk)
                     progress.advance(task, len(chunk))
 
-    # Atomic rename
-    part_path.rename(dest)
+    # Atomic rename (os.replace: on Windows, rename fails if dest exists)
+    os.replace(part_path, dest)
     return dest
 
 
@@ -60,9 +62,10 @@ def download_models(models: list[dict]) -> None:
     """Download model files from a plugin manifest's models list. Skips cached."""
     for model in models:
         cache_subdir = model.get("cache_dir", "vibe-ai-partner")
-        cache_base = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / cache_subdir
-        cache_base.mkdir(parents=True, exist_ok=True)
-        dest = cache_base / model["name"]
+        # cache_base(): downloader and every model loader must agree on the base.
+        cache_dir = cache_base() / cache_subdir
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        dest = cache_dir / model["name"]
 
         if is_cached(dest):
             size_mb = dest.stat().st_size / (1024 * 1024)

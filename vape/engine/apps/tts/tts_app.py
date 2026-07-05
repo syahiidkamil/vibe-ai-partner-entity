@@ -113,7 +113,7 @@ class TTSApp:
 def _read_tts_config(config_path: Path) -> tuple[str | None, str | None]:
     """Read preferred TTS engine and voice from config.json."""
     try:
-        config = json.loads(config_path.read_text())
+        config = json.loads(config_path.read_text(encoding="utf-8"))
         tts = config.get("tts", {})
         return tts.get("engine"), tts.get("voice")
     except (FileNotFoundError, json.JSONDecodeError):

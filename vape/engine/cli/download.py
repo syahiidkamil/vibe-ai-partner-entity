@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shlex
 import subprocess
 from typing import Annotated
 
@@ -21,7 +22,7 @@ def _load_manifest(engine: str) -> dict | None:
     for plugin_dir in PLUGINS_DIR.glob("tts-*"):
         manifest_path = plugin_dir / "plugin.json"
         if manifest_path.exists():
-            data = json.loads(manifest_path.read_text())
+            data = json.loads(manifest_path.read_text(encoding="utf-8"))
             if data["name"] == engine:
                 return data
     return None
@@ -63,12 +64,16 @@ def download(
         if post_install:
             check_cmd = lang.get("postInstallCheck")
             if check_cmd:
-                result = subprocess.run(check_cmd, shell=True, capture_output=True, text=True, cwd=str(ROOT_DIR))
+                # Manifest command strings are POSIX-quoted; shlex + argv keeps
+                # them off cmd.exe (whose quoting rules differ) on Windows.
+                result = subprocess.run(
+                    shlex.split(check_cmd), capture_output=True, text=True, cwd=str(ROOT_DIR)
+                )
                 if result.returncode == 0 and "True" in result.stdout:
                     console.print(f"  [dim]✓ Post-install already done[/dim]")
                     return
             console.print(f"  Running post-install...")
-            subprocess.run(post_install, shell=True, cwd=str(ROOT_DIR))
+            subprocess.run(shlex.split(post_install), cwd=str(ROOT_DIR))
 
         console.print(f"  [green]{lang['name']} ready.[/green]")
     else:

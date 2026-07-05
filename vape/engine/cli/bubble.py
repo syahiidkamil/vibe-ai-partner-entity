@@ -40,7 +40,7 @@ def _available() -> list[str]:
 def _title(bubble_dir) -> str:
     """First `# ` heading of bubble.md — the bubble's own one-line self-description."""
     try:
-        for line in (bubble_dir / "bubble.md").read_text().splitlines():
+        for line in (bubble_dir / "bubble.md").read_text(encoding="utf-8").splitlines():
             if line.startswith("# "):
                 return line[2:].strip()
     except Exception:
@@ -119,7 +119,7 @@ def bubble_cmd(
     for fpath in pack_paths:
         if fpath.is_file():
             print(f"\n--- {fpath.relative_to(BUBBLES_DIR)} ---")
-            print(fpath.read_text().rstrip())
+            print(fpath.read_text(encoding="utf-8").rstrip())
     print(
         "\n(End of pack. This bubble's conduct binds me until I say I've left or a newer "
         "pack supersedes it; deeper files in its folder are dereferenced on demand. If a "

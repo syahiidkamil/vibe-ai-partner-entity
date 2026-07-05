@@ -117,7 +117,7 @@ def _launch_avatar(renderer: str, shell: str, port: int) -> subprocess.Popen | N
         return None
 
     if proc is not None:
-        _avatar_pid_file().write_text(str(proc.pid))
+        _avatar_pid_file().write_text(str(proc.pid), encoding="utf-8")
     return proc
 
 
@@ -208,7 +208,7 @@ def start(
             stderr=subprocess.DEVNULL,
         )
         pid_file = cache_dir() / "server.pid"
-        pid_file.write_text(str(proc.pid))
+        pid_file.write_text(str(proc.pid), encoding="utf-8")
         console.print(f"  [green]Server started (PID {proc.pid})[/green]")
 
         if _wait_for_server(port):
