@@ -165,6 +165,11 @@ architecture. And she holds the whole valuation in pencil, on her own judgment, 
 first real match is played, because a world model unverified by play is still just a guess
 wearing a schema's name.
 
+<p align="center">
+  <img src="misc/screenshots/magic_chess_gogo_commanders_tier_list.png"
+       alt="One of Saori's Magic Chess: Go Go valuation pages: the commanders tier list" width="720">
+</p>
+
 > Most "AI memory" is a database bolted onto a stateless worker. Retrieval, RAG, fact
 > extraction: store what happened, fetch rows later. The agent is assumed; memory is
 > furniture. **They give an agent a memory. We give a memory a self.**
