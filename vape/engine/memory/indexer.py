@@ -54,6 +54,13 @@ class Indexer:
                 self.backend.reset()
                 self.core.manifest_clear()
 
+            # the manifest is backend-agnostic but the store is not: a
+            # backend switch must re-derive everything into the NEW store
+            # (without reset — hash-gated embeddings survive switching back)
+            backend_name = self.backend.capabilities().name
+            if self.core.meta_get("backend_name") != backend_name:
+                self.core.manifest_clear()
+
             queued = set(self.core.drain_reindex())
             manifest = self.core.manifest_all()
             now_iso = datetime.now(timezone.utc).isoformat()
@@ -108,6 +115,7 @@ class Indexer:
                 res.report.embedded += backfill()
 
             self.core.meta_set("last_sweep_at", now_iso)
+            self.core.meta_set("backend_name", backend_name)
         finally:
             self.core.end_sweep()
         return res

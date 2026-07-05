@@ -50,7 +50,6 @@ def build_embedder(name: str, root: Path) -> Embedder | None:
     if name != "gemini":
         return None
     import os
-    load_env(root)
     key = os.environ.get("GEMINI_API_KEY", "")
     if key in PLACEHOLDER_KEYS:
         return None            # degrade to fts-only; doctor names the reason
@@ -67,6 +66,10 @@ def resolve_backend_class(name: str):
 
 def build_backend(root: Path, cfg: dict) -> tuple[RetrievalBackend, str]:
     """Returns (backend, note). The note explains any degradation."""
+    # secrets can be needed by the STORE (DATABASE_URL), not only the
+    # embedder — load once, up front (caught live: pgvector with
+    # embedder=none never saw its URL, 2026-07-05)
+    load_env(root)
     name = cfg["retrieval"]
     if name == "files":
         return FilesBackend(root), ""

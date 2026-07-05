@@ -11,8 +11,6 @@ dependencies = [
     "typer[all]>=0.15.0",
     "httpx>=0.27.0",
     "toons>=0.7.0",
-    "psycopg[binary]>=3.2",
-    "pgvector>=0.3.6",
     "python-dotenv>=1.0.0",
     "chess>=1.11.0",
 ]
@@ -23,6 +21,7 @@ tts-kokoro = ["vibe-plugin-tts-kokoro"]
 tts-kitten = ["vibe-plugin-tts-kitten"]
 retrieval-sqlite = ["vibe-plugin-retrieval-sqlite"]
 retrieval-sqlite-vec = ["vibe-plugin-retrieval-sqlite[vec]"]
+retrieval-pgvector = ["vibe-plugin-retrieval-pgvector"]
 dev = [
     "pytest>=8.0.0",
     "httpx>=0.27.0",
@@ -46,6 +45,7 @@ vibe-plugin-tts-kokoro-onnx = { workspace = true }
 vibe-plugin-tts-kokoro = { workspace = true }
 vibe-plugin-tts-kitten = { workspace = true }
 vibe-plugin-retrieval-sqlite = { workspace = true }
+vibe-plugin-retrieval-pgvector = { workspace = true }
 
 [dependency-groups]
 dev = [

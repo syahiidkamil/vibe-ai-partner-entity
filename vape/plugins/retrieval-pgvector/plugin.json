@@ -1,0 +1,9 @@
+{
+  "name": "pgvector",
+  "displayName": "Postgres + pgvector",
+  "description": "Semantic + keyword search on a Postgres server. Needs DATABASE_URL and a GEMINI_API_KEY.",
+  "tag": "",
+  "category": "retrieval",
+  "uvExtra": "retrieval-pgvector",
+  "note": "The scale path: concurrent writers, HNSW ANN, server-side FTS. Vectors degrade to keyword-only without a key."
+}

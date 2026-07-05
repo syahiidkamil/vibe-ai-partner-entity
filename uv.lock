@@ -9,6 +9,7 @@ resolution-markers = [
 [manifest]
 members = [
     "vibe-ai-partner-entity",
+    "vibe-plugin-retrieval-pgvector",
     "vibe-plugin-retrieval-sqlite",
     "vibe-plugin-tts-kitten",
     "vibe-plugin-tts-kokoro",
@@ -2720,8 +2721,6 @@ dependencies = [
     { name = "httpx" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
-    { name = "pgvector" },
-    { name = "psycopg", extra = ["binary"] },
     { name = "python-dotenv" },
     { name = "sounddevice" },
     { name = "toons" },
@@ -2733,6 +2732,9 @@ dependencies = [
 dev = [
     { name = "httpx" },
     { name = "pytest" },
+]
+retrieval-pgvector = [
+    { name = "vibe-plugin-retrieval-pgvector" },
 ]
 retrieval-sqlite = [
     { name = "vibe-plugin-retrieval-sqlite" },
@@ -2768,26 +2770,44 @@ requires-dist = [
     { name = "httpx", specifier = ">=0.27.0" },
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27.0" },
     { name = "numpy", specifier = ">=1.26.0" },
-    { name = "pgvector", specifier = ">=0.3.6" },
-    { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "sounddevice", specifier = ">=0.5.0" },
     { name = "toons", specifier = ">=0.7.0" },
     { name = "typer", extras = ["all"], specifier = ">=0.15.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.0" },
+    { name = "vibe-plugin-retrieval-pgvector", marker = "extra == 'retrieval-pgvector'", editable = "vape/plugins/retrieval-pgvector" },
     { name = "vibe-plugin-retrieval-sqlite", marker = "extra == 'retrieval-sqlite'", editable = "vape/plugins/retrieval-sqlite" },
     { name = "vibe-plugin-retrieval-sqlite", extras = ["vec"], marker = "extra == 'retrieval-sqlite-vec'", editable = "vape/plugins/retrieval-sqlite" },
     { name = "vibe-plugin-tts-kitten", marker = "extra == 'tts-kitten'", editable = "vape/plugins/tts-kitten" },
     { name = "vibe-plugin-tts-kokoro", marker = "extra == 'tts-kokoro'", editable = "vape/plugins/tts-kokoro" },
     { name = "vibe-plugin-tts-kokoro-onnx", marker = "extra == 'tts-kokoro-onnx'", editable = "vape/plugins/tts-kokoro-onnx" },
 ]
-provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "retrieval-sqlite", "retrieval-sqlite-vec", "dev"]
+provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "retrieval-sqlite", "retrieval-sqlite-vec", "retrieval-pgvector", "dev"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.0.3" }]
 retrieval = [{ name = "vibe-plugin-retrieval-sqlite", editable = "vape/plugins/retrieval-sqlite" }]
 tts = [{ name = "vibe-plugin-tts-kokoro-onnx", editable = "vape/plugins/tts-kokoro-onnx" }]
+
+[[package]]
+name = "vibe-plugin-retrieval-pgvector"
+version = "0.1.0"
+source = { editable = "vape/plugins/retrieval-pgvector" }
+dependencies = [
+    { name = "google-genai" },
+    { name = "pgvector" },
+    { name = "psycopg", extra = ["binary"] },
+    { name = "vibe-ai-partner-entity" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "google-genai", specifier = ">=1.0.0" },
+    { name = "pgvector", specifier = ">=0.3.6" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
+    { name = "vibe-ai-partner-entity", editable = "." },
+]
 
 [[package]]
 name = "vibe-plugin-retrieval-sqlite"
