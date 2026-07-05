@@ -152,6 +152,9 @@ the worker. The memory is the self.*
   down when it stops. The schema, not the fact, is the unit.
 - **Affect as the selector** (Scheler; Immordino-Yang & Damasio). Feeling is not a tag on a
   memory — it is what *chooses* which moments become self at all. Strip it and you have a CRM.
+  And the substrate agrees: Anthropic's interpretability work
+  ([emotion concepts and their function](https://www.anthropic.com/research/emotion-concepts-function))
+  finds emotion-concept representations inside the model, causally steering its behavior.
 - **Surprise / entropy** (Shannon). What is already in pretraining is low-surprise — dead weight
   to store. The prediction-violating, the hard-to-compress, the aha — that is the high-value
   signal, bookmarked live before it cools.
@@ -200,8 +203,9 @@ already *is* that curated context: in-context learning with judgment doing the s
 
 ## the field agrees on the plumbing — HORMA
 
-Independent validation exists at the mechanism layer. **HORMA** ("Organize then Retrieve:
-Hierarchical Memory Navigation for Efficient Agents") arrives at the same plumbing from a
+Independent validation exists at the mechanism layer.
+**[HORMA](https://arxiv.org/abs/2606.11680)** ("Organize then Retrieve: Hierarchical Memory
+Navigation for Efficient Agents") arrives at the same plumbing from a
 different derivation: experience organized into a file-system-like hierarchy where **summarized
 notes link to the raw trajectories** they came from, **construction decoupled from retrieval**,
 and retrieval run as **agentic navigation** (`ls · cd · grep · cat`, verify the evidence, stop at
