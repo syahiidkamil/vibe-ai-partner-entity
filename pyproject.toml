@@ -13,7 +13,6 @@ dependencies = [
     "toons>=0.7.0",
     "psycopg[binary]>=3.2",
     "pgvector>=0.3.6",
-    "google-genai>=1.0.0",
     "python-dotenv>=1.0.0",
     "chess>=1.11.0",
 ]

@@ -80,7 +80,10 @@ def doctor_cmd() -> None:
     if caps.name == "files":
         console.print("  [dim]next rung: uv run vape memory index (sqlite tier is the default install)[/dim]")
     elif not caps.vector:
-        console.print("  [dim]next rung: vectors — sqlite-vec + GEMINI_API_KEY in vape/.env (S3)[/dim]")
+        console.print(
+            "  [dim]next rung: vectors — uv sync --extra retrieval-sqlite-vec,"
+            " then GEMINI_API_KEY in vape/.env (config memory.embedder=gemini)[/dim]"
+        )
 
 
 @memory_app.command("schema")

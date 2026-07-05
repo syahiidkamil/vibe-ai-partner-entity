@@ -101,6 +101,12 @@ class Indexer:
                 res.files_deleted = len(dead)
                 res.report.evicted += len(dead)
 
+            # in-store reconcile: rows missing current-model vectors (a key
+            # added after the sweep, or a model swap) — optional per backend
+            backfill = getattr(self.backend, "backfill", None)
+            if callable(backfill):
+                res.report.embedded += backfill()
+
             self.core.meta_set("last_sweep_at", now_iso)
         finally:
             self.core.end_sweep()

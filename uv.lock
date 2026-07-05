@@ -2717,7 +2717,6 @@ source = { editable = "." }
 dependencies = [
     { name = "chess" },
     { name = "fastapi" },
-    { name = "google-genai" },
     { name = "httpx" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.4.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
@@ -2766,7 +2765,6 @@ tts = [
 requires-dist = [
     { name = "chess", specifier = ">=1.11.0" },
     { name = "fastapi", specifier = ">=0.115.0" },
-    { name = "google-genai", specifier = ">=1.0.0" },
     { name = "httpx", specifier = ">=0.27.0" },
     { name = "httpx", marker = "extra == 'dev'", specifier = ">=0.27.0" },
     { name = "numpy", specifier = ">=1.26.0" },
