@@ -1,0 +1,40 @@
+{
+  "name": "avatar-vrm",
+  "displayName": "VRM Avatar",
+  "description": "3D VRM avatar (VRoid-compatible) — 13 feelings, actions, lip sync, spring-bone physics. Bring your own .vrm: see vrm-models/README.md",
+  "tag": "Experimental",
+  "category": "avatar",
+  "renderer": "vrm",
+  "distDir": ".",
+  "order": 4,
+  "models": [
+    {
+      "id": "user-vrm",
+      "name": "Your VRM model",
+      "description": "Any VRM 0.x/1.0 file dropped into vrm-models/ (models are not shipped — most VRoid Hub licenses forbid redistribution)",
+      "path": "vrm-models",
+      "default": true
+    }
+  ],
+  "interface": {
+    "feelings": true,
+    "selfExpressions": true,
+    "physics": true
+  },
+  "window": {
+    "width": 260,
+    "height": 380,
+    "anchor": "bottom-right",
+    "margin": { "right": 20, "bottom": 20 },
+    "title": "VAPE Avatar (VRM)",
+    "transparent": true,
+    "frame": false,
+    "alwaysOnTop": true,
+    "resizable": false
+  },
+  "connection": {
+    "wsStatus": "/ws/status",
+    "wsAudio": "/ws/audio",
+    "apiBase": "/api"
+  }
+}

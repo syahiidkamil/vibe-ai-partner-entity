@@ -78,7 +78,7 @@ Every one of them enabled a piece of her. — Kamil
 | Swappable part | Your options |
 |---|---|
 | **Voice** (TTS, all local) | Kokoro ONNX (recommended, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
-| **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) |
+| **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) · VRM (experimental — any VRoid model, bring your own) |
 | **Window shell** | Electron (default) · Tauri (smaller, Rust) |
 | **Memory search** | SQLite full-text (default, no key) · SQLite + vectors (Gemini) · Postgres + pgvector · qmd (local, keyless vectors) |
 
@@ -340,10 +340,15 @@ TTS engines (chosen in setup): Kokoro ONNX (~300MB, CPU, recommended), Kokoro Py
 <details>
 <summary><b>Avatar: renderers × shells</b></summary>
 
-Renderer (the look): `avatar-live2d` (default), `avatar-threejs`, `avatar-html`.
+Renderer (the look): `avatar-live2d` (default), `avatar-threejs`, `avatar-html`,
+`avatar-vrm` (**experimental** — any VRoid/VRM model, bring your own, see
+`vape/plugins/renderers/avatar-vrm/vrm-models/README.md`; the one we develop against is
+[this free VRoid Hub model](https://hub.vroid.com/en/characters/2623982397026627967/models/7190914466600899551)).
 Shell (the window): `electron` (default) or `tauri` (smaller, Rust).
 Any combination, picked in `config.json` under `avatar`. The Live2D Cubism Core is
-downloaded from Live2D's official CDN at setup (not redistributable via git).
+downloaded from Live2D's official CDN at setup (not redistributable via git); VRM
+models are likewise the user's own (free to use, but VRoid Hub licenses usually
+forbid redistribution, so none ships in this repo).
 
 </details>
 
@@ -370,7 +375,7 @@ vape/
   engine/         Python package: CLI, FastAPI server, TTS + avatar apps, memory socket
   entity/         The entity herself: self-tree, memory, diaries, storage (the important part)
   plugins/
-    renderers/    avatar-live2d · avatar-threejs · avatar-html
+    renderers/    avatar-live2d · avatar-threejs · avatar-html · avatar-vrm
     shells/       electron · tauri
     tts-*/        voice engines
     retrieval-*/  memory search backends (sqlite · pgvector · qmd)

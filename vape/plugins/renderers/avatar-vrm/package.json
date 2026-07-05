@@ -1,0 +1,9 @@
+{
+  "name": "@vape/avatar-vrm",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@pixiv/three-vrm": "^3.5.4",
+    "three": "^0.185.1"
+  }
+}

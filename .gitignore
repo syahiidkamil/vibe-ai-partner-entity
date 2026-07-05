@@ -72,3 +72,8 @@ vape/entity/storage/
 
 misc/browser-profile
 .playwright-mcp
+
+# VRM models are the user's own (VRoid Hub licenses usually forbid
+# redistribution) — keep them local; only the folder's README ships.
+vape/plugins/renderers/avatar-vrm/vrm-models/*
+!vape/plugins/renderers/avatar-vrm/vrm-models/README.md

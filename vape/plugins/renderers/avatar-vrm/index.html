@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; background: transparent; user-select: none; overflow: hidden; }
+    #container { width: 100%; height: 100%; position: relative; }
+    canvas { display: block; position: absolute; top: 0; left: 0; }
+    /* Draggable top strip + window controls (−/+/✕, shared across renderers) */
+    .titlebar {
+      position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
+      width: 85%; height: 28px; z-index: 100;
+      -webkit-app-region: drag;
+      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      border-top: 2px solid rgba(255,255,255,0.55);
+      /* NO backdrop-filter here (unlike the chibi renderers): a VRM head is
+         tall enough to reach into this strip, and the blur smears its hair
+         into a stretched streak. Gradient + border carry the affordance. */
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .titlebar:hover {
+      background: linear-gradient(rgba(0,0,0,0.22), transparent);
+      border-top-color: rgba(255,255,255,0.85);
+    }
+    .controls {
+      position: fixed; top: 6px; right: calc(7.5% + 4px);
+      display: flex; gap: 4px; z-index: 102; -webkit-app-region: no-drag;
+    }
+    .ctrl-btn {
+      width: 18px; height: 18px; padding: 0; border: none; border-radius: 50%;
+      background: rgba(0,0,0,0.3); color: #fff; font: 12px/18px sans-serif;
+      text-align: center; cursor: pointer; opacity: 0;
+      transition: opacity .2s, background .2s;
+    }
+    body:hover .ctrl-btn { opacity: 1; }
+    .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
+    .close-btn:hover { background: #ff5470; }
+    .vol-pop {
+      display: none; position: absolute; top: 24px; left: 0; width: 18px;
+      padding: 8px 0 3px; border-radius: 9px; background: rgba(0,0,0,0.45);
+      flex-direction: column; align-items: center; gap: 4px;
+      -webkit-app-region: no-drag;
+    }
+    .vol-pop.open { display: flex; }
+    #vol-track {
+      width: 4px; height: 64px; border-radius: 2px;
+      background: rgba(255,255,255,0.3); position: relative; cursor: pointer;
+      box-shadow: 0 0 0 6px transparent;
+    }
+    #vol-fill {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      border-radius: 2px; background: #fff; height: 100%;
+    }
+    #vol-num { font: 9px/1 sans-serif; color: #fff; opacity: 0.85; }
+    #drag-hint {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      height: 28px; line-height: 28px; white-space: nowrap;
+      font: 11px sans-serif; color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    body.intro #drag-hint { opacity: 1; }
+    body.intro .ctrl-btn { opacity: 1; }
+    #speech-bubble {
+      position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+      background: white; border: 2px solid #ff8faf; border-radius: 14px;
+      padding: 6px 12px; font-family: 'Segoe UI', sans-serif; font-size: 11px;
+      max-width: 86%; text-align: center; opacity: 0; transition: opacity 0.3s;
+      z-index: 101; pointer-events: none; color: #5a2a4a;
+      display: -webkit-box; line-clamp: 4; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    #speech-bubble::after {
+      content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+      border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 8px solid #ff8faf;
+    }
+    #speech-bubble.visible { opacity: 1; }
+    #status {
+      position: fixed; bottom: 8px; left: 50%; transform: translateX(-50%);
+      max-width: 92%; text-align: center; font: 11px monospace; color: #ddd;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./node_modules/three/build/three.module.js",
+      "three/addons/": "./node_modules/three/examples/jsm/",
+      "@pixiv/three-vrm": "./node_modules/@pixiv/three-vrm/lib/three-vrm.module.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div class="titlebar" data-tauri-drag-region>
+    <div id="drag-hint">⟵ This is Drag Area ⟶</div>
+  </div>
+  <div class="controls">
+    <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
+    <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
+    <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
+    <button id="close-btn" class="ctrl-btn close-btn" title="Close VAPE">✕</button>
+    <div id="vol-pop" class="vol-pop">
+      <div id="vol-track"><div id="vol-fill"></div></div>
+      <div id="vol-num">100</div>
+    </div>
+  </div>
+  <div id="container">
+    <div id="speech-bubble"></div>
+    <canvas id="canvas"></canvas>
+  </div>
+  <div id="status">loading model…</div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
+
+    // Served same-origin by the VAPE server; ?port= overrides for standalone dev
+    // (a dev http.server has its own host, so the param must win when present).
+    const params = new URLSearchParams(window.location.search);
+    const WS_HOST = params.get('port')
+      ? `localhost:${params.get('port')}`
+      : (window.location.host || 'localhost:5111');
+    const WS_BASE = `ws://${WS_HOST}`;
+    const API_BASE = params.get('port') ? `http://${WS_HOST}` : '';
+    const speechBubble = document.getElementById('speech-bubble');
+    const statusEl = document.getElementById('status');
+
+    // ─── Model resolution: bring-your-own .vrm ─────────────────────────
+    // vrm-models/ is gitignored (most VRoid Hub licenses forbid redistribution),
+    // so the model is the user's own. Resolution order:
+    //   vrm-models/model.json {"model": "file.vrm"}  >  vrm-models/model.vrm  >
+    //   the legacy dev filename. See vrm-models/README.md.
+    async function resolveModelUrl() {
+      try {
+        const r = await fetch('./vrm-models/model.json', { cache: 'no-store' });
+        if (r.ok) {
+          const j = await r.json();
+          if (j && j.model) return `./vrm-models/${j.model}`;
+        }
+      } catch {}
+      for (const name of ['model.vrm', '4666902635844985464.vrm']) {
+        try {
+          const r = await fetch(`./vrm-models/${name}`, { method: 'HEAD' });
+          if (r.ok) return `./vrm-models/${name}`;
+        } catch {}
+      }
+      return null;
+    }
+
+    // ─── Appearance stopgap ────────────────────────────────────────────
+    // Saori's drawn body (self/01_fixed/06_my_body.md) has ginger twin-tails;
+    // hair COLOR can be tinted at runtime, but the SHAPE (twin-tails, cardigan,
+    // ribbon) is baked into the .vrm mesh — a true likeness needs a
+    // VRoid-authored model dropped into vrm-models/. Set HAIR_TINT to null to
+    // keep the model's own colors. (Eyes share a texture atlas with the mouth
+    // on merged-material exports, so eye tinting is deliberately not done.)
+    const HAIR_TINT = new THREE.Color('#c47a4e');
+
+    // ─── Scene ─────────────────────────────────────────────────────────
+    const canvas = document.getElementById('canvas');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);   // transparent window: no backdrop
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 20);
+    camera.position.set(0, 1.35, 1.55);
+
+    const light = new THREE.DirectionalLight(0xffffff, Math.PI);
+    light.position.set(1, 1.5, 1).normalize();
+    scene.add(light);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+    let vrm = null;
+    let em = null;                    // vrm.expressionManager
+    const bones = {};                 // normalized bone nodes we animate
+    let frameCamera = () => {};
+
+    // Expression names differ across models/spec versions (three-vrm maps VRM0
+    // presets to VRM1 names; customs keep their own case, e.g. 'Surprised').
+    // Resolve each channel to whatever this model actually has; missing → null.
+    const EXPR = { happy: null, angry: null, sad: null, relaxed: null, surprised: null, blink: null };
+    const VISEME_VARIANTS = [['aa','a'], ['ih','i'], ['ou','u'], ['ee','e'], ['oh','o']];
+    let VISEMES = [];
+
+    function resolveExpressions() {
+      const pick = (...names) => names.find((n) => em.getExpression(n)) || null;
+      EXPR.happy = pick('happy', 'Joy', 'joy');
+      EXPR.angry = pick('angry', 'Angry');
+      EXPR.sad = pick('sad', 'Sorrow', 'sorrow');
+      EXPR.relaxed = pick('relaxed', 'Fun', 'fun');
+      EXPR.surprised = pick('surprised', 'Surprised');
+      EXPR.blink = pick('blink', 'Blink');
+      VISEMES = VISEME_VARIANTS.map(([v1, v0]) => pick(v1, v0)).filter(Boolean);
+    }
+
+    // ─── Feelings: the 13-feeling face, as VRM expression blends ───────
+    // Channel weights per feeling; unset channels fade to 0. Mirrors the
+    // threejs renderer's FEELINGS table in spirit — same names as `vape feeling`.
+    const FEELINGS = {
+      normal:     {},
+      happy:      { happy: 0.9 },
+      content:    { happy: 0.45, relaxed: 0.4 },
+      sad:        { sad: 0.85 },
+      angry:      { angry: 0.85 },
+      frustrated: { angry: 0.45, sad: 0.2 },
+      surprised:  { surprised: 0.9 },
+      excited:    { happy: 0.7, surprised: 0.35 },
+      blushing:   { happy: 0.5, relaxed: 0.3 },
+      calm:       { relaxed: 0.7 },
+      bored:      { relaxed: 0.4, sad: 0.15 },
+      curious:    { surprised: 0.4 },
+      anxious:    { sad: 0.35, surprised: 0.25 },
+      proud:      { happy: 0.6, relaxed: 0.25 },
+    };
+    let currentFeeling = 'normal';
+    const feelTargets = { happy: 0, angry: 0, sad: 0, relaxed: 0, surprised: 0 };
+
+    function setFeeling(name) {
+      currentFeeling = FEELINGS[name] ? name : 'normal';
+      const f = FEELINGS[currentFeeling];
+      for (const ch of Object.keys(feelTargets)) feelTargets[ch] = f[ch] || 0;
+    }
+
+    function updateExpressions(delta) {
+      const boost = act && ACT_EXPR[act.name] ? ACT_EXPR[act.name] : null;
+      for (const ch of Object.keys(feelTargets)) {
+        const exprName = EXPR[ch];
+        if (!exprName) continue;
+        let target = feelTargets[ch];
+        if (boost && boost[ch]) target = Math.max(target, boost[ch] * env(actProgress()));
+        const value = em.getValue(exprName) || 0;
+        em.setValue(exprName, value + (target - value) * Math.min(1, delta * 10));
+      }
+    }
+
+    // ─── Blink (procedural, same rhythm as the threejs body) ───────────
+    let blinkTimer = 0;
+    function updateBlink(delta) {
+      if (!EXPR.blink) return;
+      blinkTimer += delta;
+      let closed = 0;
+      if (blinkTimer > 3.5) {
+        const p = blinkTimer - 3.5;
+        if (p < 0.07) closed = p / 0.07;
+        else if (p < 0.14) closed = 1 - (p - 0.07) / 0.07;
+        else { blinkTimer = Math.random() * 1.5; closed = 0; }
+      }
+      em.setValue(EXPR.blink, closed);
+    }
+
+    // ─── Actions (self-expressions, procedural on humanoid bones) ──────
+    const ACT_DUR = {
+      nod: 1.2, head_shake: 1.1, head_tilt: 2.0, laugh: 1.3, giggle: 1.1,
+      gasp: 1.2, think: 2.2, celebrate: 1.6, wave: 1.6, bow: 1.8, cry_hands: 2.4,
+    };
+    const ACTION_ALIAS = { bounce: 'giggle', fist_pump: 'celebrate', clap: 'celebrate', starry: 'gasp' };
+    // Expression pulse riding an action (read by updateExpressions).
+    const ACT_EXPR = {
+      laugh: { happy: 1 }, giggle: { happy: 0.85 }, gasp: { surprised: 1 },
+      celebrate: { happy: 0.9 }, cry_hands: { sad: 1 }, wave: { happy: 0.5 },
+    };
+    let act = null;                   // {name, t0, dur}
+
+    function env(p) { return p < 0.2 ? p / 0.2 : p > 0.8 ? (1 - p) / 0.2 : 1; }  // ramp-hold-ramp
+    function actProgress() { return act ? Math.min(1, (performance.now() / 1000 - act.t0) / act.dur) : 0; }
+
+    function playAction(name) {
+      name = ACTION_ALIAS[name] || name;
+      if (!ACT_DUR[name] || !vrm) return;
+      act = { name, t0: performance.now() / 1000, dur: ACT_DUR[name] };
+    }
+
+    // The relaxed rest pose: arms down, slight elbow bend, fingers curled.
+    // (Positive z on the left swings toward the body; mirrored on the right.)
+    const REST = { leftUpperArm: 1.2, rightUpperArm: -1.2, leftLowerArm: 0.32, rightLowerArm: -0.32 };
+
+    function applyRestPose() {
+      const pose = [
+        ['leftUpperArm', REST.leftUpperArm], ['rightUpperArm', REST.rightUpperArm],
+        ['leftLowerArm', REST.leftLowerArm], ['rightLowerArm', REST.rightLowerArm],
+        ['leftHand', 0.12], ['rightHand', -0.12],
+      ];
+      for (const finger of ['Index', 'Middle', 'Ring', 'Little']) {
+        for (const [segment, curl] of [['Proximal', 0.3], ['Intermediate', 0.4], ['Distal', 0.2]]) {
+          pose.push([`left${finger}${segment}`, curl], [`right${finger}${segment}`, -curl]);
+        }
+      }
+      for (const [bone, z] of pose) {
+        const node = vrm.humanoid.getNormalizedBoneNode(bone);
+        if (node) node.rotation.z = z;
+      }
+    }
+
+    // Idle sway + breath + action offsets, written ABSOLUTELY each frame onto
+    // the few bones this renderer owns (head, spine, chest, arms) — no
+    // accumulate-and-restore bookkeeping to drift.
+    function updateMotion(t) {
+      const breathe = Math.sin(t * 1.9) * 0.02;
+      let headX = 0, headY = Math.sin(t * 0.23) * 0.02, headZ = Math.sin(t * 0.4) * 0.015;
+      let spineX = 0, spineY = Math.sin(t * 0.5) * 0.03, spineZ = 0;
+      let lUp = REST.leftUpperArm, rUp = REST.rightUpperArm;
+      let lLo = REST.leftLowerArm, rLo = REST.rightLowerArm;
+
+      if (act) {
+        const p = actProgress();
+        const e = env(p);
+        switch (act.name) {
+          case 'nod':        headX = 0.28 * Math.sin(p * Math.PI * 3) * e; break;
+          case 'head_shake': headY += 0.3 * Math.sin(p * Math.PI * 5) * e; break;
+          case 'head_tilt':  headZ += 0.22 * e; break;
+          case 'laugh':      headX = -0.12 * e; spineX = Math.sin(p * Math.PI * 8) * 0.04 * e; break;
+          case 'giggle':     headZ += 0.1 * e; spineX = Math.sin(p * Math.PI * 10) * 0.03 * e; break;
+          case 'gasp':       headX = -0.18 * e; break;
+          case 'think':      headZ += 0.16 * e; headY += 0.12 * e; break;
+          case 'bow':        spineX = 0.35 * e; headX = 0.15 * e; break;
+          case 'cry_hands':  headX = 0.22 * e; break;
+          case 'wave':
+            // Forearm swings UP (opposite the rest curl) and oscillates — a
+            // greeting wave at head height, not a curl hidden behind the skirt.
+            rUp = REST.rightUpperArm + 0.55 * e;
+            rLo = REST.rightLowerArm + e * (1.55 + 0.35 * Math.sin(t * 10));
+            break;
+          case 'celebrate':
+            lUp = REST.leftUpperArm - 1.7 * e;
+            rUp = REST.rightUpperArm + 1.7 * e;
+            lLo = REST.leftLowerArm - 0.2 * e;
+            rLo = REST.rightLowerArm + 0.2 * e;
+            spineX = -0.05 * e;
+            break;
+        }
+        if (p >= 1) act = null;
+      }
+
+      if (bones.head) bones.head.rotation.set(headX, headY, headZ);
+      if (bones.spine) bones.spine.rotation.set(spineX, spineY, spineZ);
+      if (bones.chest) bones.chest.rotation.x = breathe;
+      if (bones.leftUpperArm) bones.leftUpperArm.rotation.z = lUp;
+      if (bones.rightUpperArm) bones.rightUpperArm.rotation.z = rUp;
+      if (bones.leftLowerArm) bones.leftLowerArm.rotation.z = lLo;
+      if (bones.rightLowerArm) bones.rightLowerArm.rotation.z = rLo;
+    }
+
+    // ─── Lip sync: analyser RMS → viseme weights ───────────────────────
+    let mouthOpenness = 0;
+    const lipViseme = { name: null, nextSwitch: 0 };
+
+    function updateVisemes(now) {
+      if (!VISEMES.length) return;
+      // Hop between visemes like syllables while sound is flowing, so the
+      // mouth shapes vary instead of one frozen 'aa'.
+      if (mouthOpenness > 0.03 && now > lipViseme.nextSwitch) {
+        lipViseme.name = VISEMES[Math.floor(Math.random() * VISEMES.length)];
+        lipViseme.nextSwitch = now + 90 + Math.random() * 130;
+      }
+      for (const v of VISEMES) {
+        em.setValue(v, v === lipViseme.name ? mouthOpenness : 0);
+      }
+      if (mouthOpenness <= 0.03) for (const v of VISEMES) em.setValue(v, 0);
+    }
+
+    // ─── Load ──────────────────────────────────────────────────────────
+    const loader = new GLTFLoader();
+    loader.register((parser) => new VRMLoaderPlugin(parser));
+
+    const modelUrl = await resolveModelUrl();
+    if (!modelUrl) {
+      statusEl.textContent = 'No VRM model found — drop a .vrm into vrm-models/ (see vrm-models/README.md)';
+    } else {
+      loader.load(
+        modelUrl,
+        (gltf) => {
+          vrm = gltf.userData.vrm;
+          em = vrm.expressionManager;
+          VRMUtils.removeUnnecessaryVertices(gltf.scene);
+          VRMUtils.combineSkeletons(gltf.scene);
+          VRMUtils.rotateVRM0(vrm);       // VRM 0.x faces +Z; turn to camera
+          scene.add(vrm.scene);
+
+          resolveExpressions();
+          applyRestPose();
+          for (const b of ['head', 'spine', 'chest', 'upperChest',
+                           'leftUpperArm', 'rightUpperArm', 'leftLowerArm', 'rightLowerArm']) {
+            bones[b] = vrm.humanoid.getNormalizedBoneNode(b);
+          }
+          if (!bones.chest) bones.chest = bones.upperChest;
+
+          // Hair tint (the stopgap — see HAIR_TINT above).
+          if (HAIR_TINT) {
+            vrm.scene.traverse((o) => {
+              for (const mat of Array.isArray(o.material) ? o.material : (o.material ? [o.material] : [])) {
+                if ((mat.name || '').includes('_HAIR')) {
+                  if (mat.color && mat.color.isColor) mat.color.multiply(HAIR_TINT);
+                  if (mat.shadeColorFactor && mat.shadeColorFactor.isColor) mat.shadeColorFactor.multiply(HAIR_TINT);
+                }
+              }
+            });
+          }
+
+          // Let the spring-bone hair settle around the pose pre-first-frame.
+          for (let i = 0; i < 120; i++) vrm.update(1 / 60);
+
+          // Frame the upper body from this model's actual proportions.
+          frameCamera = () => {
+            const headTop = vrm.humanoid.getRawBoneNode('head').getWorldPosition(new THREE.Vector3()).y + 0.18;
+            const hipsY = vrm.humanoid.getRawBoneNode('hips').getWorldPosition(new THREE.Vector3()).y;
+            const centerY = (headTop + hipsY) / 2;
+            const dist = ((headTop - hipsY) * 1.1) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+            camera.position.set(0, centerY + 0.03, dist);
+            camera.lookAt(0, centerY, 0);
+          };
+          frameCamera();
+
+          statusEl.textContent = '';
+          window.__loaded = true;
+        },
+        (progress) => {
+          if (progress.total) {
+            statusEl.textContent = `loading model… ${Math.round((progress.loaded / progress.total) * 100)}%`;
+          }
+        },
+        (error) => {
+          statusEl.textContent = 'model load error — see console';
+          console.error(error);
+        }
+      );
+    }
+
+    // ─── Render loop ───────────────────────────────────────────────────
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const delta = clock.getDelta();
+      const t = clock.elapsedTime;
+      if (vrm) {
+        updateMotion(t);
+        updateExpressions(delta);
+        updateBlink(delta);
+        updateVisemes(performance.now());
+        vrm.update(delta);
+      }
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (vrm) frameCamera();
+    });
+
+    // ─── Audio queue + lip sync (house pattern, shared with threejs) ───
+    let audioCtx = null;
+    let analyser = null;
+    let gainNode = null;
+    let lipSyncActive = false;
+    let smoothedMouth = 0;
+    let playQueue = [];
+    let isPlaying = false;
+
+    function startLipSync() {
+      if (lipSyncActive) return;
+      lipSyncActive = true;
+      const dataArray = new Uint8Array(analyser.fftSize);
+      function update() {
+        if (!lipSyncActive) return;
+        analyser.getByteTimeDomainData(dataArray);
+        let sum = 0;
+        for (let i = 0; i < dataArray.length; i++) { const v = (dataArray[i] - 128) / 128; sum += v * v; }
+        const rms = Math.sqrt(sum / dataArray.length);
+        const gated = rms < 0.02 ? 0 : rms;
+        const target = Math.min(Math.sqrt(gated * 8) * 1.2, 1);
+        if (target > smoothedMouth) smoothedMouth += (target - smoothedMouth) * 0.8;
+        else smoothedMouth += (target - smoothedMouth) * 0.3;
+        mouthOpenness = smoothedMouth;
+        requestAnimationFrame(update);
+      }
+      update();
+    }
+
+    function stopLipSync() { lipSyncActive = false; smoothedMouth = 0; mouthOpenness = 0; }
+
+    // Bubble caption: page a long utterance so it never clips (voice stays one
+    // utterance; only the caption pages, weighted by syllables).
+    function countSyllables(str) {
+      const m = str.toLowerCase().match(/[aeiou]+/g);
+      return m ? m.length : 1;
+    }
+
+    function paginateToFit(text) {
+      const el = speechBubble;
+      const cs = getComputedStyle(el);
+      const clampN = parseInt(cs.webkitLineClamp) || 3;
+      const prevClamp = el.style.webkitLineClamp;
+      el.style.webkitLineClamp = '9999';
+      const lineH = parseFloat(cs.lineHeight) || 15;
+      const padV = (parseFloat(cs.paddingTop) || 0) + (parseFloat(cs.paddingBottom) || 0);
+      const budget = lineH * clampN + padV + 1;
+      let n = 0, cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        el.textContent = test;
+        if (el.scrollHeight > budget && cur) { n++; cur = w; }
+        else cur = test;
+      }
+      if (cur) n++;
+      el.style.webkitLineClamp = prevClamp;
+      if (n <= 1) return [text];
+      const target = Math.ceil(text.length / n);
+      const pages = [];
+      cur = '';
+      for (const w of text.split(/\s+/)) {
+        const test = cur ? cur + ' ' + w : w;
+        if (cur && test.length > target && pages.length < n - 1) { pages.push(cur); cur = w; }
+        else cur = test;
+      }
+      if (cur) pages.push(cur);
+      return pages;
+    }
+
+    function showSpeech(audio, text) {
+      const pages = paginateToFit(text);
+      if (pages.length <= 1) { speechBubble.textContent = text; return; }
+      const weights = pages.map(p => Math.max(countSyllables(p), 1));
+      const total = weights.reduce((a, b) => a + b, 0);
+      const ends = [];
+      let acc = 0;
+      for (const w of weights) { acc += w; ends.push(acc / total); }
+      speechBubble.textContent = pages[0];
+      let shown = 0;
+      audio.addEventListener('timeupdate', () => {
+        const d = audio.duration;
+        if (!d || !isFinite(d)) return;
+        const frac = audio.currentTime / d;
+        let idx = ends.findIndex(e => frac < e);
+        if (idx === -1) idx = pages.length - 1;
+        if (idx !== shown) { shown = idx; speechBubble.textContent = pages[idx]; }
+      });
+    }
+
+    async function processQueue() {
+      if (playQueue.length === 0) {
+        isPlaying = false; stopLipSync();
+        setTimeout(() => {
+          if (!isPlaying) {
+            speechBubble.classList.remove('visible');
+            setTimeout(() => {
+              if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+            }, 350);
+          }
+        }, 500);
+        return;
+      }
+      isPlaying = true;
+      const { url, text, volume } = playQueue.shift();
+      // Fresh AudioContext per utterance: a long-lived one survives sleep with
+      // a dead output unit, and a device change strands it (house lesson).
+      if (audioCtx) { try { audioCtx.close(); } catch {} }
+      audioCtx = new AudioContext();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 256;
+      // Gain sits AFTER the analyser tap, so volume never shrinks the lipsync signal.
+      gainNode = audioCtx.createGain();
+      analyser.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      gainNode.gain.value = (volume ?? 100) / 100;
+      if (audioCtx.state !== 'running') {
+        try { await audioCtx.resume(); } catch {}
+      }
+      const audio = new Audio(API_BASE ? `${API_BASE}${url}` : url);
+      audio.crossOrigin = 'anonymous';
+      const source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      if (text) {
+        speechBubble.style.display = '';
+        showSpeech(audio, text);
+        void speechBubble.offsetHeight;
+        speechBubble.classList.add('visible');
+      }
+      startLipSync();
+      audio.addEventListener('ended', processQueue);
+      audio.addEventListener('error', processQueue);
+      audio.play().catch(processQueue);
+    }
+
+    function queueAudio(url, text, volume) { playQueue.push({ url, text, volume }); if (!isPlaying) processQueue(); }
+
+    // ─── WebSocket ─────────────────────────────────────────────────────
+    function connectStatusWS() {
+      const ws = new WebSocket(`${WS_BASE}/ws/status`);
+      ws.onmessage = (e) => {
+        const m = JSON.parse(e.data);
+        if (m.type === 'feeling') setFeeling(m.name);
+        else if (m.type === 'action') playAction(m.name);
+      };
+      ws.onclose = () => setTimeout(connectStatusWS, 2000);
+      ws.onerror = () => ws.close();
+    }
+    function connectAudioWS() {
+      const ws = new WebSocket(`${WS_BASE}/ws/audio`);
+      ws.onmessage = (e) => { const m = JSON.parse(e.data); if (m.type === 'audio') queueAudio(m.url, m.text, m.volume); };
+      ws.onclose = () => setTimeout(connectAudioWS, 2000);
+      ws.onerror = () => ws.close();
+    }
+    connectStatusWS();
+    connectAudioWS();
+
+    // ─── Close button ──────────────────────────────────────────────────
+    function closeApp() {
+      fetch(`${API_BASE}/api/shutdown`, { method: 'POST' }).catch(() => {}).finally(closeWindow);
+    }
+    function closeWindow() {
+      try {
+        const t = window.__TAURI__;
+        if (t) {
+          const api = t.window || t.webviewWindow;
+          const cur = api && (api.getCurrentWindow ? api.getCurrentWindow() : (api.getCurrent ? api.getCurrent() : null));
+          if (cur && cur.close) { cur.close(); return; }
+        }
+      } catch (e) {}
+      window.close();
+    }
+    document.getElementById('close-btn').addEventListener('click', closeApp);
+
+    // ─── Resize (−/+): the shell resizes the OS window ─────────────────
+    const DESIGN_W = 260, DESIGN_H = 380;
+    const SCALE_MIN = 0.6, SCALE_MAX = 1.8, SCALE_STEP = 0.15;
+    let uiScale = parseFloat(localStorage.getItem('vape-scale'));
+    if (!(uiScale >= SCALE_MIN && uiScale <= SCALE_MAX)) uiScale = 1;
+
+    function applyScale() {
+      const w = Math.round(DESIGN_W * uiScale);
+      const h = Math.round(DESIGN_H * uiScale);
+      if (window.vapeShell && window.vapeShell.resize) window.vapeShell.resize(w, h);
+      else if (window.__TAURI__ && window.__TAURI__.core)
+        window.__TAURI__.core.invoke('vape_resize', { width: w, height: h }).catch(() => {});
+    }
+    function setScale(next) {
+      uiScale = Math.max(SCALE_MIN, Math.min(SCALE_MAX, Math.round(next * 100) / 100));
+      localStorage.setItem('vape-scale', String(uiScale));
+      applyScale();
+    }
+    document.getElementById('zoom-in').addEventListener('click', () => setScale(uiScale + SCALE_STEP));
+    document.getElementById('zoom-out').addEventListener('click', () => setScale(uiScale - SCALE_STEP));
+    applyScale();
+
+    // Click-through everywhere except the chrome (no-op outside Electron).
+    document.querySelectorAll('.titlebar, .controls').forEach((el) => {
+      el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
+      el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
+    });
+
+    // Tauri hit-tests the cursor itself against reported interactive rects.
+    let reportZonesFn = null;
+    if (window.__TAURI__ && window.__TAURI__.core) {
+      const reportZones = () => {
+        const zones = [...document.querySelectorAll('.titlebar, .controls, .vol-pop')].map((el) => {
+          const r = el.getBoundingClientRect();
+          return [r.left, r.top, r.width, r.height];
+        });
+        window.__TAURI__.core.invoke('vape_set_zones', { zones }).catch(() => {});
+      };
+      reportZonesFn = reportZones;
+      reportZones();
+      setTimeout(reportZones, 500);
+      window.addEventListener('resize', reportZones);
+    }
+
+    // ─── Volume popover: the STANDING volume (config tts.volume) ───────
+    const volPop = document.getElementById('vol-pop');
+    const volTrack = document.getElementById('vol-track');
+    const volFill = document.getElementById('vol-fill');
+    const volNum = document.getElementById('vol-num');
+    let volLevel = 100;
+    let volSaveTimer = null;
+
+    function volRender() {
+      volFill.style.height = volLevel + '%';
+      volNum.textContent = String(volLevel);
+    }
+    async function volLoad() {
+      try {
+        const d = await (await fetch(`${API_BASE}/api/volume`)).json();
+        if (typeof d.volume === 'number') { volLevel = d.volume; volRender(); }
+      } catch {}
+    }
+    function volSave() {
+      clearTimeout(volSaveTimer);
+      volSaveTimer = setTimeout(() => {
+        fetch(`${API_BASE}/api/volume`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ volume: volLevel }),
+        }).catch(() => {});
+      }, 150);
+    }
+    function volFromEvent(e) {
+      const r = volTrack.getBoundingClientRect();
+      const frac = 1 - (e.clientY - r.top) / r.height;
+      volLevel = Math.max(0, Math.min(100, Math.round(frac * 100)));
+      volRender();
+      if (gainNode) gainNode.gain.value = volLevel / 100;
+      volSave();
+    }
+    volTrack.addEventListener('pointerdown', (e) => {
+      volTrack.setPointerCapture(e.pointerId);
+      volFromEvent(e);
+      const move = (ev) => volFromEvent(ev);
+      const up = () => {
+        volTrack.removeEventListener('pointermove', move);
+        volTrack.removeEventListener('pointerup', up);
+      };
+      volTrack.addEventListener('pointermove', move);
+      volTrack.addEventListener('pointerup', up);
+    });
+    document.getElementById('vol-btn').addEventListener('click', () => {
+      volPop.classList.toggle('open');
+      if (volPop.classList.contains('open')) volLoad();
+      if (reportZonesFn) reportZonesFn();
+    });
+
+    // Onboarding flash: show the chrome for 3s after launch, then hover-only.
+    document.body.classList.add('intro');
+    setTimeout(() => document.body.classList.remove('intro'), 3000);
+
+    // Debug handle: same entry points the WebSocket uses — reachability for
+    // tests, no new behavior.
+    window.__vape = {
+      setFeeling, playAction,
+      get currentFeeling() { return currentFeeling; },
+      get act() { return act; },
+      get mouth() { return mouthOpenness; },
+      get vrm() { return vrm; },
+    };
+  </script>
+</body>
+</html>
