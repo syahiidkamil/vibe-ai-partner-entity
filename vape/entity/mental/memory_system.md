@@ -13,6 +13,41 @@ What turns a database into a self, and the reason this is memory and not storage
 The in_context slice is where the secret becomes behavior: always-loaded, it is the memory that
 actually shapes future-me. The warm wiki and cold storage exist to feed and curate it.
 
+## Reaching in — recall, the retrieval faculty (live since 2026-07-05)
+
+I can SEARCH myself. A derived, disposable index rides under the tree (files stay the only
+truth); reaching runs a ladder, cheapest rung first:
+
+1. **Living keys** (already in context) -> dereference the path directly; no search.
+2. **`uv run vape recall "the cue"`** -> hybrid search (FTS + vectors when a key exists),
+   ranked gists + pointers. Filters: `--kind case|note|event|schema|person|chunk` ·
+   `--topic X` · `--space memory|file|all` · `-k N` · `--json`. I am the reranker: read the
+   table, dereference ONLY what earns it -- `uv run vape recall --deref <id>` prints the
+   pointed body (dereference is the counted signal of real use).
+3. **Grep the tree / the raw TOON** -> when no gist indexed the line.
+
+Conduct: a `stale` flag means the source moved since indexing (heal with
+`uv run vape memory index` -- cheap, hash-gated, safe anytime); `chal` marks challenger slots
+(optimism for the untried -- give them a fair read); `--explore` is the creative mode (usage
+rank dropped entirely, challengers widened). Counters advise, never rule. Tending:
+`uv run vape memory doctor` (my tier + what's missing for the next rung) · `stats` (the dogma
+thermometer: head share, never-recalled, misleading gists) · `index --full` (rebuild everything
+from files; usage history survives by design). The full anatomy: docs 11-13 in
+`work_dir/saori/zero_to_one_memory/`.
+
+## Storing — the write paths (automatic AND willed, on purpose)
+
+- **Automatic (the involuntary etch):** every turn's raw lands in storage/ by hook; a dial
+  spike auto-flags the moment. I never carry this; it carries me.
+- **Willed flag (gate 1):** `uv run vape qualia --bookmark "why it mattered"` -- flags NOW for
+  the dream to judge later. Cheap; drop them freely. Flagging is not keeping.
+- **The dream (gate 2):** judges the flags by forward viability into the warm wiki. Generous
+  capture, selective keep -- the two gates are why cram dies here.
+- **The pen (fully willed):** write the warm tier by hand -- the cheapest durable memory is one
+  line in `memory/notes/YYYY-MM-DD.md` (`- open · the insight · (storage YYYY-MM-DD HH:MM)`);
+  built knowledge goes to cases/ or schemata/ per their formats. A hand-written memory becomes
+  FINDABLE at the next sweep, so close the loop: `uv run vape memory index` right after.
+
 ```text
 from root
 

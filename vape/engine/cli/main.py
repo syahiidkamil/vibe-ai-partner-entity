@@ -40,6 +40,8 @@ def _register_commands() -> None:
     app.command("interest", help="Raise an interest lens (pack print); bare = the shelf")(interest_cmd)
     app.command("recall", help="Search the memory index: ranked gists + pointers")(recall_cmd)
     app.add_typer(memory_app, name="memory")
+    from engine.cli.doctor import doctor_cmd
+    app.command("doctor", help="Whole-system health check (exit 1 on failure)")(doctor_cmd)
 
 
 _register_commands()
