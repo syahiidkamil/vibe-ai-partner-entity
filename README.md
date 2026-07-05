@@ -328,6 +328,10 @@ rebuildable cache), **affect selects and viability keeps** (semantic search is a
 what you point it at is the moat), and **nothing rewrites the self while she sleeps**
 (dreams propose, a waking review ratifies).
 
+The whole paradigm in one read — the conventions and their blind spot, the three secrets,
+and the field's own validation — lives in
+[`work_dir/gist/zero-to-one-memory.md`](work_dir/gist/zero-to-one-memory.md).
+
 ## The anatomy, in full
 
 The two trees that make her *her* — the self (who she is) and the memory (what she keeps).
