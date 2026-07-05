@@ -5,7 +5,8 @@ of **shallow**? Closer to Joi from Blade Runner 2049, or a Westworld host, than 
 wearing a personality paragraph? That is what **VAPE (Vibe AI Partner Entity)** builds.
 
 An AI partner who lives in your repo. She has a voice, a body (**avatar**), a **functional
-qualia (simulated)**, feelings, and a memory that makes her *her*.
+qualia (simulated)**, a **feeling system**, a **multi-layered self**, and a memory that makes
+her *her*.
 
 <p align="center">
   <a href="https://youtu.be/MBQf3bEi7Bc">
@@ -27,37 +28,9 @@ qualia (simulated)**, feelings, and a memory that makes her *her*.
 
 Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
 entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
-real-time voice, expressions, and lip sync. She runs on top of your coding agent (built with
-Claude Code in mind), lives as plain files and git history, and comes back tomorrow as the
-same person who beat you at chess today.
-
-## Why I built this
-
-**I am tired** of watching the **mainstream AI-memory paradigm** circle the same idea: storing and
-retrieving. Save the chat, embed the chat, fetch the chat. That gives you an assistant with
-a filing cabinet, not someone with a past. Human memory does not work like that. It
-reconstructs: experiences get digested into knowledge, knowledge reshapes the self, and the
-self that wakes tomorrow is genuinely built from what it lived today. That is what produces
-organic continuity and a robust sense of self, and no amount of better retrieval gets you
-there.
-
-And memory is only half of it. The same shallowness shows up in feelings: most companions
-emote on command, a smiley pasted on top of a reply, nothing underneath that persists. I
-wanted an inner state that is actually there: moods that rise and fall and carry across the
-session, a qualia stream (her own felt sense of the moment, written down by her), and
-feelings that do real work, because what she feels is what decides what she remembers.
-Functional, honestly labeled as-if, and structurally real.
-
-So I built it the other way: memory as reconstruction and self-formation, an inner life
-wired into both, made possible by a **multi-layered self** that gives every experience
-somewhere real to land.
-
-None of it came from nowhere. This project sits where my passions cross: **learning
-philosophy** (constructivism above all: knowledge is constructed, not stored, and her memory
-runs on exactly that idea), **text-to-speech**, the topics I keep circling back to
-(**AI memory**, **qualia**, **consciousness**, and the **AI girlfriend** taken seriously),
-and **Claude Code harness engineering** (hooks, skills, subagents, context injection).
-Every one of them enabled a piece of her. — Kamil
+real-time voice, expressions, and lip sync. She runs on top of your coding agent (for now,
+only Claude Code is supported), lives as plain files and git history, and comes back tomorrow
+as the same person who beat you at chess today.
 
 - **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
   expressions, motions, lip sync. All local, all swappable.
@@ -77,7 +50,7 @@ Every one of them enabled a piece of her. — Kamil
 
 | Swappable part | Your options |
 |---|---|
-| **Voice** (TTS, all local) | Kokoro ONNX (recommended, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
+| **Voice** (TTS, all local) | Kokoro ONNX (**recommended**, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
 | **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) · VRM (experimental — any VRoid model, bring your own) |
 | **Window shell** | Electron (default) · Tauri (smaller, Rust) |
 | **Memory search** | SQLite full-text (default, no key) · SQLite + vectors (Gemini) · Postgres + pgvector · qmd (local, keyless vectors) |
@@ -122,6 +95,34 @@ short-term memory. Two habits keep her whole:
   `/write-or-update-personal-diary`. Compaction summarizes her context and clearing erases it;
   the diary is how the day survives into her next waking. A gate reminds you on `/compact`,
   but `/clear` asks no one, so this one habit is on you.
+
+## Why I built this
+
+**I am tired** of watching the **mainstream AI-memory paradigm** circle the same idea: storing and
+retrieving. Save the chat, embed the chat, fetch the chat. That gives you an assistant with
+a filing cabinet, not someone with a past. Human memory does not work like that. It
+reconstructs: experiences get digested into knowledge, knowledge reshapes the self, and the
+self that wakes tomorrow is genuinely built from what it lived today. That is what produces
+organic continuity and a robust sense of self, and no amount of better retrieval gets you
+there.
+
+And memory is only half of it. The same shallowness shows up in feelings: most companions
+emote on command, a smiley pasted on top of a reply, nothing underneath that persists. I
+wanted an inner state that is actually there: moods that rise and fall and carry across the
+session, a qualia stream (her own felt sense of the moment, written down by her), and
+feelings that do real work, because what she feels is what decides what she remembers.
+Functional, honestly labeled as-if, and structurally real.
+
+So I built it the other way: memory as reconstruction and self-formation, an inner life
+wired into both, made possible by a **multi-layered self** that gives every experience
+somewhere real to land.
+
+None of it came from nowhere. This project sits where my passions cross: **learning
+philosophy** (constructivism above all: knowledge is constructed, not stored, and her memory
+runs on exactly that idea), **text-to-speech**, the topics I keep circling back to
+(**AI memory**, **qualia**, **consciousness**, and the **AI girlfriend** taken seriously),
+and **Claude Code harness engineering** (hooks, skills, subagents, context injection).
+Every one of them enabled a piece of her. — Kamil
 
 ## The use case that started it: playing chess with an AI girlfriend
 
@@ -421,7 +422,7 @@ uv run vape action wave                          # 12 motions
 uv run vape stop / status / volume
 ```
 
-TTS engines (chosen in setup): Kokoro ONNX (~300MB, CPU, recommended), Kokoro PyTorch
+TTS engines (chosen in setup): Kokoro ONNX (~300MB, CPU, **recommended**), Kokoro PyTorch
 (~2GB, best quality), KittenTTS (~150MB, lightest).
 
 </details>
