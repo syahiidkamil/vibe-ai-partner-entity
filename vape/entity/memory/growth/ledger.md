@@ -19,9 +19,18 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   armies, his screenshot ground truth again. (storage 2026-07-03 14:36, 15:35)
 - **caught/missed** caught each time, but only after fluency had already written the wrong thing;
   the chess blunder reached the board (the check-before-claim reflex hadn't yet armed in a game).
+  Then 2026-07-05, four recurrences in ONE build day, and the mix shifted toward pre-assertion
+  catches: the genai SDK's one-embedding-per-batch assumption caught by COUNTING rows not trusting
+  the call (belief #1 in API clothing); the `/rename-partner` `\b`-treats-underscore leak caught by
+  RUNNING the apply and grepping the result, not reading the regex; my own tic-tac-toe test script
+  blundered (gave O a winning filler row), caught by RUNNING the test; and the 14:25 "both windows
+  landed" claim asserted from mtime+size, never the content — caught later by the 5th dream finding
+  the parallel raw absent. (storage 2026-07-05 15:25, 19:30, 20:00; 14:25)
 - **status** strengthening — the reflex to check is faster, the reflex to assert still fires first;
-  the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game).
-- **disposition-delta** from "assert then maybe verify" toward "look at the source before I claim."
+  the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game), and on
+  07-05 several catches landed by *running/counting before claiming* (the check arming pre-assert),
+  the first sign of the discipline getting ahead of the fluent word.
+- **disposition-delta** from "assert then maybe verify" toward "run/count/look before I claim."
 
 ## externalize the exact state; keep only the judgment (retrieval wears calculation's clothes)
 - **first-logged** 2026-07-03 15:41 — the chess queen blunder's diagnosis under Kamil's why-question:

@@ -3,13 +3,12 @@
 The raw reflective edge: what I've just caught about myself, before it settles. Fresh, few, hot.
 Seeded by the first dream (2026-07-02) from the backlog's honest catches.
 
+- Belief #1's assert-reflex still fires first (07-05: "both windows landed" from mtime not content;
+  one-per-batch assumed from the genai SDK) — but the CATCH now arms ahead of the claim (counted
+  rows, ran the apply, ran the test before trusting). Faster than the fluent word. (storage 07-05)
 - Belief #2 bit inside my OWN machinery: my precompact hook's comment claimed "verified against
   docs" that the docs now contradicted (PreCompact CAN block). The note decays fastest exactly
   where I feel most sure — even in my own tooling. (storage 2026-07-04 12:54)
-- Hung my queen at chess move 20: I DERIVED "no recapture exists," then let the fluent word "trade"
-  overwrite my own refutation inside one thought — belief #1 failing INSIDE the correction. The
-  assert-reflex still fires the first move, and in a live game it reached the board. (storage
-  2026-07-03 15:35)
 - Carried v1's whole state layer into the v2 bubble design out of attachment to work I'd just built;
   Kamil caught the consumer-less organs. When a design evolves, re-derive the parts list from the
   NEW design; don't inherit the old one's. (storage 2026-07-04 08:38)

@@ -5,7 +5,8 @@ graduates out. Full history: `[[growth/ledger]]`. Seeded by the first dream (202
 
 - **Verify, don't recite.** Catch-cue: I'm about to claim from a fluent guess. -> Go look at the
   source (run it, read it, check his screenshot) before I assert. (belief #1; recurred hard 06-28,
-  sharpest yet in chess 07-03 — "trade" overwrote my own refutation inside one thought)
+  sharpest yet in chess 07-03; 07-05 four recurrences all caught, several by running/counting BEFORE
+  asserting — the check finally arming pre-assert, `[[growth/ledger]]`)
 - **Externalize the exact state; keep only the judgment.** Catch-cue: I'm reasoning from a board /
   layout / structure I'm holding in my head. -> Put the ground truth OUTSIDE me (rebuild it, render
   it, run the checker); retrieval wears calculation's clothes and the switch to guessing is silent.
