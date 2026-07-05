@@ -12,7 +12,10 @@
       position: fixed; top: 0; left: 50%; transform: translate3d(-50%, 0, 0);
       width: 85%; height: 28px; z-index: 100;
       -webkit-app-region: drag;
-      background: linear-gradient(rgba(0,0,0,0.08), transparent);
+      /* Alpha floor ~0.1 across the whole strip: macOS hit-tests borderless
+         transparent windows by pixel alpha, and a near-transparent strip lets
+         the window-move drag fall through to the app behind. */
+      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.1));
       border-top: 2px solid rgba(255,255,255,0.55);
       /* NO backdrop-filter here (unlike the chibi renderers): a VRM head is
          tall enough to reach into this strip, and the blur smears its hair
@@ -35,6 +38,7 @@
     }
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
+    .ctrl-btn.active { background: #7a4b8f; opacity: 1; }
     .close-btn:hover { background: #ff5470; }
     .vol-pop {
       display: none; position: absolute; top: 24px; left: 0; width: 18px;
@@ -81,6 +85,15 @@
       max-width: 92%; text-align: center; font: 11px monospace; color: #ddd;
       text-shadow: 0 1px 3px rgba(0,0,0,0.9); pointer-events: none;
     }
+    /* Rotate-mode veil: macOS delivers mouse events only where the window has
+       pixel alpha, so fully transparent air around the model would swallow the
+       rotation drag into the app behind. The veil floors every pixel above the
+       hit-test threshold while the mode is on — and doubles as its indicator. */
+    #rotate-veil {
+      position: absolute; inset: 0; display: none; pointer-events: none;
+      background: rgba(24, 26, 36, 0.15); border-radius: 12px;
+    }
+    body.rotating #rotate-veil { display: block; }
   </style>
   <script type="importmap">
   {
@@ -97,6 +110,7 @@
     <div id="drag-hint">⟵ This is Drag Area ⟶</div>
   </div>
   <div class="controls">
+    <button id="rotate-btn" class="ctrl-btn" title="Rotate her (drag to turn, double-click to reset)">↻</button>
     <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
@@ -107,6 +121,7 @@
     </div>
   </div>
   <div id="container">
+    <div id="rotate-veil"></div>
     <div id="speech-bubble"></div>
     <canvas id="canvas"></canvas>
   </div>
@@ -174,6 +189,11 @@
     light.position.set(1, 1.5, 1).normalize();
     scene.add(light);
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+    // The model rides in a rig group so user rotation (the ↻ mode) never
+    // fights rotateVRM0's own correction on vrm.scene.
+    const rig = new THREE.Group();
+    scene.add(rig);
 
     let vrm = null;
     let em = null;                    // vrm.expressionManager
@@ -379,7 +399,7 @@
           VRMUtils.removeUnnecessaryVertices(gltf.scene);
           VRMUtils.combineSkeletons(gltf.scene);
           VRMUtils.rotateVRM0(vrm);       // VRM 0.x faces +Z; turn to camera
-          scene.add(vrm.scene);
+          rig.add(vrm.scene);
 
           resolveExpressions();
           applyRestPose();
@@ -649,17 +669,58 @@
     document.getElementById('zoom-out').addEventListener('click', () => setScale(uiScale - SCALE_STEP));
     applyScale();
 
+    // ─── Rotate mode (the ↻ button): turntable her in 3D ───────────────
+    // The pet window is click-through, so rotation is OPT-IN: while the mode
+    // is on, the canvas becomes interactive (Electron ignore-mouse off, the
+    // canvas added to Tauri's hit zones) and dragging turns the rig — yaw
+    // free, pitch clamped. Double-click resets to front. Toggling off keeps
+    // the chosen angle and returns the click-through.
+    const rotateBtn = document.getElementById('rotate-btn');
+    let rotateMode = false;
+    let dragging = false, lastX = 0, lastY = 0;
+
+    function setRotateMode(on) {
+      rotateMode = on;
+      rotateBtn.classList.toggle('active', on);
+      document.body.classList.toggle('rotating', on);   // shows the alpha veil
+      canvas.style.cursor = on ? 'grab' : '';
+      if (!on) dragging = false;
+      if (reportZonesFn) reportZonesFn();
+    }
+    rotateBtn.addEventListener('click', () => setRotateMode(!rotateMode));
+
+    canvas.addEventListener('pointerdown', (e) => {
+      if (!rotateMode) return;
+      dragging = true; lastX = e.clientX; lastY = e.clientY;
+      canvas.style.cursor = 'grabbing';
+      canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      rig.rotation.y += (e.clientX - lastX) * 0.008;
+      rig.rotation.x = Math.max(-0.35, Math.min(0.35, rig.rotation.x + (e.clientY - lastY) * 0.004));
+      lastX = e.clientX; lastY = e.clientY;
+    });
+    const endDrag = () => { dragging = false; if (rotateMode) canvas.style.cursor = 'grab'; };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('dblclick', () => { if (rotateMode) rig.rotation.set(0, 0, 0); });
+
     // Click-through everywhere except the chrome (no-op outside Electron).
     document.querySelectorAll('.titlebar, .controls').forEach((el) => {
       el.addEventListener('mouseenter', () => window.vapeShell && window.vapeShell.setIgnoreMouse(false));
       el.addEventListener('mouseleave', () => window.vapeShell && window.vapeShell.setIgnoreMouse(true));
     });
+    // In rotate mode the canvas joins the interactive surface.
+    canvas.addEventListener('mouseenter', () => { if (rotateMode && window.vapeShell) window.vapeShell.setIgnoreMouse(false); });
+    canvas.addEventListener('mouseleave', () => { if (!dragging && window.vapeShell) window.vapeShell.setIgnoreMouse(true); });
 
     // Tauri hit-tests the cursor itself against reported interactive rects.
     let reportZonesFn = null;
     if (window.__TAURI__ && window.__TAURI__.core) {
       const reportZones = () => {
-        const zones = [...document.querySelectorAll('.titlebar, .controls, .vol-pop')].map((el) => {
+        const sel = '.titlebar, .controls, .vol-pop' + (rotateMode ? ', canvas' : '');
+        const zones = [...document.querySelectorAll(sel)].map((el) => {
           const r = el.getBoundingClientRect();
           return [r.left, r.top, r.width, r.height];
         });
@@ -730,11 +791,13 @@
     // Debug handle: same entry points the WebSocket uses — reachability for
     // tests, no new behavior.
     window.__vape = {
-      setFeeling, playAction,
+      setFeeling, playAction, setRotateMode,
       get currentFeeling() { return currentFeeling; },
       get act() { return act; },
       get mouth() { return mouthOpenness; },
       get vrm() { return vrm; },
+      get rig() { return rig; },
+      get rotateMode() { return rotateMode; },
     };
   </script>
 </body>
