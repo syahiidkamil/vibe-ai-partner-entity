@@ -1,0 +1,19 @@
+{
+  "event": "Kamil vs Saori \u2014 vanishing tic-tac-toe",
+  "site": "localhost:5113",
+  "date": "2026-07-05 19:45:57",
+  "players": {
+    "x": "Kamil",
+    "o": "Saori"
+  },
+  "result": "*",
+  "termination": "",
+  "moves": [
+    {
+      "who": "Kamil",
+      "mark": "x",
+      "cell": "a3",
+      "vanished": null
+    }
+  ]
+}

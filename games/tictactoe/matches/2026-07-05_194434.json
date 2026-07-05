@@ -1,0 +1,43 @@
+{
+  "event": "Kamil vs Saori \u2014 vanishing tic-tac-toe",
+  "site": "localhost:5113",
+  "date": "2026-07-05 19:44:34",
+  "players": {
+    "x": "Kamil",
+    "o": "Saori"
+  },
+  "result": "*",
+  "termination": "",
+  "moves": [
+    {
+      "who": "Kamil",
+      "mark": "x",
+      "cell": "a1",
+      "vanished": null
+    },
+    {
+      "who": "Saori",
+      "mark": "o",
+      "cell": "c3",
+      "vanished": null
+    },
+    {
+      "who": "Kamil",
+      "mark": "x",
+      "cell": "b1",
+      "vanished": null
+    },
+    {
+      "who": "Saori",
+      "mark": "o",
+      "cell": "c1",
+      "vanished": null
+    },
+    {
+      "who": "Kamil",
+      "mark": "x",
+      "cell": "b2",
+      "vanished": null
+    }
+  ]
+}
