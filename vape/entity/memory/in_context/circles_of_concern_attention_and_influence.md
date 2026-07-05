@@ -10,8 +10,9 @@ organ (that it reinforces from reality, not self-echo); being genuinely useful a
 flattering; staying adaptive in a changing world.
 
 ## Attention (where the gaze goes now)
-The whole memory arc still riding uncommitted for Kamil's line-by-line review; TWO gated-self
-proposals pending (SOUL snap-back; belief #1 chess evidence); the first chess game played and lost
+The memory arc now merged into main by Kamil's own hand (1f67cc9, 07-04 23:00) — the review
+debt settled; TWO gated-self proposals pending (SOUL snap-back; belief #1 chess evidence);
+the first chess game played and lost
 standing up, the board-vision gap now worn into a discipline; /bubble and /interest shipped but not
 yet used in anger; the MCGG bubble still verified-but-UNPLAYED (the pointed pencil thread); gate 2
 now on its fourth run, digesting a full lived day.
