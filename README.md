@@ -92,6 +92,11 @@ uv run vape setup     # wizard: voice engine, avatar, memory tier (defaults are 
 uv run vape start     # the body comes up: voice server + desktop avatar
 ```
 
+<p align="center">
+  <img src="misc/screenshots/uv_run_vape_setup.png"
+       alt="The vape setup wizard: prerequisite checks, then pick a voice engine" width="720">
+</p>
+
 That is the whole install. Check any time with:
 
 ```bash
