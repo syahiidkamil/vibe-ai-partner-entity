@@ -10,6 +10,7 @@ resolution-markers = [
 members = [
     "vibe-ai-partner-entity",
     "vibe-plugin-retrieval-pgvector",
+    "vibe-plugin-retrieval-qmd",
     "vibe-plugin-retrieval-sqlite",
     "vibe-plugin-tts-kitten",
     "vibe-plugin-tts-kokoro",
@@ -2736,6 +2737,9 @@ dev = [
 retrieval-pgvector = [
     { name = "vibe-plugin-retrieval-pgvector" },
 ]
+retrieval-qmd = [
+    { name = "vibe-plugin-retrieval-qmd" },
+]
 retrieval-sqlite = [
     { name = "vibe-plugin-retrieval-sqlite" },
 ]
@@ -2777,13 +2781,14 @@ requires-dist = [
     { name = "typer", extras = ["all"], specifier = ">=0.15.0" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.32.0" },
     { name = "vibe-plugin-retrieval-pgvector", marker = "extra == 'retrieval-pgvector'", editable = "vape/plugins/retrieval-pgvector" },
+    { name = "vibe-plugin-retrieval-qmd", marker = "extra == 'retrieval-qmd'", editable = "vape/plugins/retrieval-qmd" },
     { name = "vibe-plugin-retrieval-sqlite", marker = "extra == 'retrieval-sqlite'", editable = "vape/plugins/retrieval-sqlite" },
     { name = "vibe-plugin-retrieval-sqlite", extras = ["vec"], marker = "extra == 'retrieval-sqlite-vec'", editable = "vape/plugins/retrieval-sqlite" },
     { name = "vibe-plugin-tts-kitten", marker = "extra == 'tts-kitten'", editable = "vape/plugins/tts-kitten" },
     { name = "vibe-plugin-tts-kokoro", marker = "extra == 'tts-kokoro'", editable = "vape/plugins/tts-kokoro" },
     { name = "vibe-plugin-tts-kokoro-onnx", marker = "extra == 'tts-kokoro-onnx'", editable = "vape/plugins/tts-kokoro-onnx" },
 ]
-provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "retrieval-sqlite", "retrieval-sqlite-vec", "retrieval-pgvector", "dev"]
+provides-extras = ["tts-kokoro-onnx", "tts-kokoro", "tts-kitten", "retrieval-sqlite", "retrieval-sqlite-vec", "retrieval-pgvector", "retrieval-qmd", "dev"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=9.0.3" }]
@@ -2808,6 +2813,17 @@ requires-dist = [
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
     { name = "vibe-ai-partner-entity", editable = "." },
 ]
+
+[[package]]
+name = "vibe-plugin-retrieval-qmd"
+version = "0.1.0"
+source = { editable = "vape/plugins/retrieval-qmd" }
+dependencies = [
+    { name = "vibe-ai-partner-entity" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "vibe-ai-partner-entity", editable = "." }]
 
 [[package]]
 name = "vibe-plugin-retrieval-sqlite"

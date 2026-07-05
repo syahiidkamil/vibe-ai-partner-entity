@@ -1,0 +1,10 @@
+{
+  "name": "qmd",
+  "displayName": "qmd (local semantic)",
+  "description": "Keyless local vector search over the memory files via tobi/qmd. File-search only.",
+  "tag": "",
+  "category": "retrieval",
+  "uvExtra": "retrieval-qmd",
+  "ramWarning": "qmd downloads ~0.3-2 GB of GGUF models and holds them in RAM per query; needs Node >= 22 and the qmd binary on PATH.",
+  "note": "The exemplar third-party adapter: file-space only; memory-space queries fall to the files floor."
+}

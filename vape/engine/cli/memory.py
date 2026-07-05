@@ -61,7 +61,8 @@ def index_cmd(
 
 @memory_app.command("doctor")
 def doctor_cmd() -> None:
-    """Which tier am I actually on, and what's missing for the next rung."""
+    """The full tier report: configured vs actual, the ladder, staleness,
+    usage skew, and the capture-coverage tripwires."""
     root, cfg, backend, note, core = _parts()
     caps = backend.capabilities()
 
@@ -74,16 +75,112 @@ def doctor_cmd() -> None:
     if note:
         console.print(f"  [yellow]{note}[/yellow]")
 
-    if core is not None:
-        last = core.meta_get("last_sweep_at") or "never"
-        console.print(f"  last sweep: {last} · reindex queue: {core.queue_depth()}")
-    if caps.name == "files":
-        console.print("  [dim]next rung: uv run vape memory index (sqlite tier is the default install)[/dim]")
-    elif not caps.vector:
-        console.print(
-            "  [dim]next rung: vectors — uv sync --extra retrieval-sqlite-vec,"
-            " then GEMINI_API_KEY in vape/.env (config memory.embedder=gemini)[/dim]"
-        )
+    _ladder(root)
+    _freshness(root, core)
+    _skew(core)
+    _coverage(root)
+
+
+def _ladder(root) -> None:
+    """Every rung, probed not assumed."""
+    import os
+    import shutil as _shutil
+    from importlib.metadata import entry_points
+
+    from engine.memory.factory import PLACEHOLDER_KEYS, load_env
+
+    load_env(root)
+    installed = {ep.name for ep in entry_points(group="vibe.retrieval.providers")}
+
+    def probe_vec() -> bool:
+        try:
+            import sqlite_vec  # noqa: F401
+            return True
+        except ImportError:
+            return False
+
+    def probe_pg() -> str:
+        url = os.environ.get("DATABASE_URL", "")
+        if not url:
+            return "DATABASE_URL not set"
+        try:
+            import psycopg
+            with psycopg.connect(url, connect_timeout=3):
+                return "reachable"
+        except ImportError:
+            return "psycopg not installed"
+        except Exception as e:
+            return f"unreachable ({str(e)[:40].strip()})"
+
+    key = os.environ.get("GEMINI_API_KEY", "") not in PLACEHOLDER_KEYS
+    qmd = _shutil.which("qmd")
+
+    console.print("  the ladder:")
+    console.print(f"    files floor      always available")
+    console.print(f"    sqlite fts       {'installed' if 'sqlite' in installed else 'uv sync --extra retrieval-sqlite'}")
+    console.print(
+        f"    sqlite vectors   sqlite-vec {'ok' if probe_vec() else 'missing (uv sync --extra retrieval-sqlite-vec)'}"
+        f" · GEMINI_API_KEY {'ok' if key else 'missing (vape/.env)'}")
+    console.print(
+        f"    pgvector         {'installed' if 'pgvector' in installed else 'uv sync --extra retrieval-pgvector'}"
+        f" · postgres {probe_pg()}")
+    console.print(
+        f"    qmd              {'binary ' + qmd if qmd else 'binary not on PATH (github.com/tobi/qmd, Node >= 22)'}")
+
+
+def _freshness(root, core) -> None:
+    if core is None:
+        return
+    from engine.memory import derive
+    from engine.memory.interface import rel_posix
+
+    last = core.meta_get("last_sweep_at") or "never"
+    manifest = core.manifest_all()
+    pending = 0
+    for path in derive.all_sources(root):
+        try:
+            st = path.stat()
+        except OSError:
+            continue
+        row = manifest.get(rel_posix(path, root))
+        if row is None or row.mtime != st.st_mtime or row.size != st.st_size:
+            pending += 1
+    console.print(
+        f"  freshness: last sweep {last} · queue {core.queue_depth()}"
+        f" · files pending sweep {pending}")
+
+
+def _skew(core) -> None:
+    if core is None:
+        return
+    d = core.usage_distribution()
+    console.print(
+        f"  usage skew: tracked {d['tracked']} · head share {d['head_share']:.0%}"
+        f" · never recalled {d['never_recalled']}"
+        f" · recalled-never-dereferenced {len(d['recalled_never_dereferenced'])}")
+
+
+def _coverage(root) -> None:
+    """Capture tripwires (doc 12 C8): a day whose streams disagree is a day
+    something silently failed to capture — today-me found one the hard way."""
+    storage = root / "vape" / "entity" / "storage"
+    if not storage.is_dir():
+        return
+    days: dict[str, set[str]] = {}
+    for f in storage.glob("2*/*/*.toon"):
+        parts = f.stem.rsplit("_", 1)
+        if len(parts) == 2:
+            days.setdefault(parts[0], set()).add(parts[1])
+    gaps = []
+    for day, streams in sorted(days.items()):
+        if "chats" not in streams and streams & {"qualia", "bookmarks"}:
+            gaps.append(f"{day} has {'+'.join(sorted(streams))} but NO chats")
+    if gaps:
+        console.print("  [yellow]capture gaps:[/yellow]")
+        for g in gaps[:5]:
+            console.print(f"    [yellow]{g}[/yellow]")
+    else:
+        console.print("  capture coverage: no stream gaps")
 
 
 @memory_app.command("schema")
