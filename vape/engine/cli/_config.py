@@ -91,3 +91,18 @@ def get_avatar_plugin() -> str | None:
 def get_vocal_mode() -> str:
     """Get the entity vocal mode."""
     return read_config().get("entity", {}).get("vocalMode", "silent")
+
+
+def get_memory_backend() -> str:
+    """The configured retrieval backend (default sqlite; 'files' = the floor)."""
+    return read_config().get("memory", {}).get("retrieval", "sqlite")
+
+
+def get_memory_embedder() -> str:
+    """The configured embedder ('gemini' | 'none')."""
+    return read_config().get("memory", {}).get("embedder", "none")
+
+
+def get_memory_plugin_config(name: str) -> dict:
+    """Per-backend plugin config from the memory section."""
+    return read_config().get("memory", {}).get("plugins", {}).get(name, {})
