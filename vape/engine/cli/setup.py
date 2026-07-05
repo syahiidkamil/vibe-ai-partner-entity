@@ -19,18 +19,19 @@ from engine.cli._progress import download_models, download_file, is_cached
 console = Console()
 
 
-def _load_plugin_manifests() -> list[dict]:
-    """Load all plugin.json files from plugins/tts-*/ directories. Recommended first."""
+def _load_plugin_manifests(prefix: str = "tts-", order: dict | None = None) -> list[dict]:
+    """Load plugin.json files from plugins/<prefix>*/ directories, ordered."""
     manifests = []
-    for plugin_dir in sorted(PLUGINS_DIR.glob("tts-*")):
+    for plugin_dir in sorted(PLUGINS_DIR.glob(prefix + "*")):
         manifest_path = plugin_dir / "plugin.json"
         if manifest_path.exists():
             data = json.loads(manifest_path.read_text())
             data["_dir"] = str(plugin_dir)
             manifests.append(data)
-    # Fixed order: kokoro-onnx (recommended), kokoro (pytorch), kitten
-    _order = {"kokoro-onnx": 0, "kokoro": 1, "kitten": 2}
-    manifests.sort(key=lambda m: _order.get(m["name"], 99))
+    if order is None:
+        # Fixed order: kokoro-onnx (recommended), kokoro (pytorch), kitten
+        order = {"kokoro-onnx": 0, "kokoro": 1, "kitten": 2}
+    manifests.sort(key=lambda m: order.get(m["name"], 99))
     return manifests
 
 
@@ -255,6 +256,89 @@ def _download_language_pack(lang: dict) -> None:
         subprocess.run(post_install, shell=True, cwd=str(ROOT_DIR))
 
 
+def _ensure_env_key(var: str, hint: str) -> None:
+    """Guide the user to put a secret in vape/.env — the wizard copies the
+    committed template (mechanics) but NEVER writes or echoes the secret
+    itself. Skipping is always allowed: the embedder degrades independently
+    of the store, so search runs keyword-only until the key exists."""
+    import os
+
+    from rich.prompt import Prompt
+
+    env_file = ROOT_DIR / "vape" / ".env"
+    example = ROOT_DIR / "vape" / ".env.example"
+    if not env_file.exists() and example.exists():
+        import shutil as _shutil
+        _shutil.copyfile(example, env_file)
+        console.print(f"  Created [bold]vape/.env[/bold] from the template.")
+
+    def _present() -> bool:
+        # re-read the FILE each attempt, not the cached process env
+        try:
+            from dotenv import dotenv_values
+            val = (dotenv_values(env_file).get(var) or os.environ.get(var, "")).strip()
+        except Exception:
+            val = os.environ.get(var, "").strip()
+        return val not in ("", "your-gemini-api-key-here", "changeme")
+
+    while not _present():
+        console.print(
+            f"\n  Open [bold]vape/.env[/bold] and set [bold]{var}[/bold]  ({hint})")
+        answer = Prompt.ask(
+            "  Press Enter when done, or 's' to skip (keyword-only until the key exists)",
+            default="")
+        if answer.strip().lower() == "s":
+            console.print("  [yellow]Skipped — semantic search stays off until the key exists;"
+                          " then just re-run: uv run vape memory index[/yellow]")
+            return
+    console.print(f"  [green]✓ {var} found.[/green]")
+
+
+def _select_memory(current: str | None) -> tuple[dict, list[str]]:
+    """The memory-retrieval step: returns (memory config section, uv extras).
+    Default is the keyless sqlite keyword tier — a fresh clone must work with
+    zero keys and zero servers."""
+    console.print("\n  [bold]Memory retrieval — how Saori's index searches her memory files:[/bold]\n")
+    options = [
+        ("sqlite keyword", "SQLite full-text search. No API key, no server, works everywhere. (recommended)"),
+        ("sqlite + vectors", "Semantic + keyword. SQLite + sqlite-vec; needs a free GEMINI_API_KEY."),
+        ("postgres + pgvector", "Semantic + keyword at scale. Needs a Postgres server AND a GEMINI_API_KEY."),
+        ("qmd (local semantic)", "Keyless vectors via local models — downloads ~0.3-2 GB, held in RAM; file-search only."),
+        ("files only", "No index. Living keys + grep (always available as the floor anyway)."),
+    ]
+    for i, (name, desc) in enumerate(options, 1):
+        console.print(f"  [bold]{i}.[/bold] {name}\n     {desc}\n")
+    choice = IntPrompt.ask("  Enter choice", default=1)
+    if choice < 1 or choice > len(options):
+        choice = 1
+
+    if choice == 1:
+        return {"retrieval": "sqlite", "embedder": "none"}, ["retrieval-sqlite"]
+    if choice == 2:
+        _ensure_env_key("GEMINI_API_KEY", "free at aistudio.google.com/apikey")
+        return {"retrieval": "sqlite", "embedder": "gemini"}, ["retrieval-sqlite-vec"]
+    if choice == 3:
+        _ensure_env_key("GEMINI_API_KEY", "free at aistudio.google.com/apikey")
+        _ensure_env_key("DATABASE_URL", "e.g. postgresql://user:pass@localhost:5432/db")
+        return (
+            {"retrieval": "pgvector", "embedder": "gemini",
+             "plugins": {"pgvector": {"databaseUrlEnv": "DATABASE_URL"}}},
+            ["retrieval-pgvector"],
+        )
+    if choice == 4:
+        import shutil as _shutil
+        qmd_manifest = next(
+            (m for m in _load_plugin_manifests("retrieval-", order={"qmd": 0}) if m["name"] == "qmd"), {})
+        warning = qmd_manifest.get("ramWarning", "qmd holds its models in RAM per query.")
+        console.print(f"  [yellow]⚠ {warning}[/yellow]")
+        if not _shutil.which("qmd"):
+            console.print(
+                "  [yellow]qmd binary not found on PATH — install it from github.com/tobi/qmd,"
+                " then `uv run vape memory doctor` will confirm.[/yellow]")
+        return {"retrieval": "qmd", "embedder": "none"}, ["retrieval-qmd"]
+    return {"retrieval": "files", "embedder": "none"}, []
+
+
 BANNER = r"""[bold cyan]
  ██╗   ██╗ █████╗ ██████╗ ███████╗
  ██║   ██║██╔══██╗██╔══██╗██╔════╝
@@ -317,13 +401,34 @@ def setup() -> None:
         else:
             _ensure_shell_deps(shell_manifest["name"])
 
-    # Step 9: Save config. Voice IDs are engine-specific, so clear the old
+    # Step 9: Memory retrieval — the tier is a choice, the floor is a given.
+    current_memory = read_config().get("memory", {}).get("retrieval")
+    memory_cfg, memory_extras = _select_memory(current_memory)
+    if memory_extras:
+        # sync the UNION of extras: syncing one extra prunes the others
+        # (the kokoro-wheel lesson; bitten again live with sqlite-vec, 07-05)
+        console.print("\n  Installing memory retrieval dependencies...")
+        result = subprocess.run(
+            ["uv", "sync", "--extra", manifest["uvExtra"],
+             *(a for e in memory_extras for a in ("--extra", e))],
+            cwd=str(ROOT_DIR), capture_output=False,
+        )
+        if result.returncode != 0:
+            console.print("  [red]Dependency installation failed.[/red]")
+            raise typer.Exit(1)
+
+    # Step 10: Save config. Voice IDs are engine-specific, so clear the old
     # voice when switching engines to avoid stale "voice X for engine Y" state.
     cfg = read_config()
     old_engine = cfg.get("tts", {}).get("engine")
     cfg.setdefault("tts", {})["engine"] = manifest["name"]
     if old_engine and old_engine != manifest["name"]:
         cfg["tts"].pop("voice", None)
+
+    mem = cfg.setdefault("memory", {})
+    existing_plugins = mem.get("plugins", {})
+    mem.update(memory_cfg)
+    mem["plugins"] = {**existing_plugins, **memory_cfg.get("plugins", {})}
 
     avatar_cfg = cfg.setdefault("avatar", {})
     avatar_cfg["renderer"] = avatar_manifest["name"] if avatar_manifest else "avatar-live2d"
@@ -341,6 +446,8 @@ def setup() -> None:
         "  Start:   [bold]uv run vape start[/bold]\n"
         "  Stop:    [bold]Ctrl+C[/bold] (or uv run vape stop)\n"
         "  Status:  [bold]uv run vape status[/bold]\n\n"
+        "  Build the memory index: [bold]uv run vape memory index[/bold]\n"
+        "  Then search it:         [bold]uv run vape recall \"a cue\"[/bold]\n\n"
         "  Add languages later: [bold]uv run vape download --language zh[/bold]",
         style="green",
     ))
