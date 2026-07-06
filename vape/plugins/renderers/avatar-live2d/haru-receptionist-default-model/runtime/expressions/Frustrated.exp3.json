@@ -1,0 +1,45 @@
+{
+  "Type": "Live2D Expression",
+  "Parameters": [
+    {
+      "Id": "ParamEyeLOpen",
+      "Value": 0.6,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamEyeROpen",
+      "Value": 0.6,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamBrowLAngle",
+      "Value": -0.55,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamBrowRAngle",
+      "Value": -0.55,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamBrowLY",
+      "Value": -0.3,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamBrowRY",
+      "Value": -0.3,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamMouthForm",
+      "Value": -0.7,
+      "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamMouthOpenY",
+      "Value": 0.05,
+      "Blend": "Overwrite"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 {
-  "_comment": "Per-model window framing, read by the renderer (index.html). scale = zoom multiplier on the fit (1.0 = fit whole model; >1 crops in to upper body). centerY = model centre as a fraction of window height (higher = model sits lower on screen = more headroom above the head for the speech bubble). This model is a tall full-body rig, so it is zoomed to the upper body and pushed down to clear the bubble.",
+  "_comment": "Per-model window framing, read by the renderer (index.html). scale = zoom multiplier on the fit (1.0 = fit whole model; >1 crops in to upper body). centerY = model centre as a fraction of window height (higher = model sits lower on screen = more headroom above the head for the speech bubble). This model is a tall full-body rig, so it is zoomed to the upper body and pushed down to clear the bubble. tears = how she cries: 'native' means she owns a ParamTear driven by her cry_hands motion, so the renderer draws NO sprite overlay (the 'sprite' overlay is tuned per-rig for eye position and would be misplaced here); 'sad' just shows a clean sad face.",
   "scale": 1.2,
-  "centerY": 0.75
+  "centerY": 0.75,
+  "tears": "native"
 }

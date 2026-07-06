@@ -143,6 +143,7 @@
 
       let n = 0;
       app.ticker.add(() => { if (++n === 8) document.getElementById('ready').textContent = MOTION ? `READY t=${T}` : 'READY'; });
+      window.__model = model;   // exposed for headless inspection (param ranges, part list)
       setTimeout(() => { window.__ready = true; }, 600);
     }
     init().catch(e => { document.getElementById('ready').textContent = 'ERR: ' + e.message; window.__ready = true; });

@@ -245,26 +245,43 @@
       if (idx >= 0) {
         currentFeeling = name;   // remember it so looping actions can re-apply it
         model.expression(idx);
-        // Tears follow the feeling: gentle track on sad, off on anything else
-        // (a real cry-burst escalates this via triggerCry / the cry action).
-        if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
-        else { clearTimeout(cryTimer); setTearMode('off'); }
+        // Tears follow the feeling, but ONLY for a sprite-overlay rig: gentle track on
+        // sad, off on anything else. A 'native'/'none' model shows a clean sad face here
+        // (its own tear param, if any, is driven by the cry motion, not this overlay).
+        if (FRAMING.tears === 'sprite') {
+          if (name === 'sad') { if (tearMode !== 'cry') setTearMode('gentle'); }
+          else { clearTimeout(cryTimer); setTearMode('off'); }
+        }
       }
     }
+
+    // Gestures whose OWN motion animates the face (a grin, a shock, streaming tears): let the
+    // motion own the face. EVERY OTHER gesture is body-only — the arms/head move, but the FACE
+    // should stay the active feeling, never the motion's baked expression (a wave wearing m12's
+    // open-mouth face reads as surprise, not a friendly hello).
+    const EXPRESSIVE_GESTURES = new Set(['laugh', 'giggle', 'gasp', 'cry_hands']);
 
     function playSelfExpression(name) {
       if (!model) return;
       const idx = SELF_EXPRESSION_MAP[name];
       if (idx === undefined) return;
 
-      // FORCE(3): with preserveExpressionOnMotion=false the library resets the feeling now and
-      // restores it on finish — for NON-looping motions. Looping ones (head_tilt/think/starry)
-      // never finish, so re-apply the feeling ourselves after one loop's length.
+      const expressive = EXPRESSIVE_GESTURES.has(name);
+      // Per-gesture: expressive → let the motion suspend the feeling and show its own face;
+      // body-only → keep the feeling on the face (applied AFTER the motion, so it wins).
+      PIXI.live2d.config.preserveExpressionOnMotion = !expressive;
+
+      // A body gesture with no feeling set would show her flat default face; a warm gesture
+      // (wave/nod/celebrate/…) reads best smiling, so default to a soft smile when idle.
+      if (!expressive && (!currentFeeling || currentFeeling === 'normal')) setExpression('content');
+
       model.motion('SelfExpression', idx, 3);
 
+      // With preserve=false (expressive), a LOOPING motion never finishes to auto-restore the
+      // feeling, so re-apply it after one loop. (Body-only gestures keep the feeling throughout.)
       clearTimeout(selfExprRestoreTimer);
       const motion = model.internalModel.motionManager.motionGroups?.SelfExpression?.[idx];
-      if (motion && typeof motion.isLoop === 'function' && motion.isLoop() && currentFeeling) {
+      if (expressive && motion && typeof motion.isLoop === 'function' && motion.isLoop() && currentFeeling) {
         const feelingAtStart = currentFeeling;
         const loopMs = Math.max(motion.getLoopDuration() * 1000, 1500); // guards getDuration()===-1
         selfExprRestoreTimer = setTimeout(() => {
@@ -340,10 +357,13 @@
 
     function triggerCry() {
       setExpression('sad');                    // the crying face
-      setTearMode('cry');
-      playSelfExpression('cry_hands');         // celebrate's clean arm-raise, but with the sad face
-      clearTimeout(cryTimer);
-      cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
+      playSelfExpression('cry_hands');         // hands to the face; on a native rig its own
+                                               // ParamTear (in the motion) streams the tears
+      if (FRAMING.tears === 'sprite') {        // sprite rigs escalate the drawn-on overlay
+        setTearMode('cry');
+        clearTimeout(cryTimer);
+        cryTimer = setTimeout(() => setTearMode(currentFeeling === 'sad' ? 'gentle' : 'off'), 5000);
+      }
     }
 
     // ─── Audio queue + lip sync via AnalyserNode ───────────
@@ -692,14 +712,19 @@
     // model's own folder so each body carries its own; the renderer stays generic.
     // scale = zoom multiplier on the fit; centerY = model centre as a fraction of window
     // height (higher = model lower on screen = more headroom for the speech bubble).
-    let FRAMING = { scale: 1.0, centerY: 0.52 };
+    // tears: how THIS model cries. 'sprite' = the drawn-on overlay below (tuned per rig,
+    // Shizuku-style); 'native' = the model has its own tear param animated by its cry motion
+    // (no overlay); 'none' = never auto-tears. Default 'none' so a new body never shows
+    // misplaced sprite tears — a rig opts into the overlay explicitly.
+    let FRAMING = { scale: 1.0, centerY: 0.52, tears: 'none' };
     async function resolveFraming(modelUrl) {
-      const out = { scale: 1.0, centerY: 0.52 };
+      const out = { scale: 1.0, centerY: 0.52, tears: 'none' };
       try {
         const folder = modelUrl.split('/').slice(0, -2).join('/'); // strip runtime/<id>.model3.json
         const f = await (await fetch(folder + '/framing.json')).json();
         if (typeof f.scale === 'number') out.scale = f.scale;
         if (typeof f.centerY === 'number') out.centerY = f.centerY;
+        if (typeof f.tears === 'string') out.tears = f.tears;
       } catch (e) { /* keep defaults */ }
       return out;
     }

@@ -1,7 +1,7 @@
 {
   "name": "avatar-live2d",
   "displayName": "Live2D Avatar",
-  "description": "Anime-style Live2D Cubism avatar — 14 feeling expressions, lip sync, physics",
+  "description": "Anime-style Live2D Cubism avatar — 13 feeling expressions, 12 self-expression gestures, lip sync, physics",
   "tag": "Default",
   "category": "avatar",
   "renderer": "live2d",
@@ -18,7 +18,7 @@
   ],
   "interface": {
     "feelings": true,
-    "selfExpressions": false,
+    "selfExpressions": true,
     "physics": true
   },
   "window": {
