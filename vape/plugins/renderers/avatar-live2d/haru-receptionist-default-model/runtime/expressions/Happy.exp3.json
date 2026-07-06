@@ -40,6 +40,11 @@
       "Id": "ParamBrowRY",
       "Value": 0.3,
       "Blend": "Overwrite"
+    },
+    {
+      "Id": "ParamTere",
+      "Value": 0.5,
+      "Blend": "Overwrite"
     }
   ]
 }

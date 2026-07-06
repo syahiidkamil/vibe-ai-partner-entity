@@ -55,6 +55,7 @@
     }
     body:hover .ctrl-btn { opacity: 1; }
     .ctrl-btn:hover { background: rgba(0,0,0,0.55); }
+    .ctrl-btn.active { background: rgba(90,150,235,0.75); }   /* toggle ON (e.g. cursor-follow) */
     .close-btn:hover { background: #ff5470; }
     /* Volume popover: custom vertical slider (a rotated <input> needs a CSS
        transform, which ghosts on the transparent window — so honest DOM: track
@@ -159,6 +160,7 @@
     <div id="drag-hint">⟵ This is Drag Area ⟶</div>
   </div>
   <div class="controls">
+    <button id="follow-btn" class="ctrl-btn" title="Cursor follow">👁</button>
     <button id="vol-btn" class="ctrl-btn" title="Volume">🔊</button>
     <button id="zoom-out" class="ctrl-btn" title="Smaller">−</button>
     <button id="zoom-in" class="ctrl-btn" title="Bigger">+</button>
@@ -228,6 +230,7 @@
       anxious: 'Anxious', excited: 'Excited', calm: 'Calm',
       bored: 'Bored', blushing: 'Blushing',
       surprised: 'Surprised', content: 'Content',
+      shy: 'Shy',   // manual-set only (not dial-recommended) — a bashful averted-gaze twin of blushing
     };
 
     const SELF_EXPRESSION_MAP = {
@@ -299,11 +302,20 @@
       gentle: PIXI.Texture.from('assets/tear.png'),       // slim, quiet sad
       cry:    PIXI.Texture.from('assets/tear_cry.png'),   // rounded + bluer, full cry
     };
+    // Defaults are Shizuku's rig; a sprite model overrides eye position + drop size per-model
+    // via framing.json "tearTune" (applied in init once FRAMING resolves), because eye position
+    // and face-to-frame ratio differ per rig.
     const TEAR_TUNE = { eyeL: -0.128, eyeR: 0.085, eyeDY: -0.15, fall: 0.18 };
     const TEAR_CFG = {
       gentle: { interval: 1.2,  eyes: ['L', 'R'], texH: 236, size: 0.050 },
       cry:    { interval: 0.18, eyes: ['L', 'R'], texH: 210, size: 0.062 },
     };
+    function applyTearTune(t) {
+      if (!t) return;
+      for (const k of ['eyeL', 'eyeR', 'eyeDY', 'fall']) if (typeof t[k] === 'number') TEAR_TUNE[k] = t[k];
+      if (typeof t.gentleSize === 'number') TEAR_CFG.gentle.size = t.gentleSize;
+      if (typeof t.crySize === 'number') TEAR_CFG.cry.size = t.crySize;
+    }
     let tearLayer = null, tears = [], tearMode = 'off', tearAcc = 0, cryTimer = null;
 
     // Sad face (Sad.exp3.json values), forced every frame during a cry so the arm
@@ -618,6 +630,23 @@
     document.getElementById('zoom-out').addEventListener('click', () => setScale(uiScale - SCALE_STEP));
     applyScale(); // restore the remembered window size on launch (fitModel follows on resize)
 
+    // ─── Cursor-follow toggle (the 👁 button) ──────────────────────────
+    // The model tracks the pointer by default (pixi-live2d-display autoInteract): her
+    // head/eyes follow the cursor. This button turns that following on/off — off, she
+    // eases her gaze back to centre and holds it, looking straight ahead. Persisted.
+    const followBtn = document.getElementById('follow-btn');
+    let followOn = true;   // gates the pointer-driven gaze (enforced by the focus override in init)
+    function setFollow(on) {
+      followOn = on;
+      followBtn.classList.toggle('active', on);
+      followBtn.title = on ? 'Cursor follow: on (click to stop)' : 'Cursor follow: off (click to follow)';
+      localStorage.setItem('vape-follow', on ? '1' : '0');
+      // Ease her gaze back to centre; with tracking gated off it holds there.
+      if (!on && model && model.internalModel && model.internalModel.focusController)
+        model.internalModel.focusController.focus(0, 0);
+    }
+    followBtn.addEventListener('click', () => setFollow(!followOn));
+
     // Click-through everywhere except the chrome: the avatar body lets mouse
     // events pass to whatever is behind the window; the drag strip + controls
     // re-enable interaction while hovered. No-op outside Electron.
@@ -716,17 +745,44 @@
     // Shizuku-style); 'native' = the model has its own tear param animated by its cry motion
     // (no overlay); 'none' = never auto-tears. Default 'none' so a new body never shows
     // misplaced sprite tears — a rig opts into the overlay explicitly.
-    let FRAMING = { scale: 1.0, centerY: 0.52, tears: 'none' };
+    let FRAMING = { scale: 1.0, centerY: 0.52, tears: 'none', tearTune: null, hideDrawables: null };
     async function resolveFraming(modelUrl) {
-      const out = { scale: 1.0, centerY: 0.52, tears: 'none' };
+      const out = { scale: 1.0, centerY: 0.52, tears: 'none', tearTune: null, hideDrawables: null };
       try {
         const folder = modelUrl.split('/').slice(0, -2).join('/'); // strip runtime/<id>.model3.json
         const f = await (await fetch(folder + '/framing.json')).json();
         if (typeof f.scale === 'number') out.scale = f.scale;
         if (typeof f.centerY === 'number') out.centerY = f.centerY;
         if (typeof f.tears === 'string') out.tears = f.tears;
+        if (f.tearTune && typeof f.tearTune === 'object') out.tearTune = f.tearTune;
+        if (f.hideDrawables && typeof f.hideDrawables === 'object') out.hideDrawables = f.hideDrawables;
       } catch (e) { /* keep defaults */ }
       return out;
+    }
+
+    // Force per-model blush pieces to stay hidden PER FEELING. ParamTere draws this rig's blush
+    // as several drawables; some feelings want the full set, others a subset (happy = the cheek
+    // pieces only). The core recomputes drawable opacities from params each update(), so the
+    // ones we don't want are zeroed AFTER update, before the frame draws — wrapping
+    // internalModel.update is the deterministic point. hideDrawables is { feeling: [ids] };
+    // each frame we clamp the list for the CURRENT feeling.
+    function installDrawableHider(model) {
+      const map = FRAMING.hideDrawables;
+      if (!map) return;
+      const core = model.internalModel.coreModel;
+      const raw = core.getModel ? core.getModel() : core;
+      if (!raw || !raw.drawables) return;
+      const idOf = {};
+      for (let i = 0; i < raw.drawables.count; i++) idOf[raw.drawables.ids[i]] = i;
+      const perFeeling = {};   // feelingName -> [drawableIndex]
+      for (const f in map) perFeeling[f] = (map[f] || []).map(id => idOf[id]).filter(i => i != null);
+      const im = model.internalModel;
+      const orig = im.update.bind(im);
+      im.update = (dt, now) => {
+        orig(dt, now);
+        const list = perFeeling[currentFeeling];
+        if (list) for (const i of list) raw.drawables.opacities[i] = 0;
+      };
     }
 
     // ─── Resolve the default model from plugin.json ────────
@@ -764,9 +820,18 @@
           if (g && g.Ids && g.Ids[0]) LIPSYNC_PARAM = g.Ids[0];
         } catch (e) { /* keep the Cubism 2 default */ }
         FRAMING = await resolveFraming(modelUrl);
+        applyTearTune(FRAMING.tearTune);   // per-model tear eye-position + drop size
         model = await Live2DModel.from(modelUrl, {
           motionPreload: MotionPreloadStrategy.ALL,
         });
+        installDrawableHider(model);   // keep this rig's nose-blush (etc.) hidden every frame
+
+        // Gate the pointer-driven gaze at its entry point: pixi's autoInteract calls
+        // model.focus(x,y) on every pointer move. Setting autoInteract=false does NOT
+        // reliably stop it (esp. under Tauri's polled click-through), so when follow is
+        // off we swallow the focus calls and her gaze holds wherever we last parked it.
+        const _origFocus = model.focus.bind(model);
+        model.focus = (...args) => { if (followOn) _origFocus(...args); };
 
         model.anchor.set(0.5, 0.5);
         baseW = model.width;   // intrinsic size at scale 1, before we refit
@@ -776,6 +841,7 @@
         app.stage.addChild(model);
         model.motion('Idle', 0);
         fitModel(); // size the model + canvas to the current window
+        setFollow(localStorage.getItem('vape-follow') !== '0');  // restore cursor-follow pref (default on)
 
         // Tear overlay sits above the model on the same stage; ticker drives the fall.
         tearLayer = new PIXI.Container();

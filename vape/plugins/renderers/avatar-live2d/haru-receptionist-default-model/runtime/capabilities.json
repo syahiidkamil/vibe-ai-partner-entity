@@ -18,7 +18,8 @@
     "angry":      { "expression": "expressions/Angry.exp3.json" },
     "blushing":   { "expression": "expressions/Blushing.exp3.json" },
     "surprised":  { "expression": "expressions/Surprised.exp3.json" },
-    "content":    { "expression": "expressions/Content.exp3.json" }
+    "content":    { "expression": "expressions/Content.exp3.json" },
+    "shy":        { "expression": "expressions/Shy.exp3.json", "manualOnly": true }
   },
 
   "selfExpressions": {

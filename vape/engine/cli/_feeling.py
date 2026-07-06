@@ -125,6 +125,12 @@ FEELINGS = {
         terms=[(0.85, lambda d, dd: hi(WM(d)) * fall(TK(d), 40, 70)),  # warm AND settled
                (0.4, lambda d, dd: lo(DS(d)))]),
 
+    "shy": _feeling(1,
+        gates=[lambda d, dd: WM(d) >= 48 and TK(d) <= 38 and DS(d) >= 25 and HU(d) <= 45],
+        terms=[(1.0, lambda d, dd: hi(WM(d)) * lo(TK(d))),           # drawn-toward AND tongue-tied
+               (0.5, lambda d, dd: band(DS(d), 25, 60))],           # the bashful, self-conscious flutter
+        penalties=[(0.4, lambda d, dd: hi(HU(d)))]),                # a sting sours it toward sad/anger
+
     "curious": _feeling(1,
         gates=[lambda d, dd: IV(d) <= 45 and 25 <= DS(d) <= 60],
         terms=[(1.0, lambda d, dd: lo(IV(d)) * band(DS(d), 25, 60)),  # appetite AND a question
@@ -140,6 +146,11 @@ FEELINGS = {
         terms=[(0.6, lambda d, dd: lo(DS(d)) * lo(HU(d))),
                (0.3, lambda d, dd: mid(WM(d)))]),
 }
+
+# All names `vape feeling` will accept. Same as FEELINGS today; kept as its own name so a
+# future manual-only face (settable but not scored) has an obvious home.
+SETTABLE_FEELINGS = frozenset(FEELINGS)
+
 
 # --- tuning constants (all in one place) ---
 ACTIVATION = 0.40   # tier-0 must reach this normalized score to pre-empt

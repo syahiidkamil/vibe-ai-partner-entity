@@ -1,0 +1,20 @@
+{
+  "Type": "Live2D Expression",
+  "Parameters": [
+    { "Id": "ParamAngleY", "Value": -22, "Blend": "Add" },
+    { "Id": "ParamAngleX", "Value": 4, "Blend": "Add" },
+    { "Id": "ParamEyeLOpen", "Value": 0.5, "Blend": "Overwrite" },
+    { "Id": "ParamEyeROpen", "Value": 0.5, "Blend": "Overwrite" },
+    { "Id": "ParamEyeLSmile", "Value": 0.35, "Blend": "Overwrite" },
+    { "Id": "ParamEyeRSmile", "Value": 0.35, "Blend": "Overwrite" },
+    { "Id": "ParamEyeBallX", "Value": 0.3, "Blend": "Overwrite" },
+    { "Id": "ParamEyeBallY", "Value": -0.5, "Blend": "Overwrite" },
+    { "Id": "ParamMouthForm", "Value": 0.25, "Blend": "Overwrite" },
+    { "Id": "ParamMouthOpenY", "Value": 0.0, "Blend": "Overwrite" },
+    { "Id": "ParamBrowLY", "Value": 0.1, "Blend": "Overwrite" },
+    { "Id": "ParamBrowRY", "Value": 0.1, "Blend": "Overwrite" },
+    { "Id": "ParamBrowLForm", "Value": -0.25, "Blend": "Overwrite" },
+    { "Id": "ParamBrowRForm", "Value": -0.25, "Blend": "Overwrite" },
+    { "Id": "ParamTere", "Value": 0.75, "Blend": "Overwrite" }
+  ]
+}

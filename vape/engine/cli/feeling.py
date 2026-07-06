@@ -17,10 +17,10 @@ def feeling_cmd(
     port: Annotated[int, typer.Option(help="Server port")] = 0,
 ) -> None:
     """Set the avatar's feeling."""
-    from engine.cli._feeling import FEELINGS   # the 13 valid feelings (single source of truth)
-    if name not in FEELINGS:
+    from engine.cli._feeling import SETTABLE_FEELINGS  # 13 dial-scored + manual-only (single source)
+    if name not in SETTABLE_FEELINGS:
         console.print(f"  [yellow]Feeling unrecognized:[/yellow] '{name}'. "
-                      f"Valid: {', '.join(sorted(FEELINGS))}")
+                      f"Valid: {', '.join(sorted(SETTABLE_FEELINGS))}")
         raise typer.Exit(1)
 
     if port == 0:
