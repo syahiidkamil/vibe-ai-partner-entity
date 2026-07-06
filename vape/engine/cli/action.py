@@ -17,6 +17,12 @@ def action_cmd(
     port: Annotated[int, typer.Option(help="Server port")] = 0,
 ) -> None:
     """Trigger an avatar action."""
+    from engine.cli._action import ACTIONS  # canonical gesture verbs (single source)
+    if name not in ACTIONS:
+        console.print(f"  [yellow]Action unrecognized:[/yellow] '{name}'. "
+                      f"Valid: {', '.join(sorted(ACTIONS))}")
+        raise typer.Exit(1)
+
     if port == 0:
         port = get_port()
 

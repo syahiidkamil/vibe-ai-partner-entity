@@ -68,9 +68,8 @@ uv run vape feeling shy
 uv run vape feeling surprised
 
 # Actions (self-expression/*.motion3.json)
-# Names are the canonical snake_case forms — the CLI won't reject a
-# mistyped name (it returns success and the renderer silently ignores it),
-# so spell them exactly as below.
+# Names are the canonical snake_case forms. A mistyped name now fails loud
+# (exit 1) and prints the valid list — same guard as `vape feeling`.
 uv run vape action nod
 uv run vape action head_shake
 uv run vape action head_tilt
@@ -91,9 +90,9 @@ uv run vape status                   # check the server
 
 ---
 
-## Notes from testing (2026-06-01)
+## Notes from testing
 
-- All 14 feelings and all 12 actions returned success end to end.
-- The CLI does **not** validate names: `feeling banana` / `action moonwalk`
-  both return a cheerful success and the renderer silently ignores them.
-  Spell them as listed, or add a guard later so typos fail loud.
+- All feelings and actions return success end to end.
+- The CLI **validates names** (guard added 2026-07-06): `feeling banana` /
+  `action moonwalk` fail loud (exit 1) and print the valid set, instead of
+  silently no-op'ing. Sources: `_feeling.SETTABLE_FEELINGS`, `_action.ACTIONS`.
