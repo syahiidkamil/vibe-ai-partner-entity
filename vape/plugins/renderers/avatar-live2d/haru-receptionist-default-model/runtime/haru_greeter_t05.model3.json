@@ -100,10 +100,10 @@
    ],
    "SelfExpression": [
     {
-     "File": "motion/haru_g_m09.motion3.json"
+     "File": "motion/haru_g_nod_head.motion3.json"
     },
     {
-     "File": "motion/haru_g_m11.motion3.json"
+     "File": "motion/haru_g_shake_head.motion3.json"
     },
     {
      "File": "motion/haru_g_m25.motion3.json"
