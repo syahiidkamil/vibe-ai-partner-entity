@@ -214,10 +214,10 @@
       const w = window.innerWidth, h = window.innerHeight;
       app.renderer.resize(w, h);
       if (!model || !baseW) return;
-      const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95;
+      const s = Math.min((w * PANEL_FRAC) / baseW, h / baseH) * 0.95 * FRAMING.scale;
       model.scale.set(s);
       model.x = w / 2;
-      model.y = h * 0.52;   // pushed down for more bubble headroom (tunable)
+      model.y = h * FRAMING.centerY;   // per-model headroom for the speech bubble (framing.json)
     }
     window.addEventListener('resize', fitModel);
 
@@ -684,6 +684,42 @@
     document.body.classList.add('intro');
     setTimeout(() => document.body.classList.remove('intro'), 3000);
 
+    // The lip-sync mouth param, read from the model's own model3.json LipSync group
+    // (Cubism 2 rigs use PARAM_MOUTH_OPEN_Y; Cubism 5 rigs use ParamMouthOpenY).
+    let LIPSYNC_PARAM = 'PARAM_MOUTH_OPEN_Y';
+
+    // Per-model window framing (models vary in height). Read from framing.json in the
+    // model's own folder so each body carries its own; the renderer stays generic.
+    // scale = zoom multiplier on the fit; centerY = model centre as a fraction of window
+    // height (higher = model lower on screen = more headroom for the speech bubble).
+    let FRAMING = { scale: 1.0, centerY: 0.52 };
+    async function resolveFraming(modelUrl) {
+      const out = { scale: 1.0, centerY: 0.52 };
+      try {
+        const folder = modelUrl.split('/').slice(0, -2).join('/'); // strip runtime/<id>.model3.json
+        const f = await (await fetch(folder + '/framing.json')).json();
+        if (typeof f.scale === 'number') out.scale = f.scale;
+        if (typeof f.centerY === 'number') out.centerY = f.centerY;
+      } catch (e) { /* keep defaults */ }
+      return out;
+    }
+
+    // ─── Resolve the default model from plugin.json ────────
+    // The body to load is whichever models[] entry is marked default: path + id
+    // -> `<path>/<id>.model3.json`. Swapping the model is a one-line plugin.json
+    // edit, no code change. Falls back to the bundled Haru if plugin.json can't
+    // be read.
+    async function resolveDefaultModel() {
+      const FALLBACK = 'haru-receptionist-default-model/runtime/haru_greeter_t05.model3.json';
+      try {
+        const cfg = await (await fetch('plugin.json')).json();
+        const models = cfg.models || [];
+        const m = models.find(x => x.default) || models[0];
+        if (m && m.path && m.id) return `${m.path}/${m.id}.model3.json`;
+      } catch (e) { /* fall through to the bundled default */ }
+      return FALLBACK;
+    }
+
     // ─── Initialize Live2D ─────────────────────────────────
     async function init() {
       app = new PIXI.Application({
@@ -696,7 +732,14 @@
       });
 
       try {
-        model = await Live2DModel.from('shizuku/runtime/shizuku.model3.json', {
+        const modelUrl = await resolveDefaultModel();
+        try {
+          const mj = await (await fetch(modelUrl)).json();
+          const g = (mj.Groups || []).find(x => x.Name === 'LipSync');
+          if (g && g.Ids && g.Ids[0]) LIPSYNC_PARAM = g.Ids[0];
+        } catch (e) { /* keep the Cubism 2 default */ }
+        FRAMING = await resolveFraming(modelUrl);
+        model = await Live2DModel.from(modelUrl, {
           motionPreload: MotionPreloadStrategy.ALL,
         });
 
@@ -730,7 +773,7 @@
             for (const id in SAD_FACE) cm.setParameterValueById(id, SAD_FACE[id]);
           }
           if (lipSyncActive) {
-            cm.setParameterValueById('PARAM_MOUTH_OPEN_Y', smoothedMouth);
+            cm.setParameterValueById(LIPSYNC_PARAM, smoothedMouth);
           }
         });
 

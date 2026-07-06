@@ -1,0 +1,5 @@
+{
+  "_comment": "Per-model window framing, read by the renderer (index.html). scale = zoom multiplier on the fit (1.0 = fit whole model; >1 crops in to upper body). centerY = model centre as a fraction of window height (higher = model sits lower on screen = more headroom above the head for the speech bubble). This model is a tall full-body rig, so it is zoomed to the upper body and pushed down to clear the bubble.",
+  "scale": 1.2,
+  "centerY": 0.7
+}

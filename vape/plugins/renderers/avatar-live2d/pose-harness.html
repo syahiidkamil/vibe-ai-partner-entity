@@ -88,12 +88,27 @@
     const canvas = document.getElementById('canvas');
     canvas.width = W; canvas.height = H;
 
+    // Resolve the default model from plugin.json (models[].default), same as the
+    // live renderer, so the harness follows whichever body is current.
+    async function resolveDefaultModel() {
+      const FALLBACK = 'haru-receptionist-default-model/runtime/haru_greeter_t05.model3.json';
+      try {
+        const cfg = await (await fetch('plugin.json')).json();
+        const models = cfg.models || [];
+        const m = models.find(x => x.default) || models[0];
+        if (m && m.path && m.id) return `${m.path}/${m.id}.model3.json`;
+      } catch (e) { /* fall through */ }
+      return FALLBACK;
+    }
+
     async function init() {
       const app = new PIXI.Application({
         view: canvas, width: W, height: H,
         backgroundColor: 0xf0f0f0, antialias: true,
       });
-      const model = await Live2DModel.from('shizuku/runtime/shizuku.model3.json');
+      const MODEL_URL = await resolveDefaultModel();
+      const RUNTIME_BASE = MODEL_URL.slice(0, MODEL_URL.lastIndexOf('/') + 1);
+      const model = await Live2DModel.from(MODEL_URL);
       app.stage.addChild(model);
       model.anchor.set(0.5, 0.5);
       const s = Math.min(W / model.width, H / model.height) * 0.95 * ZOOM;
@@ -110,7 +125,7 @@
       // In MOTION mode, fetch + pre-evaluate every curve at time T.
       let motionParams = [], motionOpac = [];
       if (MOTION) {
-        const j = await (await fetch('shizuku/runtime/' + MOTION)).json();
+        const j = await (await fetch(RUNTIME_BASE + MOTION)).json();
         for (const c of j.Curves) {
           const val = evalCurve(c.Segments, T);
           if (c.Target === 'PartOpacity') motionOpac.push([c.Id, val]);

@@ -6,6 +6,12 @@ vape/model-stocks/live2d/
 vape/model-stocks/vrm/
 vape/model-stocks/threejs/
 !vape/model-stocks/README.md
+vape/plugins/renderers/avatar-live2d/models
+
+# Live2D editor sources (PSD/cmo3/can3) — not needed at runtime, keep the repo lean
+vape/plugins/renderers/avatar-live2d/**/*.psd
+vape/plugins/renderers/avatar-live2d/**/*.cmo3
+vape/plugins/renderers/avatar-live2d/**/*.can3
 
 # Environment — a bare pattern matches .env at ANY depth (nested folders included)
 .env

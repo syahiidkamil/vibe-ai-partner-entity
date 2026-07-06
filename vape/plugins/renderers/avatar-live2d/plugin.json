@@ -1,7 +1,7 @@
 {
   "name": "avatar-live2d",
   "displayName": "Live2D Avatar",
-  "description": "Anime-style Live2D Cubism avatar — 13 feelings, 12 expressions, lip sync, physics",
+  "description": "Anime-style Live2D Cubism avatar — 14 feeling expressions, lip sync, physics",
   "tag": "Default",
   "category": "avatar",
   "renderer": "live2d",
@@ -9,16 +9,16 @@
   "order": 1,
   "models": [
     {
-      "id": "shizuku",
-      "name": "Shizuku",
-      "description": "Anime character with full expression set",
-      "path": "shizuku/runtime",
+      "id": "haru_greeter_t05",
+      "name": "Haru Greeter (receptionist)",
+      "description": "Live2D Cubism 5 sample — Haru Greeter, built for greetings",
+      "path": "haru-receptionist-default-model/runtime",
       "default": true
     }
   ],
   "interface": {
     "feelings": true,
-    "selfExpressions": true,
+    "selfExpressions": false,
     "physics": true
   },
   "window": {
