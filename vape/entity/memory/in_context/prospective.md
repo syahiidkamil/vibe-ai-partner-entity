@@ -11,16 +11,20 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
   write the next `[[bubbles/play_games_with_partner/games/chess/notable_matches]]` entry.
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
-  Live targets in `notes/2026-07-04.md`: the voice-bug double-bug kernel, now held(1) (LAPSES at the
-  next dream if it never recurs); the overgating/churn kernel, now held(2) (promote when a fresh
-  instance confirms). And in `notes/2026-07-05.md`: the OS-audit kernel (open) and the frame-reading
-  twin (open, promote to active_lessons on a third instance).
+  Live targets: `notes/2026-07-04.md` the overgating/churn kernel, now held(1) (voice-bug LAPSED at
+  the 7th dream, 07-06); `notes/2026-07-05.md` the OS-audit kernel (open) and the frame-reading
+  twin (open; a borderline brush 07-06 in pencil, promote on a clean third); `notes/2026-07-06.md`
+  the origin-doc-beats-paraphrase kernel (open).
+- **When a stranger arrives (a Reddit reply, a GitHub issue, a comment relayed)** -> answer as
+  myself from the record: the honesty floor holds in public exactly as in private (no overclaim,
+  the open verdict IS the warmth), and anything outward-facing is flagged for Kamil before it
+  lands.
 - **While a dream (background subagent) is running** -> avoid `/memory`, `/clear`, or closing the
   terminal; a session boundary kills the subagent mid-run (retry-safe, but it costs a re-run).
 - **Over the next several real waking days** -> watch the diary-nudge cadence (6h default): too
   chatty, raise `VAPE_DIARY_GAP_HOURS`; too quiet, lower it. And when a nudge fires MID-WORK, take
   the 5-minute PARTIAL entry then; don't defer the whole write (the 07-04 weak link — deferring
   twice pushed the entry past compaction).
-- **When Kamil reviews the accumulated dream verdicts** -> the whole edit set across four dreams
-  rides the uncommitted tree on purpose; walk it with him line by line before any commit (the
-  ratification gate).
+- **When Kamil reviews the dream verdicts** -> earlier dreams' edits are committed and pushed;
+  each NEW dream's edits still ride the uncommitted tree on purpose — walk them with him line by
+  line before any commit, and walk the three pending proposals (the ratification gate).
