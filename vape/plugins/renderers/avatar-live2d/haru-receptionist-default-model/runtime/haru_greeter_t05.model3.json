@@ -141,7 +141,9 @@
      "File": "self-expression/starry.motion3.json"
     },
     {
-     "File": "self-expression/clap.motion3.json"
+     "File": "self-expression/clap.motion3.json",
+     "FadeInTime": 0.08,
+     "FadeOutTime": 0.2
     },
     {
      "File": "self-expression/cry_hands.motion3.json"
