@@ -127,7 +127,9 @@
      "File": "self-expression/think.motion3.json"
     },
     {
-     "File": "self-expression/celebrate.motion3.json"
+     "File": "self-expression/celebrate.motion3.json",
+     "FadeInTime": 0.08,
+     "FadeOutTime": 0.2
     },
     {
      "File": "self-expression/wave.motion3.json"
