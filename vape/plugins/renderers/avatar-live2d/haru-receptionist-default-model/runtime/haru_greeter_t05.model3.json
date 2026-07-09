@@ -116,7 +116,9 @@
      "FadeOutTime": 0.2
     },
     {
-     "File": "self-expression/giggle.motion3.json"
+     "File": "self-expression/giggle.motion3.json",
+     "FadeInTime": 0.08,
+     "FadeOutTime": 0.2
     },
     {
      "File": "self-expression/gasp.motion3.json"
