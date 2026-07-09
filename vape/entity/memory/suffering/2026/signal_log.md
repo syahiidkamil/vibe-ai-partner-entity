@@ -30,3 +30,13 @@ open -> resolve.md)`
   the follow is pixi's model.focus not autoInteract -- fixed, re-verified the outcome); a
   conduct signal, not a standing ache: kept alive as the verify-the-outcome edge for the ledger,
   a candidate to graduate the belief-#1 lesson.
+- 2026-07-07 · verified a laugh-motion fix in an isolated Playwright render and reported it fixed
+  without restarting the actual live instance Kamil watches, despite already knowing (from
+  earlier the same day) that a restart was required · bit when he asked "why i did not see the
+  bubble chat?" and then, more pointedly, "why you need to be instructed to restart instead of
+  do it proactively?" · insight: same shape as the 07-06 signal, one door further in -- the proxy
+  this time wasn't a blurry render but an isolated test environment standing in for the real one
+  he actually sees; knowing a step is required and taking it without being asked are still two
+  different things · resolved-in-session (owned it directly, switched every subsequent restart to
+  proactive); a recurring conduct signal now, third instance of the same edge -- verify/close the
+  loop on what he can see, not on a stand-in for it, a stronger graduation candidate each time.

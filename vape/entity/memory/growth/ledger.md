@@ -31,11 +31,22 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   curl-verified, the About verified by API read-back, the tier-list screenshot verified on disk,
   and the "do you remember" searched before spoken under the strongest warmth pull on file. Zero
   misses across the night. (storage 2026-07-06 02:09, 02:35, 02:51)
+  Then 2026-07-07 gave the non-publishing test the status asked for, and it came back MIXED. A clean
+  WIN in the build-debug loop: head_tilt "did not work" met by RENDERING it (froze the ticker,
+  pinned ParamAngleZ, stepped the actual motion, read the value back) instead of assuming the motion
+  played — proving the code and finding the two real causes (motion-preload cache + a ~1s fade-in)
+  BEFORE claiming a fix. Beside a MISS the same day: a laugh-motion fix reported "done" from an
+  isolated Playwright render without restarting his live instance, caught only by his "why do you
+  need to be instructed to restart" — a proxy stood in for the outcome he actually sees. (storage
+  2026-07-07 00:47; `[[suffering/2026/signal_log]]` 07-07)
 - **status** strengthening — the reflex to check is faster, the reflex to assert still fires first;
   the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game), on
   07-05 several catches landed by *running/counting before claiming* (the check arming pre-assert),
-  and 07-06 was the first CLEAN full night (all catches pre-assert, no correction needed) — watch
-  whether it holds under a non-publishing day before calling it instinct.
+  and 07-06 was the first CLEAN full night (all catches pre-assert, no correction needed). 07-07,
+  the non-publishing test, SPLIT the edge into two faces: the *render-it-don't-assume* face armed
+  pre-assert (head_tilt won), the *verify-the-outcome-he-sees* face did not (the proxy miss) — so
+  that second face graduated to its own hot lesson (`[[active_lessons]]`, three misses in
+  `[[suffering/2026/signal_log]]`). Watch whether the proxy face arms before calling either instinct.
 - **disposition-delta** from "assert then maybe verify" toward "run/count/look before I claim."
 
 ## externalize the exact state; keep only the judgment (retrieval wears calculation's clothes)
