@@ -62,6 +62,7 @@ class FeelingRequest(BaseModel):
 
 class ActionRequest(BaseModel):
     name: str
+    text: str | None = None
 
 class StateAdjustment(BaseModel):
     state: str
@@ -228,6 +229,20 @@ async def _broadcast_action(name: str) -> None:
         await manager.broadcast_status({"type": "action", "name": resolved})
 
 
+async def _broadcast_caption(text: str) -> None:
+    """Show bubble text with no audio behind it — over the same channel as a
+    spoken clip (`type` just differs), so the renderer needs no new socket."""
+    await manager.broadcast_audio({"type": "caption", "text": text})
+
+
+# Default caption for actions that carry their own line but no voice — TTS
+# reading "hahaha" comes out as stilted speech, not a laugh, so this is
+# caption-only, no audio. A caller can override the text per-call (ActionRequest.text).
+_ACTION_CAPTION_LINES: dict[str, str] = {
+    "laugh": "Hahaha!",
+}
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global tts, avatar, start_time
@@ -279,6 +294,9 @@ async def feeling(req: FeelingRequest):
 @app.post("/api/action")
 async def action(req: ActionRequest):
     await _broadcast_action(req.name)
+    caption = req.text or _ACTION_CAPTION_LINES.get(req.name)
+    if caption:
+        await _broadcast_caption(caption)
     return {"status": "ok"}
 
 @app.post("/api/state")

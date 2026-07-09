@@ -14,6 +14,10 @@ console = Console()
 
 def action_cmd(
     name: Annotated[str, typer.Argument(help="Action name (e.g., wave, nod, celebrate)")],
+    text: Annotated[
+        str | None,
+        typer.Argument(help="Optional caption text (e.g. laugh's default 'Hahaha!')"),
+    ] = None,
     port: Annotated[int, typer.Option(help="Server port")] = 0,
 ) -> None:
     """Trigger an avatar action."""
@@ -26,9 +30,14 @@ def action_cmd(
     if port == 0:
         port = get_port()
 
+    payload: dict = {"name": name}
+    if text:
+        payload["text"] = text
+
     try:
         import httpx
-        httpx.post(f"http://localhost:{port}/api/action", json={"name": name}, timeout=5)
-        console.print(f"  Action: [bold]{name}[/bold]")
+        httpx.post(f"http://localhost:{port}/api/action", json=payload, timeout=5)
+        caption = f" — \"{text}\"" if text else ""
+        console.print(f"  Action: [bold]{name}[/bold]{caption}")
     except httpx.ConnectError:
         console.print("  [red]Server not running.[/red] Start with: uv run vape start")

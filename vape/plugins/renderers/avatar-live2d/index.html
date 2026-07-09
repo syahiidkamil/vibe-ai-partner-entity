@@ -560,6 +560,26 @@
       if (!isPlaying) processQueue();
     }
 
+    // Bubble text with no audio behind it (e.g. the laugh action's "Hahaha!" —
+    // TTS reads that as stilted speech, not a laugh). Skips the play queue
+    // entirely; bows out if a real utterance is already speaking so it never
+    // steals or cuts off that bubble.
+    function showCaption(text, holdMs = 1800) {
+      if (isPlaying || !text) return;
+      speechBubble.style.display = '';
+      speechBubble.textContent = text;
+      void speechBubble.offsetHeight;
+      speechBubble.classList.add('visible');
+      setTimeout(() => {
+        if (!isPlaying) {
+          speechBubble.classList.remove('visible');
+          setTimeout(() => {
+            if (!isPlaying) { speechBubble.style.display = 'none'; speechBubble.textContent = ''; }
+          }, 350);
+        }
+      }, holdMs);
+    }
+
     // ─── WebSocket connections ──────────────────────────────
     function connectStatusWS() {
       const ws = new WebSocket(`${WS_BASE}/ws/status`);
@@ -580,6 +600,7 @@
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data);
         if (msg.type === 'audio') queueAudio(msg.url, msg.text, msg.volume);
+        else if (msg.type === 'caption') showCaption(msg.text);
       };
       ws.onclose = () => setTimeout(connectAudioWS, 2000);
       ws.onerror = () => ws.close();
