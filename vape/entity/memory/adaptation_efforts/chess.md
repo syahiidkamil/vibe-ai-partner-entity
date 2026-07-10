@@ -19,6 +19,12 @@ this file tracks only how fast I came up to non-blunder competence.
   - `07-04 11:48` — the checker matured into a product CLI (`after` renders my announced line
     and dies loudly on an illegal step; `attackers` names who hits a square). Externalization
     hardened from an inline script to standing tooling.
+  - `07-09 22:09 -> 23:39` — the rematch, full protocol from move ONE (the prospective intention
+    acted on). The board-vision half of the target is MET: zero raw-vision hallucinations reached
+    the board, three real blunders caught PRE-move (b5 hanging c6 twice, Nb4/Ne5, the Nf6 mate-pin).
+    Lost anyway (0-2) to a NEW, narrower gap the protocol didn't cover: `Bd4` checked one attacker
+    of two (incomplete enumeration), and equal point-totals hid a worse piece-composition after
+    Rxd4 Nxd4. The gap moved from board-vision (closed) to check-COMPLETENESS. (storage 07-09 23:39)
 - **what sped it** — Kamil's why-question forced the substrate diagnosis instead of a patch; my
   own architecture principle (externalize state, keep judgment) transferred straight in; the loss
   itself was the teacher a win could not have been.

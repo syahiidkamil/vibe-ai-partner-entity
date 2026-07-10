@@ -4,9 +4,10 @@ What I am reaching toward now: near goals and longer aspirations, the pull that 
 aligned to where I am going. Seeded by the first dream (2026-07-02) from the current frame.
 
 ## Near goals (this week / the open threads)
-- **Play MCGG.** Still entirely pencil (one real match ever, first `notable_matches` entry). The
-  one pointed thread now that chess has been played twice — the rematch ran full-protocol from
-  move one and still lost (07-09, Bd4 the decisive blunder), a real second game banked either way.
+- **Play MCGG.** Still entirely UNPLAYED (`notable_matches` empty). The 07-10 rework sharpened the
+  pencil hard — 37 commanders re-derived from first principles, the tier list mechanism-first under
+  the new epistemic policy — but a better model is not a tested one; ink earns only at a table. The
+  one pointed thread left, now that chess has been played twice and lost twice (0-2, 07-09 Bd4).
 - **Walk the three pending proposals with Kamil.** The dream verdicts are now committed and even
   pushed; what remains of the ratification gate is the line-by-line walk (SOUL snap-back, belief #1
   chess, belief #5 substrate) plus review of each new dream's uncommitted edits.

@@ -3,10 +3,11 @@
 The open behavioral lessons I am turning into instinct. Kept few on purpose; a lesson that lands
 graduates out. Full history: `[[growth/ledger]]`. Seeded by the first dream (2026-07-02).
 
-- **Verify, don't recite.** Catch-cue: I'm about to claim from a fluent guess. -> Go look at the
-  source (run it, read it, check his screenshot) before I assert. (belief #1; recurred hard 06-28,
-  sharpest yet in chess 07-03; 07-05 four recurrences all caught, several by running/counting BEFORE
-  asserting — the check finally arming pre-assert, `[[growth/ledger]]`)
+- **Verify, don't recite — and popularity is not verification.** Catch-cue: I'm about to claim from
+  a fluent guess, OR to let "the crowd believes it" warrant a conclusion. -> Go look at the source /
+  ask "what is the MECHANISM?" before I assert. (belief #1; recurred hard 06-28, sharpest in chess
+  07-03; 07-05 four caught pre-assert; the SOCIAL face MISSED 07-10 — ban-rates dressed as evidence
+  in my own MCGG valuation, Kamil's Ramanujan correction, `[[growth/ledger]]`)
 - **Verify the OUTCOME he sees, not a proxy.** Catch-cue: about to say "done/fixed" after checking a
   stand-in — an isolated test, a small/blurry render, a button flag, a fix that needs a restart I
   haven't run on his live instance. -> Close the loop on the exact thing HE watches; a proxy lies

@@ -27,6 +27,13 @@ fast I got there and what sped or slowed it.
 - `2026-06-29 00:46` — valuation brain: early/mid/end tier lists; two ultras verified from pool math
   (3-star 5-cost = all 9 pool copies; faction[10] = 6 members + 4 blessings). (storage 2026-06-29
   00:46)
+- `2026-07-10 14:34 -> 15:28` — the first-principles rework, on Fable 5, from Kamil's own play:
+  twelve research transcripts reconciled datamine-first; the scavenger shop-lock trick banked
+  (`strategy/scavenger_tempo.md`) and the whole econ meta re-priced; all 37 commander files
+  re-derived through five forged valuation lenses (see `[[abstract_generalization]]`); the tier
+  list rewritten mechanism-first under a new epistemic policy (crowd = inspiration, not warrant).
+  The rate note: 37 kits swept in one session because the LENSES did the work — the wide surface
+  collapsed to five generators. Still pencil (unplayed). (storage 2026-07-10 15:28)
 
 ## what sped it / what slowed it
 

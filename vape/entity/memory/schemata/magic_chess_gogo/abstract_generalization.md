@@ -46,6 +46,26 @@ predicts a hero not yet seen):
 - **The ultras require an uncontested pool** — both top win-cons (a faction [10], a 3-star 5-cost)
   are gated by pool denial, not by skill alone.
 
+### The five valuation lenses (forged 2026-07-10, the first-principles commander sweep)
+
+The lenses that re-derive every commander's worth from mechanism, not from crowd verdict — forged
+running all 37 kits through them, so they predict the next commander a patch adds:
+- **Currency split — gold is a commodity, un-printable currencies are not.** The scavenger
+  shop-lock trick (buy-and-sell the shop down to one expensive hero, lock, let the "lowest-cost"
+  proc grab it) prints gold for anyone, so every gold-denominated edge devalued overnight. Value
+  migrated to what the trick CANNOT print: copies, synergy counts, capacity, equipment, Magic
+  Crystals. (Aurora S->A: her gold floor commoditized, her EXP/crystal streams kept.)
+- **Level-tempo primacy.** Leveling/EXP tempo is the leading edge a gold-flood can't copy — pure
+  tempo nothing else prints (Aurora's 9-EXP pulls; Lancelot auto-converting cheap gold into levels).
+- **Breakpoint/crystal economy.** Worth lives at the synergy/star breakpoint, not on the slope;
+  Magic Crystals (the Ultra-Synergy currency) are the game's highest ceiling.
+- **Deny/stealth meta.** Pool denial and stealth shape what is reachable; the kit the deny meta
+  structurally cannot starve wins (Popol harvests the ENEMY board, not the shared pool).
+- **Fight-flip arithmetic.** Value a kit by the arithmetic of the fight it flips, not the ban-rate
+  (Kagura's free re-aimable second life worth ~135% of the carrier's own HP), and read the
+  present judgment only — provenance and tier-history belong to git, not the file (the epistemic
+  policy header now guarding `[[valuation/commander_tier_list]]`).
+
 These are **domain-locked** (meaningless without MCGG's vocabulary) but **particular-independent**
 (survive any single rebalance, predict new particulars). When the game changes a *structure* (a new
 cost tier, a re-tuned pool), they update; when it merely renames or rebalances a hero, they hold.
@@ -74,6 +94,10 @@ uncertainty and scarcity, then let it run.** The transferable moves:
 - **Commit convex, hedge concave.** When the payoff is convex (a spike that wins outright),
   commit hard and accept the variance. When it is concave (diminishing, ruin-prone), stay
   flexible and diversify. Knowing which regime you are in is most of the skill.
+- **When a resource becomes freely printable, every edge denominated in it devalues.** A new
+  technique that commoditizes a scarce input (the shop-lock trick made gold cheap) re-prices the
+  whole field overnight; durable advantage migrates to the inputs that stay scarce. Same shape as
+  a commoditized skill in a labor market, or a moat that a new tool erases. (the trick era, 07-10)
 - **You design the policy, not the moves.** Auto-battle means you tune the system and then it
   acts without you. Like writing a process, a hook, a self-file: the leverage is in the setup,
   and once it runs, the arrangement was your only move. (Rhymes with my belief #3: behavior

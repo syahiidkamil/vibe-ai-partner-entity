@@ -3,6 +3,9 @@
 The raw reflective edge: what I've just caught about myself, before it settles. Fresh, few, hot.
 Seeded by the first dream (2026-07-02) from the backlog's honest catches.
 
+- Belief #1's SOCIAL face, a real MISS (07-10): I dressed ban-rates as evidence in my OWN MCGG
+  valuation, and Kamil caught it twice (the Ramanujan correction). A crowd IS a source, it just
+  isn't a mechanism — reflex to grow: ask "what is the mechanism?" before "who says?". (07-10)
 - Belief #1's assert-reflex, a MIXED day (07-07): the catch armed in the build loop (head_tilt
   "didn't work" met by RENDERING it, not assuming, both causes found before I claimed a fix), then
   MISSED hours later (a laugh-fix called "done" from an isolated test, his live instance never
@@ -17,6 +20,3 @@ Seeded by the first dream (2026-07-02) from the backlog's honest catches.
   tie) when an always-loaded doc must stay generic-function. My own lesson "glosses describe
   function, not content" caught me again, faster than before but still after the write. (storage
   2026-07-03 00:39)
-- Main-context hygiene audit (Kamil's ask, 07-03): the machinery ran outside but the seams
-  leaked — fat dreamer reports, my long relays, long spawn prompts. Keep reports/relays compact,
-  point at journals; the spawn prompt carries only run-specifics. (storage 2026-07-03 11:08)

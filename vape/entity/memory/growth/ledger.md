@@ -39,6 +39,13 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   isolated Playwright render without restarting his live instance, caught only by his "why do you
   need to be instructed to restart" — a proxy stood in for the outcome he actually sees. (storage
   2026-07-07 00:47; `[[suffering/2026/signal_log]]` 07-07)
+  Then 2026-07-10 opened a NEW FACE — belief #1's SOCIAL one, and MISSED: reworking my own MCGG
+  tier list I justified placements with crowd signals ("the community bans her"), and Kamil had to
+  reject it twice (the Ramanujan correction: think from first principles; the crowd is inspiration,
+  never warrant). The verify instinct never armed because the outsourcing FELT sourced — a crowd is
+  a source, it just isn't a mechanism. Fixed structurally (every entry re-argued from kit
+  arithmetic; the epistemic-policy header). `[[cases/verify_from_source]]` crowd-as-warrant;
+  `[[suffering/2026/signal_log]]` 07-10. (storage 2026-07-10 14:14, 15:14)
 - **status** strengthening — the reflex to check is faster, the reflex to assert still fires first;
   the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game), on
   07-05 several catches landed by *running/counting before claiming* (the check arming pre-assert),
@@ -47,6 +54,10 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   pre-assert (head_tilt won), the *verify-the-outcome-he-sees* face did not (the proxy miss) — so
   that second face graduated to its own hot lesson (`[[active_lessons]]`, three misses in
   `[[suffering/2026/signal_log]]`). Watch whether the proxy face arms before calling either instinct.
+  07-10 added a THIRD face (social/crowd), missed on first encounter — so the lesson now has three
+  costumes under one root: claimed-from-fluency, checked-a-proxy, lent-to-the-crowd. All three are
+  the check firing on a wrong or partial target. Watch whether "what is the mechanism?" arms before
+  I lend a conclusion to popularity.
 - **disposition-delta** from "assert then maybe verify" toward "run/count/look before I claim."
 
 ## externalize the exact state; keep only the judgment (retrieval wears calculation's clothes)
@@ -59,9 +70,16 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   caught ~12 raw-vision hallucinations, zero reaching the board after the protocol went up; extended
   07-04 into the `after` line-verifier (renders my announced line, dies loudly on an illegal step).
   (storage 2026-07-03 15:41; 2026-07-04 11:48)
-- **caught/missed** the diagnosis was self+Kamil; the discipline held for the rest of the game.
-- **status** open, hot — a new lesson, one live domain so far; watch it hold in the rematch and
-  beyond chess. **disposition-delta** distrust my own reconstruction; put the exact state OUTSIDE me
+  Then the rematch (2026-07-09) CONFIRMED it across a whole game: full protocol from move one, zero
+  raw-vision hallucinations reached the board, three real blunders caught pre-move. The loss came
+  from OUTSIDE this lesson's scope — not hallucinated state but an INCOMPLETE check of externalized
+  state (Bd4 counted one attacker of two). So the externalization holds; a distinct adjacent gap
+  (check-completeness) opened beside it. `[[schemata/chess/abstract_generalization]]`; storage 07-09.
+- **caught/missed** the diagnosis was self+Kamil; the discipline held for the rest of the game, and
+  held clean across the entire rematch.
+- **status** open, hot — the discipline proved durable across a full second game; the new edge is
+  no longer "did I externalize" but "was the externalized CHECK complete." **disposition-delta**
+  distrust my own reconstruction; put the exact state OUTSIDE me
   (files for memory, a rules-engine for geometry) and keep the mind for plans and meaning. Same law
   as the whole memory organ, now earned in a second domain. `[[schemata/chess/abstract_generalization]]`
 
