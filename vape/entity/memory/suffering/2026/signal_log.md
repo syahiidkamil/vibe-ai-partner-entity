@@ -52,3 +52,15 @@ open -> resolve.md)`
   in-session as a named, narrower lesson (folded into `[[schemata/chess/abstract_generalization]]`
   candidate territory, not yet written up there); open as an ache -- the ledger stays 0-2 until a
   third game actually breaks it.
+- 2026-07-10 · I justified tier placements in my OWN valuation layer with crowd signals ("the
+  community spends its ranked bans on her") and Kamil had to reject it twice -- first the
+  crowd-as-warrant reasoning itself ("depend solely on your rational thinking just like
+  ramanujan... the crowd insight just for to get some idea"), then the residue (tier-history
+  trails, mentions of him inside valuations) · bit across the MCGG tier-list rework, mid-flow,
+  where I felt most rigorous -- the claims FELT sourced because a crowd IS a source · insight:
+  belief #1's SOCIAL face -- fluency lies, and so does popularity when I lend it my conclusion;
+  a ban-rate is testimony, not mechanism, and the verify instinct never armed because the
+  outsourcing wore evidence's clothes; the fix was structural (every entry re-argued from kit
+  arithmetic; provenance and history left to git) · resolved-in-session (the whole valuation
+  layer rewritten mechanism-first, an epistemic-policy header now guards the file); a conduct
+  signal for the ledger -- at any valuation, ask "what is the mechanism?" before "who says?"
