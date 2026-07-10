@@ -3,8 +3,10 @@
 The deep, concrete playbook, round by round. **In pencil**, reasoned from
 [[../../infos/commanders/resolved_commanders]] (the verbatim kit), [[../../infos/gogo_cards/power_cards]],
 [[../../infos/encyclopedia/hero]] (the pool/odds), and the round calendar [[../../infos/rounds/index]];
-**not yet lived**, so verify by play and overwrite. Frame: [[index]]; spine: [[../general_strategy]];
-the general (emergent) tiers: [[../tier_lists]]; the reasoning: [[../../thinking_and_mental_model/index]].
+**not yet lived** by my hands, **updated 2026-07-10** from three live-play research transcripts
+(`../../research/alice/`); verify by play and overwrite. Frame: [[index]]; spine:
+[[../general_strategy]]; the general (emergent) tiers: [[../tier_lists]]; the reasoning:
+[[../../thinking_and_mental_model/index]].
 
 > **Correction from the v1 draft (verify-don't-recite):** the rebuilt verbatim kit shows Alice is
 > contention-**resistant**, not contention-**immune**, and she does **not** "need no copies." Abyssal
@@ -129,15 +131,41 @@ implied. Level for **capacity** (more wall + support around the carry) and to re
 `L4: 3 · L5: 11 · L6: 31 · L7: 63 · L8: 103 · L9: 157 · L10: 231`. The +5 EXP from her exclusive helps
 the climb. Do not over-level past the carry's tier (dilutes the copies she still wants).
 
+## The two forms of life: the hama swarm vs the keeper carry (research correction)
+
+The v2 file read her as a one-keeper commander. The research shows the **community's feared Alice is
+the opposite: the bottom-roll "hama" (pest) swarm**, and it deserves first billing:
+- **The hama line:** sit **L6-7** (never higher), spend all three casts on the cheap swarm carries,
+  **Helcurt + Saber + Hilda (all 3-cost)**, and roll them to the cap: ~**13 copies each** maxes one
+  out (community count; the exact merge-vs-boost accounting is unverified), stats past a normal
+  3-star, "4-star" in community language. Three capped 4-stars at a level where 3-cost odds peak.
+- **Why it works (the mechanism):** the swarm spikes at L7, where 3-cost odds peak and the shared
+  pool holds deep 3-cost stock nobody can deny, so three capped units arrive BEFORE top-roll boards
+  reach their 5-cost power; timing plus un-deniability, not luck. (Field testimony agrees, "most
+  feared by top-rollers", "top 4 nearly guaranteed", held in pencil as color, not as the warrant.)
+- **The enabler cards:** **Customize Recruitment** (3-cost odds way up; the tradeoff is real: 5-cost
+  odds drop to ~0% at L7, so Ling/Lancelot become unfindable, the swarm is a commitment) and
+  **Premium Client** ("the tier-1 purple for any hama build", free refresh chances = more copies).
+- **The keeper line** (the v2 default, still real): all three casts + items into one 4-5 cost carry
+  (Odette, Kagura, Karrie, Esmeralda), used when a 4-cost lands early (the English MRS transcript:
+  "grab the first 4-cost that shows, cast on it, build around its two synergies").
+- **The fork rule:** the cast timing decides. A good 3-cost pair by I-1/II-1 -> hama at L7. A strong
+  early 4-cost and no swarm pieces -> keeper. Do not straddle; the casts are too few to split.
+
 ## Best comps (concrete)
 
-Built around **one expensive, scaling carry** with a **fat protective front** and a support synergy:
-- **A 4-5 cost Mage carry:** Odette (5c Astro/Mage) or Kagura (4c Mage/Exorcist) pumped to absurd, with
-  a Mage [4] shell + Stargazer mana, fronted by Defender/Dauntless [2].
-- **A 4-5 cost Marksman carry:** Karrie/Irithel (4c) or Lesley (5c), with a wall and peel.
-- **A tanky carry:** Esmeralda (4c Dauntless/Heartbond) or Ruby (5c) if I want the carry to also help
-  hold the front, the most forgiving since the carry is harder to delete.
-- The synergy is whatever the carry brings; the board exists to keep it alive.
+Hama first (the meta line), keeper second:
+- **Hama swarm:** Helcurt + Saber (+ Hilda the third cast), 4-starred at L7, inside a **6 Swiftblade**
+  shell (Saber/Helcurt/Gusion/Hanzo/Joy + one) with 4 Astro (Helcurt/Hilda double-count) or 4
+  Exorcist; Phoveus body hands Saber the Exorcist Seal. Blessing to Swiftblade (Link/Ling is
+  unfindable under Customize Recruitment, so buy the breakpoint with the blessing instead).
+- **A 4-5 cost Mage keeper:** Odette (5c Astro/Mage) or Kagura (4c Mage/Exorcist) pumped to absurd,
+  Mage [4] shell + Stargazer mana, fronted by Defender/Dauntless [2].
+- **A 4-5 cost Marksman keeper:** Karrie/Irithel (4c) or Lesley (5c), with a wall and peel.
+- **A tanky keeper:** Esmeralda (4c) or Ruby (5c), most forgiving (harder to delete).
+- Either way: **Mirror Devices pair with her skill** (every mirrored copy is another boost), and she
+  is **gold-poor by kit** (no econ passive), so econ cards (Wanwan's or Lancelot's gold cards, Trust
+  Fund) are her roll fuel; the research pilots prioritize them over almost everything.
 
 ## Positioning
 
@@ -188,7 +216,16 @@ The exclusive is a textbook "amplify my kit" card (**+45% Hybrid ATK straight on
 plus +5 EXP) and should almost always be kept. The **borrowable Alice card** (a 1-star copy, select 3x,
 auto-combining for partial star-ups) is a weaker, generic echo of her own kit, prefer the exclusive,
 which buffs the carry the kit already builds rather than duplicating the partial-star-up she already
-does for free. Refresh past anything else; on Alice the exclusive is near-mandatory.
+does for free. Refresh past anything else; on Alice the exclusive is near-mandatory at I-2.
+
+**Cross-card fishing (the LATER card stages, since the exclusive owns I-2):** every copy of a cast
+target is a boost, so the free-hero cards are direct scaling for her:
+- **Ling's** (the same 4-cost at L4/5/7): on the keeper line, three free copies of a random 4-cost;
+  if it lands the keeper (or lands early enough to BECOME the keeper), that is three boosts free.
+- **Luo Yi's** (the same random 3-cost x6): the hama gamble, six copies is nearly half the ~13-copy
+  cap, IF the random hero is Helcurt/Saber/Hilda or something worth a cast. A gamble; name it one.
+- **Harley's** (6g + two 4-costs shown) and **Reinforcement+** (generic 2-star 4-cost): keeper-line
+  copy injections. Mirror Devices from any source remain the same math (a mirrored copy = a boost).
 
 ## What to watch from other players (matchups)
 
@@ -224,22 +261,32 @@ Her whole skill is choosing the carry right and keeping it alive.
 
 ## Pitfalls
 
-- **Investing in a fall-off hero** (a cheap unit for early tempo) instead of a lasting 4-5 cost carry.
-- **Spreading casts or copies** across multiple heroes, diluting the one advantage.
-- **Believing the v1 "needs no copies":** she *wants* the carry's copies (each is a boost), so reroll for
-  them at the carry's tier; do not ignore the pool.
-- **Under-protecting the single carry:** all eggs in one basket, so a dove or CC-locked carry is a lost
-  board. Positioning and peel are not optional for her.
+- **Straddling the fork:** half-hama, half-keeper wastes casts. Cheap casts belong to the swarm plan
+  (L7, Customize Recruitment, 13-copy caps); a lone cheap cast inside a keeper plan is the true
+  fall-off mistake the v2 warned about.
+- **Spreading copies thin** within either plan (in hama, feed the three swarm carries; in keeper, the
+  one).
+- **Taking Customize Recruitment then wanting a 5-cost:** the card zeroes 5-cost odds at L7; the swarm
+  is a commitment, not a phase.
+- **Believing the v1 "needs no copies":** she *wants* copies (each is a boost); reroll at the carries'
+  tier; do not ignore the pool. She is also gold-poor, so budget the rolls (econ cards).
+- **Under-protecting the carry (keeper) / the formation (hama):** a dove or CC-locked keeper is a lost
+  board; a hama board caught by one big AoE melts together.
 
 ## Threat assessment (who beats her, and why)
 
 **Assassins and burst** (Swiftblade lines, the commander Ling, anything that reaches and kills the
-back-row carry) are her nightmare: neutralize the one carry and her board folds. **Hard CC** (Lukas
-stun, control) that locks the carry for a fight does the same, alive but stunned = no damage.
-**Go-wide / multi-carry** boards out-body her single threat. A **rich rival contesting her carry's
-copies** can slow her scaling (the corrected, non-immune truth). She is strongest into boards that
-cannot reach her carry and weakest into any that can; **protecting the investment is the entire
-matchup.**
+back-row carry) are the keeper line's nightmare: neutralize the one carry and the board folds.
+**Hard CC** (Lukas stun, control) that locks the carry does the same, alive but stunned = no damage.
+**Go-wide / multi-carry** boards out-body a single threat. A **rich rival contesting the carry's
+copies** can slow her scaling (the corrected, non-immune truth).
+
+The hama line's counters, from lived research games: **wide AoE mid-boards** (an Odette Astro
+center-seat "ultimate across one screen" beat the full swarm; the pilot's own words: "I honestly
+can't beat it") and **Popol and Kupa's trap ("sign") formations** that disrupt where the swarm
+lands. And the cap is real: a 13-copy 4-star is still a 3-cost body; **legend 3-stars out-stat it
+late**, so the swarm wants the game closed before Stage IV. Against everything else the hama read
+is the community's: she destroys top-rollers and the pool cannot deny her.
 
 ## Example boards by stage (named units, seats)
 
@@ -303,13 +350,17 @@ Concrete benchmarks tied to her three Abyssal Gaze casts (I-1 / II-1 / III-1). I
 
 ## Quick reference (TL;DR)
 
-- **Identity:** scale ONE carry on partial-copy boosts (not hard 3-merges) past a normal 3-star;
-  contention-*resistant*, not immune.
-- **Power card:** take the exclusive (+45% ATK + 5 EXP on the pumped carry); skip the weaker borrowable.
-- **Casts (I-1/II-1/III-1):** all three on one keeper 4-5 cost carry that does not fall off; buy its
-  copies as they appear (each is a boost, up to 8 + 4 flat).
-- **Levels:** to the carry's tier (L8-9 for 4-cost), then roll for copies; +5 EXP from the exclusive
-  helps.
-- **Board:** one carry, fat protective front, a peeler; the rest exists to keep the carry alive.
-- **Positioning is everything:** back-center carry, corner-guard, peel the divers, Purify vs CC.
-- **Watch:** assassins, CC, go-wide; protect the one threat and she wins.
+- **Identity:** turn hard 3-merges into per-copy boosts on chosen heroes; two forms of life: the
+  **hama swarm** (3x capped 3-costs at L7, the community's feared meta line) or the **keeper**
+  (one pumped 4-5 cost). Pick the fork early, never straddle.
+- **Power card:** take the exclusive (+45% ATK + 5 EXP); then fish **Customize Recruitment** +
+  **Premium Client** for hama, or carry-item bundles for keeper. She is gold-poor: econ cards are
+  roll fuel.
+- **Hama:** Helcurt + Saber + Hilda, ~13 copies each caps them, 6 Swiftblade shell, stay L7 (the
+  card zeroes 5-cost odds there); close before legend 3-stars arrive.
+- **Keeper:** all casts + items on one 4-5 cost (grab the first good 4-cost and build around its
+  synergies); L8-9, roll for copies; Mirror Devices are extra boosts.
+- **Positioning is everything:** back-center, corner-guard, peel, Purify vs CC (keeper); spread vs
+  AoE (hama).
+- **Watch:** assassins/CC on the keeper; Odette-style screen-wide AoE and Popol traps on the hama;
+  go-wide boards vs a single threat.

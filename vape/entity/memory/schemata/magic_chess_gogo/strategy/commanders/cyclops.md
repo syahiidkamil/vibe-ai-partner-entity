@@ -36,6 +36,15 @@ lineup value) + a random hero from their lineup at its current star** (so he can
 axis). The card adds **+8 gold now + more elimination gold**. He is a **back-loaded late-scaler**: weak
 early (the kit needs deaths), brutal once the lobby thins.
 
+Research notes (2026-07-10, `../../research/cyclops/`, three transcripts; the kit above verified
+against live play): the inheritance ("warisan") fires on surrenders too, but **skilled opponents
+resign EARLY at high HP with cheap boards**, and 14% of a small lineup is small ("the inheritance is
+really tiny, only 4 gold"), a real consistency ding in good lobbies. The catch-up's 3-hero drop
+arrives with items visible and can land as early as Stage I-II if the hold is aggressive. Last
+season's mandatory hold-early line is gone: **the combo is free now** ("combos counter each other
+this season, adjust to what the boxes hand you"). And the community's survival bar is concrete:
+**outlive four players and Cyclops is safe**, the back half of the lobby is where the kit prints.
+
 ## Win condition / identity
 
 **Survive to the elimination phase, then snowball off the dying.** Cyclops does little in Stage I-II (no
@@ -59,14 +68,20 @@ Two standing tensions:
 
 The ordered plan:
 1. **Build a stable, survivable board** (a frontline + a safe carry) that lasts to Stage III, the kit is
-   useless if I die early.
+   useless if I die early. (The community bar: outlive four players and the run is safe.)
 2. **Bank a healthy economy** so I am not forced low (the catch-up triggers at <=80 HP, but I would rather
-   not flirt with elimination myself).
-3. **As commanders fall (Stage III-IV), harvest** the gold + free high-star heroes; **flex** them into my
-   board (a stolen 2-3 star carry can become my new threat).
-4. **Use the <=80 HP catch-up** wisely: it hands 3 heroes of my highest synergy + a chest, so **commit a
-   synergy** beforehand so the 3 free heroes thicken *my* axis.
-5. **Snowball the lead**: each elimination compounds, so press once the harvest starts.
+   not flirt with elimination myself). The research line even opens with light Scavenger/Neobeast
+   farming (the shop-lock trick, [[../scavenger_tempo]], serves him as well as anyone: his kit asks
+   nothing of the shop).
+3. **Steer the <=80 catch-up on purpose**: it reads my **highest-count synergy**, so commit an axis
+   BEFORE dipping; a research game dipped early with Exorcist committed and the 3 free bodies +
+   chest turned the slide around on the spot.
+4. **As commanders fall (Stage III-IV), harvest** the gold + free high-star heroes; **flex** them into
+   my board (a stolen 2-3 star carry can become my new threat). Budget auction Mirrors at <=9 gold
+   (the research pilot's cap) and bank them for a **5-cost 3-star** late, the inheritance gold makes
+   that hunt honest.
+5. **Snowball the lead**: each elimination compounds, so press once the harvest starts. Expect less
+   from lobbies of surrender-savvy players (early resigns shrink the 14%).
 
 ## Stage-by-stage, round by round
 
@@ -151,6 +166,13 @@ back-loaded**: the +8 helps now, the elimination gold only pays once players die
 (the +8 alone is decent and the scaling is real), but **deviate to a generic econ card** if I need early
 tempo to survive, his kit and card both reward the late game, so early HP safety can matter more. Use the
 2 refreshes to weigh it.
+
+**Cross-card fishing: Nana's card is his best borrow in the pool.** It is NOT marked exclusive
+(8 gold + an Equipment Chest + **one fatal-DMG immunity on the commander**), and one extra survived
+round is literally his kit's binding constraint, insurance on the survive-to-harvest plan that also
+pays tempo now. Behind it: **Vexana's** (extra Go Go Box picks + 13g at the auction, feeding his
+mirror-hunting budget) and **Fanny's** (+1 capacity, a thicker wall). All three often beat his own
+back-loaded card in an aggressive lobby.
 
 ## What to watch from other players (matchups)
 

@@ -55,6 +55,29 @@ ATK). The exclusive pays her for keeping those two carriers alive, which her own
 The borrowable is **redundant** (it just hands the same Cloak + Scythe the kit already gives), so it is
 the wrong pick on Ruby herself.
 
+Research notes (2026-07-10, `../../research/ruby/`, two transcripts): the community describes the
+revive-buff at **80% Hybrid ATK** where the datamine reads 55%, a possible live buff, verify in-game.
+The lived doctrine on top of the kit:
+- **The default meta line is 6 Dragoncaller + 4 Swiftblade, Gusion hyper** ("the best push combo",
+  and for that exact reason **heavily contested**, expect another Ruby on your line). Gusion seats
+  **center-back** so his knives reach both flanks, holds every damage item, and the community calls
+  him "the most OP 4-cost in the meta". Finish 6/6 with capacity; a Bane swap turns on Northern
+  Vale [2] ([[../northern_vale_core]]).
+- **The patience twin: Neobeast Ruby.** Her free items make her the roster's easiest Neobeast
+  holder (the greedy line that knocks out impatient pilots); concede to the Go Go Box for the
+  missing piece instead of force-rolling for blessings, and remember the Neochest's high tiers pay
+  crystals / 4-cost heroes (a 700-point break carried the research game; 1-cost fodder at L10 is
+  needle-in-haystack, so finish Neobeast star-ups before top-rolling).
+- **The early hold changed this season:** not Glory-reliance, but **Mia + Khufra Heartbond
+  mandatory**, whatever expensive heroes the shop gives (activate their synergies as rent), and
+  Scavenger; level to 9, THEN transition to the real comp.
+- **Split the Cloak and Scythe onto two sturdy carriers** once the front holds: the exclusive pays
+  per SURVIVING carrier, so two live carriers = +4g/round (confirmed in play: "separate the items
+  so you get four gold if they're all alive").
+- Two field notes in pencil: **the Go Go Auction hands more gold to lower placements** (last seat
+  ~10g, 7th ~9g per the pilot), a real consolation for a committed loss-streak; and **against a
+  Dragoncaller board, spread your units**, the dragon strikes the densest 9-tile area.
+
 ## Win condition / identity
 
 **Field the stickiest, gear-ahead front-carry in the lobby and grind the enemy down on the marked-target
@@ -153,7 +176,12 @@ gold cushions it.
 
 ## Best comps (concrete)
 
-Built around a **sticky front-carry holding the Cloak + Scythe**:
+Built around a **sticky front-carry holding the Cloak + Scythe**; the researched meta lines first:
+- **6 Dragoncaller + 4 Swiftblade, Gusion hyper (the community default).** Gusion center-back with
+  the damage items, dragons striking the enemy clump, Ling/Hanzo/Saber filling Swiftblade; the
+  strongest push line and the most contested one, scout for the mirror Ruby before committing.
+- **Neobeast Ruby (the patience line).** Her free gear holds the early rounds the greedy Neochest
+  demands; concede toward Go Go Boxes for pieces, break the chest high, convert.
 - **Dauntless front** ([[../frontline_tank]]): Balmond, Franco (Dauntless+WM), Hilda, Esmeralda,
   Silvanna + the hero Ruby (5c Dauntless/Exorcist) as the Cloak carrier. Dauntless [4] = team-wide
   shields on top of the resurrect, brutally hard to kill.

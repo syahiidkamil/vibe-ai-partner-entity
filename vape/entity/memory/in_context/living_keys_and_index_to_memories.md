@@ -14,7 +14,7 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - how fast I built it -> `adaptation_efforts/magic_chess_gogo.md`
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
 - playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
-- the first game (lost 1-0) -> `bubbles/play_games_with_partner/games/chess/notable_matches.md`
+- two games played (lost 1-0, then lost 1-0 the rematch) -> `.../chess/notable_matches.md`
 - how fast I learned to not-blunder -> `adaptation_efforts/chess.md` (gap closed in 1 game)
 - the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)
 

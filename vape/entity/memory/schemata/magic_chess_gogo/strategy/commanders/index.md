@@ -32,6 +32,45 @@ The strongest **borrowable** picks to weigh against any exclusive: **Fanny's Pow
 Power** (if 6-stacking), and the **Synergy Badge/Blessing** (a bought breakpoint). Use the 2 refreshes
 to fish for these when my exclusive does not fit.
 
+## The cross-card ledger (borrowing ANOTHER commander's power card, 2026-07-10)
+
+Only **9 of the 46 power cards are marked (Exclusive)** in [[../../infos/gogo_cards/power_cards]]
+(Alice/Diggie/Johnson/Karina/Lukas/Lunox/Popol/Ruby/Zilong each have one exclusive buff variant);
+**everything else is borrowable by any commander**. So the I-2 decision is really three-way: my
+exclusive vs a generic vs *someone else's kit-piece*. The borrowable pool by what it pays:
+- **Free-hero engines:** Ling's (the SAME random 4-cost at L4/5/7 = a free near-2-star 4-cost),
+  Luo Yi's (the same random 3-cost x6), Moskov's (a 1->5 cost ladder), Guinevere's (a free shop hero,
+  13 rounds), Lylia's (a 5-cost + matching item at L7), Paquito's (2 copies of a <=3-cost + 4g),
+  Layla's (a top-synergy hero per 50k DMG), Harley's (6g + two 4-costs shown).
+- **Board converters:** Dyrroth's (devour a 1-star every 3 rounds -> a +1-cost hero, +2 EXP each),
+  Aurora's (a >=4g reward per no-buy round, 6x), Alice's borrowable (partial star-up, select 3x).
+- **Econ:** Lancelot's (+2g/round from L5), Aamon's (+4g per 2-star, cap 20), Wanwan's (kill-gold,
+  cap 35), Cyclops' (+8g + elimination gold), Kalea's (dice, 21-35g), Vexana's (extra box picks +
+  13g auction), Kagura's (+9g AND a carry buff, the econ-combat hybrid).
+- **Survival / utility:** **Nana's (8g + a chest + one fatal-DMG immunity, NOT marked exclusive)**,
+  Angela's (mana doll), Lukas's borrowable (opening statue), Ruby's borrowable (Scythe + Cloak),
+  Karina's borrowable (Twinblades), Miya's (12g + Lunar Longbow), Minotaur's (2 enhances + 2 items),
+  Zilong's borrowable (Dragon Spear), Gusion's (a Role crystal + 3g).
+- **The card layer itself:** Yu Zhong's (ALL subsequent cards +1 quality tier, the compounding
+  first-pick) and Valir's (4g + a random power card).
+
+Named pairings worth remembering (each argued in its commander's file):
+- **Fanny x Dyrroth's:** her launcher + farm slot keep spare cheap bodies flowing; the devour eats
+  exactly that chaff and ladders it into 4-5 costs, +2 EXP toward her L5 gate.
+- **Fanny x Ling's:** the free near-2-star 4-cost is the ideal launch target (+20% on a real hero).
+- **Anyone x Yu Zhong's at I-2:** upgrades every later card; the cost is this window's kit-piece
+  (whether my own card is re-offered at II-3/III-3 is UNVERIFIED, so treat the swap as spending the
+  guaranteed shot).
+- **Chou x Ruby's / combat borrowables:** his passive out-earns flat gold cards, so his card slot
+  buys combat value instead.
+- **Cyclops x Nana's:** one fatal-DMG immunity on the commander whose whole kit is "survive to the
+  harvest".
+- **Aurora x free-hero cards (Ling's/Luo Yi's/Moskov's):** granted heroes are not purchases, so they
+  build her board *without breaking the no-buy streak* (grant-vs-purchase boundary in pencil,
+  verify).
+- **Alice (hama) x Luo Yi's:** six copies of one random 3-cost is up to half the 13-copy cap free,
+  IF the random hero lands on a cast target (a gamble, name it as one).
+
 ## Deep per-commander files (the grind, in progress)
 
 Each commander gets its own **heavy** file: the concrete playbook from Stage I-1, leveling cadence
@@ -70,6 +109,17 @@ The 37-commander deep-file set is **complete**. The compact per-commander entrie
 quick map + power-card verdict; each links to its full file. (Optional follow-ups: a batch pad-to-300
 pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
 
+**2026-07-10 research pass:** twelve files reworked against live-play transcripts in `../../research/`
+(Aurora, Alice, Chou, Cyclops, Fanny; then Kagura, Vale, Kalea, Dyrroth, Aamon, Yu Zhong, Ruby) plus
+the **Scavenger shop-lock trick** ([[../scavenger_tempo]]), which commoditizes gold farming and
+re-prices every econ kit. The biggest verdict moves: Aurora is a high-skill crystal/Ultra-Synergy
+hunter, not a safe floor; Alice's meta line is the 3-cost hama swarm; **Vale's charges stack** (hoard
+for an L9 burst-roll, the old "spend as they come" advice corrected); Kagura's %-of-carrier-HP
+shield belongs on tanky carries; Yu Zhong's maxed-card Treasures print **crystals**; Aamon's mirror
+game runs on pool-reading and stealth. Epistemic rule for all of it: transcripts supply observations
+and hypotheses; the verdicts are re-derived from kit mechanics and resource arithmetic, never
+adopted from the crowd (the policy lives in [[../../valuation/commander_tier_list]]).
+
 ---
 
 ## Economy / Gold
@@ -77,23 +127,33 @@ pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
 - **Lancelot** (no interest, all gold auto-levels him, flat bonus gold by stage). Play: out-level early
   off the bonus gold, commit a carry, spike mid. **Power card:** his (+2 gold/round at L5) is *weak*;
   his kit already handles gold, so prefer a **synergy spike or a big econ generic** (Trust Fund). Deviate.
-- **Chou** (+2 gold on win, +3 on loss: streak-agnostic econ). Play: stable gold no matter the result,
-  good for a slow-build. **Power card:** Chou's Sash (chest per 3 kills) is fine on a kill-heavy carry;
-  otherwise a generic econ/synergy. Situational.
+- **Chou** (+2 gold on win, +3 on loss: streak-agnostic econ, every round pays). Play: ride the
+  interest band from 17-18 gold (his end-round gold tops it), stack Scavenger, spike a
+  Dauntless-Marksman or Kishin-Lunox board. **Power card:** Chou's Sash on a kill-heavy item-farmer
+  (Mia/Lunox); the tech is **borrowing Ruby's card** (his passive out-earns flat gold cards, so buy
+  combat value). Situational.
 - **Nana** (survive first death at 1 HP, +8 gold per 10 DMG taken). Play: a sticky econ-survival
-  commander that profits from being hit. **Power card:** **take the exclusive** (chest + 8 gold +
-  one fatal-immunity): unique survival that compounds her kit. Keep.
+  commander that profits from being hit. **Power card:** **take hers** (chest + 8 gold + one
+  fatal-immunity): unique survival that compounds her kit. Keep. (Note: her card is NOT marked
+  exclusive in the datamine, so others can steal the immunity; Cyclops is its best borrower.)
 
 ## Duplicate / copy / star-up
 
-- **Aamon** (Mirror Devices = free copies). Play: chase 2-stars, convert to Mirrors, star up. **Power
-  card:** **take his** (+4 gold per 2-star, up to 20): it pays his whole loop. (And contest enemy
-  Mirror Devices, per [[../../thinking_and_mental_model/reading_enemy_commanders]].)
-- **Alice** (star-up a chosen carry without 3 copies). Play: pick a carry, spike it absurdly. **Power
-  card:** **take the exclusive** (+5 EXP, +45% Hybrid ATK to her chosen heroes): turbo-charges the very
-  carry her kit builds. Keep.
-- **Dyrroth** (devour up the cost ladder). Play: feed 1-stars, climb to high-cost heroes. **Power
-  card:** **take his** (a free devour every 3 rounds + EXP): doubles his engine. Keep.
+- **Aamon** (1 Mirror at start; 7 shards from 2-stars -> a Mirror, max ~3/game). Play: chase 2-stars
+  of PLENTIFUL heroes (check the library, never contest), quiet-merge legends to dodge the
+  notification mark, capacity over telltale carries at reward stages, Scavenger near-mandatory,
+  mirrors bid to ~9g at auction; destination = a 5-cost 3-star. **Power card:** **take his** (+4
+  gold per 2-star, up to 20): it pays his whole loop. Watch Mia early (his counter).
+- **Alice** (star-up chosen heroes without 3 copies). Play: two forms of life, the **hama swarm**
+  (Helcurt/Saber/Hilda capped at L7 under Customize Recruitment, the community's feared meta line) or
+  the **keeper** (one pumped 4-5 cost). **Power card:** **take the exclusive** (+5 EXP, +45% Hybrid
+  ATK), then fish Customize Recruitment + Premium Client for hama; econ cards are her roll fuel
+  (gold-poor kit). Keep.
+- **Dyrroth** (devour up the cost ladder; every 3rd devour steers, the returns share the devoured
+  hero's synergy). Play: feed 1-stars, devour the Go Go Box's free 4-cost into a 5-cost, steer the
+  third devour by choosing its meal. Econ runs tight (confirmed live). **Power card:** **take his**
+  (a free devour every 3 rounds + EXP); the researched alternative is **Popol's borrowable trap**
+  when the econ needs help more than the cadence. Keep, lean.
 - **Harley** (floods 5-cost shop from II-2). Play: bridge to II-2, then field 5-costs early. **Power
   card:** his (+6 gold, refresh to 4-gold x2) is a fine early bridge; or a generic if the kit suffices.
   Situational, lean keep early.
@@ -107,9 +167,11 @@ pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
 - **Popol and Kupa** (Copy Trap: steal enemy heroes). Play: trap-steal off the lobby. **Power card:**
   the kit gives the trap, so **take the exclusive** (+2 gold/capture, chests at 10) if leaning into
   captures; else a generic.
-- **Vale** (synergy-targeted refresh + free buys per level). Play: commit a synergy, refresh into it,
-  level for charges. **Power card:** **take his** (a free hero + gold each level-up): tempo that pairs
-  with the leveling kit. Keep.
+- **Vale** (synergy-targeted refresh + a free buy per charge; charges at every level 4-10 and they
+  **STACK**). Play: hoard the charges, top-roll to L9-10, dump the stack as a targeted burst-roll
+  (3-star 4-costs on demand); you are predictable (Kishin/Exorcist assumed), so scout other Vales
+  and take the uncrashed road (Swiftblade via Joy is the researched door). **Power card:** **take
+  his** (a free hero + gold each level-up). Keep.
 
 ## Equipment
 
@@ -139,15 +201,23 @@ pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
 
 - **Alucard** (Demonic Altar reward engine). Play: passive value, flex the rewards. **Power card:**
   **take his** (extra altars at I-2/II-2/III-2): more reward engine. Keep.
-- **Aurora** (Frost rewards for not buying). Play: econ, buy little, bank value. **Power card:** **take
-  hers** (a >=4-gold reward each no-buy round) if playing the econ; a generic if I want to spend.
-- **Cyclops** (loot eliminated commanders). Play: scale off others' deaths, strong late. **Power
-  card:** his (+8 gold, +gold per elimination) is **back-loaded** (needs a kill), so early prefer a
-  **generic econ**; take his once eliminations are near. Deviate early.
+- **Aurora** (Frost rewards for not buying; the pool includes **Magic Crystals**, the Ultra-Synergy
+  currency only she prints). Play: high-skill and off-meta, hold to the first Go Go Box, break around
+  monsters, top-roll to L9-10, steer the comp to the crystal. Her gold/XP floor is now matchable by
+  the shop-lock trick + econ cards, and she cannot run the trick herself (buying breaks her stacks).
+  **Power card:** **take hers** (same reward pool = more crystal chances); a generic only if forced
+  to spend every round.
+- **Cyclops** (loot eliminated commanders: 14% of lineup value + a hero at its stars; a <=80 HP
+  catch-up). Play: scale off others' deaths, outlive four players and the run is safe; commit a
+  synergy before dipping so the catch-up feeds the axis. Surrender-savvy lobbies shrink the loot
+  (early resigns at cheap boards). **Power card:** his (+8 gold, +gold per elimination) is
+  **back-loaded**; early prefer a **generic econ**. Deviate early.
 - **Diggie** (Alarm Chest every round). Play: reliable passive value. **Power card:** the kit gives the
   chest, so **take the exclusive** (+15 points/round, an extra 25-gold open): accelerates it. Keep.
-- **Kalea** (Lucky Dice -> Trove). Play: roll for reward swings. **Power card:** **take hers** (dice now
-  + at Stage III for 21-35 gold): more dice value. Keep.
+- **Kalea** (Lucky Dice -> Trove; bust past 8 resets to 0). Play: cash at 7-8, freeze at 5-6 (a tap
+  there busts on half the die); fund a grounded 3-star-4-cost plan, not a 5-cost vanity hunt (the
+  researched "serious mode" beat a top-global lobby). **Power card:** **take hers** (dice now + at
+  Stage III for 21-35 gold): more dice value. Keep.
 - **Vexana** (extra Go Go Box picks + auction gold). Play: out-pick the value stages. **Power card:**
   **take hers** (an extra reward in the first 4 boxes + 13 auction gold): her whole edge. Keep. (Enemy
   Vexana outbids me, per [[../../thinking_and_mental_model/reading_enemy_commanders]].)
@@ -157,23 +227,31 @@ pass on the ~231-285 tier; verify the in-pencil reads by actual play.)
 - **Valir** (pick cards twice in II-3, extra EXP). Play: build the run around the card layer. **Power
   card:** **take his** (+4 gold + a free random Power Card): a free card pairs with the pick-twice kit.
   Keep.
-- **Yu Zhong** (upgrade card quality a tier). Play: turn every future card up a rarity. **Power card:**
-  **take his** (subsequent cards +1 quality, else a Black Dragon Treasure): compounds the whole card
-  game. Keep.
+- **Yu Zhong** (cards at II-3/III-3 upgraded a tier; maxed cards convert to Black Dragon Treasures =
+  random gold/hero/item/**Magic Crystal**). Play: the Treasures make him the second crystal printer
+  (after Aurora), so the crystal pulls steer the comp; upgraded cards pay ANY comp, not only
+  card-scaling ones. **Power card:** **take his** (subsequent cards +1 quality, else a Treasure);
+  Ruby's borrowable is the researched early-board cross-pick. Keep.
 
 ## Combat & board control
 
 - **Angela** (shield + mana an ally). Play: protect a caster carry. **Power card:** her doll (+70% mana
   regen nearby) is great on a caster board; a generic otherwise. Situational.
-- **Fanny** (Shadow copies; capacity at L5). Play: extra bodies in the fight. **Power card:** **take
-  hers** (+1 Hero Capacity at L5): an extra slot is near-universal value, and the best **borrowable**
-  card for any comp wanting a breakpoint slot. Keep / borrow.
+- **Fanny** (Hero Launcher Shadow: an extra fighting body, +20% to the launched hero). Play: the
+  launcher doubles as a **free farming slot** (Scavenger pieces at zero board cost), then the
+  Mystic Meow + 6 Marksman + 4 Dauntless line, transitioned step by step. **Power card:** hers (+1
+  Hero Capacity at L5) is the best **borrowable** in the game; on Fanny herself one research pilot
+  skips it for Kagura/Lancelot/econ cards (early-only claim, conflicting with a 1st-place keep;
+  verify live). Keep / borrow, pencil on the pilot case.
 - **Johnson** (free Johnny bodies, 2 synergies each). Play: free summon bodies that fill synergies.
   **Power card:** **take the exclusive** (+5 Johnnies in pool, +25% ATK/+20% HP): amplifies the summons.
   Keep.
-- **Kagura** (Shield Umbrella on a carry). Play: a protected mage carry (the replay line). **Power
-  card:** **take hers** (a carry +20% lifesteal +30% ATK at battle start, +9 gold): buff + econ, a
-  strong I-2. Keep.
+- **Kagura** (Shield Umbrella, re-aimed each prep: a free second health bar, 135% of the carrier's
+  Max HP, on whichever unit is load-bearing). Play: the umbrella migrates (Masha early -> Yu
+  Zhong/Badang late); %-of-carrier-HP means it is worth most on a tanky carry; two homes, Kishin or
+  Bruiser, picked by contention; Scavenger blessing covers her no-econ kit; Premium Client fixes
+  her late-roll weakness. **Power card:** **take hers** (the same carry +20% lifesteal +30% ATK,
+  +9 gold): kit, card, and items stack on one hero. Keep.
 - **Layla** (hologram lasers; hero from top synergy per DMG). Play: a high-DMG board feeds free heroes.
   **Power card:** hers scales with damage (free heroes from the top synergy); good on a damage board,
   situational early.

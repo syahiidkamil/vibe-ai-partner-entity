@@ -37,6 +37,17 @@ quality (Orange), he gets a **Black Dragon Treasure** instead (a bonus reward), 
 The card extends the upgrade to **subsequent** cards. He is a **card-quality specialist**: every augment
 he takes punches a tier above its weight.
 
+Research notes (2026-07-10, `../../research/yuzhong/`, live play; the kit above confirmed): the
+**Black Dragon Treasure contents are the news**, a random reward drawn from gold (~13 observed) /
+a hero / an item / **a Synergy Magic Crystal**. That last entry changes his read: the maxed-card
+conversion plus the starred I-2 Treasure make him a **second crystal-printing commander** (slower
+than Aurora, but his floor is card quality instead of HP bleed), and the research pilot's own
+verdict is "the best way to play Yu Zhong is to get crystals; hero and item pulls are the duds,
+crystals and gold are the hits." Practical corollary: at card stages where the offer is ALREADY
+orange, his kit converts it, so taking the max-quality card is not wasted on him. The pilot also
+opened on **Ruby's borrowable card** for the early board, letting his own passive carry the card
+game, a clean cross-card open.
+
 ## Win condition / identity
 
 **Take the same cards as everyone, but a tier stronger.** Card quality is his multiplier, so a comp built

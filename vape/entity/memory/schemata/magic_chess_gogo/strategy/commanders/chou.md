@@ -33,6 +33,13 @@ the most **flexible** econ commander: he can win-streak for tempo *or* loss-stre
 **bank gold either way**, on top of the normal streak bonus. The card gives **Chou's Sash** (a strong
 carry item: +60% Hybrid ATK, and an Equipment Chest per 3 kills). A **stable econ snowball**.
 
+Research notes (2026-07-10, `../../research/chou/`, five transcripts): the lose-side gold is a
+**recent buff** the community is loud about ("you earn extra gold whether you win or lose, a huge
+economic advantage"), and top players now frame him as **a combat commander with a built-in economy**,
+strong enough to fund 3-star 5-costs. The Sash's chest gate was also reportedly buffed (one video:
+kills needed dropped 6 -> 4; the datamined text reads 3); verify the live number in-game before
+relying on it.
+
 ## Win condition / identity
 
 **Out-economy the lobby with result-proof gold, then spike a strong board.** Because he banks gold whether
@@ -54,14 +61,24 @@ Two standing tensions:
 ## The econ plan (his signature, concrete)
 
 The ordered way to run the economy:
-1. **Bank the interest band** (>=20 gold) on top of his result-proof gold; he reaches the +4 interest cap
-   easily and stays there.
+1. **Ride the band from 17-18, not 20 (the community's Chou-only trick).** His end-of-round gold tops
+   the bank before the next interest tick, so holding **17-18 gold going into the fight** still lands
+   the full band ("interest at 18: win and it reads 21"). He plays 2-3 gold deeper than everyone else
+   at the same interest, every round, which compounds into the fastest honest leveling in the roster.
 2. **Choose the streak the board supports** (win for tempo, loss for reward priority) and ride it clean,
    he banks gold on either, so the choice is purely board-driven.
-3. **Take the card (Chou's Sash)** if I have a kill-heavy carry (a strong +60% ATK item + chests), else a
-   generic econ/synergy card.
-4. **Spike mid-game**: the stable lead funds a roll-down + star-ups; do not hoard into Stage IV.
-5. **Stay flexible** on the comp (the gold funds any line the pool opens).
+3. **Stack Scavenger on top when the pieces flow** (Angela + Phoveus): "double farming", his passive
+   plus the free hero, and the **shop-lock trick** ([[../scavenger_tempo]]) turns the [2] into
+   guaranteed gold; he is one of the trick's most natural users since his own econ never depended on
+   holding the shop.
+4. **Take the card (Chou's Sash)** if I have a kill-heavy carry (a strong +60% ATK item + chests) and
+   feed it to the item-farmer (Mia early, or a Lunox that spams ultimates: "put Chou's item on Lunox
+   and it will definitely deliver"); else a generic econ/synergy card. **The Ruby-card tech** (from a
+   rank-1-global match): borrow **Ruby's card** instead, his passive alone out-earns most flat-gold
+   cards (Ruby's caps at 35; his passive passes 35 by ~round 12), so the card slot buys Ruby's
+   Cloak+Scythe combat value on top of an economy he already has.
+5. **Spike mid-game**: the stable lead funds a roll-down + star-ups; do not hoard into Stage IV.
+6. **Stay flexible** on the comp (the gold funds any line the pool opens).
 
 ## Stage-by-stage, round by round
 
@@ -99,11 +116,19 @@ mid-game, not hoarding.
 
 ## Best comps (concrete)
 
-**Flexible**, the stable gold funds any line:
-- **A frontline + one carry** ([[../frontline_tank]]) is the safe econ shell; the gold buys a fed carry.
-- **A go-wide or synergy line** the gold lead reaches faster than the field.
-- **A kill-heavy carry** (if I take Chou's Sash, the +60% ATK + chests reward it).
-- The constant: **out-econ, then commit and spike** whatever the pool opens.
+**Flexible**, the stable gold funds any line; the research's lived defaults:
+- **The standard Chou line (top-global pattern): 6 Marksman + 4 Dauntless + 2 Mystic Meow.** Early:
+  the Mia-Khufra Heartbond "hama" + Tigreal while Scavenger farms; Sash on Mia to farm item chests;
+  transition step-by-step (Heartbond hold -> Dauntless front -> the Marksman six: Karrie, Lesley,
+  Irithel, Granger, Brody, Miya), Karrie the burst carry. Attack-speed items, plus one real tank item
+  so the front is not skinny.
+- **Kishin + Stargazer (Lunox hyper):** the Sash on Lunox (fast ultimates = fast chests), 4 Kishin
+  around her; the research's winning alt-line when Marksman is contested (three MM players in one
+  lobby is common; scout before committing).
+- **A frontline + one carry** ([[../frontline_tank]]) as the safe econ shell.
+- The constant: **out-econ, then commit and spike** whatever the pool opens; his gold also makes late
+  **legend 3-star hunts** honest (the research pilot 3-starred Odette from scratch as a pivot when
+  every MM was contested).
 
 ## Positioning
 
@@ -139,6 +164,14 @@ His card (**Chou's Sash**: +60% Hybrid ATK + an Equipment Chest per 3 kills, max
 kill-heavy carry** (a strong item + free chests), but he is an econ commander, so on a non-kill board a
 **generic econ card** (Trust Fund, Vault Upgrade+) that stacks his lead is often better. Situational: take
 the Sash for a carry, a generic econ for the snowball. Use the 2 refreshes to weigh it.
+
+**Cross-card fishing (the Chou principle: buy COMBAT with the card slot, his passive already prints
+gold).** Flat-gold borrowables are near-wasted on him (his passive out-earns Ruby's 35-cap by ~round
+12, the rank-1-global game's exact argument), so fish the kit-pieces instead: **Ruby's borrowable**
+(Scythe + Cloak, a free sticky front, the researched tech), **Karina's borrowable** (Twinblades on
+his burst carry), **Zilong's borrowable** (Dragon Spear on the Marksman line), **Miya's** (12g +
+Lunar Longbow feeds the 6-MM standard), or **Fanny's** (+1 capacity, the universal). The one gold
+card that still earns: **Kagura's** (+9g AND a carry buff, both halves useful).
 
 ## What to watch from other players (matchups)
 
@@ -225,10 +258,13 @@ from [[../../infos/synergies/synergies]].
 
 ## Quick reference (TL;DR)
 
-- **Identity:** gain gold on a **win (+2) OR a loss (+3)**, result-proof econ, the steadiest and most
-  flexible in the roster; free to ride either streak and bank either way.
-- **Power card:** take **Chou's Sash** for a kill-heavy carry (+60% ATK + chests); a **generic econ card**
-  (Trust Fund/Vault Upgrade+) to stack the lead otherwise.
+- **Identity:** gain gold on a **win (+2) OR a loss (+3)**, result-proof econ (buffed, and the
+  community knows it), the steadiest and most flexible in the roster; free to ride either streak.
+- **Interest from 17-18, not 20:** his end-round gold tops the band, so he plays 2-3 gold deeper every
+  round. Stack Scavenger + the shop-lock trick on top when the pieces flow.
+- **Power card:** take **Chou's Sash** for a kill-heavy carry (+60% ATK + chests, on the item-farmer:
+  Mia early, Lunox for ult-spam); **Ruby's borrowable card** is the tech (his passive out-earns gold
+  cards, so buy combat value instead); a generic econ card otherwise.
 - **Pick the streak the board supports** (win = tempo, loss = reward priority), ride the interest band,
   out-econ the lobby.
 - **Convert the lead mid-game** (anti-greed); spike in Stage III, do not hoard into a dead game.

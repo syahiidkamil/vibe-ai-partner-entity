@@ -37,6 +37,20 @@ reliably than blind rolling. With the star-up, he gains a charge at **every Comm
 targeted refresh + a free buy**. The card stacks **another free buy + 1 gold per level-up**, so leveling
 becomes doubly rewarding. He is the roster's best **synergy-committer and pool-beater for a chosen line**.
 
+Research notes (2026-07-10, `../../research/vale/`, two transcripts): the load-bearing correction is
+that **charges STACK and keep** ("this still has five skills" at level 9 in live play, which also
+confirms the level-based charge schedule above over a rounds-based description that circulates;
+verify once live). So the modern line is the opposite of spending each charge as it arrives: **hoard
+the charges, top-roll to level 9-10, then dump them as a burst of targeted refreshes + free buys**
+where the 4-5 cost odds are real, which is how the pilots three-star 4-costs on demand ("at level 9,
+that's our game"). One early exception both pilots allow: **spend ONE charge pointed at
+Phoveus/Angela** to fish the Scavenger engine if the blessing gamble fails, never two. His named
+weakness: **predictability**, a Vale is assumed onto Kishin or Exorcist, so multi-Vale lobbies
+contest each other blind; the researched off-meta answer was a Swiftblade commit (point Updraft at
+Joy: Swiftblade + Northern Vale + the 5-cost Bane all hang off her synergies, [[../northern_vale_core]]).
+And at top ranks expect the **deny game**, opponents bench-holding contested copies and hiding
+carries; the L9 burst-roll is the counter, and a Mirror Device held in reserve is the insurance.
+
 ## Win condition / identity
 
 **Commit one synergy and reach its breakpoints faster and cheaper than anyone.** The targeted refreshes
@@ -249,8 +263,11 @@ rosters from [[../../infos/synergies/synergies]].
 - **Identity:** **Updraft** refreshes the shop to show only a chosen synergy's members + a free buy, on a
   charge at **every level 4-10** (7 total). The cleanest synergy-committer.
 - **Power card:** take his (free buy + 1 gold per level-up), doubling the leveling value.
-- **Commit one uncontested, 6-stackable synergy** and point Updraft at it; treat **every level-up as a
-  synergy-fish** (level, Updraft, grab the free buys).
-- **Level on pace** (charges arrive at level-ups; hoarding strands them).
-- **Spike the [6]** a round ahead via the charges; take Purest Power.
-- **Watch:** contention on the chosen line (re-point Updraft), fast aggro (level on pace).
+- **Charges STACK: hoard them** (corrected 2026-07-10), top-roll to L9-10, then dump the stack as a
+  targeted burst-roll to 3-star the 4-5 cost core; the one sanctioned early spend is a single charge
+  at Phoveus/Angela to fish Scavenger.
+- **Commit one uncontested, 6-stackable synergy**, and remember you are PREDICTABLE (the lobby
+  expects Kishin/Exorcist): scout the other Vales and take the road not crashed (Swiftblade via Joy
+  is the researched off-meta door).
+- **Spike the [6]** via the burst; take Purest Power; hold a Mirror as deny-insurance.
+- **Watch:** contention on the chosen line, multi-Vale lobbies, fast aggro, top-rank hero-hiding.

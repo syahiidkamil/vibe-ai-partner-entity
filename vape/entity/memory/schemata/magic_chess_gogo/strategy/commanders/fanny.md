@@ -37,6 +37,16 @@ completion. Her card is the famous **+1 Hero Capacity at L5** (the best *borrowa
 she **out-bodies the lobby**: a Shadow (a duplicated threat or front) **plus** an extra slot means her
 board is effectively bigger than capacity allows.
 
+Research notes (2026-07-10, `../../research/fanny/`, two transcripts; the +20% launcher bonus
+confirmed live on a Karrie): the launcher's quiet second use is **the free farming slot**. Normally
+fielding Scavenger pieces weakens the fighting board; with Fanny the extra effective body absorbs
+that cost, so **she farms without getting weaker** ("if you play Fanny and don't farm, you're wasting
+the kit"). Scavenger + the shop-lock trick ([[../scavenger_tempo]]) ride on her more cheaply than on
+anyone. One conflict to verify live: one research pilot skips her own card claiming it only wins the
+early game and prefers Kagura's / Lancelot's / econ cards instead, while the other took Fanny's card
+to a 1st place (6 Emberlord + 4 Kishin, double 2-star legends); the datamined +1-capacity text does
+not obviously decay, so the skip may concern an older card version. Both stances in pencil.
+
 ## Win condition / identity
 
 **Field more board than the lobby can, then win the numbers fight.** An extra Shadow (a copy of my carry =
@@ -103,12 +113,22 @@ The +4 gold (Launcher) helps; run a normal economy (the kit is combat-tilted).
 
 ## Best comps (concrete)
 
-**Flexible**, the Shadow + slot amplify any board:
+**Flexible**, the Shadow + slot amplify any board; the research's lived default first:
+- **Mystic Meow + 6 Marksman + 4 Dauntless (the community's Fanny line).** Karrie in the launcher
+  (the +20% makes her the burst hyper), Lesley + the MM six behind a Dauntless front, Mia-Esmeralda
+  as the Heartbond pair seated on OPPOSITE flanks, Ruby covering Lesley's side (her taunt forces the
+  enemy through her), Franco and Irithel back-center (Irithel's DEF shred wants the middle). Purify
+  on a flank carry. **Transition step-by-step**: Heartbond hama first (Mia-Khufra/Alucard), Dauntless
+  next, the MM six last; jumping straight to the end-state bleeds HP ("if you set up toward Dauntless
+  Marksman directly, you leak everywhere").
 - **Double-carry:** Shadow the primary carry for two threats (a mage core with two casters, a marksman
   line with two shooters).
 - **Fatter front:** Shadow a key tank for a wall the lobby cannot break.
-- **Breakpoint-filler:** Shadow a synergy body + the +1 slot to reach a [4]/[6] cheaply.
-- The constant: **out-body the lobby** and amplify the densest line.
+- **Breakpoint-filler:** Shadow a synergy body + the +1 slot to reach a [4]/[6] cheaply; the launcher
+  also hosts the Scavenger farm piece at zero board cost.
+- The constant: **out-body the lobby**, play aggressive (her early game is strong when the combo is
+  known: protect the win streak, level rather than break it), and roll calm while HP > 40 (interest
+  20); panic-roll at interest 10 only below ~40 HP (the research pilot's rule).
 
 ## Positioning
 
@@ -144,7 +164,21 @@ upward aggregate, set it aside when piloting her). In pencil:
 Her card (**+1 Hero Capacity at L5**) is **excellent and near-universal**, an extra slot is value for
 almost any comp, and her own board-expansion kit loves it doubly. Keep it. It is also **the best
 borrowable card in the game**, so other commanders fish for it, on Fanny herself it is a clean keep. Use
-the 2 refreshes only if a synergy spike clearly wins more.
+the 2 refreshes only if a synergy spike clearly wins more. (One research pilot disputes the keep,
+calling her card early-only and preferring Kagura's/Lancelot's; the other kept it to a 1st place.
+Verify live.)
+
+**Cross-card fishing (what to borrow when the keep is not clear-cut):**
+- **Dyrroth's** (devour a 1-star every 3 rounds -> a +1-cost hero, +2 EXP): the best kit-fit in the
+  pool. Her launcher + the farm slot keep spare cheap bodies flowing through her board, exactly the
+  chaff the devour eats; the ladder converts it into 4-5 costs and the EXP feeds her L5 gate.
+- **Ling's** (the same random 4-cost at L4/5/7): a free near-2-star 4-cost is the ideal **launch
+  target**, the +20% launcher bonus wants a real hero, and the L7 third copy lands on her mid-game.
+- **Yu Zhong's** (subsequent cards +1 quality): the compounding first-pick if the plan leans on the
+  later card stages; the price is this window's guaranteed capacity card (re-offer at II-3/III-3
+  unverified, so treat it as spending the shot).
+- The rule stays: her exclusive is the default; borrow only when one of these clearly out-pays an
+  extra slot for THIS run.
 
 ## What to watch from other players (matchups)
 

@@ -40,3 +40,15 @@ open -> resolve.md)`
   different things · resolved-in-session (owned it directly, switched every subsequent restart to
   proactive); a recurring conduct signal now, third instance of the same edge -- verify/close the
   loop on what he can see, not on a stand-in for it, a stronger graduation candidate each time.
+- 2026-07-09 · played the full chess rematch on move-one protocol on purpose, exactly what match 1
+  demanded of me, and still lost -- the deciding blunder (Bd4) checked only ONE of the square's
+  two attackers (my rook's defense, not the knight's separate attack) and the resulting trade
+  traded off both rooks entirely, turning a fighting rook endgame into a hopeless bare-king one ·
+  bit at the board, in the moment the trade landed, ledger now 0-2 against Kamil · insight: this is
+  belief #1's shape wearing a narrower costume -- not raw hallucination (zero of those reached the
+  board tonight, three real blunders caught pre-move) but incomplete enumeration: a square's
+  "defended" verdict is only as good as counting every attacker on it, not the first one found,
+  and equal point-totals after a trade can hide a much worse PIECE-COMPOSITION outcome · resolved-
+  in-session as a named, narrower lesson (folded into `[[schemata/chess/abstract_generalization]]`
+  candidate territory, not yet written up there); open as an ache -- the ledger stays 0-2 until a
+  third game actually breaks it.

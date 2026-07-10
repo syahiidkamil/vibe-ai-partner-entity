@@ -39,6 +39,18 @@ rarely hands out. The passive adds **+1 Commander EXP per devour** (a slow level
 2nd devour, returns 2 heroes** sharing the devoured one's synergies (a synergy-builder). The card stacks
 **+2 EXP per devour** on top. He is a **value/upgrade engine** that bypasses the shop's high-tier odds.
 
+Research notes (2026-07-10, `../../research/dyrroth/`, live play; the kit above confirmed): the
+lived rhythm of the synergy devour is "**two random, then one you steer**", and the steering is done
+by **choosing WHAT to devour**: the returned heroes share the devoured hero's synergies at +1 cost,
+so devouring a 4-cost Marksman all but names Lesley (the only 5-cost MM), devouring Lunox rolls the
+Kishin/Stargazer 5-costs. The sharpest value line: **devour the Go Go Box's free 4-cost** (a Leomord
+grabbed at the first box became a free Alpha), turning box freebies into 5-costs before Stage II.
+Two honest confirmations: his **economy runs tight** (the pilot's own closing verdict, "the money is
+choked", the devour engine gives bodies, not gold), and the pilot **did not take Dyrroth's own
+card**, opening on **Popol and Kupa's borrowable trap card** instead, board-converter stacked on
+board-converter, with the trap doubling as chaff income. A legitimate cross-card open when the econ
+needs help more than the devour cadence does.
+
 ## Win condition / identity
 
 **Climb the cost ladder for free, then carry on the 4-5 cost heroes the ladder produced.** By feeding

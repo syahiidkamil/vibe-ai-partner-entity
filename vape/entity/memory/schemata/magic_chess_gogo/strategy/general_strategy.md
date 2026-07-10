@@ -87,6 +87,12 @@ more HP damage the more surviving high-star units I field), so press the lead to
 - **Spend triggers.** Spend gold (level or reroll) when: the spend wins more HP than the interest is
   worth (true early when HP is cheap is the *opposite*, so this bites mid-late), a key 3-star is one
   or two copies away, or HP is low enough that banking is moot.
+- **The Scavenger shop-lock trick (guaranteed gold on any commander).** With Scavenger [2] active
+  (Angela 2c + Phoveus 1c), buy the cheap heroes out of the shop, leave only the most expensive one,
+  and lock: the [2] proc grabs "the lowest-cost hero in the shop", which is now the expensive one,
+  guaranteed. Costs the round's free refresh; pays 4-5 gold of value. Full recipe and the meta
+  implication (gold farming commoditized, econ-commander edges now relative): [[scavenger_tempo]].
+  (From Kamil, 2026-07-10; sell-back values to verify by play.)
 
 ## Leveling cadence (comp-dependent, not a fixed rush)
 

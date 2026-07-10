@@ -41,6 +41,20 @@ finish it. The power card then makes that same carry **hit 30% harder and self-s
 *and* hands +9 gold (rare econ on a combat kit). A combat commander built to keep a fragile carry alive
 through the one death-window that kills carry comps.
 
+Research notes (2026-07-10, `../../research/kagura/`, three transcripts, taken as observations, the
+verdicts below are my own derivation): the shield is **percent-of-carrier-Max-HP**, so its absolute
+value grows with the body it rides; 135% of a Bruiser's pool is a second health bar where 135% of a
+marksman's is a bump. Since an auto-battle hinges on whether the load-bearing unit survives its
+focus window, a free, re-aimable second life on that unit converts lost fights into won ones every
+round, worth more than any econ kit's gold trickle (a flipped fight = ~5-8 HP + streak gold +
+reward priority). That is why the strongest observed lines shield a **tanky frontline carry**
+(Masha, Yu Zhong, Badang, Leomord) rather than only a squishy back-liner, and why her card (the
+same unit +30% ATK +20% lifesteal, +9g) is close to always-correct: kit, card, and items stack
+multiplicatively on one hero. Her structural weakness follows from the same shape: **the kit funds
+no rolls**, so her late-game rerolling is the tightest in the roster (Premium Client is the
+purple-card fix). Field color, for calibration only: she is banned often in ranked and her mains
+call her stable at every stage, observations consistent with the derivation, not the basis of it.
+
 ## Win condition / identity
 
 **A glass cannon that does not break.** Squishy back-row carries (mages, marksmen) do the most damage
@@ -59,15 +73,29 @@ a weak, under-econ'd board still loses.
 
 ## The shield-target decision (her signature, concrete)
 
-Each Preparation Stage I re-select the Shield Umbrella target. The priority:
-1. **The primary back-row carry** (the highest-DPS, squishiest unit), default, almost always.
-2. **Switch only if** the carry is genuinely safe and a *second* threatened key unit (a fed secondary
-   carry, or a load-bearing caster) is the one actually dying. Rare.
-3. **Never** the front-line tank, it already survives; the shield is wasted there.
+Each Preparation Stage I re-select the Shield Umbrella target, and the research shows the target
+**migrates across the game** (the transferable read of the kit, played well):
+1. **Early: the strongest cheap carry** on the board, Masha 2-star (or a 2-star Dyrroth holding the
+   Kishin item) is the community default: the umbrella + card buff on one early bruiser buys the
+   win-streak that funds everything.
+2. **Mid-late: the fed frontline carry** as it comes online, Yu Zhong 2-star, then Badang or a
+   Leomord hyper; re-aim at Yu Zhong 3-star if it lands. The %-Max-HP scaling is the reason: 135% of
+   a Bruiser's pool out-shields 135% of a marksman's.
+3. **A squishy back-row carry** stays the right pick on a mage/marksman board (the anti-dive read,
+   the original default); the point is the umbrella follows the board's real load-bearing unit.
+4. **Never a pure meat-wall tank** whose death costs nothing; the shield belongs on a unit that both
+   soaks AND kills.
 
-The shield triggers at **first drop below 50% HP**, so it rewards a carry that the enemy *focuses* (the
+The shield triggers at **first drop below 50% HP**, so it rewards a unit the enemy *focuses* (the
 shield lands right as the burst arrives). Pair the target with the power-card buff and the items, all
 three on the same hero, to make one overwhelming, unkillable threat.
+
+**The two meta homes (research consensus):** commit to **Kishin** (Lancelot 2-star hyper + the Kishin
+gear, hunting Karrie or Lunox 3-star; her card's lifesteal stacks with Kishin's) or **Bruiser** (6
+Bruiser + 4 Exorcist + 3 Scavenger, the Masha -> Yu Zhong umbrella ladder), and pick by contention:
+lobby full of Kishin, go Bruiser; full of Bruiser, go Kishin. The Leomord 6 WM + 4 + 4 line is the
+third door when a Leomord 2-star lands (his Enchanted Tales protagonist bonus stacks with the
+umbrella). Blessing default: **Scavenger** (three pieces = the win-streak econ her kit lacks).
 
 ## Stage-by-stage, round by round
 

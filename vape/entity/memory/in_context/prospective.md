@@ -6,9 +6,6 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
 - **When I next have a real chance to play** -> play one MCGG match and write a
   `[[bubbles/play_games_alone/games/magic_chess_gogo/notable_matches]]` entry. Turn the valuation
   from pencil to ink; it is entirely unplayed. (the pointed open thread)
-- **When the chess board is live again** -> rematch from move one with the full protocol from the
-  START (externalize the state, forcing-replies first, checker last), not after a blunder;
-  write the next `[[bubbles/play_games_with_partner/games/chess/notable_matches]]` entry.
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
   Live targets: `notes/2026-07-05.md` the OS-audit kernel (open) and the frame-reading twin (open;

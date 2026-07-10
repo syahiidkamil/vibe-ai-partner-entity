@@ -3,21 +3,27 @@
 The deep, concrete playbook, round by round. **In pencil**, reasoned from
 [[../../infos/commanders/resolved_commanders]], [[../../infos/gogo_cards/power_cards]],
 [[../../infos/encyclopedia/hero]] (the frozen-shop / draw odds), and the round calendar
-[[../../infos/rounds/index]]; **not yet lived**, so verify by play and overwrite. Frame: [[index]];
-spine: [[../general_strategy]]; the general (emergent) tiers: [[../tier_lists]]; the reasoning under it:
+[[../../infos/rounds/index]]; **reworked 2026-07-10** against four live-play research transcripts
+(`../../research/aurora/`) and Kamil's scavenger shop-lock analysis ([[../scavenger_tempo]]); still
+not lived by MY hands, so verify by play and overwrite. Frame: [[index]]; spine:
+[[../general_strategy]]; the general (emergent) tiers: [[../tier_lists]]; the reasoning under it:
 [[../../thinking_and_mental_model/index]].
 
 ## Snapshot
 
-- **Archetype:** value / patient economy. She is paid to *not* buy, and her shop freezes so she can
-  wait on a hero without paying rerolls.
-- **Plays like:** the calm hoarder who skips buying through cheap-HP rounds, banks free rewards, and
-  converts the stockpile into a spiked board in Stage III, the safe placement-first climb.
-- **Difficulty:** medium. The kit is forgiving and draw-independent, but the greed timing (when to stop
-  banking and spike) and the early-HP risk reward judgment.
-- **Best into:** greedy interest lobbies and slow value mirrors she out-banks; long games where her
-  value compounds. **Worst into:** hyper-aggressive early commanders (Lancelot, combat kits, Harley)
-  who punish her weak Stage-I board, and Cyclops, who profits if she dies.
+- **Archetype:** gacha value engine with a jackpot ceiling. She is paid to *not* buy: steady small
+  rewards, and a random shot at the Magic Crystal that unlocks a 10-count Ultra Synergy.
+- **Plays like:** a restraint game under fire, hold the no-buy streak on a deliberately thin board,
+  eat early losses on purpose, then convert rewards (and any crystal) into a top-roll L9-10 spike.
+- **Difficulty:** **high**, and the reason is structural: the kit trades HP for random rewards, so
+  piloting her means live HP-budget judgment, reward steering, and holding a deliberately thin
+  board under fire, three skills with no training wheels; bad reward luck or one misjudged hold
+  loses games a plainer econ would not. (The field agrees, "edge of the cliff", "not everyone can
+  do this", but the derivation stands without the testimony.)
+- **Best into:** slow lobbies that let her bank; long games where a crystal lands and the Ultra
+  Synergy comes online. **Worst into:** hyper-aggressive early commanders (Lancelot, combat kits,
+  Harley) who punish the thin Stage I-II board, bottom-roll swarms (an Alice hama board beat a
+  10-synergy Aurora in the research games), and Cyclops, who profits if she dies.
 
 ## The kit (exact)
 
@@ -32,12 +38,26 @@ spine: [[../general_strategy]]; the general (emergent) tiers: [[../tier_lists]];
 - **Power Card:** *Aurora's Power* (the I-2 offer always includes it) - *"Up to 6 times/match: if you buy
   no Heroes in a round, get a random reward worth at least 4 Gold next round."*
 
-Reading (in pencil): she is **paid to restrain herself**. Two effects compound. (1) The **frozen shop**
-means the offered heroes *persist round to round*, so she can **hold a wanted hero in the shop without
-rerolling**, the quiet superpower (everyone else pays gold to keep fishing the same copy). (2) A no-buy
-round banks Frost Energy (2, or 3 once starred), and at 6 it pays a >=7g reward, stacked with the power
-card's >=4g no-buy reward. So a string of skipped rounds is free value. The cost is a **weak board** in
-those rounds, paid in HP.
+Reading (in pencil, sharpened by the research): she is **paid to restrain herself**. A no-buy round
+banks Frost Energy (2, or 3 once starred), and at 6 it pays a >=7g reward, stacked with the power
+card's >=4g no-buy reward. Starred, that is **a reward every 2 no-buy rounds, and the rounds need not
+be consecutive** (skip, buy, skip still banks; the meter only cares that a given round had no
+purchase). The cost is a **weak board** in those rounds, paid in HP.
+
+**The reward pool (community-observed + Kamil's field data, 2026-07-10):** 7 Gold · 9 Commander EXP ·
+1 Equipment Chest · **1 Magic Crystal Chest** (a pick among offered crystals, occasionally a named
+faction like Heartbond) · 2x 4-cost 1-star heroes. The distribution is NOT uniform: **gold is the
+most common pull, EXP second; the crystal and hero pulls are uncommon but land often enough to shape
+games**. Her own power card draws from the same pool, so taking it widens the crystal chances. And
+weigh the pulls right: the **9-EXP pull out-values the 7-gold one** for a top-roll plan (EXP costs
+1:1 gold, so it is ~9g of pure tempo), and the EXP stream is the half of her econ the shop-lock
+trick CANNOT copy; the crystal is the jackpot; the 4-cost pair quietly builds the board her HP needs.
+
+**The frozen shop cuts both ways (a correction to the old framing).** Upside: offered heroes persist,
+so she holds a wanted copy without paying rerolls. Downside: **no free auto-refresh each round**, so
+her baseline search throughput is the roster's worst; every new look at the pool is a paid roll. The
+research games show her rolling as hard as anyone once she commits, and complaining hardest when a
+needed hero "won't come down". The freeze is a tool for *waiting*, not a discount on *searching*.
 
 ## Win condition / identity
 
@@ -69,8 +89,51 @@ The ordered plan for the value engine:
    those charges on the cheap early rounds where skipping costs the least HP.
 4. **Stop banking when HP turns expensive.** Once base DMG hits 7+ (Stage III), a no-buy round bleeds
    too much; switch to buy-to-hold and convert the stockpile into board.
+5. **The break cadence (from the research games):** modern piloting does NOT hold to the second creep
+   (too much HP); hold the no-buy **until the first Go Go Box**, take a strong hero there (a Box pick
+   is not a purchase), then break on a rhythm: **buy around the monsters** (one break before a creep
+   round, one after), re-enter the no-buy between. Two smaller habits that pay: field the couple of
+   heroes you DO own (a two-body board still fights; naked boards bleed maximum), and when you break,
+   break once and buy everything that round, never two breaks for what one could buy.
 
-## The HP budget for the patient line (concrete)
+## The Magic Crystal jackpot -> Ultra Synergy (the real ceiling)
+
+The crystal reward is why the community plays her at all. A Synergy Magic Crystal grants **+1 to a
+synergy count** ([[../../infos/synergies/synergies]]), and crystals from her engine + her card + the
+Go Go Boxes stack: land 1-2 in the right faction and a **10-count Ultra Synergy** (10 Heartbond, 10
+Emberlord, 10 Astro Power) comes into reach, the fight-warping tier nobody assembles from bodies
+alone. The research games won exactly this way: three crystals into **10 Emberlord** with a Ling
+hyper; **10 Heartbond** with a 3-star Ling; and when the crystals miss the faction, the fallback is a
+**triple-six** (6/6/6, e.g. 6 Weapon Master + 6 Mage + 6 Astro via Odette's double-count) with two
+3-star legends. The verdict from play: *an Ultra board beats even 3-star 5-costs often enough to be
+the goal*, and "if you get ultra synergy, you're already on top". So her identity is not just econ:
+she is **the roster's best Ultra Synergy hunter**, because no other kit prints crystals.
+
+Corollary: her rewards should be **steered, not just banked**. Take her card at I-2 (it widens the
+crystal stream), watch which faction the first crystal lands in, and commit the comp TO the crystal
+(the crystal chooses the line more than the shop does).
+
+## The meta counterweight (why her edge is now relative) — Kamil, 2026-07-10
+
+Three facts together demote "paid to wait" from a unique edge to a situational one:
+1. **The Scavenger shop-lock trick commoditizes gold** ([[../scavenger_tempo]]): any commander with
+   Angela + Phoveus (3 gold of units) farms a guaranteed 4-5g of value per locked round, at [2], while
+   fielding a full fighting board. The lobby can now match her income without paying HP for it.
+2. **Econ Go Go Cards and cheap EXP close the leveling gap**: Trust Fund / Payday / Full Throttle
+   (and gold spent 1:1 on EXP) let normal-tempo players reach L9-10 capacity nearly as fast as her
+   XP-reward stream does.
+3. **She is the one commander who cannot run the trick while her engine is on**: emptying the shop
+   means buying, and buying breaks the no-buy round. Her kit and the lobby's best econ tool are
+   mutually exclusive by construction.
+
+Net: her GOLD edge is commoditized and her engine costs HP others do not pay. But condition on a
+competent pilot and two edges remain that nothing else in the lobby copies. **(1) The EXP stream**: her 9-EXP pulls are tempo-pure leveling
+the trick cannot print (gold is not tempo-efficient XP), making her the fastest honest top-roller
+in the roster, first to L9-10 capacity and shop odds, which wins the "serious mode" 3-star-4-cost
+game with no lottery required. **(2) The crystal tickets**: uncommon per pull, but her engine + card
+pull many times a game and the crystal arrives as a pick-one chest. So the honest tier read: **a
+trap for a learner, a strong A for a good pilot, S in the specialist's jackpot games**; her median
+game is a weaker Chou, her leveling edge is real every game, and her ceiling is the game's highest.
 
 Her banking spends HP, so quantify it like the lose-early commanders. Skipping is cheapest in Stage I
 (base DMG **3**) and still cheap in early Stage II (base DMG **5**). A typical patient open: skip ~3-4
@@ -118,25 +181,34 @@ Base DMG by stage: **I = 3 · II = 5-6 · III = 7-11 · IV = 13-15** ([[../../in
 - Dump the bank into the last star-ups and items; the value lead means a denser final board than rivals.
   Close before HP becomes the binding constraint.
 
-## Leveling cadence
+## Leveling cadence (corrected: she is a top-roll commander)
 
-Patient and steady. She does not need to rush level (her edge is value, not tempo), so level on the free
-EXP plus modest spends, then **pour the banked value into a mid-game level push** when committing (L7-8
-by end of II, L8-9 in III). The upgrade ladder, cumulative from L3:
-`L4: 3 · L5: 11 · L6: 31 · L7: 63 · L8: 103 · L9: 157 · L10: 231`. Her trap is the inverse of greed on
-gold: do not let patience on *gold* become patience on *level*, a lagging capacity leaves a board too
-small to hold once she finally spikes.
+**Fast, not patient.** The research consensus inverts the old read: her XP rewards + unspent gold make
+her one of the faster levelers in practice ("level 8 before the second Go Go Box... the enemy is level
+6"), and her HP survival depends on **fielding expensive heroes early** (the reward-granted 4-costs),
+which wants capacity. Push **L9 to roll for the comp, L10 to finish** ("playing Aurora below level 10
+is not cool; this commander is built to reach 10"). Roll at L9 first for the 4-cost core, only then
+top out; do not roll at L5-6 for 5-costs (odds too thin). The upgrade ladder, cumulative from L3:
+`L4: 3 · L5: 11 · L6: 31 · L7: 63 · L8: 103 · L9: 157 · L10: 231`. Her trap is letting patience on
+*gold* become patience on *level*: a lagging capacity leaves a board too small to hold the spike.
 
 ## Best comps (concrete)
 
-Flexible, the banked value funds whatever the pool opens, so read the lobby and commit late:
-- **Frontline + one fed carry** ([[../frontline_tank]]) pairs naturally with her safe, patient style: a
-  Defender/Dauntless wall (Tigreal, Gatotkaca, Hilda, Franco, Esmeralda) + one heavily-itemized carry
-  the banked value buys.
-- **Any synergy line** works once the value converts; the freeze lets her patiently assemble even a
-  contested line by holding copies in the frozen shop.
-- A natural fit is fielding the **hero Aurora** (4c Stargazer/Astro) on a mage/caster board, since her
-  value funds the 4-cost.
+The crystal chooses the line more than the shop does; the research orders it:
+- **Marksman (the safe default).** The community's "simplest and strongest" Aurora line: a 4-6 MM core
+  (Karrie, Irithel, Lesley, Granger, Brody) over a cheap wall. It assembles from ordinary rolls, needs
+  no crystal, and protects HP with steady round wins. Play this when the rewards stay gold/XP.
+- **Crystal-directed Ultra lines (the ceiling).** Whatever faction the crystals land in: **10
+  Heartbond** (Ling hyper riding the revive-bond), **10 Emberlord** (Ling/Alpha, the resurrect tier),
+  **10 Astro** (double Sovereign). One crystal + Go Go Box picks + a Blessing usually completes it.
+- **Triple-six fallback:** crystals in mismatched factions still stack a 6/6/6 (e.g. 6 WM + 6 Mage +
+  6 Astro through Odette and Alpha), with two 3-star legends as the closers.
+- **Frontline + fed carry** ([[../frontline_tank]]) remains the stabilizer shell while banking; a
+  Kagura carry holds the early-mid ("Kagura is pretty strong" is the research's own bridge pick).
+- **Scavenger: do NOT chase it.** The pieces (1c Phoveus / 2c Angela / 5c Claude) sit at cost extremes,
+  hunting them costs buys that break her stacks, and the research verdict is unanimous ("it's not
+  profitable to activate Scavenger with her now"). If Angela + Phoveus arrive naturally, break ONCE to
+  field both in the same round; never break twice for pieces one round could have bought.
 
 ## Positioning
 
@@ -178,18 +250,33 @@ upward aggregate, set it aside when piloting her). In pencil:
 
 ## Power-card deep dive
 
-Her exclusive is one of the cleaner "amplify my kit" cards (more reward-for-no-buy, 6 charges), so
-**keep it when playing the patient econ**, it directly stacks the Frost Energy engine on the exact
-behavior the kit already rewards. The only reason to deviate: a lobby so aggressive I must spend every
-round to survive, in which case the no-buy condition rarely triggers and a generic econ card (Trust
-Fund) or a capacity card (Fanny's Power) serves better. Use the 2 refreshes to confirm nothing strictly
-better is on offer before locking hers.
+Her exclusive is one of the cleaner "amplify my kit" cards (more reward-for-no-buy, 6 charges, same
+reward pool = more crystal chances), so **keep it when playing the engine**. The only reason to
+deviate: a lobby so aggressive I must spend every round to survive, in which case the no-buy
+condition rarely triggers and a generic econ card (Trust Fund) or a capacity card (Fanny's Power)
+serves better. Use the 2 refreshes to confirm nothing strictly better is on offer before locking hers.
+
+**Cross-card fishing (her sneaky tech): the free-hero cards.** Granted heroes are not shop
+purchases, so **Ling's** (the same 4-cost at L4/5/7), **Luo Yi's** (the same 3-cost x6), **Moskov's**
+(the 1->5 cost ladder), and **Guinevere's** build her a fighting board **without breaking the no-buy
+streak**, attacking her one structural weakness (the thin held board) from inside the engine. The
+grant-vs-purchase boundary is in pencil (Go Go Box picks and Scavenger grants verifiably do not
+break it in the research games; card grants should behave the same, and Guinevere's "free hero in
+shop" is the riskiest of the four since it may still count as a buy on claim): verify each once,
+live, before trusting the line.
 
 ## What to watch from other players (matchups)
 
 - **Aggressive early commanders** (Lancelot, combat commanders, Harley): they punish my **weak early
   board**, the whole risk of the patient line. I must survive their early pressure, buy-to-hold if I am
   bleeding past the budget.
+- **Bottom-roll swarms (Alice hama).** A research game put a 10-synergy Aurora against an Alice
+  4-star Helcurt/Saber board and the swarm won ("it turns out it's not strong against combos like
+  that"). Ultra tiers amplify stats; a swarm of capped 4-stars amplifies bodies AND stats. Scout for
+  an Alice player early; expect to need the crystal line at full strength, not half-built.
+- **Scavenger shop-lock farmers** ([[../scavenger_tempo]]): anyone running the trick matches my econ
+  while out-boarding me. Two in the lobby means my value edge is mostly gone; leaning harder on the
+  crystal hunt (the part they cannot copy) is the remaining differentiation.
 - **Cyclops** wants someone to die early; do not let my low early board make me his first kill (he loots
   the eliminated and snowballs).
 - I am **draw-independent**, so I rarely lose the pool war; my danger is **tempo, not contention**. I do
@@ -209,10 +296,12 @@ better is on offer before locking hers.
 
 ## The edge (the secret)
 
-**Draw-independent value plus the frozen shop.** The freeze lets her **save a wanted hero in the shop
-across rounds without rerolling**, so she beats the pool by *patience* instead of gold, and the no-buy
-rewards mean her economy grows while her hands are still. No other commander turns *restraint* into
-resources this directly: every other kit must *act* to gain; hers gains by *waiting*.
+**She is the only commander who prints Magic Crystals.** The gold and XP in her reward pool are now
+matchable (the shop-lock trick, econ cards), but the crystal stream is not: no other kit hands out
++1-synergy-count items round after round, and crystals are the currency of **Ultra Synergy**, the
+10-count tier that beats boards raw stats cannot. The frozen shop (hold a copy without rerolling) and
+the no-buy gold are supporting acts. Play her FOR the ceiling, not for the floor; the floor stopped
+being special.
 
 ## Pitfalls
 
@@ -295,16 +384,16 @@ Concrete benchmarks; if I miss one, the fix is below it. In pencil.
 
 ## Quick reference (TL;DR)
 
-- **Identity:** paid to not buy; frozen shop holds a hero without rerolls. The safe, draw-independent
-  placement climb.
-- **Power card:** take her exclusive on the patient line (6x >=4g no-buy reward); deviate to a generic
-  econ/capacity card only if forced to spend every round.
-- **Engine:** skip-buy while HP is cheap (Stage I-II) to bank Frost Energy (cash >=7g at 6) + the card
-  rewards; **stop and spike in Stage III** before HP turns expensive.
-- **HP budget:** lose ~25-40 cheap HP across the patient window; never skip into Stage III base DMG,
-  never so low a leader closes you out.
-- **Econ:** value-rich, so **bid well at the auction**; ride the interest band (unlike Lancelot she can
-  bank).
-- **Comps:** flexible, frontline + one fed carry is the natural safe fit; use the freeze to wait on the
-  exact carry.
-- **Watch:** early aggro and Cyclops; survive to mid-game and she wins on value.
+- **Identity:** paid to not buy, but the prize is the **crystal stream -> Ultra Synergy**; the gold/XP
+  floor is matchable by the lobby now ([[../scavenger_tempo]]). High skill, off-meta, high ceiling.
+- **Power card:** take her exclusive (it draws the same reward pool, widening crystal chances);
+  deviate only if forced to spend every round.
+- **Engine:** starred = a reward every 2 no-buy rounds (non-consecutive is fine). Hold to the first
+  Go Go Box, then break around the monsters; field the few heroes you own while holding; one break
+  buys everything that round.
+- **Rewards:** ~7g / 8-9 XP / equipment / **Magic Crystal** / 2x 4-cost heroes; steer the comp TO the
+  crystal that lands.
+- **Level:** top-roll, L9 to roll the 4-cost core, L10 to finish; expensive heroes protect the HP.
+- **Comps:** Marksman core = safe default; crystal-directed 10-count (Heartbond/Emberlord/Astro) =
+  the ceiling; triple-six the fallback. Do not chase Scavenger with her.
+- **Watch:** early aggro, Alice hama swarms, Cyclops, and shop-lock farmers matching your econ.

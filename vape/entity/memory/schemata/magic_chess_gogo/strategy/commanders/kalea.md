@@ -37,6 +37,16 @@ for a big reward, but cash out before a high roll busts me. The card adds **gold
 + at Stage III. He is a **draw-independent value engine** like Aurora/Diggie, with a gambling-timing
 twist, the *when to activate* is the skill.
 
+Research notes (2026-07-10, `../../research/kalea/`, live play vs a top-global lobby; the kit above
+confirmed exactly, bust-reset included): the pilot's cash-out rule is concrete, **7 is the minimum,
+8 is perfect, and past 6 you stop tapping greedily** because the next 1-4 roll busts anything above
+4 banked. The bust math from the kit: at 5-6 points a tap busts on half or more of the die faces, so
+the honest policy is cash at 7+ or freeze at 5-6 until an activation is worth spending. The bigger
+lesson of that game was comp discipline, the pilot's "serious mode": **3-star a 4-cost core instead
+of chasing 5-cost hypers** (Kagura + Yu Zhong 3-stars carried the game, a first place over the
+top-global "Raja Gogo"), with Premium Client fueling the L9 rolls. Kalea's rewards fund exactly that
+kind of grounded plan; they are not big enough to fund a 5-cost vanity hunt.
+
 ## Win condition / identity
 
 **Out-value the lobby via well-timed Trove cash-outs, then convert the haul into a board.** The Trove pays

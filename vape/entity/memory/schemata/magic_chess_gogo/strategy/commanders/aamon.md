@@ -38,6 +38,24 @@ copies + 12 gold each**, and the card adds +4 gold per 2-star (cap 20). The cap 
 so call it **2-3 Mirrors a game**, scarce, so each one matters. Each Mirror needs **7 two-stars** of
 shards, so the engine demands a steady pair-buying tempo.
 
+Research notes (2026-07-10, `../../research/aamon/`, three transcripts; the 7-shards / max-3-mirrors
+read confirmed by the community's own description): the lived rules of the mirror game:
+- **Hunt PLENTIFUL heroes, never contested ones.** The pilots check the hero library constantly and
+  only chase 3-stars with deep remaining stock ("look for heroes that are still plentiful; a hero
+  the enemy holds will never complete"). Aamon's engine multiplies copies, it cannot conjure them
+  from an empty pool.
+- **Stealth is part of the kit.** A 2-starred legend shows a notification by your name; opponents
+  "mark" a visible Aamon and deny his line. The counter-craft: grab **capacity** at reward stages
+  instead of the telltale carry (the carry returns to shop; capacity does not), and 2-star legends
+  during the fight screen where no notification shows (the community's quiet-merge trick).
+- **Mirrors at auction: bid to ~9 gold**, they are his single most valuable lot.
+- **Scavenger blessing is near-mandatory** ("playing Aamon without Scavenger is useless"), his loop
+  is gold-hungry and slow-leveling without the farm.
+- **The expiry**: cheap 3-stars carry Stage I-II and then die in relevance ("relying on 3-star
+  [cheap] heroes is no longer valid from phase two"); the mirrors' real destination is the 5-cost
+  3-star endgame (a 3-star Badang/Bane), with an early 1-cost 3-star (Dyrroth) only as the bridge.
+- **Mia is his early counter** (the pilots ban her: "an Aamon destroyer" in Stage I-II).
+
 ## Win condition / identity
 
 **3-star a carry the pool would deny, funded by the gold his kit prints.** His loop: buy pairs -> 2-star
