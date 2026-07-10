@@ -40,6 +40,16 @@ starts with a chest, turns Basics into Enhanced (the extra passive is a real pow
 +2 gold for each enhance, so his enhancing *funds itself*. The scarce resource is **enhance charges**
 (3 from the kit + 2 from the card = 5), so each enhance is a real decision.
 
+Rethink (2026-07-10, first principles): equipment is the trick era's soundest currency, no shop
+lock or gold farm prints an Enhanced passive, so his engine holds full value while pure-gold kits
+deflated around him, and his kit is shop-independent, so he hosts the trick on top for free. The
+structural read of the 5 charges: each enhance is a fixed-size, never-bricking power increment
+whose value COMPOUNDS with concentration (Enhanced passives on one carry multiply with each other
+and with the Astro Sovereign most-equipped bonus), so the charges want one hero, not fairness. His
+cap is the other side of the same coin: the increments are bounded and he still must FIND the
+items to enhance (a chest, the card's two, the creep drops), so he out-values steadily but never
+spikes, the definition of a high floor with a modest ceiling.
+
 ## Win condition / identity
 
 **Field the best-geared carry in the lobby, earlier, and let the gear gap win fights.** Everything

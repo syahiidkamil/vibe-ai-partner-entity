@@ -39,6 +39,16 @@ econ + gear reward). The catch: captures are **random** (the enemy's heroes, not
 **positioning-driven** (the trap must be placed where enemies step), so he is a **flexible value/econ
 harvester**, not a fixed vertical. The borrowable card just re-grants the trap, redundant on the owner.
 
+Rethink (2026-07-10, first principles): his harvest is indexed to **the enemy's board, not the
+shared pool**, which gives him two properties nothing else has: bench-holding cannot starve him
+(the deny meta is aimed at shops and pools, his trap reads deployment), and his captures are
+automatically **meta-correlated** (what steps into the trap is what the lobby actually fields, so
+his fodder doubles as scouting made flesh: sell it, star it, or field the lobby's own tech back at
+it). The trap is also a small **positional weapon**, enemies that path around it concede formation
+shape for free. What caps him is the same mechanism: he cannot CHOOSE what he receives, so the kit
+floors placement (never a dead round, chests at 10) and never spikes. Trick era: gold half
+commoditized, capture half untouched; the trap and the shop-lock stack without conflict.
+
 ## Win condition / identity
 
 **Out-resource the lobby by farming its own heroes, then flex the harvest into a board.** Every round he

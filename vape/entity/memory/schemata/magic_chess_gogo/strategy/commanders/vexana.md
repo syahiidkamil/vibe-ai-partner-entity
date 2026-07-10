@@ -38,6 +38,17 @@ auction** (+13 more from the card = a big bidding edge). She is a **draw-indepen
 edge is concentrated at the **shared-reward stages**: she simply gets *more* from each than anyone, and
 out-bids the auction.
 
+Rethink (2026-07-10, first principles): among the value engines she weathered the trick era best,
+because her payout is drawn from the Go Go Boxes' **mixed, un-printable currency** (equipment,
+heroes, capacity, crystals) rather than raw gold, and her ~26g auction edge buys the auction's
+un-printables too (Mirrors, Enhanced items, crystals). Her shape is also the rare
+**result-independent** one: not win-accelerated like Diggie, not loss-fed like Nana, the boxes come
+on the calendar regardless, so her floor claim is structurally honest. Even the extra pick's
+"leftover" clause is quietly anti-contention: she takes AFTER everyone, so nobody can bid or deny
+her bonus, it prices in whatever the lobby revealed it did not want. Her cap is the same calendar:
+value arrives only at reward stages, so between boxes she is a kit-less commander and must run
+normal tempo.
+
 ## Win condition / identity
 
 **Out-value the lobby at every shared-reward stage, then convert the surplus into a board.** Each Go Go Box

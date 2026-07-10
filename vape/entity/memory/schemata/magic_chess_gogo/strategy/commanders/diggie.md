@@ -39,6 +39,16 @@ a battlefield object that can be attacked). The **exclusive doubles the rate** (
 value engine** like Aurora/Alucard, accelerated by winning. The borrowable just re-grants the chest,
 redundant on the owner.
 
+Rethink (2026-07-10, first principles): two structural truths sharpen his read. (1) The +10-on-win
+acceleration makes him a **win-more engine**: the value arrives fastest exactly when it is least
+needed and slowest when a rescue is needed, so his "high floor" is really a high MIDDLE, the floor
+belongs to kits that pay while losing (Chou, Nana, Cyclops). Pilot him like a tempo commander (a
+board that wins early rounds IS the engine), never like a lose-and-bank engine. (2) The chest is a
+**battlefield object with Max HP**, meaning enemies can hit it; whether destroying it costs the
+rewards is unverified, CHECK live, because if it does, focused aggro counters his whole kit. Trick
+era: reward contents unverified (gold-heavy = partially commoditized); the kit ignores the shop, so
+the shop-lock rides on top freely.
+
 ## Win condition / identity
 
 **Out-value the lobby passively, faster the more I win.** The chest pays escalating-rarity rewards

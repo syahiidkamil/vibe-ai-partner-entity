@@ -46,6 +46,15 @@ hit harder, kill the next. The exclusive adds **+40% ATK Speed** (more attacks =
 faster stacking) plus +6 gold. The execute is **adjacent**, so she is a **melee / front-ish carry**, not
 a back-liner.
 
+Rethink (2026-07-10, first principles): the execute's real identity is **defense-ignoring damage**,
+a unit at 17% HP dies regardless of armor, shields queued, or healing incoming, so she is the
+structural counter to the sustain-and-shield economies (Dauntless walls, lifesteal stacks, Kagura
+umbrellas, Ruby resurrect timing if the execute lands before the revive window, verify that
+interaction live). Her currency is equipment (the Blades), fully trick-proof. The conditionality is
+also structural: below-18% requires CHIP, so her value is a function of fight length, long
+attrition fights = compounding executes, burst metas = the blades never trigger. A conditional
+amplifier with a real tech niche: B in general, strongest exactly where the lobby builds sustain.
+
 ## Win condition / identity
 
 **A snowballing melee execute-carry that cleans up the enemy board and gets stronger doing it.** The free

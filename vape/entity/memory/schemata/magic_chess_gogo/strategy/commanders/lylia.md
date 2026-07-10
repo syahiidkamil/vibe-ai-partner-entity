@@ -38,6 +38,18 @@ a star-up the shared pool would deny (a 5-cost 3-star = 9 of 9 copies). Party Ti
 buffs that carry (+15% ATK). The card hands her a **free 5-cost + matching item at L7**, the perfect carry
 to then free-copy at L8. The big commitment: **no shop after activation**, so the board must be set first.
 
+Rethink (2026-07-10, first principles): three structural reads. (1) The copies are **pool-drawn**
+("if that Hero is sold out... gain the next highest cost instead"), so the deny meta CAN starve her
+line, bench-holding her carry's copies redirects her engine to a lesser hero; her flip is not the
+pool-exit it looks like. (2) The engine is **win-gated** post-flip (a copy per WON round), stacking
+a second conditionality on top of the shop-off: a Lylia who flips and then loses gets only the
+consolation +15% ATK, cannot adapt (no shop), and rides the board she froze, which is the mechanism
+of her low floor, two gates multiplied. (3) The flip's hidden price is **information**: she must
+commit at L8 on a forecast of the lobby's Stage III-IV boards she can no longer answer. High
+ceiling honestly earned when the board is genuinely ahead at L8; a coin-flip otherwise. Trick era:
+pre-flip she hosts the lock like anyone; post-flip her shop is gone and with it the trick, another
+small cost of the switch.
+
 ## Win condition / identity
 
 **A free 2-3 star high-cost carry the pool would never allow, fed by wins.** She builds a strong board by

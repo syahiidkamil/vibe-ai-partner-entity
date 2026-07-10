@@ -34,6 +34,17 @@ is the big one: it makes that free hero **guaranteed for 13 rounds**, a free bod
 the game, an enormous tempo/recruitment engine. Free heroes are **pool draws + star-up fodder +
 synergy-fillers + sell-for-gold**, so she **out-bodies the lobby** and flexes the surplus into a comp.
 
+Rethink (2026-07-10, first principles): the free hero's value splits into a **commodity half**
+(sell-gold, now printable by anyone via the shop-lock trick) and an **un-printable half** (pool
+draws and copy progress, which no trick prints), so her tier rests on playing the copies, not the
+gold: keep pairs, feed verticals, fill breakpoints; selling free heroes is the weakest use of the
+kit now. One sharp incompatibility the wording exposes: the free hero appears **after auto-refresh**,
+and a locked shop does not auto-refresh, so **the shop-lock trick suppresses her kit** during the
+card's 13-round window, she and Aurora are the two commanders who cannot stack it (hers by the
+refresh clause, Aurora's by the no-buy clause). Choose one engine per round, never lock during the
+card window. The double-farm line (Neobeast + Scavenger beside her kit) buys the fastest leveling
+in the lobby at a real HP price; it is a tempo loan, spend it on levels before Stage III calls it.
+
 ## Win condition / identity
 
 **Out-resource the lobby on bodies, then flex the surplus into a board.** A free hero most rounds (every

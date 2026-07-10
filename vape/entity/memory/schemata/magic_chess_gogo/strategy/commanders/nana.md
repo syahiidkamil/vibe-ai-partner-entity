@@ -32,6 +32,17 @@ death at 1 HP each battle, the MLBB Molina-revive flavor; verify the exact targe
 gold, a chest, and a **one-time commander fatal-immunity**. Net: she profits from the exact thing other
 commanders spend HP to avoid, and she carries safety nets so the overshoot is forgiving.
 
+Rethink (2026-07-10, first principles): her income is capped AND commodity (+24g total, the kind
+the shop-lock trick prints for anyone), so the econ half of her kit deflated with the era; what
+holds value is the **survival currency**, the 1-HP save and the fatal immunity, which nothing
+prints and which converts directly into the one resource that ends games. Note the leak: her card
+is NOT marked exclusive in the datamine, so the fatal immunity is borrowable (Cyclops is its best
+customer), though on Nana it is guaranteed in the I-2 offer. Her lose-early line synergizes with a
+field note from the Ruby research: **the Go Go Auction pays more gold to lower placements** (last
+seat ~10g, in pencil), so a committed Nana loss-streak stacks the gift + streak gold + reward
+priority + auction gold, the cheapest deliberate tank in the roster. The unmoved cap: nothing in
+the kit spikes, the wallet must buy the entire mid-game board.
+
 ## Win condition / identity
 
 **Out-economy the lobby by getting paid to take cheap early damage, then bank into a mid-game spike,

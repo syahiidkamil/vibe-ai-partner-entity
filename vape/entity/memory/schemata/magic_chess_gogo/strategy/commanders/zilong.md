@@ -44,6 +44,16 @@ each Basic ATK has a **20% chance to add 2 extra ATKs**. He then buys **traits**
 - **Gold Bandit:** each Basic ATK has a **5% chance to grant 1 Gold** (an econ engine on a fast attacker).
 - **Low-HP Shield:** below 30% HP, gain a **shield = 50% Max HP** (triggers on fatal DMG if unused).
 
+Rethink (2026-07-10, first principles): the spear's real identity is a **configurable answer slot**,
+the only equipment in the game whose passive I choose per run, so its value is scout-reactive:
+Control Immunity is a built-in Purify-plus against the stun openers (Lukas, CC frontlines) that
+every other carry buys an item slot for; the Low-HP Shield is a pocket Kagura umbrella (50% vs her
+135%, but stacking WITH one is a double life); Gold Bandit on the 20%-extra-attack carrier is a
+small compounding econ that, alone among gold sources, scales with combat length. Equipment
+currency is trick-proof, so his engine holds era value. The caps are unchanged: one host (an
+auto-attacker), ramp time, and the whole kit rides a single unit that burst can still delete
+through the toolbox.
+
 Reading (in pencil): the spear is a **DPS multiplier for an auto-attacker**, +20% chance of 2 extra ATKs
 is on average **~+0.4 attacks per attack (~40% more hits)**, which compounds with ATK Speed (so a
 Marksman board is the natural host). The traits make the carry **uninterruptible and self-sustaining**

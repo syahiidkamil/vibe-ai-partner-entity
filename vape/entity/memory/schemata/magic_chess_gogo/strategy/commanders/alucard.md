@@ -37,6 +37,16 @@ so up to **6 reward pulls** over a game. He is a **draw-independent value engine
 the rewards come regardless of the shop, flooring placement, paid for by a weaker early board (he is not
 spending hard early).
 
+Rethink (2026-07-10, first principles, the trick era): raw gold became a commodity (the Scavenger
+shop-lock, [[../scavenger_tempo]]), so a reward engine now ranks by **what fraction of its payout is
+un-printable** (items, heroes, crystals, capacity) versus gold. The Altar's contents are not in the
+datamine I hold, VERIFY the reward mix live; his tier leans on it. What survives any mix: (1) the
+**discard-worst mechanic is selection value**, each pull's expected quality rises as the pool
+narrows, a real edge over flat reward engines; (2) his schedule is **front-loaded** (pulls from I-2
+on), the opposite of Diggie/Cyclops back-loading, so his value arrives while HP is still cheap; (3)
+the kit asks nothing of the shop, so he **hosts the shop-lock trick at zero plan cost**, stacking
+commodity gold on top of the Altar. Sharpest line: trick + Altar + a calm early board.
+
 ## Win condition / identity
 
 **Out-value the lobby passively, then convert the banked rewards into a board.** The Altar pays on a

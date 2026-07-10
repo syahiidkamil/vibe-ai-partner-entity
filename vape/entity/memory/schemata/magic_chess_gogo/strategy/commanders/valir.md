@@ -36,6 +36,16 @@ rarity gives *more* EXP, a tradeoff: a weaker card for a bigger level assist). T
 random Power Card** (a third card). He is a **card-layer specialist**: his power is in the augments, so he
 wants a comp those cards pay off and a read on which two to take.
 
+Rethink (2026-07-10, first principles): the old "needs a card-scaling comp" framing was a false
+premise, the same one that under-rated Yu Zhong. **Cards are universal currency**, every comp takes
+one at II-3, so a second pick pays ANY board; and two picks from one offer is **selection value
+plus complementarity**, the best PAIR (a synergy payoff + an econ stack, a payoff + the item
+bundle) beats twice the best single. The quality-EXP inversion (blue pays 26, purple 16) is a
+priced choice between card power and level tempo, and under level-tempo primacy the blue-side EXP
+is often the stronger pull than it reads. Back-loaded to II-3 and moderate in magnitude, the Yu
+Zhong shape exactly, so he grades with him, not below him. Trick era: kit ignores the shop, the
+lock rides free.
+
 ## Win condition / identity
 
 **Over-power the card layer, then convert it into a spike.** Two cards at II-3 (plus the card's bonus

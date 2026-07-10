@@ -39,6 +39,16 @@ spend it the moment he has it (buy, reroll, or it auto-levels him). Softer readi
 remainder* converts. Either way the identity holds: **no interest, no hoarding, fastest leveling**.
 Play it as "spend in the moment or it becomes a level," and verify the exact timing in play.
 
+Rethink (2026-07-10, first principles): the trick era is quietly kind to him. Scavenger shop-lock
+gold ([[../scavenger_tempo]]) on a normal commander competes with interest banking; on Lancelot
+every farmed coin **auto-converts to EXP**, so the trick becomes a guaranteed-tempo engine, and
+tempo is his entire thesis, he is the structural version of the edge Aurora only draws by lottery
+(her 9-EXP pulls). Two structural dings stand unmoved: the **expiry** (level advantage is a
+depreciating asset, worth its maximum the round it is gained and zero at L10 convergence, so every
+round of early lead NOT converted into HP damage and streak gold is value destroyed), and the
+**auction handicap** (no war-chest means the end-of-stage auctions belong to others; his bids must
+come from same-round income). Pilot him as a countdown: the game he wins ends before it converges.
+
 ## Win condition / identity
 
 He trades the entire interest economy for **raw leveling speed**, and leveling buys two compounding

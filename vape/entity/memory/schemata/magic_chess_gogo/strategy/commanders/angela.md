@@ -36,6 +36,16 @@ allies near it (a positional mana buff for a caster cluster). She is a **caster 
 skill-damage carry, **mana is damage** (more casts), so she turbo-charges exactly that, plus a survival
 shield.
 
+Rethink (2026-07-10, first principles): mana on a caster is the same mechanism family as Northern
+Vale's battle-start restore ([[../northern_vale_core]]), **cast-rate is the caster's fight-flip**,
+but hers is continuous and single-target where NV's is a one-shot team opener, so on the right carry
+her per-fight value rivals Kagura's umbrella (more ultimates delivered vs one death blanked). The
+whole difference is conditionality: Kagura's %-HP shield pays on ANY body; Angela's mana pays only
+where ultimates carry the fight, which is why she is a general-list C and a caster-meta S, the same
+kit graded on two boards. Trick-era note: her kit is combat-only (no shop dependence), so she hosts
+the shop-lock freely, and her econ weakness (no gold in kit) matters less now that guaranteed
+Scavenger gold is a bolt-on.
+
 ## Win condition / identity
 
 **A caster carry that casts twice as often and does not die.** Skill-damage carries (mages, Stargazer

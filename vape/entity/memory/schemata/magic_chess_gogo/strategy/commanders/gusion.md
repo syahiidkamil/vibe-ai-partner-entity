@@ -38,6 +38,16 @@ Crystal Chest + 3 gold** (another class-count grant). So he **buys class breakpo
 it**, a flexible synergy-grantor focused on the **class** (role) axis specifically. The grant is *not
 inherited* if others copy my heroes, a minor anti-steal note.
 
+Rethink (2026-07-10, first principles): synergy counts are the game's **denial-immune currency**, no
+bench-holding or pool contention can stop a granted +1, and a bought [4]->[6] is a deterministic
+fight-flip (the breakpoint changes what the whole class DOES, not just its stats). With 3 refreshes
+the Sigil is effectively **chooseable**, not random, so he converts one flexible body into two class
+memberships on demand, plus 7 gold for doing it. In the trick era this ranks HIGHER than before:
+his payout is precisely the un-printable kind (counts + a Role crystal from the card), while the
+gold half of his kit was never the point. Ceiling note: Role synergies cap at [6], so he buys
+breakpoints, never the faction-[10] Ultra tier, the structural line between him and the crystal
+printers (Aurora, Yu Zhong).
+
 ## Win condition / identity
 
 **Cross class breakpoints the roster would not cheaply allow, and bank gold doing it.** By granting a

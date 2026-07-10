@@ -37,6 +37,15 @@ the lobby can roll into one. The card adds early **4-cost** access (auto-refresh
 +6 gold. The catch: 5-costs cost **5 gold each**, so the flood is only as good as the **gold** I have to
 cash it, the free buy covers one, the rest I pay for.
 
+Rethink (2026-07-10, first principles): the trick era **helps him more than most**, because his one
+gate is gold and guaranteed Scavenger gold ([[../scavenger_tempo]]) is exactly the fuel his flood
+lacks; a gold-hungry kit gains when gold gets cheap, a gold-printing kit loses. Second derivation,
+from the deny meta: his flood is also a **denial weapon**, first access to the 5-cost pool means he
+can buy-and-bench the legendary a rival's whole comp waits on (a Ling, an Odette) while fielding his
+own, and at the top ranks where bench-holding is standard play, that pre-emption is worth HP. His
+window is still a window: the spike must convert to HP damage and streak gold before the lobby's
+natural L9-10 odds arrive and the monopoly expires.
+
 ## Win condition / identity
 
 **Field 5-cost power before anyone, and pick the best one for my board.** Where Lancelot reaches high

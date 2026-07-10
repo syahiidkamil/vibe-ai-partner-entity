@@ -27,9 +27,9 @@ sets the tier.
 Wittgenstein: a word's meaning is its use inside a form of life; strip the practice and it is noise. A
 tier is the same, it only means something inside a *way of playing*. So:
 - **Under a chosen commander, this general list can invert.** A C-tier-here commander is **S-tier in its
-  own specialization** (Valir/Yu Zhong are niche generally but dominant in a card-built run; Angela is
-  weak generally but premier in a mage meta; Lylia's ceiling is among the highest). The general list
-  ranks **for a default climb**, not for a piloted specialist.
+  own specialization** (Angela is weak generally but premier in a mage meta; Lylia's ceiling is among
+  the highest in the game; Ling owns a carry-heavy lobby). The general list ranks **for a default
+  climb**, not for a piloted specialist.
 - It depends on **the meta and the lobby**: which synergies are strong this patch, and the seven enemy
   boards. And remember the **8-unique fact**: a match has up to 8 *distinct* commanders, so in play I
   pilot **one** and read seven, I never need an all-37 ranking *while playing*, only my one + the read
@@ -89,50 +89,119 @@ says otherwise.
   weaker Chou; her leveling edge is constant; her jackpot games top the lobby. That mix, strong
   reliable tempo + a random ceiling, minus the HP tax and the reward variance, is A: above the
   swingy tier, below the engines that deliver their whole value deterministically.
-- **Diggie** — draw-independent value that *accelerates when winning*; high floor.
-- **Vexana** — out-picks every Go Go Box + out-bids the auction; reliable value, moderate spike.
-- **Alucard** — guaranteed altar value, draw-independent, flexible; spike is modest.
-- **Gusion** — buys class breakpoints on demand + gold; very versatile, reliable.
-- **Guinevere** — a free hero most rounds; high floor, very versatile.
-- **Lunox** — a one-shot synergy injection + the +24g 6-count windfall; high spike on a committed axis.
-- **Minotaur** — the gear economy, low-variance (nothing bricks), any carry; high floor.
-- **Ruby** — gear-ahead sticky front (free Cloak+Scythe + a resurrect); high floor.
-- **Aamon** — free copies (Mirror Devices) complete a contested 3-star + gold; reliable spike.
-- **Paquito** — scheduled 2-copy Gloves (a 2-star 5-cost at IV-1); reliable late spike.
-- **Harley** — floods 5-costs on demand; high spike (early legendaries), gated on gold + the window.
+- **Vexana** — the value engine that weathered the trick era best: her extra picks draw from the
+  boxes' mixed un-printable currency (items, heroes, capacity, crystals), her ~26g edge owns the
+  auction's un-printables too, and the calendar pays regardless of winning or losing, the rare
+  result-independent floor. Cap: between reward stages she is kit-less.
+- **Gusion** — synergy counts are the denial-immune currency, and his refreshable Sigil makes the
+  grant effectively chooseable: a bought class [4]->[6] is a deterministic fight-flip no pool state
+  can block, and he is PAID +7g to do it. Cap: Role synergies stop at [6], he never buys the Ultra
+  tier.
+- **Lunox** — the same count currency plus 3 pool-proof bodies and the +24g windfall, delivered as
+  ONE cast whose timing is a real lever (bodies scale with shop odds at cast time, the windfall
+  wants an early [6]). The single cast is the variance her tier carries: no second injection.
+- **Minotaur** — equipment is the era's soundest currency and his engine (5 self-funding enhances +
+  chests) never bricks; the charges compound when concentrated on one carry (Enhanced passives
+  multiply, the Astro Sovereign rides the pile). High floor by construction, modest ceiling by the
+  same construction: bounded increments on items he still must find.
+- **Ruby** — two real items from round 1 whose passives LINK (mark -> burst -> resurrect -> +ATK),
+  a per-fight stickiness that flips close fights like a small Kagura; splitting the pieces onto two
+  sturdy carriers doubles her exclusive's gold. Countered by anti-heal/true damage; the meta line
+  (Dragon-Swiftblade Gusion) is the most contested comp in the game.
+- **Aamon** — copy currency on an honest treadmill: 7 two-stars per Mirror, ~3 Mirrors a game, each
+  a pool-beating star-up step plus gold. The skill gates are pool-reading (only chase deep-stock
+  heroes) and stealth (quiet-merge, untelegraphed grabs); Mia bullies his early game.
+- **Paquito** — scheduled, likely pool-independent copies (verify the "obtain" clause) at exactly
+  the rounds each cost tier peaks, ending in a 2-star 5-cost at IV-1 that ordinary play cannot
+  assemble. The schedule is also his tell: the staged singleton announces the plan to scouts.
+- **Harley** — a monopoly window on 5-costs at II-2, a full stage before the odds curve arrives,
+  doubling as pre-emptive denial (buy-and-bench the legendary a rival's comp waits on). Gold-gated,
+  and the trick era feeds exactly that gate: guaranteed Scavenger gold is his flood's fuel.
+- **Diggie** — draw-independent value with a win-accelerator, which makes him a tempo commander in
+  a value engine's clothing: the +10-per-win means a board that wins early IS the engine, and the
+  same clause means he rescues nothing when behind (a high middle, not a true floor). The chest is
+  an attackable battlefield object, verify what its destruction costs.
+- **Alucard** — the front-loaded reward engine: pulls from I-2 onward while HP is cheap, and the
+  discard-worst mechanic is genuine selection value (each pull's expected quality rises). His tier
+  leans on the Altar's unverified reward mix: gold-heavy would mean partly commoditized, item/hero
+  mixed holds. Shop-independent, hosts the trick free.
+- **Guinevere** — a free pool draw most rounds (guaranteed for 13 with her card): the copy-progress
+  half is un-printable, the sell-gold half is now a commodity, so she is played for the copies.
+  One hard clause: her free hero rides the AUTO-refresh, so the shop-lock trick suppresses her kit,
+  the only commander besides Aurora who cannot stack it.
 
 ### B — high ceiling but swingy / back-loaded / setup- or matchup-dependent / higher skill floor
-- **Lancelot** — fastest leveler, big early spike, but the edge **expires** once the lobby reaches L10
-  (consistency ding).
-- **Nana** — a strong survival floor; very low ceiling/spike caps it.
-- **Dyrroth** — devour up the cost ladder; back-loaded value, flexible.
-- **Moskov** — ritual enhance + duplicate; self-funding but back-loaded.
-- **Karina** — snowballing execute-carry; needs chip to enable, attrition-only.
-- **Zilong** — a scaling spear; strong, but needs an auto-attacker and ramp.
-- **Luo Yi** — capacity/synergy-density flex; **highest skill floor** (a mispiloted Luo Yi is just "fine").
+- **Lancelot** — the structural tempo maximum: every coin auto-converts to EXP (the trick era feeds
+  him, farmed gold becomes guaranteed levels), but a level lead is a **depreciating asset**, worth
+  most the round it is gained and zero at L10 convergence, and the no-bank clause forfeits every
+  auction. He is a countdown: convert the lead to HP damage before it expires, or it was nothing.
+- **Nana** — paid to take the damage others avoid, but the income is capped and commodity; what
+  holds is the survival currency (the 1-HP save, the fatal immunity) plus the cheapest committed
+  loss-streak in the game (gift + streak gold + reward priority + the auction's low-placement
+  gold). Nothing in the kit spikes; the wallet must buy the whole mid-game.
+- **Dyrroth** — chaff into 4-5 costs on a fixed cadence, with the every-3rd devour steerable by
+  choosing its meal (devour a Marksman 4-cost, all but name Lesley); bodies without gold, so the
+  econ runs tight and the ladder is back-loaded.
+- **Moskov** — the ritual's gold half is commodity now; the real kit is the two free copies + the
+  15/15 buff on a chosen carry, priced in time (four placements) and information (the Field
+  telegraphs the carry to every scout).
+- **Karina** — execute = defense-ignoring damage, the structural counter to sustain-and-shield
+  economies; equipment currency, trick-proof. Priced by fight length: attrition compounds her,
+  burst metas never let the 18% threshold matter.
+- **Zilong** — the only equipment whose passive you choose per run: a configurable answer slot
+  (built-in CC immunity vs stun openers, a pocket 50% shield, a combat-scaling gold trickle).
+  Trick-proof currency, single-host, needs ramp.
+- **Luo Yi** — the capacity arbitrageur: a blessed body compressed into an item slot keeps its
+  synergy count while freeing a board slot, printing the game's binding late constraint. The trade
+  costs 60% of the body's stats, so it pays only under real planning, the roster's highest skill
+  ceiling and its most punished mispilot.
 - **Cyclops** — feasts on eliminations; back-loaded, dies-first risk, high ceiling if it survives
-  (research bar: outlive four players). New ding: surrender-savvy lobbies resign early at cheap
+  (research bar: outlive four players). Ding: surrender-savvy lobbies resign early at cheap
   boards, shrinking the 14% loot.
-- **Kalea** — push-your-luck Trove value; the bust risk lowers consistency vs the other value engines.
-- **Popol and Kupa** — copy-trap harvester; never a dead round, but placement-dependent value, not a spike.
-- **Lukas** — a free opening stun + DEF shred; strong enabler, needs follow-up carries.
-- **Miya** — marksman amplifier + anti-tank; reliable, but auto-attacker-only.
+- **Kalea** — push-your-luck value with a derivable policy (cash at 7-8, freeze at 5-6 where a tap
+  busts on half the die); the bust risk is why she grades under the deterministic engines, and the
+  rewards fund grounded 4-cost plans, not 5-cost vanity.
+- **Popol and Kupa** — the only kit indexed to the ENEMY board instead of the pool: bench-holding
+  cannot starve it, and the harvest is meta-correlated scouting made flesh. The same mechanism caps
+  him: he cannot choose what he receives, a floor without a spike.
+- **Lukas** — the opener quantified: 45% of the target's Max HP (grows with their tank investment),
+  a 1.5s one-sided window, and a -65 DEF shred bigger than Defender [6]. Universal per-fight tempo,
+  fixed in size, with no carry or econ behind it.
+- **Miya** — the +50% ATK Speed is self-synergistic (carry DPS and volley proc-rate at once) and
+  the %-Max-HP arrows invert tank investment into her damage; one auto-attacking host carries the
+  whole kit, so CC or burst on that unit zeroes it.
 - **Yu Zhong** — quality upgrades pay ANY comp (every card family tiers, so the bump is never
   wasted on a live board), and maxed cards convert to Black Dragon Treasures whose pool includes
   **Magic Crystals**, a second, slower crystal stream priced in card slots instead of HP. Back-loaded
   to II-3/III-3 and moderate in magnitude, hence B not A.
-- **Johnson** — free Johnnies (cheap synergy + CC); flexible, but the bodies want real carries.
-- **Ling** — the dueling isolator; **hard-counters single-carry boards, hard-countered by go-wide** (a
-  swingy matchup axis).
-- **Layla** — damage-into-recruitment; only spins on a board that already hits hard.
+- **Valir** — the false premise ("needs a card-scaling comp") falls the same way Yu Zhong's did:
+  cards are universal currency, and two picks from one offer is selection value plus
+  complementarity (the best PAIR beats twice the best single), with a priced EXP-vs-power choice
+  on top (blue pays 26 EXP, purple 16). Back-loaded to II-3, moderate magnitude: the Yu Zhong
+  shape, so the Yu Zhong tier.
+- **Johnson** — Johnnies are denial-immune breakpoint currency from a private pool (stolen ones
+  lose their synergies) welded to a per-fight AoE stun opener; the kit supplies enablers only, the
+  damage core must still come from the shop.
+- **Ling** — the ring is a trade of presences: (their farthest unit's worth) minus (my dueler's
+  worth to the main fight). Against hyper-carries the difference is a whole game plan; against
+  go-wide the trade inverts, a strong dueler spent killing chaff. The card's deterministic 2-star
+  4-cost is trick-proof and usually IS the dueler.
+- **Layla** — the recruited heroes are denial-immune synergy thickeners, but the causality runs the
+  wrong way for a floor: damage must exist before the engine pays. Play the early-mid kit-less and
+  count on the hologram's quiet +3%/round ramp; the recruitment is a late multiplier.
 
 ### C — most situational generally (but S-tier in their specialization)
-- **Lylia** — a pool-denied 5-cost star, but the shop-off **flip is swingy** and high-commitment; high
-  ceiling, low floor.
-- **Angela** — caster mana-enabler; **hard-countered by CC**, dead on a non-caster board, but premier in a
-  mage meta.
-- **Valir** — card-doubler; needs a card-scaling comp to matter (niche, but strong in that build).
-- **Wanwan** — a finisher add-on; lowest standalone value, needs a host board that already softens enemies.
+- **Lylia** — two gates multiplied: the copies are pool-drawn (deniable) AND win-gated post-flip,
+  behind a shop-off that freezes adaptation at L8 on a forecast of boards she can no longer answer.
+  The ceiling (a free 5-cost 3-star) is honestly the game's highest for a board already ahead; the
+  floor is the coin-flip the two gates make.
+- **Angela** — mana is the caster's fight-flip (the same mechanism family as Kagura's shield, cast
+  rate instead of a second life), but conditional on ultimates carrying the fight: on a caster
+  board her per-fight value rivals the S combat kits, anywhere else it is ~zero. C general, S in a
+  mage meta, one kit graded on two boards.
+- **Wanwan** — win-margin insurance, not win-probability: the finisher triggers in fights already
+  being won and converts them into clean sweeps; capped commodity kill-gold; the purest win-more
+  add-on, so every alternative gives a losing board more.
 
 ## The per-commander valuations (the bottom-up source)
 
@@ -215,8 +284,9 @@ versatility. Grouped by archetype ([[../strategy/commanders/index]]); each links
   Box + a ~26g auction edge; reliable value.
 
 ### Go Go cards / Commander EXP
-- **[Valir](../strategy/commanders/valir.md)** — C:M · S:H · V:M -> **C (S in the card build).** Two cards
-  at II-3 + EXP; only matters with a card-scaling comp, but huge there.
+- **[Valir](../strategy/commanders/valir.md)** — C:M · S:M · V:H -> **B.** Two picks at II-3 pay any
+  comp (cards are universal currency; the best pair beats twice the best single), plus a priced
+  EXP-vs-power choice. Back-loaded, moderate magnitude: graded with Yu Zhong, whose shape he shares.
 - **[Yu Zhong](../strategy/commanders/yu_zhong.md)** — C:M · S:M · V:H -> **B.** Every card a tier
   stronger pays ANY comp, and maxed cards convert to Treasures whose pool includes Magic Crystals
   (a second, slower crystal stream). Back-loaded to II-3/III-3, moderate magnitude.

@@ -37,6 +37,16 @@ of that carry** appear, real progress toward a star-up the pool would charge for
 **feeds the ladder**: it hands a 1-Gold hero now, then 2/3/4/5-Gold in sequence, exactly the costs the
 ritual needs (and a free 5-cost on top). So he is a **self-funding enhance-and-duplicate** commander.
 
+Rethink (2026-07-10, first principles): split his payout by currency and the shape is clear, the
++20 ritual gold is commodity (the trick prints gold now), so his REAL value is the two free copies
++ the 15/15 buff, copy currency the pool cannot deny. Two structural costs price it: the ritual is
+**time** (four placements across rounds = a back-loaded engine in a tempo game), and the enhanced
+carry is **telegraphed** (scouting reveals which hero got the Field, inviting the deny meta to
+bench-hold its remaining copies; the two free copies partially insure against exactly that). His
+card is quietly one of the better self-feeds in the pool (the 1-5 ladder is both ritual food and a
+free 5-cost). Play him as a copies-and-buff kit that happens to refund its own gold, never as an
+econ commander.
+
 ## Win condition / identity
 
 **Enhance one carry and duplicate it toward a star-up, paid for by the ritual gold.** Completing the

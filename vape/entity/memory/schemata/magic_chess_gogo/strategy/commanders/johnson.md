@@ -41,6 +41,16 @@ exclusive **buffs the Johnnies** (+25% ATK / +20% HP, +5 in pool, making them re
 borrowable just re-opens the skill shop, redundant on the owner. He is a **free-body synergy filler with
 disruption**.
 
+Rethink (2026-07-10, first principles): "cheap synergy bodies" undersells two properties. (1) The
+Johnnies are **denial-immune breakpoint currency**: they come from HIS exclusive pool (and lose
+their synergies if stolen), so no bench-holding or contention touches his counts, the same immunity
+class as Gusion's grants. (2) The Spanner Spin stun + the starred CC-immune charge is a **per-fight
+tempo opener** in the Lukas family: an AoE stun on the enemy's densest tiles is 0.5-1s of free
+damage every single fight, small but universal fight-flip value. What caps him at B is structural:
+the kit supplies enablers only, no carry and no econ, so a real damage core must come from the shop
+like anyone's. Trick era: shop-independent kit, hosts the shop-lock freely, which patches the
+no-econ half.
+
 ## Win condition / identity
 
 **Stack a synergy for free with Johnnies, add CC, and back it with real carries.** The free Johnnies fill

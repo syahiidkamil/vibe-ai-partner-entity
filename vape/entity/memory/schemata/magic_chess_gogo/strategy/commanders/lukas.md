@@ -39,6 +39,17 @@ shred). So he **softens and CCs the enemy at battle start**, setting up my board
 adds **+12 gold + 50% statue DMG**; the borrowable just re-grants the statue, redundant on the owner. A
 **CC-burst disruptor**.
 
+Rethink (2026-07-10, first principles): quantify the opener and he reads better than "enabler"
+suggests. 45% of *the target's* Max HP is %-scaling damage that grows with the enemy's tank
+investment (the anti-tank inversion: their Dauntless wall feeds his blast), a 1.5s stun is ~1.5s
+of one-sided damage for my whole board every fight, and **-65 Hybrid DEF** is bigger than the
+Defender [6] bonus (+60), applied as a debuff instead of earned as a breakpoint. That bundle is
+universal per-fight tempo in the Kagura family, but front-loaded and fixed in size: it cannot flip
+a fight my board loses by more than the opener's margin, and the kit contains no carry and no econ,
+which is the structural cap. Trick era: shop-independent, hosts the lock freely; the +12g exclusive
+plus trick gold patches the econ hole. His fight-math partner is burst that fires DURING the stun
+window, build the board around that 1.5 seconds.
+
 ## Win condition / identity
 
 **Open every fight with a stun + shred, then let my carries clean up.** The statue's battle-start AoE stun

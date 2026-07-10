@@ -34,6 +34,16 @@ my **highest synergy** next round, plus the card's **1 hero per 50000 ally DMG**
 board prints free synergy heroes**, compounding the very synergy doing the damage. She is a
 **damage-into-recruitment** engine: the more I hit, the more free bodies of my line I get.
 
+Rethink (2026-07-10, first principles): the recruited heroes are the good currency (denial-immune
+synergy thickeners aimed at my own densest line, copies the pool cannot refuse me), but the
+**causality runs the wrong way for a floor**: damage must exist before the engine pays, so she
+amplifies strength and cannot rescue weakness, the same win-more shape as Diggie with a narrower
+trigger. The honest pilot conclusion: treat the kit as a LATE multiplier and build the early-mid
+like a kit-less commander (normal econ, normal tempo); count on the hologram's ramp (+3%/round
+compounds quietly into a real free carry by Stage III) rather than the recruitment to carry the
+early game. Trick era: shop-independent, hosts the lock freely, which matters since her kit pays no
+gold at all.
+
 ## Win condition / identity
 
 **A high-damage synergy that recruits itself.** Build a hard-hitting synergy board (Marksman/Mage); its

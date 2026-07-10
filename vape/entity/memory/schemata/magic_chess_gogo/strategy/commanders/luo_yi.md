@@ -41,6 +41,17 @@ spine: [[../general_strategy]]; the general (emergent) tiers: [[../tier_lists]];
 - **Power Card:** *Luo Yi's Power* (the I-2 offer always includes it) - *"Obtain random 3-Gold Hero ×1 now,
   then the same one at each round start, up to 6 total."*
 
+Rethink (2026-07-10, first principles): the kit's deepest line hides in one clause, **a transformed
+hero's Blessing-granted synergy still counts**. That makes her a **capacity arbitrageur**: a blessed
+body compressed into an item slot keeps its +1 count while freeing a board slot, and capacity is
+the game's binding constraint from L8 on (every rival buys it at 103-231 gold of levels; she prints
+it from the device). The conversion itself is a priced trade, 40% of the hero's stats in exchange
+for a freed slot, so it pays exactly when the freed slot fields something worth more than the lost
+60%, which is why she is the roster's highest skill ceiling: her power is a planning problem, not a
+button. Currencies: gear-stats and counts, both trick-proof; her card's same-3-cost x6 is copy
+currency (and hama-adjacent fuel). Verify the truncated per-Role Core enhancements in-game, they
+may move which classes convert best.
+
 **Equipment the kit grants ([[../../infos/equipments/commander_exclusive]]):** the **Essence Core**
 ("Hero's Power Inherited"), **+10% Hybrid ATK, +10% Max HP** at Basic (*Enh: +20% / +20%*), plus the
 inherited **40% of the transformed Hero's Hybrid ATK and HP** and **40% of that Hero's equipment base

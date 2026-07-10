@@ -35,6 +35,16 @@ targets and can chain through a weakened back line. The star-up + card add **gol
 snowball, up to caps). So she is a **cleanup/finisher**: not a primary carry (flat damage), but a
 board-wide closer that rewards a board which **softens enemies** and a **kill-heavy** game.
 
+Rethink (2026-07-10, first principles): her precise function is **win-margin insurance, not
+win-probability**. The finisher triggers on a fight that is already being won on chip, so she
+converts narrow wins into clean sweeps (fewer enemy survivors = a bigger HP hit on the loser and a
+safer streak) and rescues almost nothing when behind, the purest win-more shape in the roster. Her
+income is kill-gold, capped and commodity (the trick prints gold without needing kills), so the
+econ half deflated with the era. What is left is real but small: a free stage-scaling closer whose
+value peaks late (550 per hit x 20 in Stage IV is genuine deletion). The add-on grade stands: she
+needs a host board that wins fights on its own merits, and every alternative commander gives that
+board more.
+
 ## Win condition / identity
 
 **Soften the enemy, then clean them up and snowball kills.** Wanwan's burst triggers on a sub-30% enemy

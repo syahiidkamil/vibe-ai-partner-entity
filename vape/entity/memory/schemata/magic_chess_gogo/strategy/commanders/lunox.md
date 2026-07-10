@@ -40,6 +40,14 @@ reasoning: [[../../thinking_and_mental_model/synergies]]; the general (emergent)
   gain 24 more Gold."* **(Exclusive)**; borrowable *Lunox's Power* - *"Gain 6 Gold. Select one of your
   Heroes without a Blessing to grant a random Blessing."*
 
+Rethink (2026-07-10, first principles): her currency is the good kind, a +1 count (denial-immune,
+and deliberately non-shiftable) plus 3 bodies the pool cannot refuse, so the trick era does not
+touch her edge. The kit's real tension is **a timing lever pulling against an econ clock**: the 3
+free heroes scale with shop odds at cast time (later = better bodies), while the exclusive's +24g
+pays on the FIRST 6-count (earlier = richer), so the cast wants to be exactly as late as still wins
+the race to 6, usually the level-up right before committing rolls. And it is ONE cast: a mis-picked
+axis has no second injection, which is the variance her tier carries.
+
 Reading (in pencil): the active is **one** powerful synergy injection, a free **+1 synergy count** on a
 chosen hero, and (with the passive) **3 free heroes of that synergy + 6 gold**. The 3 free heroes scale
 with **current shop odds**, so casting at a higher level yields better bodies (a real timing lever). The

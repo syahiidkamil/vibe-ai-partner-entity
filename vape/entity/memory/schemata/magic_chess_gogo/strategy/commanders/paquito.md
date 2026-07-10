@@ -37,6 +37,17 @@ of the matching cost: **a 3-cost at II-1, a 4-cost at III-1, a 5-cost at IV-1** 
 vertical**: the value is fixed in time, and the skill is **having the matching-cost carry ready** to wear
 each Glove.
 
+Rethink (2026-07-10, first principles): his copies read as **generated, not drawn** ("obtain their
+1-Star copy", no pool clause), which if true makes him the roster's only fully denial-proof
+vertical, bench-holding cannot starve a Glove, VERIFY against the shared-pool counter in-game,
+the tier leans on it. The deterministic schedule is both his strength (plan the comp backward from
+II-1/III-1/IV-1, the copies arrive exactly when each cost tier's power peaks) and his tell: the
+staged singleton 4-5 cost on his bench announces the plan to any scout, so the deny meta prices
+him even if the Gloves themselves are safe. Trick era: copies are un-printable currency, his
+value holds; the kit ignores the shop, so the lock rides free. The unmoved gate: a Glove with no
+matching-cost hero ready is a dead pull, so tempo TO the schedule (holding the right singleton
+early) is the entire pilot skill.
+
 ## Win condition / identity
 
 **Star up the carry the pool would deny, on a timetable.** Each Glove turns a single matching-cost hero

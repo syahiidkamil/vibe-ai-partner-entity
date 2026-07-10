@@ -39,6 +39,15 @@ the carry **+50% ATK Speed** (so it attacks faster -> procs the volley faster). 
 The card adds **+12 gold + the Lunar Longbow item** (ATK speed + heal-on-kill). She is the
 **auto-attacker's Angela**: mana-for-casters becomes ATK-speed-and-%-HP-arrows for marksmen.
 
+Rethink (2026-07-10, first principles): two multiplications hide in the kit. The +50% ATK Speed is
+**self-synergistic**, it raises the carry's own DPS AND the volley's proc rate at once, so the
+starred kit is worth more than its two halves read separately; and the %-Max-HP arrows are the
+**anti-tank inversion**, the enemy's Dauntless/Defender HP investment literally feeds her damage,
+so she is strongest against exactly the walls that blank normal marksmen. The conditionality is the
+same shape as Angela's: the whole kit keys off one auto-attacker's Basic ATKs, so a CC'd, dead, or
+absent carry zeroes it, general-list B, tank-meta S. Trick era: combat-only kit, hosts the
+shop-lock freely; the +12g card plus trick gold covers her missing econ.
+
 ## Win condition / identity
 
 **A fast auto-attack carry that melts everything, especially tanks.** The +50% ATK speed makes the carry

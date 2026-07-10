@@ -36,6 +36,17 @@ enemy carry from the main fight** while my board wins the rest 5-on-4. Winning t
 dueler **+6% Hybrid ATK (up to +66%)**. The card hands **3 copies of the same 4-Gold hero** (L4/5/7) = a
 free **2-star 4-cost** (a strong dueler or carry). He is a **disruption/isolation** commander.
 
+Rethink (2026-07-10, first principles): the ring is a **trade of presences**, my dueler leaves the
+main fight to remove their farthest unit, so its value is exactly *(what their unit was worth to
+them) - (what my dueler was worth to my main fight)*. Against a hyper-carry board that difference
+is enormous (their whole damage plan vs one of my bodies); against go-wide the farthest unit is
+chaff and the trade INVERTS, I spend a strong dueler to kill filler, which is the mechanical root
+of his matchup swing, not a vague "countered by go-wide". Derived rules: the dueler must be an
+**auto-attacker** (the duel is Basic-ATKs-only, +100% AS), sturdy enough to win 1v1s (each win
+compounds +6% to +66%, so early duel wins are an investment), and his card's deterministic 2-star
+4-cost is trick-proof copy currency that usually IS the dueler. Scout before committing: his kit
+reads the lobby, a carry-heavy lobby is his S-tier, a swarm lobby his C.
+
 ## Win condition / identity
 
 **Delete the enemy carry in a duel, win the main fight a man up.** Most enemy boards lean on one carry;
