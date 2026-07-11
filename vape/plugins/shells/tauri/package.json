@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tauri build",
+    "build": "tauri build --no-bundle",
+    "bundle": "tauri build",
     "dev": "tauri dev"
   },
   "devDependencies": {

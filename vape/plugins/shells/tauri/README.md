@@ -24,11 +24,17 @@ The Rust binary is compiled on demand:
 ```bash
 uv run vape setup          # choose the Tauri shell — it compiles the binary
 # or, manually:
-cd plugins/shells/tauri && npx tauri build
+cd plugins/shells/tauri && npx tauri build --no-bundle
 ```
 
 `vape start` runs the compiled binary; it never compiles Rust on startup, so a
 first run is never blocked by a multi-minute build.
+
+`--no-bundle` matters cross-platform: the launcher runs the raw binary
+(`src-tauri/target/release/vape-avatar`), never an installer bundle, and the
+config's default `app` bundle target is macOS-only — on Linux/Windows the
+bundler stage would fail after a perfectly good compile. To produce a macOS
+`.app` for distribution, run `npm run bundle` instead.
 
 ## Renderer compatibility
 

@@ -376,7 +376,11 @@ async def stop():
 
 @app.post("/api/shutdown")
 async def shutdown():
-    os.kill(os.getpid(), signal.SIGTERM)
+    # In-process raise, not os.kill: on Windows os.kill(pid, SIGTERM) is a hard
+    # TerminateProcess (the shutdown lifespan never runs, temp WAVs leak), while
+    # raise_signal triggers uvicorn's signal.signal handler → graceful exit.
+    # On POSIX the two are equivalent for our own pid.
+    signal.raise_signal(signal.SIGTERM)
     return {"status": "shutting_down"}
 
 @app.get("/api/health")

@@ -160,7 +160,7 @@ def _launch_tauri(shell_dir: Path, window: dict, port: int) -> subprocess.Popen 
         console.print(
             "  [yellow]Tauri shell is not built yet.[/yellow]\n"
             "  [dim]Run `vape setup` and choose the Tauri shell, or build it with "
-            "`npx tauri build` in plugins/shells/tauri.[/dim]"
+            "`npx tauri build --no-bundle` in plugins/shells/tauri.[/dim]"
         )
         return None
 

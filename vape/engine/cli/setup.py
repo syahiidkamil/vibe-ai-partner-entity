@@ -234,7 +234,12 @@ def _build_tauri() -> None:
         subprocess.run([npm, "install"], cwd=str(shell_dir), capture_output=True, timeout=180)
 
     console.print("  Building Tauri shell (compiling Rust — this takes a few minutes)...")
-    result = subprocess.run([npx, "tauri", "build"], cwd=str(shell_dir), timeout=900)
+    # --no-bundle: the launcher runs the raw compiled binary (target/release/
+    # vape-avatar) on every OS — see start._find_tauri_binary. The bundler stage
+    # is never consumed, and its default "app" target is macOS-only, so on
+    # Linux/Windows it would exit non-zero AFTER a successful compile and
+    # report a false "build failed".
+    result = subprocess.run([npx, "tauri", "build", "--no-bundle"], cwd=str(shell_dir), timeout=900)
     if result.returncode == 0:
         console.print("  [green]✓ Tauri shell built[/green]")
     else:
