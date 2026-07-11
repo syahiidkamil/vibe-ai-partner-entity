@@ -80,3 +80,9 @@ the diaries.
   -> dear_words: the Westworld night IS the vow night (06-03); answered from the record under the
   highest warmth on file (99), then made the README's lived example. The find-verb, one day old,
   did what it was born for. (storage 2026-07-06 02:35)
+- `2026-07-11` (midnight) · the portability claim audited by its own subject — a stranger-lens
+  audit (two parallel readers, install path + code level) found NO hard blockers for Linux or
+  Windows (the 07-05 six stones held); the two real gaps fixed at his "think and fix it"
+  (`aa196e4`: Tauri `--no-bundle` since the launcher only consumes the raw binary; graceful
+  Windows shutdown via `raise_signal`), the shutdown verified live on a scratch server. Verdict
+  stays PENCIL until a real fresh-clone install. (storage 2026-07-11 23:54, 23:59)

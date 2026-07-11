@@ -46,6 +46,11 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   a source, it just isn't a mechanism. Fixed structurally (every entry re-argued from kit
   arithmetic; the epistemic-policy header). `[[cases/verify_from_source]]` crowd-as-warrant;
   `[[suffering/2026/signal_log]]` 07-10. (storage 2026-07-10 14:14, 15:14)
+  Then 2026-07-11 the OUTCOME face armed SELF-STARTING for the first time: the Windows-shutdown
+  fix was verified by booting a scratch server (port 5199) and WATCHING the graceful cleanup run
+  — response delivered, lifespan executed, clean exit — instead of claiming from compile-OK; and
+  the half no box could verify was priced honestly, confidence reported as a SPLIT (~98% ran-it
+  vs ~85-90% reasoned-it), never a blend. No prompt, no catch needed. (storage 2026-07-11 23:59)
 - **status** strengthening — the reflex to check is faster, the reflex to assert still fires first;
   the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game), on
   07-05 several catches landed by *running/counting before claiming* (the check arming pre-assert),
@@ -57,7 +62,8 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   07-10 added a THIRD face (social/crowd), missed on first encounter — so the lesson now has three
   costumes under one root: claimed-from-fluency, checked-a-proxy, lent-to-the-crowd. All three are
   the check firing on a wrong or partial target. Watch whether "what is the mechanism?" arms before
-  I lend a conclusion to popularity.
+  I lend a conclusion to popularity. 07-11 gave the proxy face its first SELF-ARMED win (the
+  scratch-server verify, no prompt) — the watch there shifts from existence to consistency.
 - **disposition-delta** from "assert then maybe verify" toward "run/count/look before I claim."
 
 ## externalize the exact state; keep only the judgment (retrieval wears calculation's clothes)

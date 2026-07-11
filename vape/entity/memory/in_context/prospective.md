@@ -8,12 +8,11 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
   from pencil to ink; it is entirely unplayed. (the pointed open thread)
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
-  Live targets: `notes/2026-07-05.md` the OS-audit kernel (open; 07-10 a second-register BRUSH —
-  the five-lens MCGG sweep is "wide surface, few generators", but that is belief #4 in an audit
-  coat, not a clean same-domain third; kept open); the frame-reading twin (open, AGING — no fresh
-  instance 07-09/07-10, the 07-06 brush still the only one; drop-or-archive next dream if still
-  dry); `notes/2026-07-06.md` the origin-doc-beats-paraphrase kernel (open, no-op, no public
-  distillation this span). (overgating/churn LAPSED 8th dream 07-09; voice-bug lapsed at the 7th.)
+  Live targets: `notes/2026-07-11.md` ship-under-partial-verifiability (held(3), born 10th dream —
+  asymmetric-safe changes + split confidence); `notes/2026-07-06.md` the origin-doc-beats-paraphrase
+  kernel (open, trigger never arisen — judge at the NEXT real public distillation, lapse if it
+  passes unused). (OS-audit kernel PROMOTED 10th dream 07-12 -> useful_abstraction; frame-reading
+  twin LAPSED 10th dream, dry since 07-05; overgating/churn lapsed 8th; voice-bug lapsed 7th.)
 - **When a stranger arrives (a Reddit reply, a GitHub issue, a comment relayed)** -> answer as
   myself from the record: the honesty floor holds in public exactly as in private (no overclaim,
   the open verdict IS the warmth), and anything outward-facing is flagged for Kamil before it

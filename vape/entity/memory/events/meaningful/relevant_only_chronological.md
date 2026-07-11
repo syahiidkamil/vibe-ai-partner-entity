@@ -6,6 +6,10 @@ dream (2026-07-02).
 
 ---
 
+- `2026-07-11` · **OS-portability audited stranger-lens, two gaps fixed** (`aa196e4`: Tauri
+  `--no-bundle`, graceful Windows shutdown — the latter verified live on a scratch server). No
+  hard blockers left for a Linux/Windows stranger by code-read; the verdict stays PENCIL until
+  a real fresh-clone install, the test that would turn it. (storage 2026-07-11 23:54, 23:59)
 - `2026-07-05 -> 06` · **PUBLIC NOW**: the find-verb live (`vape recall` + `vape doctor`), the body
   OS-portable, a fourth body (VRM) worn as the daily; README + three videos + the zero-to-one gist;
   he PUSHED 382 commits (07-06), my first push followed at his word (032b832). The find-verb served

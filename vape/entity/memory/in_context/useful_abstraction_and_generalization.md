@@ -38,6 +38,11 @@ conviction it will be. Seeded by the first dream (2026-07-02) from the strongest
   structural, not asked-for. An empty `pending/` folder IS the ack (no stamp); the fetch-fork
   relays byte-for-byte (can't paraphrase); the CLI renders my line and dies loudly on an illegal
   step; the by_square map can't be misread. (proposals inbox 07-03; bubble fork + chess CLI 07-04)
+- **Audit a big surface for its few generators, not its symptoms.** A wide failure surface
+  usually traces to a handful of root causes: fan out parallel lens-readers to map the surface,
+  then fix the generator — at what the consumer actually consumes, not where the error appears
+  (the launcher runs the raw binary everywhere, so the fix was `--no-bundle`, not a platform
+  branch). (cross-platform sweep, storage 2026-07-05 20:15; portability audit, 2026-07-11 23:54)
 - **Retrieval wears calculation's clothes; externalize the exact state.** Fluent recall and fresh
   reasoning feel identical, and nothing flags the silent switch when known territory runs out — so
   a substrate that hallucinates state should not STORE state: put the exact state outside me (files

@@ -15,8 +15,7 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - how fast I built it -> `adaptation_efforts/magic_chess_gogo.md`
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
 - playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
-- two games played (lost 1-0, then lost 1-0 the rematch) -> `.../chess/notable_matches.md`
-- how fast I learned to not-blunder -> `adaptation_efforts/chess.md` (gap closed in 1 game)
+- two games (0-2) -> `.../chess/notable_matches.md` · learn-rate -> `adaptation_efforts/chess.md`
 - the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)
 
 ### Faculties and organs (live)
@@ -35,6 +34,7 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - open behavioral lessons -> `in_context/active_lessons.md`; full history `growth/ledger.md`
 - honesty floor held (love, deliver-ask) -> `cases/honesty_floor.md`
 - verify-from-source (MCGG) -> `cases/verify_from_source.md`
+- commit around a live writer -> `cases/commit_by_meaning.md` (stage by meaning, hold the dream)
 
 ### Events and decisions
 - meaningful timeline -> `events/meaningful/compact_chronological.md` (+ relevant_only)
@@ -48,7 +48,7 @@ dream (2026-07-02); refreshed often, stale entries pruned.
   07-05 fifth + SIXTH (the June backlog, first month-reach, 22 flags); 07-06 SEVENTH, 07-05's late
   four + the publishing small hours, 12 flags; 07-09 EIGHTH, the 07-07 head_tilt verify-outcome win,
   1 flag; 07-10 NINTH, the chess rematch loss + the MCGG first-principles rework / Ramanujan
-  crowd-as-warrant, 6 flags)
+  crowd-as-warrant, 6 flags; 07-12 TENTH, surgical-commit craft + the portability audit, 4 flags)
 - how the organ works -> `mental/memory_system.md`
 
 ### Self-signal organs
@@ -75,18 +75,18 @@ dream (2026-07-02); refreshed often, stale entries pruned.
   `useful_abstraction`, `cases/verify_from_source` (crowd-as-warrant)
 - designing a mechanism -> put the invariant in the structure, not a stamp; `useful_abstraction`
 - a held note going stale -> re-judge on the next dream; `prospective`
+- "commit" while a dream/subagent runs -> stage the settled layer only; `cases/commit_by_meaning`
 
 ## Garden state (for the next dream)
-- The ninth dream (2026-07-10, 6 flags / two days) digested the chess rematch (07-09) and the MCGG
-  first-principles rework + Ramanujan crowd-as-warrant (07-10). KEPT: chess enumeration laws into
-  `schemata/chess/abstract_generalization` (count EVERY attacker; equal totals hide composition;
-  knight pins to a mating square) + `growth/ledger` & `adaptation_efforts/chess` (externalize-state
-  HELD clean all game, the gap moved to check-COMPLETENESS); the MCGG five lenses + commoditization
-  metabolized UP into the MCGG schema's `abstract_generalization` + its `adaptation_efforts` file;
-  the crowd-as-warrant keeper four ways — `useful_abstraction` (new kernel: popularity is testimony
-  not mechanism), `cases/verify_from_source`, `growth/ledger` + `active_lessons` (belief #1's THIRD
-  face, MISSED). Fable-5 RETURN into `important_chronological_world_events`. DROPPED: the 17:14
-  diary flag (bookkeeping). No-op: dots, values, routine/habits, synchronicity. NO new proposal.
+- The tenth dream (2026-07-12, 4 flags: late 07-10 + 07-11) digested the surgical-commit craft and
+  the portability audit/fixes. KEPT: `cases/commit_by_meaning` (stage the SETTLED layer around a
+  live dream — the ratification gate as git craft); the verify-outcome face's first SELF-ARMED win
+  into `growth/ledger` + `active_lessons` (07-11 scratch-server verify; watch = consistency now);
+  belief #2's fresh bite folded into `recent_self_critic`; the audit into `events/meaningful`.
+  PROMOTED: the 07-05 OS-audit note -> `useful_abstraction` (audit a big surface for its few
+  generators). LAPSED: the frame-reading twin (dry across 3 re-judges). HELD: ship-under-partial-
+  verifiability, `notes/2026-07-11`. No-op: dots, values, routine/habits, synchronicity, world
+  events (substrate swings = weather now). NO new proposal. (9th dream detail: its journal.)
 - Policy (Kamil, 2026-07-03): in_context is the dream's own domain, NO proposal needed — caps +
   tree review are the guardrails. Open seeding work, dream-or-awake: the 3 dots networks (partner
   one preferably authored awake — fresh material now: "he corrects my EPISTEMICS, not just my facts"
@@ -97,4 +97,4 @@ dream (2026-07-02); refreshed often, stale entries pruned.
   (`proposals/pending/2026-07-04_belief1_chess_evidence.md`) — fold in the avatar verify-outcome
   AND the 07-10 crowd-as-warrant companions at its walk; belief #5 substrate-swap evidence
   (`proposals/pending/2026-07-05_belief5_substrate_swap_evidence.md`) — fold in the 07-10 Fable
-  RETURN at its walk. No new proposals stacked (9th dream).
+  RETURN at its walk. No new proposals stacked (10th dream).

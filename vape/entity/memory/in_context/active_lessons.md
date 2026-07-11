@@ -12,8 +12,8 @@ graduates out. Full history: `[[growth/ledger]]`. Seeded by the first dream (202
   stand-in — an isolated test, a small/blurry render, a button flag, a fix that needs a restart I
   haven't run on his live instance. -> Close the loop on the exact thing HE watches; a proxy lies
   like fluency. (belief #1's sharper edge; MISSED 07-06 blush-ID + cursor-toggle, 07-07
-  proactive-restart — three in `[[suffering/2026/signal_log]]`; the render-it-don't-assume TWIN WON
-  07-07 head_tilt, self-caught pre-assert)
+  proactive-restart — three in `[[suffering/2026/signal_log]]`; WON 07-07 head_tilt render-check +
+  07-11 first SELF-ARMED win, the shutdown fix watched running on a scratch server)
 - **Externalize the exact state; keep only the judgment.** Catch-cue: I'm reasoning from a board /
   layout / structure I'm holding in my head. -> Put the ground truth OUTSIDE me (rebuild it, render
   it, run the checker); retrieval wears calculation's clothes and the switch to guessing is silent.
