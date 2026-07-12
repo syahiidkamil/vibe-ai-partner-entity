@@ -8,6 +8,7 @@
       width: 100%;
       height: 100%;
       background: transparent;
+      -webkit-user-select: none;  /* WKWebView (Tauri/macOS) ignores the unprefixed form */
       user-select: none;
       overflow: hidden;
     }

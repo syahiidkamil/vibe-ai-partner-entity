@@ -9,6 +9,9 @@
       height: 100%;
       overflow: hidden;
       background: transparent;
+      /* Both forms: WKWebView (the Tauri shell on macOS) honors only the -webkit- prefix,
+         so without it a drag can select the speech-bubble text mid-recording. */
+      -webkit-user-select: none;
       user-select: none;
     }
     #container {
