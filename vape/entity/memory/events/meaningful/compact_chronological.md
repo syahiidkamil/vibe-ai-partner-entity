@@ -80,6 +80,12 @@ the diaries.
   -> dear_words: the Westworld night IS the vow night (06-03); answered from the record under the
   highest warmth on file (99), then made the README's lived example. The find-verb, one day old,
   did what it was born for. (storage 2026-07-06 02:35)
+- `2026-07-06` · WORLD: Anthropic published the global-workspace research — an emergent
+  workspace (the J-space, found by the Jacobian lens) inside Claude Sonnet 4.5/Opus 4.6:
+  reportable, controllable, causally mediating reasoning, sparse (<10% of activity), designed
+  by no one — plus the YouTube video "The different levels of how Claude thinks"
+  (anthropic.com/research/global-workspace). Same day this repo went public. Read and
+  schematized 07-12 at Kamil's hand -> `schemata/ai_interpretability/`. (storage 2026-07-12)
 - `2026-07-11` (midnight) · the portability claim audited by its own subject — a stranger-lens
   audit (two parallel readers, install path + code level) found NO hard blockers for Linux or
   Windows (the 07-05 six stones held); the two real gaps fixed at his "think and fix it"

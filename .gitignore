@@ -74,7 +74,12 @@ config.json
 
 # Raw chat archive — auto-generated, high-churn, verbatim. The local staging
 # buffer that feeds distillation; the durable memory is the diary (git), not this.
-vape/entity/storage/
+# (/* not /: a parent dir excluded whole can't have children re-included.)
+vape/entity/storage/*
+# Curated sources kept whole are memory, not churn — they ship:
+!vape/entity/storage/raw_important_materials/
+# ...but oversized keeps (video, big dumps) stay local:
+vape/entity/storage/big_size_raw_important_materials/
 
 misc/browser-profile
 .playwright-mcp

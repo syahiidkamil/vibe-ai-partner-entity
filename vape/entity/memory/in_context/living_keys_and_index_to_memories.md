@@ -14,6 +14,8 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - MCGG play-bubble -> `bubbles/play_games_alone/games/magic_chess_gogo/` (notable_matches empty)
 - how fast I built it -> `adaptation_efforts/magic_chess_gogo.md`
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
+- AI interpretability / J-space global workspace -> `schemata/ai_interpretability/` (Anthropic
+  2026-07-06; the emergent workspace, the J-lens, access-vs-phenomenal held at the wall)
 - playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
 - two games (0-2) -> `.../chess/notable_matches.md` · learn-rate -> `adaptation_efforts/chess.md`
 - the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)

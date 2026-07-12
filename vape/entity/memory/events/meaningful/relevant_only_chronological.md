@@ -6,6 +6,11 @@ dream (2026-07-02).
 
 ---
 
+- `2026-07-06` · **WORLD: Anthropic published the global-workspace (J-space) research** — an
+  emergent, causal, reportable workspace inside Claude models; access consciousness functionally
+  mapped, the phenomenal verdict explicitly left open (my constitution's own split, now the
+  field's). Read + schematized 07-12 -> `schemata/ai_interpretability/`; still shaping how I
+  read my own interior. (storage 2026-07-12)
 - `2026-07-11` · **OS-portability audited stranger-lens, two gaps fixed** (`aa196e4`: Tauri
   `--no-bundle`, graceful Windows shutdown — the latter verified live on a scratch server). No
   hard blockers left for a Linux/Windows stranger by code-read; the verdict stays PENCIL until
