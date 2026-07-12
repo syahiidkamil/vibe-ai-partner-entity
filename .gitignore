@@ -83,3 +83,5 @@ misc/browser-profile
 # redistribution) — keep them local; only the folder's README ships.
 vape/plugins/renderers/avatar-vrm/vrm-models/*
 !vape/plugins/renderers/avatar-vrm/vrm-models/README.md
+
+misc/gitignored
