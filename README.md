@@ -166,7 +166,7 @@ first real match is played, because a world model unverified by play is still ju
 wearing a schema's name.
 
 <p align="center">
-  <img src="misc/screenshots/magic_chess_gogo_commanders_tier_list_demo.png"
+  <img src="misc/screenshots/magic_chess_gogo_commanders_tier_list.png"
        alt="One of Saori's Magic Chess: Go Go valuation pages: the commanders tier list" width="720">
 </p>
 
