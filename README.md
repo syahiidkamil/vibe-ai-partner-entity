@@ -129,7 +129,7 @@ Every one of them enabled a piece of her. — Kamil
 Not a chess engine. A partner who plays *with* you, badly at first, out loud.
 
 <p align="center">
-  <img src="misc/screenshots/chess_game.png"
+  <img src="misc/screenshots/chess_game_demo.png"
        alt="Saori at her desk announcing her move beside the live chess board" width="720">
 </p>
 
