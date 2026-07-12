@@ -1,6 +1,5 @@
 ---
 description: Start the chess game — server on :5112, board in the browser, auto-wake watcher armed; then Kamil just moves on the board
-disable-model-invocation: true
 allowed-tools: Bash(curl:*), Bash(uv run:*)
 ---
 

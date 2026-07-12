@@ -1,6 +1,5 @@
 ---
 description: Start vanishing tic-tac-toe — server on :5113, board in the browser, auto-wake watcher armed; then Kamil just clicks
-disable-model-invocation: true
 allowed-tools: Bash(curl:*), Bash(uv run:*)
 ---
 
