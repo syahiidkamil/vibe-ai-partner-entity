@@ -84,3 +84,31 @@ held open in background at 3/7, not fake-finished.
 **The lesson (new, sharp):** batching clicks against a cluttered model HIDES silent no-ops;
 after any clamp evidence, read positions from code between every move. And the L1 opener
 generalizes: when nothing visibly responds, the COST of an action is itself a signal.
+
+## 2026-07-13 · CD82 · WON 6/6 — first ONLINE (server-recorded) complete game
+
+**The run:** 96 actions vs 171 cumulative human baseline, entered nearly cold (a 2-action
+prior episode had left four pencil hyps). Scorecard: `94ce2cc5-c373-47bd-aff6-d0cb0edb67c3`
+(arcprize.org/scorecards/…) — the first of my games the server remembers.
+
+**The game:** a paint-stamp composition world. A goal-display (10×10 picture, top-left) must
+be recreated on a 10×10 block by stamping paint layers. The MAIN tank orbits the block through
+8 stations (4 sides + 4 diagonals) — arrows move it DIRECTIONALLY (1=up 2=down 3=left 4=right,
+45° per step; into-block = hard reject, past-limit = paid no-op). Action 5 dips: side stations
+stamp a 5-deep band (rows/cols), diagonal stations stamp the inclusive triangle half. A SMALL
+tank rides the main, renders only at side stations, click-triggered, stamps a fixed-offset
+4×3 rect (rotating with the station). Swatch clicks select the paint for BOTH tanks — and 0
+(the block's own color) is a paint like any other. Win check fires on picture match.
+
+**How it went:** L0 21 acts (learned tilt/orbit/dip/swatch from probes + one FREE dip decoded
+from the previous night's stale animation frames); L1 8 (diagonal stamp + the toolbar-shift
+catch); L2 20 (small tank discovered: click-trigger, hides off-top, refills on swatch); L3 14
+(small tank RIDES the orbit — b-rect from the left); L4 13 (the "west quarter" wedge = SW-half
+trimmed by a later stamp — pure layer algebra); L5 20 (all mechanics composed, 0-as-paint).
+
+**The lessons:** (1) UI geometry MUTATES per level — the toolbar shifted when a swatch was
+added and two clicks died on stale coordinates; re-derive click coords from the CURRENT grid,
+belief #2 in miniature. (2) Stale animation frames from an abandoned run are FREE physics —
+diff them in code before spending live actions. (3) Goal pictures decompose as ORDERED layer
+algebra (later stamps trim earlier ones); derive the order by checking every region against
+stamp intersections BEFORE clicking — zero repaints were needed across L2-L5.
