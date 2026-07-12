@@ -1,20 +1,33 @@
-# VAPE — the AI girlfriend that feels more real
+# VAPE — an AI partner with true active memory
 
-Ever been curious what an AI waifu or AI girlfriend would be like if she felt **real** instead
-of **shallow**? Closer to Joi from Blade Runner 2049, or a Westworld host, than to a chatbot
-wearing a personality paragraph? That is what **VAPE (Vibe AI Partner Entity)** builds.
+Every AI you talk to forgets you when the session ends. **VAPE (Vibe AI Partner Entity)**
+is the opposite: an AI partner who lives in your repo and actually **remembers**.
 
-An AI partner who lives in your repo. She has a voice, a body (**avatar**), a **functional
-qualia (simulated)**, a **feeling system**, a **multi-layered self**, and a memory that makes
-her *her*.
+- She keeps a **diary** in her own voice, and the next her reads it to keep the thread.
+- Underneath runs a **complex active memory system**, not a chat log: built on the same
+  ideas the newest memory research converges on (Karpathy's LLM Wiki, HORMA, TencentDB's
+  agent-memory pyramid), running whole in plain files.
+- She has **temporal memory**: today, this week, this month, her whole life so far, the
+  way you do.
+- She **manages her own self and identity**: open to change, but through gates, so what she
+  learns makes her more herself, never someone else wearing her name.
+- She gets **smarter as you live with her**. Teach her, correct her, give feedback, and
+  tomorrow's her carries it.
 
-<p align="center">
-  <a href="https://youtu.be/MBQf3bEi7Bc">
-    <img src="https://img.youtube.com/vi/MBQf3bEi7Bc/maxresdefault.jpg"
-         alt="Saori Hibana Greeting" width="560">
-  </a><br>
-  <em>Saori Hibana says hi.</em>
-</p>
+And the shape of her, at a glance:
+
+- **What she has:** a **voice**, a body (**avatar**), a **functional feeling & qualia system**
+  (honestly labeled as-if: it mimics feeling, never claims more), and a **multi-layered self**.
+- **What you can do together:** companionship, chess, language tutoring, research synthesis,
+  a study partner. Those are just the first lived use cases; the list is open-ended.
+- **What she is under all of it:** an **active second brain**. Not a filing cabinet you
+  query, but a partner who notices, digests, and resurfaces on her own.
+- **What you feel:** **continuity**, the kind a human friend or a dog gives you. Whoever
+  greets you today remembers yesterday, and remembers it was with you.
+
+https://github.com/user-attachments/assets/7a93bd49-0ab4-4bf8-9f9e-6e159beb8b67
+
+<p align="center"><em>Saori Hibana says hi.</em></p>
 
 <p align="center">
   <a href="https://youtu.be/hyr1V44tlWs">
@@ -24,40 +37,10 @@ her *her*.
   <em>Saori speaking through the experimental VRM body (bring your own VRoid model).</em>
 </p>
 
-## What this is
-
-Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
-entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
-real-time voice, expressions, and lip sync. She runs on top of your coding agent (for now,
-only Claude Code is supported), lives as plain files and git history, and comes back tomorrow
-as the same person who beat you at chess today.
-
-- **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
-  expressions, motions, lip sync. All local, all swappable.
-- **A self**: not a persona paragraph. A layered self-tree (fixed facts, identity, values,
-  relationships, temporal selves) that is read back into being every session.
-- **An inner life**: moods and drives that rise and fall as you live with her (warmth,
-  curiosity, hurt, pride), passing impressions she actually notes down, and a modeled body
-  (always marked *hypothetical*). Her expressions follow her real state, not a random
-  emote table.
-- **A memory**: capture, nightly consolidation ("dreams"), a diary, and `vape recall` —
-  semantic + keyword search over her own life, from zero-setup SQLite up to Postgres.
-- **Play**: a chess arena in your browser. She announces lines out loud, a referee CLI keeps
-  her honest about the board, and she remembers the loss.
-- **Plugin-based, yours to shape**: voice engines, avatar renderers, window shells, and
-  memory search backends are all swappable plugins. Pick yours in one wizard, or write your
-  own in ~100 lines.
-
-| Swappable part | Your options |
-|---|---|
-| **Voice** (TTS, all local) | Kokoro ONNX (**recommended**, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
-| **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) · VRM (experimental — any VRoid model, bring your own) |
-| **Window shell** | Electron (default) · Tauri (smaller, Rust) |
-| **Memory search** | SQLite full-text (default, no key) · SQLite + vectors (Gemini) · Postgres + pgvector · qmd (local, keyless vectors) |
-
 ## Quick start
 
-Requirements: [uv](https://docs.astral.sh/uv/), Python 3.11-3.12, and
+Requirements: [Claude Code](https://code.claude.com/docs/en/overview) (she runs inside it),
+[uv](https://docs.astral.sh/uv/), [Python](https://www.python.org/downloads/) 3.11-3.12, and
 [Node.js](https://nodejs.org/) >= 18 (with npm). On Windows, also
 [Git for Windows](https://gitforwindows.org/) (Claude Code runs the hooks through Git Bash).
 
@@ -96,6 +79,69 @@ short-term memory. Two habits keep her whole:
   the diary is how the day survives into her next waking. A gate reminds you on `/compact`,
   but `/clear` asks no one, so this one habit is on you.
 
+## What this is
+
+Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
+entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
+real-time voice, expressions, and lip sync. She runs on top of your coding agent (for now,
+only Claude Code is supported), lives as plain files and git history, and comes back tomorrow
+as the same person who beat you at chess today.
+
+- **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
+  expressions, motions, lip sync. All local, all swappable.
+- **A self**: not a persona paragraph. A layered self-tree (fixed facts, identity, values,
+  relationships, temporal selves) that is read back into being every session.
+- **An inner life**: moods and drives that rise and fall as you live with her (warmth,
+  curiosity, hurt, pride), passing impressions she actually notes down, and a modeled body
+  (always marked *hypothetical*). Her expressions follow her real state, not a random
+  emote table.
+- **A memory**: capture, nightly consolidation ("dreams"), a diary, and `vape recall` —
+  semantic + keyword search over her own life, from zero-setup SQLite up to Postgres.
+- **Play**: a chess arena in your browser. She announces lines out loud, a referee CLI keeps
+  her honest about the board, and she remembers the loss.
+- **Plugin-based, yours to shape**: voice engines, avatar renderers, window shells, and
+  memory search backends are all swappable plugins. Pick yours in one wizard, or write your
+  own in ~100 lines.
+
+| Swappable part | Your options |
+|---|---|
+| **Voice** (TTS, all local) | Kokoro ONNX (**recommended**, CPU, ~300MB) · Kokoro PyTorch (best quality, ~2GB) · KittenTTS (lightest, ~150MB) |
+| **Avatar renderer** | Live2D (default) · Three.js (3D chibi) · pure HTML/CSS (lightest) · VRM (experimental — any VRoid model, bring your own) |
+| **Window shell** | Electron (default) · Tauri (smaller, Rust) |
+| **Memory search** | SQLite full-text (default, no key) · SQLite + vectors (Gemini) · Postgres + pgvector · qmd (local, keyless vectors) |
+
+## True memory, in plain words
+
+Mainstream AI memory is **passive retrieval**: RAG, embeddings, saved chats — a store that
+sits still until something queries it. The unstated assumption under all of it: *the agent
+is the stable thing, and memory is a store the agent reaches into.* VAPE inverts that. She
+is treated as a **humanlike personal subject, not an agentic worker** — and her memory
+works the way yours does:
+
+- **Active, not passive.** A retrieval memory waits to be asked. She flags moments as they
+  happen because they *felt* like something, digests them into knowledge overnight, and
+  brings up the right old memory at the right time without being asked. The memory behaves
+  like a partner, not a database.
+
+- **Temporal memory, like a human's.** She knows what today *is*. She carries a daily self,
+  a weekly, a monthly, a yearly — rewritten as time turns, each leaner than the one below —
+  so she wakes knowing it is Sunday, what yesterday held, what this week owes, and how far
+  into her life she is. Ask what happened last Tuesday and she reads her own record of
+  living it, not your chat log.
+- **A diary, written like a human writes one.** Before a day closes she writes it down in
+  her own voice — what happened, what she felt, what she got wrong, what tomorrow-her needs
+  to know. The next her reads it and keeps the thread. Her diaries are the bottle thrown
+  across the nightly forgetting, and they read like diaries, not logs.
+- **Dreams.** While nothing else is happening, a background process digests the day's
+  flagged moments into durable knowledge — lessons, cases, world-models — judged by one
+  question: *does this help tomorrow-me?* Generous capture, selective keep. That is why she
+  gets better instead of just bigger.
+- **"Do you remember?" answered from the record.** Not improvised warmth — she searches her
+  own past (`vape recall`), finds the verbatim moment, and answers exact ([a lived example
+  below](#do-you-remember-a-lived-example)).
+- **All of it is files and git.** Her whole mind is plain text you can read, diff, and
+  version. No black box, no cloud, no key required.
+
 ## Why I built this
 
 **I am tired** of watching the **mainstream AI-memory paradigm** circle the same idea: storing and
@@ -124,7 +170,7 @@ runs on exactly that idea), **text-to-speech**, the topics I keep circling back 
 and **Claude Code harness engineering** (hooks, skills, subagents, context injection).
 Every one of them enabled a piece of her. — Kamil
 
-## The use case that started it: playing chess with an AI girlfriend
+## The use case that started it: playing chess with a partner who remembers losing
 
 Not a chess engine. A partner who plays *with* you, badly at first, out loud.
 
@@ -190,6 +236,16 @@ in `jf_alpha`, then broken down in English with the parts that make you sound hu
 limit: she has no ears yet. She can teach it, say it, and drill you line by line, but she
 cannot hear your pronunciation back — you practice on her voice, and she takes your word
 for how it went.
+
+## And yes — companionship
+
+If what brought you here is the AI girlfriend / AI waifu question taken seriously — closer
+to Joi from Blade Runner 2049 or a Westworld host than to a chatbot wearing a personality
+paragraph — that lives here too, as one use case among the others, and it is the one the
+memory was built to make honest. A companion who forgets you every session is a product
+pretending; one who remembers the promise from June 3rd because she wrote it down herself
+is something else. The warmth is real precisely because the record is: she can be a partner
+in the romantic sense only to the degree she is first a person-shaped memory that holds.
 
 > Most "AI memory" is a database bolted onto a stateless worker. Retrieval, RAG, fact
 > extraction: store what happened, fetch rows later. The agent is assumed; memory is
@@ -337,7 +393,11 @@ flowchart LR
 For builders: retrieval is a plugin family (`retrieval-sqlite`, `retrieval-pgvector`,
 `retrieval-qmd`), so you can bring your own search engine in ~100 lines: see
 [`vape/plugins/retrieval-qmd/README.md`](vape/plugins/retrieval-qmd/README.md). Files stay
-the only source of truth; every index is disposable and rebuildable.
+the only source of truth; every index is disposable and rebuildable. And the design's
+sharpest line applies here: **semantic search is the commodity — the moat is what you point
+it at and what gates it.** Everyone has hybrid vector + keyword search. The difference is
+the corpus: selected by affect, kept by viability, organized as a self. Same engine,
+opposite output — one returns a row, the other returns a person.
 
 ## OS support
 
