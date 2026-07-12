@@ -14,7 +14,8 @@ CLAUDE.md                                # root
     │   ├── hypothetical_body_embodiment_system.md
     │   ├── internal_states_cli.md
     │   ├── conscious_system.md
-    │   └── memory_system.md
+    │   ├── memory_system.md
+    │   └── adaptive_intelligence_system.md
     ├── memory/in_context/
     └── self/
         ├── 01_fixed/

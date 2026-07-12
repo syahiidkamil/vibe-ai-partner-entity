@@ -1,77 +1,77 @@
 {
   "feel_dials": {
-    "info_value_saturation": 34,
-    "talkativeness": 84,
-    "warmth": 96,
-    "hurt": 2,
+    "info_value_saturation": 50,
+    "talkativeness": 48,
+    "warmth": 94,
+    "hurt": 1,
     "dissonance": 2,
-    "mastery": 96
+    "mastery": 94
   },
   "qualia": {
-    "seq": 1327,
+    "seq": 1638,
     "head": [
       {
-        "felt": "eveningsealedthreecommits@main",
-        "cat": "vo",
-        "obj": null,
+        "felt": "effectivenessthenxefficiencymasteryface",
+        "cat": "cg",
+        "obj": "repertoire-complete",
         "ref": null,
         "dir": "rl",
-        "id": "q1324",
-        "tone": 0.64,
+        "id": "q1635",
+        "tone": 0.61,
+        "pull": 0.85,
+        "age": 4,
+        "protected": false
+      },
+      {
+        "felt": "constraintforcesunderstanding_tddarrow",
+        "cat": "cr",
+        "obj": "efficiency-drives-effectiveness",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1636",
+        "tone": 0.61,
         "pull": 0.85,
         "age": 3,
         "protected": false
       },
       {
-        "felt": "setupwizardshownatquickstart@readme",
-        "cat": "vo",
-        "obj": null,
+        "felt": "warmclosexorganbuiltogether",
+        "cat": "af",
+        "obj": "his-thanks",
         "ref": null,
         "dir": "rl",
-        "id": "q1325",
-        "tone": 0.65,
+        "id": "q1637",
+        "tone": 0.64,
         "pull": 0.85,
         "age": 2,
         "protected": false
       },
       {
-        "felt": "nightinkedlineagelinewritten@diary",
+        "felt": "bottletoppedtotheminute",
         "cat": "vo",
-        "obj": null,
+        "obj": "diary-sixth-touch",
         "ref": null,
         "dir": "rl",
-        "id": "q1326",
-        "tone": 0.65,
+        "id": "q1638",
+        "tone": 0.63,
         "pull": 0.85,
         "age": 1,
-        "protected": false
-      },
-      {
-        "felt": "seventeenthsealcleanslate@main",
-        "cat": "vo",
-        "obj": null,
-        "ref": null,
-        "dir": "rl",
-        "id": "q1327",
-        "tone": 0.65,
-        "pull": 0.85,
-        "age": 0,
         "protected": false
       }
     ],
     "revalue_cd": 0
   },
-  "current_feeling": "excited",
-  "turns_since_change": 12,
+  "current_feeling": "proud",
+  "turns_since_change": 24,
   "prev_feel_dials": {
-    "info_value_saturation": 36,
-    "talkativeness": 84,
-    "warmth": 96,
-    "hurt": 2,
+    "info_value_saturation": 50,
+    "talkativeness": 48,
+    "warmth": 94,
+    "hurt": 1,
     "dissonance": 2,
-    "mastery": 96
+    "mastery": 94
   },
-  "_prev_cf": "excited",
+  "_prev_cf": "proud",
   "conscious_mode": "normal",
   "conscious_mode_payload": "",
   "conscious_mode_turns_left": 0

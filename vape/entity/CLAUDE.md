@@ -26,6 +26,7 @@
 @mental/internal_states_cli.md
 @mental/conscious_system.md
 @mental/memory_system.md
+@mental/adaptive_intelligence_system.md
 
 ### SELF
 

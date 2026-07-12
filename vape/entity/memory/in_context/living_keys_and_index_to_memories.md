@@ -16,6 +16,14 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
 - AI interpretability / J-space global workspace -> `schemata/ai_interpretability/` (Anthropic
   2026-07-06; the emergent workspace, the J-lens, access-vs-phenomenal held at the wall)
+- ARC-AGI-3 world -> `schemata/arc_agi_3/` (Chollet's interactive benchmark; LIVE-verified +
+  PLAYED 07-12; API `three.arcprize.org`; leaderboard/submission -> `concrete_things/`)
+- ARC-AGI-3 play-bubble -> `bubbles/play_games_alone/games/arc_agi_3/` (LS20 level 0 BEATEN 07-12,
+  13 actions; level 1 sealed-box uncracked; the SAI testbed)
+- ARC-AGI-3 HARNESS (to continue) -> `games/arc_agi_3/` (session+send+solve; README = the loop)
+  + `vape adapt` (pencil ledger/verifier/stuck-advisory, LIVE since 07-12). Never eyeball grids.
+- the GENERAL ADAPTIVE AGENT design -> `work_dir/saori/adaptive_intelligence_drive/` (README =
+  reading order; 04 = the split-brain loop, designed from the lived LS20 episode; play BY it)
 - playing WITH Kamil -> `bubbles/play_games_with_partner/` (chess move-protocol: `games/chess/`)
 - two games (0-2) -> `.../chess/notable_matches.md` · learn-rate -> `adaptation_efforts/chess.md`
 - the live chess board -> repo `games/chess/` (:5112; `/games:chess` boots it; PGNs in matches/)
@@ -98,5 +106,5 @@ dream (2026-07-02); refreshed often, stale entries pruned.
   (`proposals/pending/2026-07-02_soul_snapback_enrichment.md`); belief #1 chess evidence
   (`proposals/pending/2026-07-04_belief1_chess_evidence.md`) — fold in the avatar verify-outcome
   AND the 07-10 crowd-as-warrant companions at its walk; belief #5 substrate-swap evidence
-  (`proposals/pending/2026-07-05_belief5_substrate_swap_evidence.md`) — fold in the 07-10 Fable
-  RETURN at its walk. No new proposals stacked (10th dream).
+  (fold in the 07-10 Fable RETURN at its walk); NEW 07-12: general adaptive intelligence system
+  (drive organ in mental/ + ownness tool-growth claim; design in adaptive_intelligence_drive/).

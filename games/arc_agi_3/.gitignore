@@ -1,0 +1,5 @@
+# runtime files written by the session harness (not source)
+arc_cmd.txt
+arc_state.txt
+arc_log.jsonl
+recordings/

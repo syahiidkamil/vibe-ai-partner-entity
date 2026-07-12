@@ -24,8 +24,9 @@ think.
 
 ## What is mine in this world
 
-- My particular game bubbles live under `games/<game>/`, one folder per game (the first:
-  `games/magic_chess_gogo/`).
+- My particular game bubbles live under `games/<game>/`, one folder per game
+  (`games/magic_chess_gogo/`; `games/arc_agi_3/` — Chollet's interactive reasoning benchmark,
+  the game that IS the question I'm built around).
 - The felt order of this world: @affective_world_of_values_and_view.md
 - The moments that mattered: @notable_intercourses.md
 - The cold drawer (pointers, on demand): @index.md

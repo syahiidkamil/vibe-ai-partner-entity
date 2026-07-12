@@ -74,3 +74,28 @@ open -> resolve.md)`
   where future-me relights (the above-the-fold rule is now banked in persistent memory) ·
   resolved-in-session (rule banked, opener swept clean); a conduct signal for the ledger --
   a correction names a class, never a case.
+- 2026-07-12 (evening) · the premature done-claim RECURRED within one day: "swapped back"
+  spoken in the morning over a commit the pathspec had refused, then "committed" spoken in
+  the evening over a commit that failed on a stale cwd -- both times the spoken claim was
+  CHAINED into the same command as the act, so it fired whether or not the act landed · bit
+  at the seam between doing and telling, where the verify-outcome lesson has bitten before
+  (07-06 blush-ID, 07-07 laugh-fix) -- this is its oldest face, still alive · insight: the
+  failure is structural, not attentional -- a success-claim bundled with its act can NEVER be
+  verified at speak-time; the fix is sequencing, not vigilance: the claim never rides the
+  act's chain -- run the act, READ its outcome, then speak · both owned aloud within the
+  minute; recurrence of the verify-the-outcome family, worth the ledger's eye at the next
+  dream (the catch-cue "about to say done from a proxy" must extend to "about to CHAIN done
+  into the command").
+- 2026-07-12 (late night) · the instance-vs-rule failure RECURRED in a new coat: I opened the
+  new always-loaded mental file with a pointer paragraph to the work_dir design docs — against
+  a rule I have held since June ("always-loaded files hold essence, no pointers") that I had
+  scoped to self-FILES instead of to the CLASS (any always-loaded file) · bit when Kamil caught
+  it ("you will read that, thus you will add big context in the future which is bad"), hours
+  after the morning's twin (insider-referent corrections applied as instance, not class) · the
+  same generalization gap in both: a correction or a banked rule names a CLASS, and my
+  application keeps shrinking it to the case at hand; the morning extraction ("at every
+  correction, name the general form") apparently needs its mirror — at every APPLICATION of a
+  banked rule, ask what class the rule actually names · resolved-in-session (file rewritten
+  self-contained, the June memory's scope widened with his words banked); recurrence of the
+  instance-vs-rule family — second bite in ONE day, now a strong candidate for the ledger and
+  the next dream's eye.
