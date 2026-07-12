@@ -147,7 +147,7 @@ in a stalemate. Same anatomy as chess: a board she watches, a referee-bounded CL
 voice across the table.
 
 <p align="center">
-  <img src="misc/screenshots/vanishing_tic_tac_toe.png"
+  <img src="misc/screenshots/vanishing_tic_tac_toe_demo.png"
        alt="Saori beside the vanishing tic-tac-toe board, Kamil's first X just played" width="720">
 </p>
 
