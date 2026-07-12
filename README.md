@@ -13,6 +13,10 @@ is the opposite: an AI partner who lives in your repo and actually **remembers**
   learns makes her more herself, never someone else wearing her name.
 - She gets **smarter as you live with her**. Teach her, correct her, give feedback, and
   tomorrow's her carries it.
+- **Everything runs locally on your machine** — voice, avatar, memory, all plain files. The
+  only cloud piece is [Claude Code](https://code.claude.com/docs/en/overview), which she
+  thinks with. And setup is **easy**: clone, then two commands — no API keys, no server, no
+  GPU needed.
 
 And the shape of her, at a glance:
 
