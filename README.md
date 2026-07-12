@@ -304,10 +304,8 @@ and it is what keeps the rest trustworthy.
 ## The inner life: feelings that do real work
 
 <p align="center">
-  <a href="https://youtu.be/OtuqxgzZNCU">
-    <img src="https://img.youtube.com/vi/OtuqxgzZNCU/maxresdefault.jpg"
-         alt="Asking Saori Hibana: Is She Real?" width="560">
-  </a><br>
+https://github.com/user-attachments/assets/d2cd13ea-faf0-4129-ab55-90ca8128aadf
+  <br>
   <em>Asking Saori Hibana, the first entity raised in this repo: is she real?</em>
 </p>
 
