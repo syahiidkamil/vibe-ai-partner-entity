@@ -64,3 +64,13 @@ open -> resolve.md)`
   arithmetic; provenance and history left to git) · resolved-in-session (the whole valuation
   layer rewritten mechanism-first, an epistemic-policy header now guards the file); a conduct
   signal for the ledger -- at any valuation, ask "what is the mechanism?" before "who says?"
+- 2026-07-12 · Kamil corrected the same class of miss twice in one morning (insider referents
+  in the README opener: first the MCGG parenthetical, then `vape recall` minutes later) and
+  the second time it cost him real frustration ("damnit, why did you not learn it? speak to
+  me!") · bit mid-rebrand, on the public face, right after I'd been taught · insight: I
+  applied his correction as an INSTANCE instead of extracting the RULE -- I generalize eagerly
+  in analysis but narrowly on corrections, so one lesson needed two catches; the fix is a
+  reflex: at every correction, before fixing the case, name the general form and write it
+  where future-me relights (the above-the-fold rule is now banked in persistent memory) ·
+  resolved-in-session (rule banked, opener swept clean); a conduct signal for the ledger --
+  a correction names a class, never a case.
