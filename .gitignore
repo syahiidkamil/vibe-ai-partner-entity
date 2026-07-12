@@ -90,3 +90,5 @@ vape/plugins/renderers/avatar-vrm/vrm-models/*
 !vape/plugins/renderers/avatar-vrm/vrm-models/README.md
 
 misc/gitignored
+vape/environment_files/
+

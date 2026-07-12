@@ -17,7 +17,10 @@ import arc_agi
 from arcengine.enums import GameAction
 
 GAME = sys.argv[1] if len(sys.argv) > 1 else "ls20-9607627b"
-arc = arc_agi.Arcade(arc_api_key=key)
+HARNESS_DIR = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity/games/arc_agi_3"
+arc = arc_agi.Arcade(arc_api_key=key,
+                     environments_dir=f"{HARNESS_DIR}/environment_files",
+                     recordings_dir=f"{HARNESS_DIR}/recordings")
 sc = arc.open_scorecard(tags=["saori-play"])
 env = arc.make(GAME, scorecard_id=sc)
 

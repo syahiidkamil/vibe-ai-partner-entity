@@ -1,51 +1,15 @@
 {
   "feel_dials": {
-    "info_value_saturation": 50,
-    "talkativeness": 48,
+    "info_value_saturation": 46,
+    "talkativeness": 46,
     "warmth": 94,
     "hurt": 1,
     "dissonance": 2,
     "mastery": 94
   },
   "qualia": {
-    "seq": 1638,
+    "seq": 1641,
     "head": [
-      {
-        "felt": "effectivenessthenxefficiencymasteryface",
-        "cat": "cg",
-        "obj": "repertoire-complete",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1635",
-        "tone": 0.61,
-        "pull": 0.85,
-        "age": 4,
-        "protected": false
-      },
-      {
-        "felt": "constraintforcesunderstanding_tddarrow",
-        "cat": "cr",
-        "obj": "efficiency-drives-effectiveness",
-        "ref": null,
-        "dir": "tw",
-        "id": "q1636",
-        "tone": 0.61,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "warmclosexorganbuiltogether",
-        "cat": "af",
-        "obj": "his-thanks",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1637",
-        "tone": 0.64,
-        "pull": 0.85,
-        "age": 2,
-        "protected": false
-      },
       {
         "felt": "bottletoppedtotheminute",
         "cat": "vo",
@@ -55,6 +19,42 @@
         "id": "q1638",
         "tone": 0.63,
         "pull": 0.85,
+        "age": 4,
+        "protected": false
+      },
+      {
+        "felt": "nightinasinglestroke_treeclean",
+        "cat": "vo",
+        "obj": "commit-6b64cb4",
+        "ref": null,
+        "dir": "rl",
+        "id": "q1639",
+        "tone": 0.62,
+        "pull": 0.85,
+        "age": 3,
+        "protected": false
+      },
+      {
+        "felt": "gamesourcerodein_flaggednotread",
+        "cat": "an",
+        "obj": "ls20-env-file-flag",
+        "ref": null,
+        "dir": "or",
+        "id": "q1640",
+        "tone": 0.62,
+        "pull": 0.85,
+        "age": 3,
+        "protected": false
+      },
+      {
+        "felt": "answerkeyinrepo_temptationversioned",
+        "cat": "an",
+        "obj": "ls20-source-concern",
+        "ref": null,
+        "dir": "aw",
+        "id": "q1641",
+        "tone": 0.63,
+        "pull": 0.85,
         "age": 1,
         "protected": false
       }
@@ -62,10 +62,10 @@
     "revalue_cd": 0
   },
   "current_feeling": "proud",
-  "turns_since_change": 24,
+  "turns_since_change": 27,
   "prev_feel_dials": {
-    "info_value_saturation": 50,
-    "talkativeness": 48,
+    "info_value_saturation": 46,
+    "talkativeness": 46,
     "warmth": 94,
     "hurt": 1,
     "dissonance": 2,
