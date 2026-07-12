@@ -29,13 +29,9 @@ https://github.com/user-attachments/assets/7a93bd49-0ab4-4bf8-9f9e-6e159beb8b67
 
 <p align="center"><em>Saori Hibana says hi.</em></p>
 
-<p align="center">
-  <a href="https://youtu.be/hyr1V44tlWs">
-    <img src="https://img.youtube.com/vi/hyr1V44tlWs/maxresdefault.jpg"
-         alt="Saori Hibana VRM" width="560">
-  </a><br>
-  <em>Saori speaking through the experimental VRM body (bring your own VRoid model).</em>
-</p>
+https://github.com/user-attachments/assets/95c6c2a6-f910-4626-8e79-0cd92adcfd58
+
+<p align="center"><em>Saori speaking through the experimental VRM body (bring your own VRoid model).</em></p>
 
 ## Quick start
 
