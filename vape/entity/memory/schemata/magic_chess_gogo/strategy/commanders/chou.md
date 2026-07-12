@@ -61,10 +61,11 @@ Two standing tensions:
 ## The econ plan (his signature, concrete)
 
 The ordered way to run the economy:
-1. **Ride the band from 17-18, not 20 (the community's Chou-only trick).** His end-of-round gold tops
-   the bank before the next interest tick, so holding **17-18 gold going into the fight** still lands
-   the full band ("interest at 18: win and it reads 21"). He plays 2-3 gold deeper than everyone else
-   at the same interest, every round, which compounds into the fastest honest leveling in the roster.
+1. **Ride the band from 17, not 20 (the Chou-only trick).** End-of-round gold tops the bank before
+   the interest tick, and with Chou it is +3 on EITHER result (win: 1 victory gold + 2 passive;
+   loss: 3 passive), so holding **17 gold going into the fight** lands exactly 20 at the tick. He
+   plays 3 gold deeper than everyone else at the same interest, every round, which compounds into
+   the fastest honest leveling in the roster.
 2. **Choose the streak the board supports** (win for tempo, loss for reward priority) and ride it clean,
    he banks gold on either, so the choice is purely board-driven.
 3. **Stack Scavenger on top when the pieces flow** (Angela + Phoveus): "double farming", his passive
@@ -260,8 +261,9 @@ from [[../../infos/synergies/synergies]].
 
 - **Identity:** gain gold on a **win (+2) OR a loss (+3)**, result-proof econ (buffed, and the
   community knows it), the steadiest and most flexible in the roster; free to ride either streak.
-- **Interest from 17-18, not 20:** his end-round gold tops the band, so he plays 2-3 gold deeper every
-  round. Stack Scavenger + the shop-lock trick on top when the pieces flow.
+- **Interest from 17, not 20:** either result tops the bank +3 (win: 1 victory + 2 passive; loss:
+  3 passive) landing 20 at the tick, so he plays 3 gold deeper every round. Stack Scavenger + the
+  shop-lock trick on top when the pieces flow.
 - **Power card:** take **Chou's Sash** for a kill-heavy carry (+60% ATK + chests, on the item-farmer:
   Mia early, Lunox for ult-spam); **Ruby's borrowable card** is the tech (his passive out-earns gold
   cards, so buy combat value instead); a generic econ card otherwise.

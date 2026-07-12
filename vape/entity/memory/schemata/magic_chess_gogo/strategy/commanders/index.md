@@ -128,7 +128,8 @@ adopted from the crowd (the policy lives in [[../../valuation/commander_tier_lis
   off the bonus gold, commit a carry, spike mid. **Power card:** his (+2 gold/round at L5) is *weak*;
   his kit already handles gold, so prefer a **synergy spike or a big econ generic** (Trust Fund). Deviate.
 - **Chou** (+2 gold on win, +3 on loss: streak-agnostic econ, every round pays). Play: ride the
-  interest band from 17-18 gold (his end-round gold tops it), stack Scavenger, spike a
+  interest band from 17 gold (+3 either way — win adds 1 victory + 2 passive — lands 20 at the
+  tick), stack Scavenger, spike a
   Dauntless-Marksman or Kishin-Lunox board. **Power card:** Chou's Sash on a kill-heavy item-farmer
   (Mia/Lunox); the tech is **borrowing Ruby's card** (his passive out-earns flat gold cards, so buy
   combat value). Situational.

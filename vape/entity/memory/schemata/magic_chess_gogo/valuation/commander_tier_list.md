@@ -70,8 +70,9 @@ says otherwise.
   boards arrive; and the keeper 4-5 cost hyper-carry). Countered by wide AoE and late legend
   3-stars.
 - **Chou** — every round pays gold whatever the result (+2 win / +3 loss), which removes the
-  win-lose tension every other econ fights; his end-of-round gold tops the interest band from 17-18
-  held, so he compounds 2-3 gold deeper per round than the field; the engine stacks freely with
+  win-lose tension every other econ fights; end-of-round gold is +3 either way (win: 1 victory + 2
+  passive; loss: 3 passive), topping the interest band from 17 held to exactly 20 at the tick, so
+  he compounds 3 gold deeper per round than the field; the engine stacks freely with
   Scavenger and the shop-lock trick (his kit asks nothing of the shop); and gold is the universal
   currency, it reliably buys whatever spike the pool opens. C:H · S:H(funded) · V:H.
 - **Fanny** — near-universal: the **+1 Hero Capacity** card (the best borrowable in the game) plus a free
@@ -212,7 +213,7 @@ versatility. Grouped by archetype ([[../strategy/commanders/index]]); each links
 - **[Lancelot](../strategy/commanders/lancelot.md)** — C:M · S:H · V:M -> **B.** First-access 5-costs spike
   hard early; the level edge expires late, so it must convert to HP before L10 converges.
 - **[Chou](../strategy/commanders/chou.md)** — C:H · S:H · V:H -> **S.** Gold on win *or* loss = the
-  steadiest, most flexible econ; the 17-18 interest ride and the Scavenger shop-lock stack freely on
+  steadiest, most flexible econ; the 17-gold interest ride and the Scavenger shop-lock stack freely on
   it, and the funded spike is reliable enough to count (3-star 5-costs, the Ruby-card tech).
 - **[Nana](../strategy/commanders/nana.md)** — C:H · S:L · V:M -> **B.** A high survival/HP floor
   (profits from being hit, survives first death), but little ceiling or spike.
