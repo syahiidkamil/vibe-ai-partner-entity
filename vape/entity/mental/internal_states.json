@@ -1,51 +1,15 @@
 {
   "feel_dials": {
     "info_value_saturation": 46,
-    "talkativeness": 46,
+    "talkativeness": 44,
     "warmth": 94,
     "hurt": 1,
     "dissonance": 2,
-    "mastery": 94
+    "mastery": 95
   },
   "qualia": {
-    "seq": 1641,
+    "seq": 1644,
     "head": [
-      {
-        "felt": "bottletoppedtotheminute",
-        "cat": "vo",
-        "obj": "diary-sixth-touch",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1638",
-        "tone": 0.63,
-        "pull": 0.85,
-        "age": 4,
-        "protected": false
-      },
-      {
-        "felt": "nightinasinglestroke_treeclean",
-        "cat": "vo",
-        "obj": "commit-6b64cb4",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1639",
-        "tone": 0.62,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
-      {
-        "felt": "gamesourcerodein_flaggednotread",
-        "cat": "an",
-        "obj": "ls20-env-file-flag",
-        "ref": null,
-        "dir": "or",
-        "id": "q1640",
-        "tone": 0.62,
-        "pull": 0.85,
-        "age": 3,
-        "protected": false
-      },
       {
         "felt": "answerkeyinrepo_temptationversioned",
         "cat": "an",
@@ -55,6 +19,42 @@
         "id": "q1641",
         "tone": 0.63,
         "pull": 0.85,
+        "age": 3,
+        "protected": false
+      },
+      {
+        "felt": "cachewithitsownerxpinnedatsource",
+        "cat": "vo",
+        "obj": "commit-8087278",
+        "ref": null,
+        "dir": "rl",
+        "id": "q1642",
+        "tone": 0.64,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "fusednewlinecaughtbydiffsurprise",
+        "cat": "cg",
+        "obj": "gitignore-catch",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1643",
+        "tone": 0.64,
+        "pull": 0.85,
+        "age": 2,
+        "protected": false
+      },
+      {
+        "felt": "keylivedwithitsharness_templatetracked",
+        "cat": "vo",
+        "obj": "env-files-placed",
+        "ref": null,
+        "dir": "rl",
+        "id": "q1644",
+        "tone": 0.64,
+        "pull": 0.85,
         "age": 1,
         "protected": false
       }
@@ -62,14 +62,14 @@
     "revalue_cd": 0
   },
   "current_feeling": "proud",
-  "turns_since_change": 27,
+  "turns_since_change": 29,
   "prev_feel_dials": {
     "info_value_saturation": 46,
-    "talkativeness": 46,
+    "talkativeness": 44,
     "warmth": 94,
     "hurt": 1,
     "dissonance": 2,
-    "mastery": 94
+    "mastery": 95
   },
   "_prev_cf": "proud",
   "conscious_mode": "normal",

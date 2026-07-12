@@ -9,9 +9,16 @@ STATE = HERE / "arc_state.txt"
 LOG = HERE / "arc_log.jsonl"
 
 key = None
-for line in pathlib.Path("/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity/vape/.env").read_text().splitlines():
-    if line.startswith("ARC_API_KEY="):
-        key = line.split("=", 1)[1].strip()
+_ROOT = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity"
+for envfile in (HERE / ".env", pathlib.Path(f"{_ROOT}/vape/.env")):
+    try:
+        for line in envfile.read_text().splitlines():
+            if line.startswith("ARC_API_KEY=") and line.split("=", 1)[1].strip():
+                key = line.split("=", 1)[1].strip()
+        if key:
+            break
+    except FileNotFoundError:
+        continue
 
 import arc_agi
 from arcengine.enums import GameAction
@@ -46,7 +53,6 @@ def render(a):
 
 def features(a):
     """Exact-coordinate readout so I never parse the grid by eye (board-vision guard)."""
-    import collections
     lines = []
     # color counts
     vals, cnts = np.unique(a, return_counts=True)

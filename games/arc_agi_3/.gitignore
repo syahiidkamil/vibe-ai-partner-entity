@@ -4,3 +4,4 @@ arc_state.txt
 arc_log.jsonl
 recordings/
 environment_files/
+.env
