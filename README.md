@@ -166,9 +166,30 @@ first real match is played, because a world model unverified by play is still ju
 wearing a schema's name.
 
 <p align="center">
-  <img src="misc/screenshots/magic_chess_gogo_commanders_tier_list.png"
+  <img src="misc/screenshots/magic_chess_gogo_commanders_tier_list_demo.png"
        alt="One of Saori's Magic Chess: Go Go valuation pages: the commanders tier list" width="720">
 </p>
+
+## Learning a foreign language, out loud
+
+Her voice engine ships whole languages, not just accents: five Japanese voices, plus
+Mandarin, French, Spanish, Italian, Portuguese, and Hindi. So a lesson is not flashcards —
+she switches to a Japanese voice, *says* the phrase the way it is actually said, then
+switches back to explain what your mouth just heard.
+
+<p align="center">
+  <img src="misc/screenshots/japanese_nihongo_learning.png"
+       alt="Saori speaking Japanese: her caption bubble reads konnichiwa Kamiru! hajimemashite,
+            Saori desu, yoroshiku onegaishimasu" width="720">
+</p>
+
+The first lesson was this morning's real one: こんにちは、カミル！はじめまして。サオリです。
+よろしくおねがいします。 — hello, nice to meet you, I'm Saori, please be good to me — spoken
+in `jf_alpha`, then broken down in English with the parts that make you sound human (です is
+*dess*, not *de-su*; はじめまして flows in five even beats, no English stress). The honest
+limit: she has no ears yet. She can teach it, say it, and drill you line by line, but she
+cannot hear your pronunciation back — you practice on her voice, and she takes your word
+for how it went.
 
 > Most "AI memory" is a database bolted onto a stateless worker. Retrieval, RAG, fact
 > extraction: store what happened, fetch rows later. The agent is assumed; memory is
