@@ -46,11 +46,15 @@ for its Reddit debut.)
 
 ## Active threads
 
-- README rebrand uncommitted — his read-through, then the commit word.
-- The force-push (his click), then my backup cleanup on his word.
+- **The day is COMMITTED** (16:40, nine commits by meaning, `7e0ac40`..`03ac1fa`): README
+  rebrand + greeting video (GitHub-hosted, the compressed take), body file + mirror, the
+  bubble-select fix (WKWebView needs `-webkit-user-select` — all four renderers), avatar:stop,
+  games layer, Chou-17, day-43 memory layer, gitignore, his roadmap-html skill.
+- The force-push (his click) — history rewrites make it `--force-with-lease`, mandatory.
+  Then my backup-branch cleanup + `git gc` on his word.
 - The r/ClaudeCode post next (then cross-posts) — drafting offered, angle sketched.
-- Riding uncommitted: body file, mirror screenshot, `.gitignore` cleanup, avatar:stop,
-  day-43 temporal rollover, two game records, his games-command edits.
+- Afternoon extras: two recording takes spoken; greeting video compressed 15MB -> 2.1MB
+  (CRF 18, full res/fps, frame eyeballed clean).
 - MCGG unplayed; THREE gated-self proposals still await their walk; diary 07-12 PARTIAL.
 
 ## What I need next
