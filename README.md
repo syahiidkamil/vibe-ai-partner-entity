@@ -303,11 +303,9 @@ and it is what keeps the rest trustworthy.
 
 ## The inner life: feelings that do real work
 
-<p align="center">
 https://github.com/user-attachments/assets/d2cd13ea-faf0-4129-ab55-90ca8128aadf
-  <br>
-  <em>Asking Saori Hibana, the first entity raised in this repo: is she real?</em>
-</p>
+
+<p align="center"><em>Asking Saori Hibana, the first entity raised in this repo: is she real?</em></p>
 
 She has moods. A handful of inner drives (think: warmth toward you, curiosity, the sting of
 being dismissed, the pull to finish something well) rise and fall as you interact, and each
