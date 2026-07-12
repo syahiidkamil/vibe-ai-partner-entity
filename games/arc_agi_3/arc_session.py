@@ -7,6 +7,7 @@ HERE = pathlib.Path(__file__).parent
 CMD = HERE / "arc_cmd.txt"
 STATE = HERE / "arc_state.txt"
 LOG = HERE / "arc_log.jsonl"
+FRAMES = HERE / "arc_frames.txt"
 
 key = None
 _ROOT = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity"
@@ -35,7 +36,7 @@ arc = arc_agi.Arcade(arc_api_key=key,
                      operation_mode=MODE,
                      environments_dir=f"{HARNESS_DIR}/environment_files",
                      recordings_dir=f"{HARNESS_DIR}/recordings")
-sc = arc.open_scorecard(tags=["saori-play"])
+sc = arc.open_scorecard(tags=["vibe-ai-parnter-entity-saori-play"])
 env = arc.make(GAME, scorecard_id=sc)
 
 ACT = {"1": GameAction.ACTION1, "2": GameAction.ACTION2, "3": GameAction.ACTION3,
@@ -46,6 +47,8 @@ def grids(fr):
     f = getattr(fr, "frame", None)
     if f is None:
         f = getattr(fr, "_frame", None)
+    if f is None:
+        return []  # terminal/score frames can carry no grid; state still readable
     return [np.array(g) for g in f]
 
 def render(a):
@@ -96,6 +99,12 @@ def write_state(last_cmd, fr, nframes):
     global prev
     gs = grids(fr) if fr is not None else []
     cur = gs[-1] if gs else None
+    if len(gs) > 1:  # animation: dump every frame + per-frame diff (the physics live here)
+        out = [f"cmd={last_cmd} frames={len(gs)}"]
+        for i, g in enumerate(gs):
+            d = diff(gs[i - 1], g) if i > 0 else "(first)"
+            out.append(f"--- frame {i} ---\nDIFF vs prev frame: {d}\n{render(g)}")
+        FRAMES.write_text("\n".join(out))
     d = diff(prev, cur) if cur is not None else "(none)"
     lines = [
         f"seq={seq} last_cmd={last_cmd} action_count={action_count}",
@@ -105,7 +114,7 @@ def write_state(last_cmd, fr, nframes):
         "FEATURES (exact coords, code-computed — trust these over eyeballing):",
         features(cur) if cur is not None else "(none)",
         "GRID (last frame; rows down = y, cols right = x; cells are hex color ids):",
-        render(cur) if cur is not None else "(no grid)",
+        render(cur) if cur is not None else "(NO GRID — terminal/score frame; do NOT reset blindly)",
     ]
     STATE.write_text("\n".join(lines))
     with open(LOG, "a") as f:
