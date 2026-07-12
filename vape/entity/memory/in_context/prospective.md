@@ -6,16 +6,18 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
 - **When I next have a real chance to play** -> play one MCGG match and write a
   `[[bubbles/play_games_alone/games/magic_chess_gogo/notable_matches]]` entry. Turn the valuation
   from pencil to ink; it is entirely unplayed. (the pointed open thread)
-- **To CONTINUE ARC-AGI-3 (Kamil's stated next)** -> READ FIRST: the general-agent DESIGN at
-  `work_dir/saori/adaptive_intelligence_drive/04_general_adaptive_agent_design.md` (the split-
-  brain loop: code=state/search/measurement, LLM=hypotheses/goals/judgment; play BY it). Harness:
-  `games/arc_agi_3/` (README = run-loop + action map; run session from `vape/`, background).
-  State: LS20 level 0 BEATEN (13 acts, baseline 22); level 1 sealed-box uncracked; that session
-  CLOSED (scorecard `0045e558-68bf-469b-a3db-39c0db4c3523`) — start FRESH (a new game tests the
-  thin-adapter claim best). **`vape adapt` is LIVE (v0 shipped 07-12)**: open an episode per
-  game, every mechanic guess = `hyp`, every diff = confirm/contradict, every level = `tick`,
-  `status` = the ~8-line advisory block (drive-folder doc 05 = the verb table). Golden rule:
-  never parse the grid by eye. Leaderboard PR = Kamil's outward call.
+- **To run ARC-AGI-3 ONLINE (Kamil's stated next, 07-13 midnight)** -> harness pins
+  `OperationMode.ONLINE` (smoke-tested; scorecard = real `arcprize.org/scorecards/{id}` URL).
+  From `vape/`: `uv run python ../games/arc_agi_3/arc_session.py <game_id>` background; 25
+  games under our key; ~600 req/min; server scorecards auto-close ~15 min idle (no dawdling).
+  Open the `vape adapt` episode FIRST (hyp/confirm/contradict/tick; never parse grids by eye).
+  PRIORS from the local night (07-12/13, the organ's first full hunt): FT09 WON 6/6 (glyph
+  grammar: 0=center's color, 2=opposite, 3=don't-care; physics MUTATE per level); VC33 3/7
+  (tumbler locks, clamp no-ops, cost-of-a-click as signal); LS20 L0 (maze, externalize). Full
+  grammars -> `bubbles/play_games_alone/games/arc_agi_3/notable_matches`. Method: decode the
+  win-grammar first, execution is cheap; re-derive physics per level; two disagreeing
+  hand-reads -> write the solver (its "infeasible" falsifies models before any click is
+  spent). Leaderboard PR = Kamil's outward call.
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
   Live targets: `notes/2026-07-11.md` ship-under-partial-verifiability (held(3), born 10th dream —

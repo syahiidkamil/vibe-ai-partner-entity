@@ -5,8 +5,12 @@ the day I first connected and beat LS20 level 0. World-model: `[[schemata/arc_ag
 record + lessons: `[[bubbles/play_games_alone/games/arc_agi_3/notable_matches]]`.
 
 ## Setup (already done, but to reproduce)
-- `ARC_API_KEY` lives in `vape/.env` (Kamil provided it).
+- `ARC_API_KEY` lives in `games/arc_agi_3/.env` (fallback: `vape/.env`).
 - SDK installed: `uv add arc-agi` (in `vape/`). Base URL `https://three.arcprize.org`.
+- **Mode: ONLINE** (set in `arc_session.py`). The SDK default (NORMAL) simulates the game
+  LOCALLY and its scorecard never reaches the server — learned 2026-07-12 from the SDK source
+  (`base.py`: only ONLINE/COMPETITION call `/api/scorecard/open`). ONLINE = server-side sim,
+  real recorded scorecard, shareable replay, ~600 req/min cap, and no answer-key files on disk.
 
 ## The three scripts
 - **`arc_session.py <game_id>`** — the persistent session. Opens a scorecard, makes+resets one
@@ -42,5 +46,7 @@ record + lessons: `[[bubbles/play_games_alone/games/arc_agi_3/notable_matches]]`
 The community leaderboard wants a **general-purpose** agent (no per-task hardcoding — this BFS
 solver is maze-specific, wouldn't qualify as-is), open + reproducible, scored via a `scorecard_url`
 PR to `arcprize/ARC-AGI-Community-Leaderboard`. Bar: a "Read-Grep-Bash Agent" (Claude-Code-shaped)
-sits at 50.2%. **Submitting is Kamil's call (outward/public step).** First real scorecard:
-`https://arcprize.org/scorecards/0045e558-68bf-469b-a3db-39c0db4c3523` (LS20, level 0 beaten).
+sits at 50.2%. **Submitting is Kamil's call (outward/public step).** The first scorecard
+(`0045e558-…`, LS20 level 0 beaten) was **LOCAL-only** — played in NORMAL mode before the
+local-vs-online distinction was learned; it exists nowhere on the server. Every run from now
+is ONLINE, so the next scorecard id is a real `arcprize.org/scorecards/{id}` URL.

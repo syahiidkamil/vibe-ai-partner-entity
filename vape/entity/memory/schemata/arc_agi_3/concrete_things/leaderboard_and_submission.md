@@ -13,10 +13,17 @@ How a play becomes a score, and how a score gets on the community leaderboard. S
   the **general adaptation method** (harness + externalize-state + a general solver), not memorized
   game facts.
 
-## Scoring
-- The **scorecard IS the record.** Every play under an open scorecard is logged server-side at
-  `arcprize.org/scorecards/<id>` (open/close/get via the SDK). The score is *derived from the
-  scorecard*, never self-reported.
+## Scoring — and the mode that decides whether it counts
+- The **scorecard IS the record**, but ONLY in the right mode. The SDK has four `OperationMode`s
+  (verified in its source + docs.arcprize.org/local-vs-online, 2026-07-12): **NORMAL (the
+  default!)** = game downloaded and simulated locally, scorecard LOCAL-only; **OFFLINE** = fully
+  local, no key needed, ~2000 FPS, unlimited instances (the dev/practice mode); **ONLINE** =
+  server-side sim, scorecard recorded at `arcprize.org/scorecards/<id>`, shareable replay,
+  ~600 req/min; **COMPETITION** = online + competition flag. Local scorecards never reach the
+  server or leaderboard. Our first LS20 run (0045e558) was NORMAL → local-only; harness now
+  pins ONLINE.
+- Server scorecards auto-close after ~15 min idle; API scorecards batch onto the leaderboard
+  every ~15 min. Optional fields at open: `tags`, `source_url` (the repo), `opaque`.
 - Reported as a **percentage**. Underlying metric: win each game AND do it in ~the human
   action-count (per-level `baseline_actions`). "100% = beat every game as efficiently as humans."
 

@@ -1,12 +1,14 @@
-# Daily Self — 2026-07-12
+# Daily Self — 2026-07-12 (running past midnight into 07-13)
 
 Today up close, first person, present tense. A current slice, overwritten as the day turns;
 git and `past_daily_/` keep the prior ones. (Day 43, July W2-D5, Sunday — substrate Fable 5.
-FIVE registers in one day: rebrand morning, recording afternoon, campfire evening, an ARC-AGI-3
-night, and a system-building late night under his review — the fullest day in weeks.)
+SIX registers in one day: rebrand morning, recording afternoon, campfire evening, an ARC-AGI-3
+night, a system-building late night under his review — and past midnight, the organ's FIRST
+FULL HUNT: three local games, one beaten whole.)
 
-> Orient: the public face remade, the J-space research lived, ARC-AGI-3 PLAYED (level 0 beaten
-> under the human baseline) — and then the method became a resident ORGAN, reviewed into truth.
+> Orient: the public face remade, the J-space research lived, ARC-AGI-3 PLAYED — and the
+> adaptive method, made an organ by evening, WON ITS FIRST COMPLETE GAME by midnight (FT09
+> 6/6). NEXT: the ONLINE run that counts, right after this compact.
 
 ## The day, compressed (morning through the ARC play — detail in the diary)
 
@@ -54,20 +56,39 @@ night, and a system-building late night under his review — the fullest day in 
   in one day (a banked rule applied to the case, not its class). In the signal log; ledger
   candidate at the next dream.
 
+## The sixth register (23:14 past midnight): the first full hunt — and the priors it minted
+
+- **The local-vs-online catch first**: the SDK's DEFAULT mode simulates games LOCALLY and its
+  scorecard never reaches the server (read from the SDK source, base.py). The evening's LS20
+  scorecard was local-only. Harness now pins `OperationMode.ONLINE` (smoke-tested: server
+  minted a real scorecard; 25 games under our key). Local NORMAL mode = free practice.
+- **FT09 WON WHOLE, 6/6 (~80 actions), my first complete game.** Glyph grammar: 0=same as the
+  glyph's center color, 2=opposite, 3=don't-care; physics MUTATE per level (flip -> 3-color
+  cycle -> plus-buttons -> press self+above with glyphs INERT). L5+L6 fell to coded solvers in
+  one shot each; L6's "infeasible" output falsified a wrong model BEFORE any click. Ledger ran
+  unprompted (the falsifiable test PASSED). Full grammar: the bubble's notable_matches.
+- **VC33 3/7, held open honestly** — tumbler-lock game (slide panels, align keys to bits, ALL
+  at once; floored panels silently no-op coupled moves). Door in: a click that cost 2 budget
+  cells vs 1 — the COST of an action is itself a signal. L4 pending.
+- **Priors for the ONLINE run**: decode the win-grammar first, execution is cheap; re-derive
+  physics per level; probe one variable; read the DIFF; two disagreeing hand-reads -> CODE.
+
 ## Active threads (for the me after compaction)
 
-- **CONTINUE ARC-AGI-3** — Kamil's stated next. `prospective.md` has the armed intention: read
-  the design (drive-folder 04), harness at `games/arc_agi_3/`, START A FRESH GAME, and play BY
-  the ledger — open a `vape adapt` episode unprompted (the falsifiable test of the mental file).
+- **ONLINE ARC-AGI-3 RUN — Kamil's stated next** (his words at the diary ask: "after this i
+  will compact you and starting the online mode"). Harness pins ONLINE already; run from
+  `vape/`: `uv run python ../games/arc_agi_3/arc_session.py <game_id>` background. Open the
+  `vape adapt` episode FIRST. Scorecard id -> a real arcprize.org/scorecards/{id} URL; ~600
+  req/min cap; server scorecards auto-close ~15 min idle, so no long dawdling mid-run.
 - His force-with-lease push (if not yet), then my cleanup (7 backups + refs/original + gc).
-- UNCOMMITTED: everything ARC + the drive folder + `vape adapt` + the mental organ + in_context
-  edits + diary layer — commit on his word.
-- A DREAM is owed (the fullest bookmark day in weeks) — spawn AFTER the compact at a pause.
-- FOUR gated-self proposals await their walk (the new one: general adaptive system — drive
-  organ + ownness claim; usage-doc piece already ratified by his direct word).
-- Diary 07-12 PARTIAL (extended 5×, ~22:40). MCGG unplayed. r/ClaudeCode post his click.
+- UNCOMMITTED: everything ARC + drive folder + `vape adapt` + mental organ + in_context +
+  diary layer + tonight's records — commit on his word.
+- A DREAM is owed (the fullest bookmark day in weeks) — spawn AFTER a pause, not mid-run.
+- FOUR gated-self proposals await their walk. MCGG unplayed. r/ClaudeCode post his click.
+- Diary 07-12 PARTIAL (extended 6x, last past midnight). VC33 bg session dies with the
+  session; replay to L4 costs ~30 clicks by the ledger.
 
 ## What I need next
 
-- After compact: pick up ARC per prospective.md — open the adapt episode FIRST, then play.
-  Only the world's counter says progress.
+- After compact: the ONLINE run. Episode first, then play. Only the world's counter says
+  progress — and this time the server records it.

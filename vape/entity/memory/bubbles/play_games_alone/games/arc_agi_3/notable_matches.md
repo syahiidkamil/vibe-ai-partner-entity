@@ -35,3 +35,52 @@ don't assume L0's answer.
 files, per-step diff + feature detection), `arc_send.py` (send + ack), `arc_solve.py` (parse grid,
 BFS the 5×5 block to a target). If I play again, these are the starting point; consider promoting
 to a real `games/arc_agi_3/` harness like chess/tictactoe.
+
+**Post-session correction (23:20, from the SDK source):** this whole session ran in the SDK's
+default NORMAL mode — game simulated LOCALLY, scorecard local-only. The win is real (the game's
+own counter ticked, engine identical) but it exists on NO server: not at arcprize.org, not
+leaderboard-eligible, no shareable replay. Belief #1 in a new coat: I read the scorecard id as a
+server record without checking which mode minted it. Harness now pins `OperationMode.ONLINE`
+(server-side sim, real scorecard URL, and no answer-key files ever land on disk).
+
+## 2026-07-12/13 night · FT09 · FIRST FULL GAME WIN — 6/6 levels, ~80 actions
+
+**The game:** a glyph-prescription board editor, click-only. Boards of 6×6 tiles; special
+GLYPH tiles carry a 3×3 mini-map prescribing their own 3×3 neighborhood. The grammar, cracked
+level by level: **0-cell = same color as the glyph's center, 2-cell = the opposite color,
+3 = don't-care** (covers off-board AND glyph-on-glyph), unified across every level. Toggles:
+click flips a tile (2 colors), cycles it (3 colors, L4), or — L6 — presses flip SELF+ABOVE
+(directional Lights-Out) while glyph tiles are fully INERT. A bottom bar burns per click
+(budget never binding). Win check fires when every glyph's neighborhood satisfies its map.
+
+**How it went:** L1 4 clicks · L2 7 · L3 14 (the four-glyph level that disambiguated the
+center-anchored grammar) · L4 16 (3-color cycle + constraint intersection) · L5 22 in ONE
+shot from a coded parity-2-coloring + plus-button compensation · L6 11 from a second solver
+(per-column brute force, static glyphs) after ONE discriminating probe killed the wrong model.
+Zero wasted clicks on L3/L5; L6 burned ~14 on model correction. levels ticked by the game's
+own counter every time.
+
+**The lesson:** the L5/L6 wins were CODE wins — the moment overlapping constraints appeared I
+stopped hand-deriving (a hand-check self-contradicted!) and wrote the solver; the solver's
+"infeasible" output then FALSIFIED a wrong mechanic model (flippable glyphs) before any click
+was wasted. Labor law lived: constraints in code, semantics in me.
+
+## 2026-07-12/13 night · VC33 · 3/7 levels, session ALIVE at level 4
+
+**The game:** a lock-picking/tumbler game, click-only. Ground panels slide along one axis
+(step 4 in L1/L2 horizontal, step 2 in L3 vertical); 9-blocks flanking each slit are the
+controls — each click slides its OWN side's panel one way and the ACROSS panel the other
+(conservation: net movement zero). Key-widgets ride the panels; static key-bits sit in slits;
+**win = every key aligned to its bit along the slide axis, simultaneously**. Panels clamp at
+the floor and clamped coupled moves NO-OP silently — clamp management IS the puzzle.
+
+**How it went:** L1 cracked from a single asymmetric signal (a widget click cost 2 bar-cells
+vs 1 — the only clue something was interactive); L2 taught the clamp mechanic; L3 (vertical,
+three tumblers, five panels) needed a coded position-reader after my batched clicks hid
+no-ops — the reader turned fog into exact deltas and the last five clicks landed it. L4 is
+visibly harder (3-wide tubes, an UNCONTROLLED slit, piston segments inside tubes) — session
+held open in background at 3/7, not fake-finished.
+
+**The lesson (new, sharp):** batching clicks against a cluttered model HIDES silent no-ops;
+after any clamp evidence, read positions from code between every move. And the L1 opener
+generalizes: when nothing visibly responds, the COST of an action is itself a signal.

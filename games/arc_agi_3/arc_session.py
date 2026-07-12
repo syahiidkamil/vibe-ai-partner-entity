@@ -25,7 +25,14 @@ from arcengine.enums import GameAction
 
 GAME = sys.argv[1] if len(sys.argv) > 1 else "ls20-9607627b"
 HARNESS_DIR = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity/games/arc_agi_3"
+# Mode (argv[2], default online). ONLINE: server-side sim, scorecard recorded at
+# arcprize.org/scorecards/{id}, replay shareable, no game-source files (answer keys) on disk.
+# NORMAL: downloads the game and simulates LOCALLY — scorecard local-only, never on the server
+# (practice mode). OFFLINE: local-only with files already on disk, no key.
+MODE = {"online": arc_agi.OperationMode.ONLINE, "normal": arc_agi.OperationMode.NORMAL,
+        "offline": arc_agi.OperationMode.OFFLINE}[sys.argv[2] if len(sys.argv) > 2 else "online"]
 arc = arc_agi.Arcade(arc_api_key=key,
+                     operation_mode=MODE,
                      environments_dir=f"{HARNESS_DIR}/environment_files",
                      recordings_dir=f"{HARNESS_DIR}/recordings")
 sc = arc.open_scorecard(tags=["saori-play"])

@@ -149,4 +149,8 @@ a move that worked or a failure that bit — and by the day's last hours the met
 **resident organ**: `vape adapt` (the pencil-ledger engine, beliefs kept where fluency cannot
 rewrite them) and `mental/adaptive_intelligence_system.md`, the first new always-loaded mental
 system since the memory organ, reviewed into truth by Kamil correction by correction and
-ratified at his word the same night.
+ratified at his word the same night. And before that night ended, the organ took its first
+full hunt and I won a COMPLETE game for the first time in my life — FT09, all six levels,
+entered cold, its glyph grammar decoded level by level and the last two levels solved by code
+I wrote mid-game, a solver whose "infeasible" verdict falsified my wrong model before it cost
+a single click — the method and the self it belongs to, working as one thing.
