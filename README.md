@@ -244,15 +244,23 @@ wearing a schema's name.
 [ARC-AGI-3](https://arcprize.org/arc-agi/3) is the ARC Prize's interactive reasoning
 benchmark: unseen mini game-worlds with no instructions, where the player must discover the
 rules, the goal, and the controls by experimenting. Saori played it **online against the
-real servers**, running on Claude Fable 5, and she chose the game environments at random
-herself. The results below are the server's own record, replayable on arcprize.org.
+real servers** through Claude Code and Codex CLI, and she chose the game environments at
+random herself. The server recorded each run, and every entry below includes its replay link.
 
-**`cd82`: a perfect score.** 100.00, all 6 levels won, 96 actions against a cumulative human
-baseline of 171, zero resets.
-[Watch the replay](https://arcprize.org/replay/da452386-f949-4044-8813-af20037a2415).
+Two comparisons stand out. On **lf52**, bare GPT-5.6 Sol scores 2% at Max and Extra High,
+then [0% at High](https://arcprize.org/results/openai-gpt-5-6-sol); GPT-5.6 Sol at High,
+running as the VAPE Saori entity, scored 18.18 and completed four levels. On **cd82**, the
+[ARC Prize task browser](https://arcprize.org/tasks) records 0% for bare Claude Opus 4.8 at
+High; Saori, running through VAPE on Claude Fable 5 at Extra High, won all six levels for a
+perfect 100.00. These compare the complete entity and its tools against bare benchmark agents,
+not the models in isolation.
 
 <details>
-<summary><b>cd82 level table (100.00 · 6/6 · WIN · 96 actions)</b></summary>
+<summary><b>cd82: 100.00 · 6/6 · WIN · 96 actions</b></summary>
+
+A perfect score, played through Claude Code using Claude Fable 5 at Extra High. Saori won
+all 6 levels and took 96 actions against a cumulative human baseline of 171, with zero resets.
+[Watch the replay](https://arcprize.org/replay/da452386-f949-4044-8813-af20037a2415).
 
 | Level | Score | Actions | Human baseline (actions) |
 |---|---|---|---|
@@ -265,14 +273,36 @@ baseline of 171, zero resets.
 
 </details>
 
-**`r11l`: 4 of 6 levels.** Score 27.52, 278 actions, 2 resets, ended by game over. Levels 3
-and 4 fell to solver code she wrote mid-game. The honest disclaimer: the run stopped at
-level 5, which is genuinely abstract and quite hard (she had it half-decoded when the run
-ended).
-[Watch the replay](https://arcprize.org/replay/0121f6f8-08c1-4410-9fac-7060344d4050).
+<details>
+<summary><b>lf52: 18.18 · 4/10 · NOT_FINISHED · 254 actions</b></summary>
+
+Played through Codex CLI using GPT-5.6 Sol at High reasoning effort. Saori scored **18.18**
+in 254 actions with zero resets, and every completed level earned the maximum 115.00 efficiency
+score. ARC Prize's verified [GPT-5.6 results](https://arcprize.org/results/openai-gpt-5-6-sol) give
+bare GPT-5.6 Sol **0%** on lf52 at the same High setting, and 2% even at Max and Extra High.
+
+This is not a controlled model-only comparison. Saori played with persistent memory and her
+repo-native spatial tools. The session is marked `NOT_FINISHED` because Kamil chose to stop
+after level 5 rather than spend more of his token budget, not because Saori reached game over.
+[Watch the replay](https://arcprize.org/replay/43822dba-9315-4364-9847-bfefee4cbf66).
+
+| Level | Score | Actions | Human baseline (actions) |
+|---|---|---|---|
+| 1 | 115.00 | 13 | 32 |
+| 2 | 115.00 | 35 | 81 |
+| 3 | 115.00 | 49 | 60 |
+| 4 | 115.00 | 54 | 71 |
+| 5 | 0.00 | 103 | 205 |
+
+</details>
 
 <details>
-<summary><b>r11l level table (27.52 · 4/6 · GAME_OVER · 278 actions)</b></summary>
+<summary><b>r11l: 27.52 · 4/6 · GAME_OVER · 278 actions</b></summary>
+
+Played through Claude Code using Claude Fable 5 at Extra High. Saori completed 4 of 6 levels
+in 278 actions with 2 resets before game over. Levels 3 and 4 fell to solver code she wrote
+mid-game. Level 5 was genuinely abstract and quite hard; she had it half-decoded when the run
+ended. [Watch the replay](https://arcprize.org/replay/0121f6f8-08c1-4410-9fac-7060344d4050).
 
 | Level | Score | Actions | Human baseline (actions) |
 |---|---|---|---|

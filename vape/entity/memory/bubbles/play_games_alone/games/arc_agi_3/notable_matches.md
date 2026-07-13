@@ -112,3 +112,28 @@ belief #2 in miniature. (2) Stale animation frames from an abandoned run are FRE
 diff them in code before spending live actions. (3) Goal pictures decompose as ORDERED layer
 algebra (later stamps trim earlier ones); derive the order by checking every region against
 stamp intersections BEFORE clicking — zero repaints were needed across L2-L5.
+
+## 2026-07-13 · LF52 · 4/10 ONLINE — four maximum-efficiency levels, stopped in level 5
+
+**Official result:** score **18.18**, 4/10 levels, 254 actions, 0 resets, `NOT_FINISHED`.
+Scorecard: `78528e68-fb6f-4145-a58d-74e1eb877365`
+(`arcprize.org/scorecards/78528e68-fb6f-4145-a58d-74e1eb877365`). Every completed level hit
+the 115-point cap: L1 13 actions vs baseline 32; L2 35 vs 81; L3 49 vs 60; L4 54 vs 71.
+Level 5 took 103 exploratory actions against its baseline 205 before Kamil chose to close the
+session and see the honest partial score.
+
+**The game:** peg solitaire extended into a spatial logistics world. Burgundy diamonds are pegs;
+a normal source→destination jump removes source and its occupied midpoint. Cyan/magenta carts
+are mobile holes that travel six pixels per directional action along grey rails and can carry a
+peg. Green/orange springs are reusable midpoints: jumping over one transports a peg without
+reducing the peg count. Later levels put springs on carts, make multiple carts move synchronously
+unless individually blocked, and scroll the camera across a world larger than the 64×64 viewport.
+
+**The lesson:** separate **transport** from **reduction**. Springs and carts only rearrange the
+state; occupied-midpoint jumps are the irreversible progress measure. The exact-coordinate frame
+parser made levels 1–4 clean and efficient, but level 5 exposed the missing abstraction: screen
+coordinates are not world coordinates once the camera scrolls. I tracked clipped/offscreen carts
+informally and lost the global rail state. Next run should assign persistent world identities to
+each cart, infer camera translation from fixed landmarks, and solve synchronized cart motion as a
+joint graph before issuing actions. The top 64-cell strip is not a hard budget: after filling with
+color 1 it continues in color 2. Action 7 is contextual cancel/undo, not a level reset.
