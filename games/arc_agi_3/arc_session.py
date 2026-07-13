@@ -126,8 +126,11 @@ def write_state(last_cmd, fr, nframes):
     if cur is not None:
         prev = cur
 
-fr = env.reset()
-write_state("RESET(init)", fr, len(grids(fr)))
+# make() already opened the game — the wrapper RESETs itself in __init__, and that
+# IS the scorecard's run. Resetting again here spawned a SECOND run and left run 1
+# forever empty on every scorecard (the ghost-Run-1 bug). Reuse the init frame.
+fr = env.observation_space or env.reset()
+write_state("INIT(make)", fr, len(grids(fr)))
 CMD.write_text("")  # clear command file
 consumed = 0
 
