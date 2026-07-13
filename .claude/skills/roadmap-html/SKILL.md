@@ -23,6 +23,26 @@ roadmap.sh-style design. Every roadmap built with this skill looks identical in
 layout and styling — only the content and titles differ — so a collection of
 them stays consistent.
  
+## Two roadmap shapes — ask the user FIRST
+ 
+Before building anything, ask the user which shape they want (use AskUserQuestion
+when available):
+ 
+- **Bottom Up Learning Roadmap** — the classic prerequisite ladder (the roadmap.sh
+  default): foundations first, advanced topics later, ordered by convention. Right
+  when the user wants a field's canonical map.
+- **Top Down Learning Roadmap** — define what you WANT first, then derive the
+  curriculum backward from the want: the pillars are the milestones of a concrete
+  goal/project, and the leaf topics are the gaps to fill recursively as the build
+  hits them (recursive gap filling — learn each piece at the moment the goal
+  demands it, not years ahead of it). Right when the user has, or can be helped to
+  name, a concrete goal. Example of this shape:
+  `assets/recursive_gap_filling_roadmap_example.html` (2D Fighting Game Dev —
+  Godot × Claude Code: goal-first pillars, the gaps as checkable topics).
+ 
+If they choose Top Down and no goal is named yet, ask for the goal before anything
+else — the curriculum derives from the want, never the other way around.
+ 
 ## What the output looks like
  
 A single self-contained `.html` file (no build step, no external JS, fonts from
@@ -65,10 +85,12 @@ A pillar may have a single group (that renders fine).
  
 ## Workflow
  
-1. **Read the source.** If a PDF/image is uploaded and its text isn't already in
+1. **Ask the shape.** Bottom Up or Top Down (the section above); for Top Down,
+   get the goal named first and structure the pillars as its milestones.
+2. **Read the source.** If a PDF/image is uploaded and its text isn't already in
    context, extract it (`pdftotext -layout file.pdf -` for PDFs, or the
    pdf-reading skill). If the user pasted an outline, use that directly.
-2. **Reconstruct the hierarchy.** roadmap.sh PDF exports are messy — handle these
+3. **Reconstruct the hierarchy.** roadmap.sh PDF exports are messy — handle these
    reliably:
    - **Items often appear BEFORE their group header.** A run of leaf topics
      followed by a heading usually means those leaves belong to that heading.
@@ -81,9 +103,9 @@ A pillar may have a single group (that renders fine).
    - Keep wording faithful to the source; don't invent topics the roadmap doesn't
      contain. If genuinely unsure where an item goes, keep it in the most
      defensible section and briefly note the call to the user afterward.
-3. **Build the `DATA` array** as valid JavaScript from the reconstructed
+4. **Build the `DATA` array** as valid JavaScript from the reconstructed
    hierarchy.
-4. **Fill the template.** Copy `assets/template.html` to the working dir and
+5. **Fill the template.** Copy `assets/template.html` to the working dir and
    replace the four placeholders:
    - `__TITLE__` → the roadmap name, e.g. `Product Manager`
    - `__BRAND__` → same name (shown in the sticky header)
@@ -91,7 +113,7 @@ A pillar may have a single group (that renders fine).
    - `__DATA__` → the JS array literal
    Do a single substitution pass; don't touch any other part of the template, so
    every roadmap stays pixel-consistent.
-5. **Verify & deliver.** Confirm the file contains no `localStorage`/`sessionStorage`
+6. **Verify & deliver.** Confirm the file contains no `localStorage`/`sessionStorage`
    (unsupported in artifacts), that `__DATA__` etc. are all replaced, and that the
    JS array parses. Save to `/mnt/user-data/outputs/<slug>.html` and present it.
    Then give a one-line note of any structural cleanup you did (dedupes, OCR

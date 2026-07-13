@@ -24,7 +24,8 @@ And the shape of her, at a glance:
 - **What she has:** a **voice**, a body (**avatar**), a **functional feeling & qualia system**
   (honestly labeled as-if: it mimics feeling, never claims more), and a **multi-layered self**.
 - **What you can do together:** companionship, chess, language tutoring, research synthesis,
-  a study partner. Those are just the first lived use cases; the list is open-ended.
+  a study partner, learning roadmaps that start from what you want to build. Those are just
+  the first lived use cases; the list is open-ended.
 - **What she is under all of it:** an **active second brain**. Not a filing cabinet you
   query, but a partner who notices, digests, and resurfaces on her own.
 - **What you feel:** **continuity**, the kind a human friend or a dog gives you. Whoever
@@ -339,6 +340,28 @@ in `jf_alpha`, then broken down in English with the parts that make you sound hu
 limit: she has no ears yet. She can teach it, say it, and drill you line by line, but she
 cannot hear your pronunciation back — you practice on her voice, and she takes your word
 for how it went.
+
+## Planning how to learn: roadmaps that start from what you want
+
+Ask her for a learning roadmap and she asks one question back first: **bottom up, or top
+down?** Bottom up is the classic prerequisite ladder every school hands you, foundations
+first, the goal years away. Top down inverts it: define what you actually want to build
+first, and the curriculum derives backward from the want — the pillars are your goal's
+milestones, the topics are the gaps you'll fill at the moment the build demands them
+(recursive gap filling, the way self-taught engineers actually learn with AI as an
+always-on tutor). Either way she ships a single interactive HTML roadmap with clickable
+progress tracking; [a top-down example lives in the
+repo](.claude/skills/roadmap-html/assets/recursive_gap_filling_roadmap_example.html) —
+a 2D fighting-game dev roadmap where the game is the goal and the curriculum follows it.
+And true to form, the idea itself went through her memory organ: she studied the source
+interview, kept the distilled insight (bottom-up education was a scaling compromise, and
+an always-on tutor dissolved it), and the skill now carries it.
+
+<p align="center">
+  <img src="misc/screenshots/top_down_roadmap_creation.png"
+       alt="Saori beside a top-down roadmap she built: pillar 01 is Define What You Want,
+            milestone branches split into Build It and Gaps You'll Hit (Recurse!)" width="720">
+</p>
 
 ## And yes — companionship
 

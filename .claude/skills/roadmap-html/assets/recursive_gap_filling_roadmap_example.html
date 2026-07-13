@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2D Fighting Game Dev — Godot × Claude Code — Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --line:#3a3a3a;
+    --topic:#ffe599;      /* yellow main node */
+    --topic-edge:#e6c84d;
+    --sub:#d9c7f7;         /* purple subtopic   */
+    --sub-edge:#b79ae6;
+    --item:#ffffff;
+    --ink:#16130d;
+    --muted:#6a6256;
+    --done:#2f9e44;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Figtree',system-ui,sans-serif;background:#fbfaf7;color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle, #e9e6df 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+  .top{position:sticky;top:0;z-index:50;background:rgba(251,250,247,.9);backdrop-filter:blur(8px);
+       border-bottom:2px solid var(--line);}
+  .top-in{max-width:1100px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .brand{font-weight:800;font-size:18px;letter-spacing:-.01em}
+  .brand small{font-weight:500;color:var(--muted);font-size:13px;margin-left:8px}
+  .spacer{flex:1}
+  .count{font-size:13px;color:var(--muted);font-weight:600}
+  .count b{color:var(--done)}
+  .rst{font:inherit;font-size:12px;font-weight:700;border:2px solid var(--line);background:#fff;
+       padding:6px 12px;border-radius:8px;cursor:pointer;box-shadow:2px 2px 0 var(--line)}
+  .rst:active{transform:translate(2px,2px);box-shadow:none}
+  .head{text-align:center;padding:46px 20px 6px}
+  .head h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.025em}
+  .head p{color:var(--muted);margin-top:8px;font-size:15px}
+  .flow{max-width:1080px;margin:0 auto;padding:24px 18px 90px;position:relative}
+  .flow::before{content:"";position:absolute;top:30px;bottom:60px;left:50%;width:3px;
+                background:var(--line);transform:translateX(-50%);z-index:0;border-radius:2px}
+  .stage{position:relative;z-index:1;margin:0 auto 8px}
+  .topic{position:relative;z-index:3;width:max-content;max-width:440px;margin:0 auto;
+         background:var(--topic);border:2.5px solid var(--line);border-radius:12px;
+         padding:13px 22px;box-shadow:4px 4px 0 var(--line);cursor:pointer;
+         display:flex;align-items:center;gap:13px;transition:transform .12s}
+  .topic:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--line)}
+  .topic .n{font-weight:800;font-size:14px;background:var(--line);color:var(--topic);
+            width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex-shrink:0}
+  .topic h2{font-size:19px;font-weight:800;letter-spacing:-.01em;line-height:1.1}
+  .topic .tg{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted);background:#fff8e0;
+             border:1.5px solid var(--topic-edge);border-radius:20px;padding:2px 9px;white-space:nowrap}
+  .stage.complete .topic{background:#d6f3da;border-color:var(--done)}
+  .stage.complete .topic .n{background:var(--done);color:#fff}
+  .stage.complete .topic .tg{background:#e9f9ec;border-color:var(--done);color:var(--done)}
+  .chev{margin-left:4px;width:16px;height:16px;stroke:var(--line);stroke-width:2.4;
+        fill:none;transition:transform .25s;flex-shrink:0}
+  .stage.open .chev{transform:rotate(180deg)}
+  .branch{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+  .stage.open .branch{grid-template-rows:1fr}
+  .branch-clip{overflow:hidden}
+  .stem{height:26px;width:3px;background:var(--line);margin:0 auto}
+  .groups{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+          gap:18px 22px;padding-top:22px;justify-items:stretch}
+  .groups::before{content:"";position:absolute;top:0;left:12%;right:12%;height:3px;background:var(--line)}
+  .group{position:relative}
+  .group::before{content:"";position:absolute;top:-22px;left:50%;width:3px;height:22px;
+                 background:var(--line);transform:translateX(-50%)}
+  .group-hd{background:var(--sub);border:2.5px solid var(--line);border-radius:10px;
+            padding:9px 14px;font-weight:700;font-size:14.5px;box-shadow:3px 3px 0 var(--line);
+            position:relative;z-index:2}
+  .items{margin-top:10px;padding-left:16px;border-left:3px dashed var(--line);
+         display:flex;flex-direction:column;gap:7px}
+  .item{position:relative;background:var(--item);border:2px solid var(--line);border-radius:8px;
+        padding:8px 11px 8px 32px;font-size:13.5px;font-weight:500;cursor:pointer;
+        box-shadow:2px 2px 0 rgba(58,58,58,.55);transition:.12s;text-align:left;line-height:1.25}
+  .item:active{transform:translate(2px,2px);box-shadow:none}
+  .item::after{content:"";position:absolute;left:-16px;top:50%;width:13px;height:3px;background:var(--line)}
+  .item .dot{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:15px;height:15px;
+             border:2px solid var(--line);border-radius:50%;display:grid;place-items:center}
+  .item .dot svg{width:9px;height:9px;stroke:#fff;stroke-width:3.4;fill:none;opacity:0;transition:.12s}
+  .item.done{background:#eafaee;color:var(--muted)}
+  .item.done .lbl{text-decoration:line-through;text-decoration-color:var(--done)}
+  .item.done .dot{background:var(--done);border-color:var(--done)}
+  .item.done .dot svg{opacity:1}
+  @media(max-width:620px){
+    .flow::before{left:26px}
+    .topic{margin:0 0 0 0;max-width:none}
+    .groups{grid-template-columns:1fr;padding-left:0}
+    .groups::before{display:none}
+    .group::before{display:none}
+    .stem{margin:0 0 0 24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-in">
+    <span class="brand">2D Fighter · Godot × Claude Code<small>roadmap</small></span>
+    <span class="spacer"></span>
+    <span class="count"><b id="done">0</b> / <span id="total">0</span> topics</span>
+    <button class="rst" id="reset">Reset</button>
+  </div>
+</div>
+
+<div class="head">
+  <h1>2D Fighting Game Dev — Godot × Claude Code</h1>
+  <p>Recursive gap-filling roadmap: build a Tekken-style 2D fighter top-down · click any topic to check it off</p>
+</div>
+
+<div class="flow" id="flow"></div>
+
+<script>
+const DATA = [
+  {
+    "t": "Define What You Want",
+    "groups": [
+      {
+        "g": "Your Fighter's Spec",
+        "items": [
+          "1v1 2D fighter (Tekken-style, side view)",
+          "Start with 2 characters, not a roster",
+          "Local versus first — online comes much later",
+          "Pick art style: pixel sprites vs 3D-rendered 2D"
+        ]
+      },
+      {
+        "g": "Reference Study",
+        "items": [
+          "Play Tekken / SF2 and note what a 'hit' feels like",
+          "Learn the vocabulary: startup, active, recovery frames",
+          "Watch one frame-data breakdown video",
+          "Write a 1-page game design doc with Claude"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "The Recursive Gap-Filling OS",
+    "groups": [
+      {
+        "g": "The 'Gap' Signal",
+        "items": [
+          "Catch yourself glossing over AI-generated code",
+          "Rule: never paste code you can't explain line-by-line",
+          "Ask: 'wait, do I actually understand why this works?'"
+        ]
+      },
+      {
+        "g": "The 'Click' Signal",
+        "items": [
+          "Prompt 'explain this like I'm 12'",
+          "Demand intermediate code states & graphs",
+          "Recurse deeper until it intuitively clicks",
+          "Re-explain the concept back to Claude to confirm"
+        ]
+      },
+      {
+        "g": "Climb Back Up",
+        "items": [
+          "Return to the milestone after each rabbit hole",
+          "Keep a 'gaps I filled' log (your real transcript)"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Set Up the AI-Powered Workshop",
+    "groups": [
+      {
+        "g": "Core Tooling",
+        "items": [
+          "Install Godot 4.x stable (4.7 as of mid-2026)",
+          "Install Claude Code (terminal agent)",
+          "Git repo from day one — commit every milestone",
+          "Choose GDScript (best MCP & AI support)"
+        ]
+      },
+      {
+        "g": "Godot MCP Server",
+        "items": [
+          "Install a Godot MCP server (e.g. godot-mcp / GDAI)",
+          "Let Claude see the live scene tree, not guess it",
+          "Enable run-project + debug-output tools",
+          "Auto-approve safe read tools, gate destructive ones"
+        ]
+      },
+      {
+        "g": "Agent Workflow Rules",
+        "items": [
+          "Work on feature branches — AI edits are cheap to revert",
+          "Small focused prompts, one system at a time",
+          "Read every diff before accepting (gap detection!)"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 1 · Two Boxes That Move",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Scene with 2 CharacterBody2D fighters + floor",
+          "Input map: left/right/jump for both players",
+          "Walk, dash, jump with gravity",
+          "Face the opponent automatically"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "What is a scene tree / node, really?",
+          "_physics_process vs _process & delta time",
+          "Vector2 math: velocity, normalization",
+          "Godot's coordinate system (y-down!)"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 2 · The State Machine",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "FSM: idle, walk, jump, attack, hitstun, blockstun",
+          "One script per state or enum-based FSM",
+          "Debug label showing current state on screen"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Why if-else spaghetti collapses at 10+ moves",
+          "Enums, match statements, node references",
+          "Signals: Godot's observer pattern",
+          "Who owns state transitions and why"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 3 · Hitboxes & Hurtboxes",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Area2D hitboxes/hurtboxes as child nodes",
+          "Collision layers & masks (P1 hits P2 only)",
+          "One punch with startup/active/recovery frames",
+          "Damage, knockback, and hitstun on contact"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "AABB overlap — the math behind collision",
+          "Frame data: why fighters count in frames",
+          "Hitstop (freeze frames) and why hits feel weighty",
+          "Priority: what if both attacks land same frame?"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 4 · Animation & Game Feel",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Sprite sheets + AnimationPlayer per fighter",
+          "Animate hitboxes ON/OFF inside animation tracks",
+          "Screen shake, hit sparks, sound on impact",
+          "Cancel windows: attack → special cancels"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Keyframes, tracks, and call-method tracks",
+          "Animation-driven vs code-driven hitboxes",
+          "The 'juice' toolbox: easing curves & tweens"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 5 · Combat Depth (the Tekken Part)",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Input buffer (accept inputs a few frames early)",
+          "Command inputs: QCF + punch → fireball",
+          "Blocking: high/low, chip damage",
+          "Throws and throw techs",
+          "Juggle combos + damage scaling"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Ring buffers: how input history is stored",
+          "Parsing motion inputs as sequences over frames",
+          "Why damage scaling exists (infinite combos)",
+          "Balancing: risk/reward of every move"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 6 · Rounds, UI & a Real Match",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Health bars, round timer, round counter",
+          "Win/lose/KO flow, best-of-3 logic",
+          "Character select & stage select screens",
+          "Pause menu and rematch"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Godot UI: Control nodes, anchors, containers",
+          "Autoloads/singletons for match state",
+          "Scene switching without losing state"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 7 · The CPU Opponent",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "State-machine AI: approach, attack, defend",
+          "Reaction delays so it feels human, not psychic",
+          "Difficulty levels via reaction time & move choice"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Decision trees vs behavior trees vs FSM AI",
+          "Utility scoring: picking the 'best' move",
+          "Why perfect AI is bad game design"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Milestone 8 · Going Online (Advanced)",
+    "groups": [
+      {
+        "g": "Build It",
+        "items": [
+          "Make your game simulation deterministic",
+          "Godot Rollback Netcode addon (Snopek / Delta fork)",
+          "SG Physics 2D: deterministic fixed-point physics",
+          "Test with artificial latency & packet loss"
+        ]
+      },
+      {
+        "g": "Gaps You'll Hit (Recurse!)",
+        "items": [
+          "Why floats break determinism across machines",
+          "Rollback: predict, detect, resimulate",
+          "Delay-based vs rollback tradeoffs",
+          "Serializing game state every frame"
+        ]
+      }
+    ]
+  },
+  {
+    "t": "Ship It (Show, Don't Tell)",
+    "groups": [
+      {
+        "g": "Prove Your Skill in 3 Seconds",
+        "items": [
+          "Export to itch.io (HTML5 + desktop)",
+          "Record a 10-second combo GIF for your portfolio",
+          "Write a devlog: gaps you hit and how you filled them"
+        ]
+      },
+      {
+        "g": "Feedback Loop",
+        "items": [
+          "Get brutal playtest feedback from fighting-game players",
+          "Ask senior devs to tear your architecture apart",
+          "Iterate — then start your next, bigger gap"
+        ]
+      }
+    ]
+  }
+];
+
+const flow = document.getElementById('flow');
+const state = {};
+let TOTAL = 0;
+const tick = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 6"/></svg>';
+const chev = '<svg class="chev" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+
+DATA.forEach((st,si)=>{
+  const n = st.groups.reduce((a,g)=>a+g.items.length,0);
+  TOTAL += n;
+
+  const stage = document.createElement('div');
+  stage.className = 'stage' + (si===0?' open':'');
+  stage.dataset.si = si;
+
+  const groupsHTML = st.groups.map((g,gi)=>{
+    const items = g.items.map((it,ii)=>{
+      const cid = `${si}.${gi}.${ii}`; state[cid]=false;
+      return `<button class="item" data-id="${cid}"><span class="dot">${tick}</span><span class="lbl">${it}</span></button>`;
+    }).join('');
+    return `<div class="group"><div class="group-hd">${g.g}</div><div class="items">${items}</div></div>`;
+  }).join('');
+
+  stage.innerHTML = `
+    <div class="topic">
+      <span class="n">${String(si+1).padStart(2,'0')}</span>
+      <h2>${st.t}</h2>
+      <span class="tg" data-tg="${si}">0/${n}</span>
+      ${chev}
+    </div>
+    <div class="branch"><div class="branch-clip">
+      <div class="stem"></div>
+      <div class="groups">${groupsHTML}</div>
+    </div></div>`;
+
+  stage.querySelector('.topic').addEventListener('click',()=>stage.classList.toggle('open'));
+  flow.appendChild(stage);
+});
+
+document.getElementById('total').textContent = TOTAL;
+
+flow.addEventListener('click',e=>{
+  const it = e.target.closest('.item'); if(!it) return;
+  const id = it.dataset.id;
+  state[id] = !state[id];
+  it.classList.toggle('done', state[id]);
+  refresh();
+});
+
+function refresh(){
+  let done = 0;
+  document.querySelectorAll('.stage').forEach(stage=>{
+    const si = stage.dataset.si;
+    const chips = stage.querySelectorAll('.item');
+    let sd = 0; chips.forEach(c=>{ if(state[c.dataset.id]) sd++; });
+    done += sd;
+    stage.querySelector(`[data-tg="${si}"]`).textContent = `${sd}/${chips.length}`;
+    stage.classList.toggle('complete', sd===chips.length);
+  });
+  document.getElementById('done').textContent = done;
+}
+
+document.getElementById('reset').addEventListener('click',()=>{
+  for(const k in state) state[k]=false;
+  document.querySelectorAll('.item.done').forEach(c=>c.classList.remove('done'));
+  refresh();
+});
+</script>
+</body>
+</html>
