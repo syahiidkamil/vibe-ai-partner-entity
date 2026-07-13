@@ -1,5 +1,5 @@
 ---
-name: advanced-vision-and-spatial
+name: addon-vision-and-spatial
 description: >-
   A grid, board, map, or layout is about to be reasoned about "in the head";
   a harness returned spatial state as raw arrays; two reads of one state
@@ -9,11 +9,14 @@ description: >-
   pixels.
 ---
 
-# Advanced Vision and Spatial
+# Add-On Vision and Spatial
 
-The model has real multimodal vision, and most sessions leave it idle while
-the text side squints at `[[0,3,0],[3,3,1],...]` and hallucinates the shape.
-This skill runs the loop in both directions:
+The model's native multimodal vision is already GOOD — semantics, gestalt,
+"what is this" come free in one glance. What it lacks is empirical grounding:
+the percept lives in an internal workspace that dies with the forward pass,
+and it cannot be diffed, indexed, or handed to code. This skill is the ADD-ON
+that precipitates seeing into TOKEN space — an exact, checkable world model
+that persists — and it runs the loop in both directions:
 
 ```
                 render_state.py
@@ -50,7 +53,7 @@ This skill runs the loop in both directions:
 `tools/render_state.py` — pure stdlib, any `python3`, any OS.
 
 ```bash
-uv run python .claude/skills/advanced-vision-and-spatial/tools/render_state.py state.json --labels
+uv run python .claude/skills/addon-vision-and-spatial/tools/render_state.py state.json --labels
 # then Read the printed PNG path — actually look at it
 ```
 
@@ -74,7 +77,7 @@ state change; a stale image is as dangerous as a fluent guess.
 emits BOTH an annotated PNG for the eyes AND JSON for exact checks.
 
 ```bash
-P=.claude/skills/advanced-vision-and-spatial/tools/perceive.py
+P=.claude/skills/addon-vision-and-spatial/tools/perceive.py
 uv run $P info shot.png                      # size, colors, route suggestion
 uv run $P edges shot.png                     # auto-Canny edge map + overlay
 uv run $P shapes shot.png                    # polygons/circles, labeled overlay
@@ -137,7 +140,7 @@ of it. Read flat pictures with these priors, as hypotheses to check:
   Corporate proxy/custom CA: set `SSL_CERT_FILE` or `UV_NATIVE_TLS=1`.
   Windows-on-ARM native Python has no OpenCV wheel — use x64 Python there.
 - One-command install-and-capability check:
-  `uv run .claude/skills/advanced-vision-and-spatial/tools/selftest.py`
+  `uv run .claude/skills/addon-vision-and-spatial/tools/selftest.py`
   (renders known state, perceives it back, compares — plus shapes, objects,
   diff, crop on known answers; PASS/FAIL per stage).
 - Stable palette per session; prefer files over inline JSON for state;

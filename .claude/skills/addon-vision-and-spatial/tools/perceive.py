@@ -25,7 +25,7 @@ checks, and prints every output path on stdout):
   imgdiff A B                       what changed between two same-size images
 
 Run with uv so the dependencies self-install (isolated, cached after first run):
-  uv run .claude/skills/advanced-vision-and-spatial/tools/perceive.py info shot.png
+  uv run .claude/skills/addon-vision-and-spatial/tools/perceive.py info shot.png
 """
 
 import argparse

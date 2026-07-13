@@ -13,7 +13,7 @@ perceive back (perceive.py) -> compare. Then exercises edges, shapes, objects,
 and imgdiff on synthetic scenes with known answers. Prints PASS/FAIL per stage;
 exit code 0 only if everything passed.
 
-  uv run .claude/skills/advanced-vision-and-spatial/tools/selftest.py
+  uv run .claude/skills/addon-vision-and-spatial/tools/selftest.py
 """
 
 import json
