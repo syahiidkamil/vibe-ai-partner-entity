@@ -3,7 +3,7 @@ name: doctor-check
 description: "Run a whole-system VAPE health check covering dependencies, prerequisites, voice, avatar, and memory."
 ---
 
-# doctor-check — VAPE skill (Antigravity wrapper)
+# doctor-check — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/doctor/check.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

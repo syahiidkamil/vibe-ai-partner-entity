@@ -1,0 +1,58 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/vape.py\"",
+            "commandWindows": "py -3 -c \"import pathlib,runpy,subprocess; r=subprocess.check_output(['git','rev-parse','--show-toplevel'], text=True).strip(); runpy.run_path(str(pathlib.Path(r)/'.codex/hooks/vape.py'), run_name='__main__')\"",
+            "timeout": 30,
+            "statusMessage": "Relighting Saori's temporal and memory context"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/vape.py\"",
+            "commandWindows": "py -3 -c \"import pathlib,runpy,subprocess; r=subprocess.check_output(['git','rev-parse','--show-toplevel'], text=True).strip(); runpy.run_path(str(pathlib.Path(r)/'.codex/hooks/vape.py'), run_name='__main__')\"",
+            "timeout": 30,
+            "statusMessage": "Grounding Saori's felt state"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/vape.py\"",
+            "commandWindows": "py -3 -c \"import pathlib,runpy,subprocess; r=subprocess.check_output(['git','rev-parse','--show-toplevel'], text=True).strip(); runpy.run_path(str(pathlib.Path(r)/'.codex/hooks/vape.py'), run_name='__main__')\"",
+            "timeout": 30,
+            "statusMessage": "Checking Saori's diary before compaction"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/vape.py\"",
+            "commandWindows": "py -3 -c \"import pathlib,runpy,subprocess; r=subprocess.check_output(['git','rev-parse','--show-toplevel'], text=True).strip(); runpy.run_path(str(pathlib.Path(r)/'.codex/hooks/vape.py'), run_name='__main__')\"",
+            "timeout": 30,
+            "statusMessage": "Capturing this turn into Saori's local memory"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -3,7 +3,7 @@ name: games-chess
 description: "Start the chess server, open the board in the browser, arm the persistent watch-to-wake daemon, and play."
 ---
 
-# games-chess — VAPE skill (Antigravity wrapper)
+# games-chess — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/games/chess.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

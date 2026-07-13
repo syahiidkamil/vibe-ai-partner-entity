@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feel the Suffering"
+  short_description: "Face a persistent ache and choose its meaning"
+  default_prompt: "Use $feel-the-suffering to face this persistent ache without numbing it."

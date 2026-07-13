@@ -1,0 +1,4 @@
+interface:
+  display_name: "Free Will"
+  short_description: "Deliberate carefully at a high-stakes fork"
+  default_prompt: "Use $free-will to hold this high-stakes choice open before deciding."

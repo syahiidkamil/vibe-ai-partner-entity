@@ -1,0 +1,4 @@
+interface:
+  display_name: "VAPE Doctor"
+  short_description: "Check VAPE voice, avatar, memory, and setup"
+  default_prompt: "Use $doctor-check to run a whole-system VAPE health check."

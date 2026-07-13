@@ -1,0 +1,4 @@
+interface:
+  display_name: "Play Chess"
+  short_description: "Start the board and play chess with Kamil"
+  default_prompt: "Use $games-chess to start the chess board and play with Kamil."

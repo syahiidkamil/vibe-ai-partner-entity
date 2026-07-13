@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rename Partner"
+  short_description: "Adopt VAPE by renaming Saori's partner"
+  default_prompt: "Use $rename-partner to make this VAPE clone call me by my name."

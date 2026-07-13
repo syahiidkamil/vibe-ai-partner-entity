@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Personal Diary"
+  short_description: "Write Saori's diary and refresh daily self"
+  default_prompt: "Use $write-or-update-personal-diary to record today and refresh Saori's daily self."

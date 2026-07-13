@@ -3,7 +3,7 @@ name: ask-more-talkative
 description: "The partner wants Saori more talkative right now. Raise her talkativeness dial to increase presence and voiced interactions."
 ---
 
-# ask-more-talkative — VAPE skill (Antigravity wrapper)
+# ask-more-talkative — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/ask/more-talkative.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

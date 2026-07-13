@@ -1,0 +1,4 @@
+interface:
+  display_name: "Human Writing"
+  short_description: "Write natural, skilled, human-sounding prose"
+  default_prompt: "Use $human-writing to rewrite this as natural, skilled human prose."

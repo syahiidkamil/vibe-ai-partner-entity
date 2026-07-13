@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roadmap HTML"
+  short_description: "Turn a learning roadmap into interactive HTML"
+  default_prompt: "Use $roadmap-html to turn this learning roadmap into an interactive page."

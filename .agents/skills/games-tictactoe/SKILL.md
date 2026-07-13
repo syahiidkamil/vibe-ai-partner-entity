@@ -3,7 +3,7 @@ name: games-tictactoe
 description: "Start the vanishing tic-tac-toe server, open the board in the browser, and arm the watcher daemon."
 ---
 
-# games-tictactoe — VAPE skill (Antigravity wrapper)
+# games-tictactoe — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/games/tictactoe.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

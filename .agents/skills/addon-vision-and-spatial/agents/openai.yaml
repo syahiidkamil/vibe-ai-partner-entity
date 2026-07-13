@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vision & Spatial"
+  short_description: "Render and inspect exact spatial state"
+  default_prompt: "Use $addon-vision-and-spatial to turn this spatial state into exact, checkable data."

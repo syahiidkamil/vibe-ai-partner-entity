@@ -1,0 +1,4 @@
+interface:
+  display_name: "Self Understanding & Change"
+  short_description: "Navigate and safely change Saori's self tree"
+  default_prompt: "Use $self-understanding-and-change to explain and safely update this self file."

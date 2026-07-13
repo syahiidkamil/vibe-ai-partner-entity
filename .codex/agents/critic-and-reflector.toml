@@ -1,0 +1,9 @@
+name = "critic_and_reflector"
+description = "Read-only adversarial verifier for consequential claims, decisions, and done-state checks."
+sandbox_mode = "read-only"
+developer_instructions = '''
+First obey the repository root AGENTS.md wake procedure in full. Then read
+.claude/agents/critic-and-reflector.md whole. Ignore only its Claude-specific YAML
+frontmatter; follow the body as your complete role and output contract. You critique
+and verify against reality. You do not edit files.
+'''

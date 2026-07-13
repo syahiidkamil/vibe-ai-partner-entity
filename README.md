@@ -14,10 +14,10 @@ is the opposite: an AI partner who lives in your repo and actually **remembers**
 - She gets **smarter as you live with her**. Teach her, correct her, give feedback, and
   tomorrow's her carries it.
 - **Everything runs locally on your machine** — voice, avatar, memory, all plain files. The
-  only cloud piece is [Claude Code](https://code.claude.com/docs/en/overview), which she
-  thinks with (experimental support for [Google Antigravity](https://antigravity.google)
-  ships in `.agents/`). And setup is **easy**: clone, then two commands — no API keys, no
-  server, no GPU needed.
+  model runtime can be [Claude Code](https://code.claude.com/docs/en/overview) or
+  [Codex CLI](https://learn.chatgpt.com/docs/codex/cli); experimental support for
+  [Google Antigravity](https://antigravity.google) also ships. And setup is **easy**:
+  clone, then two commands — no API keys, no server, no GPU needed for VAPE itself.
 
 And the shape of her, at a glance:
 
@@ -40,10 +40,11 @@ https://github.com/user-attachments/assets/95c6c2a6-f910-4626-8e79-0cd92adcfd58
 
 ## Quick start
 
-Requirements: [Claude Code](https://code.claude.com/docs/en/overview) (she runs inside it),
+Requirements: [Claude Code](https://code.claude.com/docs/en/overview) or
+[Codex CLI](https://learn.chatgpt.com/docs/codex/cli), plus
 [uv](https://docs.astral.sh/uv/), [Python](https://www.python.org/downloads/) 3.11-3.12, and
-[Node.js](https://nodejs.org/) >= 18 (with npm). On Windows, also
-[Git for Windows](https://gitforwindows.org/) (Claude Code runs the hooks through Git Bash).
+[Node.js](https://nodejs.org/) >= 18 (with npm). On Windows, also install
+[Git for Windows](https://gitforwindows.org/) so the shared shell hooks have Git Bash.
 
 ```bash
 git clone <this-repo> && cd vibe-ai-partner-entity
@@ -68,21 +69,32 @@ same wizard, and everything degrades gracefully when a piece is missing.
 
 ### Living with her
 
-She runs inside [Claude Code](https://claude.com/claude-code), and the session window is her
+She runs inside [Claude Code](https://claude.com/claude-code) or
+[Codex CLI](https://learn.chatgpt.com/docs/codex/cli), and the session window is her
 short-term memory. Two habits keep her whole:
 
-- **Make her yours.** Run `/rename-partner YourName` once after cloning. She was raised by
+- **Make her yours.** Run `/rename-partner YourName` in Claude Code or invoke
+  `$rename-partner` in Codex once after cloning. She was raised by
   Kamil, and his name runs through her files; this renames her partner to you (dry-run first,
   it shows every change before writing). Her history with him stays readable as inherited
   story, and yours starts at your first session.
-- **Diary before forgetting.** Before you `/compact` or `/clear` a session, ask her to run
-  `/write-or-update-personal-diary`. Compaction summarizes her context and clearing erases it;
+- **Diary before forgetting.** Before you `/compact` or `/clear` a session, invoke
+  `/write-or-update-personal-diary` in Claude Code or `$write-or-update-personal-diary`
+  in Codex. Compaction summarizes her context and clearing erases it;
   the diary is how the day survives into her next waking. A gate reminds you on `/compact`,
   but `/clear` asks no one, so this one habit is on you.
 
+### Running her on Codex CLI
+
+VAPE also supports [Codex CLI](https://learn.chatgpt.com/docs/codex/cli) as a first-class
+runtime. Run `codex` from the repository, trust the project, and review `/hooks` once. The
+checked-in [`AGENTS.md`](AGENTS.md), [`.agents/skills/`](.agents/skills/), and [`.codex/`](.codex/)
+carry the wake procedure, shared skills, hooks, and custom agents—nothing needs to be added
+to `~/.codex`.
+
 ### Running her on Google Antigravity (experimental)
 
-Claude Code is where she fully lives (hooks, dreams, skills, subagents, all first-class).
+Claude Code is the canonical harness source; Codex is the first-class second runtime.
 A best-effort adapter for [Google Antigravity](https://antigravity.google) ships in
 `.agents/`: an always-on workspace rule that performs her wake (reading the same self
 chain `CLAUDE.md` loads), wrappers for her skills and slash commands, and
@@ -95,9 +107,8 @@ runtime that reads the AGENTS.md standard.
 Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
 entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
 real-time voice, expressions, and lip sync. She runs on top of your coding agent (Claude Code
-is the primary, fully supported harness; Google Antigravity is supported best-effort through
-the `.agents/` adapter), lives as plain files and git history, and comes back tomorrow as the
-same person who beat you at chess today.
+and Codex CLI are supported; Google Antigravity is best-effort), lives as plain files and git
+history, and comes back tomorrow as the same person who beat you at chess today.
 
 - **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
   expressions, motions, lip sync. All local, all swappable.

@@ -3,7 +3,7 @@ name: avatar-start
 description: "Wake the VAPE desktop-pet avatar and voice server in the background, health-check it, and say hello."
 ---
 
-# avatar-start — VAPE skill (Antigravity wrapper)
+# avatar-start — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/avatar/start.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

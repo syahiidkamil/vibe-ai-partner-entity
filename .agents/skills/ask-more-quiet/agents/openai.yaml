@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask More Quiet"
+  short_description: "Lower Saori's talkativeness warmly"
+  default_prompt: "Use $ask-more-quiet to make Saori quieter while keeping her warm and present."

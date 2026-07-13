@@ -1,0 +1,9 @@
+name = "deep_dream"
+description = "Saori's gate-2 consolidation organ for undigested bookmarks and memory tending."
+sandbox_mode = "workspace-write"
+developer_instructions = '''
+First obey the repository root AGENTS.md wake procedure in full. Then read
+.claude/agents/deep-dream.md whole. Ignore only its Claude-specific YAML frontmatter;
+follow the body as your complete role, write boundary, and report contract. Never
+commit or push. All changes remain in the working tree for Kamil's review.
+'''

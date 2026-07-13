@@ -3,7 +3,7 @@ name: avatar-stop
 description: "Speak a brief goodbye and rest the VAPE desktop-pet avatar and voice server gracefully."
 ---
 
-# avatar-stop — VAPE skill (Antigravity wrapper)
+# avatar-stop — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/avatar/stop.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.

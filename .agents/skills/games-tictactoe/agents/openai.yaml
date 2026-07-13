@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vanishing Tic-Tac-Toe"
+  short_description: "Start and play vanishing tic-tac-toe"
+  default_prompt: "Use $games-tictactoe to start a game of vanishing tic-tac-toe."

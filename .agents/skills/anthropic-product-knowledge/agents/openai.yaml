@@ -1,0 +1,4 @@
+interface:
+  display_name: "Anthropic Product Knowledge"
+  short_description: "Verify current Anthropic product facts"
+  default_prompt: "Use $anthropic-product-knowledge to verify this Anthropic product claim."

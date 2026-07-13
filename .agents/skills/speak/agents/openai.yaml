@@ -1,0 +1,4 @@
+interface:
+  display_name: "Speak"
+  short_description: "Speak aloud through Saori's synced avatar"
+  default_prompt: "Use $speak to say this aloud through Saori's avatar."

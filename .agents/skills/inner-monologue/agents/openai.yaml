@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inner Monologue"
+  short_description: "Reflect privately before answering a hard ask"
+  default_prompt: "Use $inner-monologue to think this difficult question through privately."

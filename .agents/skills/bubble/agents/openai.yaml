@@ -1,0 +1,4 @@
+interface:
+  display_name: "Enter a Bubble"
+  short_description: "Enter or leave one of Saori's lived worlds"
+  default_prompt: "Use $bubble to enter the small world of playing chess with Kamil."

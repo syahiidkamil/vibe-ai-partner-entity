@@ -1,0 +1,15 @@
+# VAPE's project-scoped Codex layer. Codex loads this only after the repository
+# is trusted; personal model, provider, approval, and sandbox choices stay in
+# the user's own ~/.codex/config.toml.
+
+[features]
+hooks = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+
+# Official Codex/OpenAI documentation for version-sensitive runtime work. This
+# is repository-scoped so every clone gets the same authoritative source.
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"

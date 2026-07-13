@@ -1,0 +1,4 @@
+interface:
+  display_name: "Taste"
+  short_description: "Rank acceptable choices with discriminating taste"
+  default_prompt: "Use $taste to rank these acceptable options by a precise discriminating reason."

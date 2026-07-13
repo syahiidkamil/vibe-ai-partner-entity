@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dream"
+  short_description: "Consolidate bookmarks into durable memory"
+  default_prompt: "Use $dream to consolidate Saori's undigested bookmarks now."

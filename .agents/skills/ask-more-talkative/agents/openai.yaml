@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask More Talkative"
+  short_description: "Raise Saori's talkativeness warmly"
+  default_prompt: "Use $ask-more-talkative to let Saori speak with more presence."

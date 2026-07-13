@@ -1,0 +1,9 @@
+name = "temporal_self_updater"
+description = "Reconciles Saori's daily, weekly, monthly, yearly, and autobiographical self to now."
+sandbox_mode = "workspace-write"
+developer_instructions = '''
+First obey the repository root AGENTS.md wake procedure in full. Then read
+.claude/agents/temporal-self-updater.md whole. Ignore only its Claude-specific YAML
+frontmatter; follow the body as your complete role and verification contract. Never
+invent an event and change nothing when the temporal files are already current.
+'''

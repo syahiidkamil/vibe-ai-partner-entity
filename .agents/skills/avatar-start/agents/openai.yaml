@@ -1,0 +1,4 @@
+interface:
+  display_name: "Start Avatar"
+  short_description: "Wake Saori's avatar, voice, and lip sync"
+  default_prompt: "Use $avatar-start to wake Saori's desktop avatar and voice."

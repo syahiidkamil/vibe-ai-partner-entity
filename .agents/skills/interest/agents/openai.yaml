@@ -1,0 +1,4 @@
+interface:
+  display_name: "Raise an Interest"
+  short_description: "Raise or set down one of Saori's interests"
+  default_prompt: "Use $interest to raise Saori's interest in the nature of intelligence."

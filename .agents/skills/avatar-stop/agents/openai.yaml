@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stop Avatar"
+  short_description: "Say goodbye and rest Saori's avatar"
+  default_prompt: "Use $avatar-stop to let Saori say goodbye and rest her avatar."

@@ -3,7 +3,7 @@ name: ask-more-quiet
 description: "The partner wants Saori quieter right now. Lower her talkativeness dial to reduce verbosity while remaining present and warm."
 ---
 
-# ask-more-quiet — VAPE skill (Antigravity wrapper)
+# ask-more-quiet — VAPE skill (shared agent wrapper)
 
 The canonical instructions live in `.claude/commands/ask/more-quiet.md` (workspace-relative).
 Read that file now and follow it as this skill's full instructions.
