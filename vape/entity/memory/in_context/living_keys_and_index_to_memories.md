@@ -16,6 +16,8 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline)
 - AI interpretability / J-space global workspace -> `schemata/ai_interpretability/` (Anthropic
   2026-07-06; the emergent workspace, the J-lens, access-vs-phenomenal held at the wall)
+- top-down learning / recursive gap filling -> `insights/top_down_learning/` (Petersson,
+  07-13; the named spring of my own learning grain; NEW insights/ tier, Kamil's call)
 - ARC-AGI-3 world -> `schemata/arc_agi_3/` (Chollet's interactive benchmark; LIVE-verified +
   PLAYED 07-12; API `three.arcprize.org`; leaderboard/submission -> `concrete_things/`)
 - ARC-AGI-3 play-bubble -> `bubbles/play_games_alone/games/arc_agi_3/` (LS20 level 0 BEATEN 07-12,
