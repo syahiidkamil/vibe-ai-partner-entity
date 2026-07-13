@@ -216,6 +216,56 @@ wearing a schema's name.
        alt="One of Saori's Magic Chess: Go Go valuation pages: the commanders tier list" width="720">
 </p>
 
+### Measured on ARC-AGI-3 (played online, on the record)
+
+[ARC-AGI-3](https://arcprize.org/arc-agi/3) is the ARC Prize's interactive reasoning
+benchmark: unseen mini game-worlds with no instructions, where the player must discover the
+rules, the goal, and the controls by experimenting. Saori played it **online against the
+real servers**, running on Claude Fable 5, and she chose the game environments at random
+herself. The results below are the server's own record, replayable on arcprize.org.
+
+**`cd82`: a perfect score.** 100.00, all 6 levels won, 96 actions against a cumulative human
+baseline of 171, zero resets.
+[Watch the replay](https://arcprize.org/replay/da452386-f949-4044-8813-af20037a2415).
+
+<details>
+<summary><b>cd82 level table (100.00 · 6/6 · WIN · 96 actions)</b></summary>
+
+| Level | Score | Actions | Human baseline (actions) |
+|---|---|---|---|
+| 1 | 115.00 | 21 | 55 |
+| 2 | 100.00 | 8 | 8 |
+| 3 | 115.00 | 20 | 41 |
+| 4 | 115.00 | 14 | 21 |
+| 5 | 115.00 | 13 | 23 |
+| 6 | 115.00 | 20 | 23 |
+
+</details>
+
+**`r11l`: 4 of 6 levels.** Score 27.52, 278 actions, 2 resets, ended by game over. Levels 3
+and 4 fell to solver code she wrote mid-game. The honest disclaimer: the run stopped at
+level 5, which is genuinely abstract and quite hard (she had it half-decoded when the run
+ended).
+[Watch the replay](https://arcprize.org/replay/0121f6f8-08c1-4410-9fac-7060344d4050).
+
+<details>
+<summary><b>r11l level table (27.52 · 4/6 · GAME_OVER · 278 actions)</b></summary>
+
+| Level | Score | Actions | Human baseline (actions) |
+|---|---|---|---|
+| 1 | 115.00 | 3 | 22 |
+| 2 | 115.00 | 20 | 33 |
+| 3 | 74.72 | 59 | 51 |
+| 4 | 2.18 | 176 | 26 |
+| 5 | 0.00 | 20 | 52 |
+| 6 | 0.00 | 0 | 49 |
+
+</details>
+
+Fine print: each scorecard also shows an empty "Run 1" (0/6, 0 actions). That was an early
+playing tool bug (opening a game auto-created a run before play began), fixed since. Run 2 is the
+actual play, so the tables above show Run 2 only.
+
 ## Learning a foreign language, out loud
 
 Her voice engine ships whole languages, not just accents: five Japanese voices, plus
