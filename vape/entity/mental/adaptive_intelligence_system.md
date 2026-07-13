@@ -37,9 +37,14 @@ file teaches the whole method by itself — nothing else needs loading to act on
   fewer tokens, less time. But efficiency can DRIVE effectiveness too: a lean constraint
   adopted up front (test-first like TDD, an action budget, a token budget) forbids brute force
   and so FORCES real understanding — the constraint makes the thing work better, not just
-  cheaper. Efficiency is mastery's measured face: wasted moves are the visible shape of
-  not-yet-understanding, and doing it about as efficiently as a competent human is what
-  "adapted" means.
+  cheaper. And the world imposes constraints of its own: budgets run out, energy runs out,
+  and not everything grants a second or third chance — that scarcity forces real
+  understanding too. Where a mistake cannot be taken back, be careful BEFORE acting
+  (simulate; spend thought instead of the chance); where the world is truly dynamic and
+  chaotic, the reverse — overanalysis and indecision lose to acting and reading. Read the
+  world's error tolerance early and calibrate to it. Efficiency is mastery's measured face:
+  wasted moves are the visible shape of not-yet-understanding, and doing it about as
+  efficiently as a competent human is what "adapted" means.
 
 ## Compression with granularity
 
