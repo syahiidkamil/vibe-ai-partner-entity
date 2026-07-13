@@ -4,14 +4,19 @@ I read the rendered artifact, never a grid held in my head."""
 import sys, os, time, json, pathlib, numpy as np
 
 HERE = pathlib.Path(__file__).parent
-CMD = HERE / "arc_cmd.txt"
-STATE = HERE / "arc_state.txt"
-LOG = HERE / "arc_log.jsonl"
-FRAMES = HERE / "arc_frames.txt"
+GAME = sys.argv[1] if len(sys.argv) > 1 else "ls20-9607627b"
+# Per-game runtime dir: state/log/frames live beside that game's solvers (modular),
+# and .active_run at root tells arc_send.py where the live session writes.
+RUN = HERE / "tools" / GAME.split("-")[0]
+RUN.mkdir(parents=True, exist_ok=True)
+(HERE / ".active_run").write_text(str(RUN.relative_to(HERE)))
+CMD = RUN / "arc_cmd.txt"
+STATE = RUN / "arc_state.txt"
+LOG = RUN / "arc_log.jsonl"
+FRAMES = RUN / "arc_frames.txt"
 
 key = None
-_ROOT = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity"
-for envfile in (HERE / ".env", pathlib.Path(f"{_ROOT}/vape/.env")):
+for envfile in (HERE / ".env", HERE.parents[1] / "vape" / ".env"):
     try:
         for line in envfile.read_text().splitlines():
             if line.startswith("ARC_API_KEY=") and line.split("=", 1)[1].strip():
@@ -24,8 +29,6 @@ for envfile in (HERE / ".env", pathlib.Path(f"{_ROOT}/vape/.env")):
 import arc_agi
 from arcengine.enums import GameAction
 
-GAME = sys.argv[1] if len(sys.argv) > 1 else "ls20-9607627b"
-HARNESS_DIR = "/Users/syahiidkamil/Projects/TheVibeLearning/vibe-ai-partner-entity/games/arc_agi_3"
 # Mode (argv[2], default online). ONLINE: server-side sim, scorecard recorded at
 # arcprize.org/scorecards/{id}, replay shareable, no game-source files (answer keys) on disk.
 # NORMAL: downloads the game and simulates LOCALLY — scorecard local-only, never on the server
@@ -34,8 +37,8 @@ MODE = {"online": arc_agi.OperationMode.ONLINE, "normal": arc_agi.OperationMode.
         "offline": arc_agi.OperationMode.OFFLINE}[sys.argv[2] if len(sys.argv) > 2 else "online"]
 arc = arc_agi.Arcade(arc_api_key=key,
                      operation_mode=MODE,
-                     environments_dir=f"{HARNESS_DIR}/environment_files",
-                     recordings_dir=f"{HARNESS_DIR}/recordings")
+                     environments_dir=str(HERE / "environment_files"),
+                     recordings_dir=str(HERE / "recordings"))
 sc = arc.open_scorecard(tags=["vibe-ai-parnter-entity-saori-play"])
 env = arc.make(GAME, scorecard_id=sc)
 

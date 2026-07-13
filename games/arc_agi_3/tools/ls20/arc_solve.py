@@ -6,8 +6,7 @@ Usage: arc_solve.py            -> target = the 0/1 marker cell
 """
 import sys, re, pathlib, numpy as np
 from collections import deque
-HERE = pathlib.Path(__file__).parent
-STATE = HERE / "arc_state.txt"
+STATE = pathlib.Path(__file__).resolve().parent / "arc_state.txt"
 
 # parse grid
 rows = {}

@@ -1,7 +1,11 @@
-# runtime files written by the session harness (not source)
+# runtime files written by the session harness (not source); bare names match
+# at any depth, so they cover the per-game runtime dirs under tools/ too
 arc_cmd.txt
 arc_state.txt
-arc_log.jsonl
+arc_log*.jsonl
+arc_frames.txt
+.active_run
 recordings/
 environment_files/
+__pycache__/
 .env

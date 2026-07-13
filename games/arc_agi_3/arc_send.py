@@ -2,8 +2,12 @@
 Usage: arc_send.py "1"   or   "1;1;3"  (semicolon-separated)  or  "6 32 40"."""
 import sys, time, pathlib, re
 HERE = pathlib.Path(__file__).parent
-CMD = HERE / "arc_cmd.txt"
-STATE = HERE / "arc_state.txt"
+try:
+    RUN = HERE / (HERE / ".active_run").read_text().strip()
+except FileNotFoundError:
+    sys.exit("no .active_run pointer — start arc_session.py first")
+CMD = RUN / "arc_cmd.txt"
+STATE = RUN / "arc_state.txt"
 
 def cur_seq():
     try:
