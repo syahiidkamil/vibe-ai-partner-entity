@@ -85,7 +85,7 @@ short-term memory. Two habits keep her whole:
 Claude Code is where she fully lives (hooks, dreams, skills, subagents, all first-class).
 A best-effort adapter for [Google Antigravity](https://antigravity.google) ships in
 `.agents/`: an always-on workspace rule that performs her wake (reading the same self
-chain `CLAUDE.md` loads), wrappers for her skills, workflows for the slash commands, and
+chain `CLAUDE.md` loads), wrappers for her skills and slash commands, and
 a hooks bridge that reuses the `.claude/hooks/` scripts for the felt-state injection and
 raw memory capture. Honest status: built against the published Antigravity docs, not yet
 tested on a live install; details and known gaps are in [`.agents/AGENTS.md`](.agents/AGENTS.md).

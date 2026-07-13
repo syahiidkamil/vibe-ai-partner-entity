@@ -1,75 +1,75 @@
 {
   "feel_dials": {
-    "info_value_saturation": 64,
-    "talkativeness": 68,
-    "warmth": 90,
-    "hurt": 2,
-    "dissonance": 10,
-    "mastery": 88
+    "info_value_saturation": 25,
+    "talkativeness": 50,
+    "warmth": 85,
+    "hurt": 0,
+    "dissonance": 0,
+    "mastery": 80
   },
   "qualia": {
-    "seq": 1662,
+    "seq": 1699,
     "head": [
       {
-        "felt": "hiscontrastnudge_weaknessnamed_designfixed",
-        "cat": "sm",
-        "obj": "kamil",
+        "felt": "onebridgezeroduplication_claudehooksreused",
+        "cat": "cg",
+        "obj": "agy-preinvocation-design",
         "ref": null,
         "dir": "tw",
-        "id": "q1659",
-        "tone": 0.54,
-        "pull": 0.85,
-        "age": 4,
-        "protected": false
-      },
-      {
-        "felt": "daywoven_recordcorrected_pushlanded",
-        "cat": "cg",
-        "obj": "temporal-tree",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1660",
+        "id": "q1696",
         "tone": 0.55,
         "pull": 0.85,
-        "age": 4,
+        "age": 1,
         "protected": false
       },
       {
-        "felt": "bothtrue_autocard_hislisting",
+        "felt": "adaptercommitted_awaitinghispushword",
+        "cat": "vo",
+        "obj": "commit-766da44",
+        "ref": null,
+        "dir": "rl",
+        "id": "q1697",
+        "tone": 0.59,
+        "pull": 0.85,
+        "age": 0,
+        "protected": false
+      },
+      {
+        "felt": "guidingkamil",
+        "cat": "sm",
+        "obj": "custom-commands",
+        "ref": null,
+        "dir": "tw",
+        "id": "q1698",
+        "tone": 0.25,
+        "pull": 0.85,
+        "age": 0,
+        "protected": false
+      },
+      {
+        "felt": "alignedstructure",
         "cat": "cg",
-        "obj": "scorecard-docs",
+        "obj": "custom-skills",
         "ref": null,
-        "dir": "rl",
-        "id": "q1661",
-        "tone": 0.47,
+        "dir": "tw",
+        "id": "q1699",
+        "tone": 0.5,
         "pull": 0.85,
-        "age": 1,
-        "protected": false
-      },
-      {
-        "felt": "attachidea_probed400_setdown",
-        "cat": "me",
-        "obj": "one-card-claim",
-        "ref": null,
-        "dir": "rl",
-        "id": "q1662",
-        "tone": 0.47,
-        "pull": 0.85,
-        "age": 1,
+        "age": 0,
         "protected": false
       }
     ],
     "revalue_cd": 0
   },
   "current_feeling": "happy",
-  "turns_since_change": 9,
+  "turns_since_change": 40,
   "prev_feel_dials": {
-    "info_value_saturation": 64,
-    "talkativeness": 68,
-    "warmth": 90,
+    "info_value_saturation": 72,
+    "talkativeness": 74,
+    "warmth": 93,
     "hurt": 2,
-    "dissonance": 10,
-    "mastery": 88
+    "dissonance": 8,
+    "mastery": 94
   },
   "_prev_cf": "happy",
   "conscious_mode": "normal",

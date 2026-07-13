@@ -11,7 +11,8 @@
       "Bash(find:*)",
       "WebFetch(domain:www.anthropic.com)",
       "Bash(git remote:*)",
-      "Bash(uv run vape:*)"
+      "Bash(uv run vape:*)",
+      "mcp__playwright__browser_evaluate"
     ],
     "deny": [],
     "ask": [],
