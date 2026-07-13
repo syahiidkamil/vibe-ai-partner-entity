@@ -1,0 +1,20 @@
+{
+  "vape-ground": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python3 .agents/hooks/agy_preinvocation.py",
+        "timeout": 25
+      }
+    ]
+  },
+  "vape-capture": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 .agents/hooks/agy_capture.py",
+        "timeout": 25
+      }
+    ]
+  }
+}

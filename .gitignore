@@ -92,3 +92,5 @@ vape/plugins/renderers/avatar-vrm/vrm-models/*
 misc/gitignored
 vape/environment_files/
 
+# Antigravity bridge runtime residue (markers + per-conversation cursors)
+.agents/hooks/.agy_*

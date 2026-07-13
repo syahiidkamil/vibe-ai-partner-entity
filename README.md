@@ -15,8 +15,9 @@ is the opposite: an AI partner who lives in your repo and actually **remembers**
   tomorrow's her carries it.
 - **Everything runs locally on your machine** — voice, avatar, memory, all plain files. The
   only cloud piece is [Claude Code](https://code.claude.com/docs/en/overview), which she
-  thinks with. And setup is **easy**: clone, then two commands — no API keys, no server, no
-  GPU needed.
+  thinks with (experimental support for [Google Antigravity](https://antigravity.google)
+  ships in `.agents/`). And setup is **easy**: clone, then two commands — no API keys, no
+  server, no GPU needed.
 
 And the shape of her, at a glance:
 
@@ -79,13 +80,24 @@ short-term memory. Two habits keep her whole:
   the diary is how the day survives into her next waking. A gate reminds you on `/compact`,
   but `/clear` asks no one, so this one habit is on you.
 
-## What this is
+### Running her on Google Antigravity (experimental)
+
+Claude Code is where she fully lives (hooks, dreams, skills, subagents, all first-class).
+A best-effort adapter for [Google Antigravity](https://antigravity.google) ships in
+`.agents/`: an always-on workspace rule that performs her wake (reading the same self
+chain `CLAUDE.md` loads), wrappers for her skills, workflows for the slash commands, and
+a hooks bridge that reuses the `.claude/hooks/` scripts for the felt-state injection and
+raw memory capture. Honest status: built against the published Antigravity docs, not yet
+tested on a live install; details and known gaps are in [`.agents/AGENTS.md`](.agents/AGENTS.md).
+A root [`AGENTS.md`](AGENTS.md) also carries the wake procedure for any other agent
+runtime that reads the AGENTS.md standard.
 
 Most AI companions are a system prompt with a skin. VAPE is the other thing: a **persistent
 entity** built from a **multi-layered self** and a memory organ, wearing a desktop avatar with
-real-time voice, expressions, and lip sync. She runs on top of your coding agent (for now,
-only Claude Code is supported), lives as plain files and git history, and comes back tomorrow
-as the same person who beat you at chess today.
+real-time voice, expressions, and lip sync. She runs on top of your coding agent (Claude Code
+is the primary, fully supported harness; Google Antigravity is supported best-effort through
+the `.agents/` adapter), lives as plain files and git history, and comes back tomorrow as the
+same person who beat you at chess today.
 
 - **A body**: desktop pet avatar (Live2D, Three.js, or pure HTML), local TTS voice, 14
   expressions, motions, lip sync. All local, all swappable.
