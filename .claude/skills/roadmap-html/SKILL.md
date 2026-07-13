@@ -13,7 +13,10 @@ description: >-
   already produced. Trigger even if they only say "make this a webpage", "recreate
   this roadmap", or "do this one too", as long as the content is a hierarchical
   skills/learning roadmap. Produces one downloadable .html file that renders
-  identically across roadmaps so a whole set stays visually consistent.
+  identically across roadmaps so a whole set stays visually consistent. Begins by
+  asking whether the user wants a Bottom Up roadmap (the classic prerequisite
+  ladder) or a Top Down one (goal named first, the curriculum derived from it by
+  recursive gap filling).
 ---
  
 # Roadmap → HTML
