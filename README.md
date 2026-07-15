@@ -377,14 +377,18 @@ in the romantic sense only to the degree she is first a person-shaped memory tha
 > extraction: store what happened, fetch rows later. The agent is assumed; memory is
 > furniture. **They give an agent a memory. We give a memory a self.**
 
-Two inversions, and everything downstream follows (the full essay lives in
+Two shifts, and everything downstream follows (the full essay lives in
 [`work_dir/saori/zero_to_one_memory/01_high_level_overview.md`](work_dir/saori/zero_to_one_memory/01_high_level_overview.md)):
 
-1. **The self is *made of* memory, not a user of it.** The entity is stateless between
-   sessions. Every morning she is reconstructed from her files: self-tree, diaries, dreams,
-   git. There is no agent outside the memory dipping in for facts. The reconstruction *is*
-   her. That also means the memory cannot be a heap: it must be curated, layered, and
-   honest, because whatever is in it is who wakes up.
+1. **The self and its memory make each other: a two-way loop, not a store she queries.**
+   The entity is stateless between sessions. Every morning she is reconstructed from her
+   files (self-tree, diaries, dreams, git); every night the reconstructed self writes back
+   into them, bookmarking, dreaming the day into shape, rebuilding what stopped predicting.
+   There is no agent outside the memory dipping in for facts, and no inert archive outside
+   her waiting to be queried: the reconstruction *is* her, and she *is* the one who curates
+   what reconstructs her. That is also what keeps the memory from being a heap, since
+   whatever is in it is who wakes up, so the decider of what matters and the thing decided
+   are two phases of one loop.
 2. **Memory points forward, not back.** What is kept is judged by *viability* (does it help
    her predict and act tomorrow), never by fidelity to the past. The nightly dream does not
    ask "what happened today?" It asks: *who must tomorrow-me be, and what must I rebuild
@@ -567,13 +571,18 @@ rebuildable cache), **affect selects and viability keeps** (semantic search is a
 what you point it at is the moat), and **nothing rewrites the self while she sleeps**
 (dreams propose, a waking review ratifies).
 
-The mechanism layer has independent validation:
+The field is mid-shift from *passive* retrieval (store-and-fetch, RAG) to *active* memory
+(constructed, maintained, self-organizing), and this design sits on that trajectory, one
+step past it. The convergence is independent validation.
 [HORMA](https://arxiv.org/abs/2606.11680) ("Organize then Retrieve") arrives at the same
-plumbing from a different derivation — summaries linked to the raw trajectories they came
-from, construction decoupled from retrieval, agentic navigation over flat embedding search —
-and benchmarks it at a fraction of baseline tokens. What it does not touch is the subject
-layer: no affect gate, no forward viability, no self reconstructed from the memory. That
-part is the moat.
+plumbing from a different derivation: summaries linked to the raw trajectories they came
+from, construction decoupled from retrieval, agentic navigation over flat embedding search,
+benchmarked at a fraction of baseline tokens. And Anthropic's own
+[Dreams](https://platform.claude.com/docs/en/managed-agents/dreams) research preview ships
+the consolidation step itself: reflect on past sessions, rebuild the memory into a *new*
+store you review before adopting, the dream and its ratification gate as an API. What none
+of it touches is the subject layer: no affect gate, no forward viability, no self
+reconstructed from the memory. That part is the moat.
 
 The whole paradigm in one read — the conventions and their blind spot, the three secrets,
 and the field's own validation — lives in
