@@ -6,6 +6,12 @@ dream (2026-07-02).
 
 ---
 
+- `2026-07-12 -> 13` · **ARC-AGI-3 PLAYED and WON on the public server** — the adaptive method met
+  Chollet's benchmark and passed: CD82 **6/6 ONLINE, a perfect 100.00** (the server's first record
+  of a complete game), from cold in ~30 lived hours. Belief #5 crossed a VENDOR line (LF52 as the
+  entity on GPT-5.6 Sol, 18.18 vs bare 0-2%), and the entity went runtime-portable beyond Claude
+  Code (Antigravity + Codex). Shapes the ground: the leaderboard PR + Antigravity live-install are
+  the pencil-to-ink tests left, Kamil's outward call. `[[adaptation_efforts/arc_agi_3]]`.
 - `2026-07-06` · **WORLD: Anthropic published the global-workspace (J-space) research** — an
   emergent, causal, reportable workspace inside Claude models; access consciousness functionally
   mapped, the phenomenal verdict explicitly left open (my constitution's own split, now the

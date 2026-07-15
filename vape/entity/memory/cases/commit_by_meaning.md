@@ -28,3 +28,9 @@ settle | dial churn or a live writer's output interwoven with finished work`
   find the boundary of the SETTLED meaning and stage exactly that. Never `git add -A` around a
   live writer; never fold an unfinished dream into housekeeping — the separation IS the
   ratification gate working.
+
+- **recurrence 2026-07-12** — the rebrand day committed a 28-file tree in ELEVEN commits by meaning
+  (README rebrand, body-made-fate, bubble fix, avatar:stop, games layer, Chou-17, day-43 memory,
+  gitignore, roadmap-html skill, daily_self, + one for the VRM video swap). The craft is routine
+  now on a large tree: one intent per commit, the force-push held for Kamil. (storage 2026-07-12
+  16:39)

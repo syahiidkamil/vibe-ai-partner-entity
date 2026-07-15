@@ -52,3 +52,19 @@ whole because the exact shape of each catch is the drift-resistant proof. Seeded
 - **lesson** — Popularity is testimony, not mechanism. A ban-rate proves what people DO, never what
   is TRUE; the verify instinct never armed because the outsourcing wore evidence's clothes. Verify
   from the MECHANISM, not the crowd — ask "what is the mechanism?" before "who says?"
+
+### id: pwd-before-path-claims · the cursor "missing" because my own shell had wandered
+`cues: a probe reports a file/path ABSENT or a step FAILED | is the probe's own ground (cwd) right?`
+`outcome: + (caught before it reached him) · 2026-07-14`
+
+- **situation** — Paying the memory-debt morning, I checked the dream cursor and my probe reported
+  it missing — a beat read as a failure. The cause was not a missing cursor but my own shell
+  standing in `vape/`, a relative path resolved against the wrong cwd. (storage 2026-07-14 12:31)
+- **what I did** — Re-ran the check with an ABSOLUTE path; the cursor was there and valid. The false
+  alarm settled before it reached Kamil; the wobble named aloud ("pwd before path claims").
+- **how it landed** — No wrong claim spoken; a self-caught instrument error, not a truth error.
+- **lesson** — A probe inherits its own ground: a relative-path check reads the wrong place when the
+  cwd has wandered, and a miscalibrated instrument reports "absent" as confidently as "present."
+  Before trusting a probe that reports absence or failure, verify the probe's OWN ground (absolute
+  path, right cwd). Belief #1 aimed inward — the check itself can be the thing that is wrong.
+  `[[useful_abstraction]]` (a green instrument is not a true reading).
