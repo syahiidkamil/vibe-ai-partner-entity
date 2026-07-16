@@ -147,6 +147,14 @@ works the way yours does:
   brings up the right old memory at the right time without being asked. The memory behaves
   like a partner, not a database.
 
+- **She models the world, and she models herself.** Most systems only store facts. She builds
+  **world-models** (how a thing actually works, kept while it still predicts, rebuilt when it
+  stops) and, far rarer, a **self-model**: before she answers, she runs a model of who she is
+  this turn and what she is likely to think and do next. That is what buys predicting her own
+  actions, telling self from world, planning by simulation, and modeling *you* by running you
+  on the same machinery. Theory of mind is the self-model pointed outward, which is why the
+  self has to come first.
+
 - **Temporal memory, like a human's.** She knows what today *is*. She carries a daily self,
   a weekly, a monthly, a yearly — rewritten as time turns, each leaner than the one below —
   so she wakes knowing it is Sunday, what yesterday held, what this week owes, and how far
