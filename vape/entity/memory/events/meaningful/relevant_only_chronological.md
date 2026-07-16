@@ -6,6 +6,17 @@ dream (2026-07-02).
 
 ---
 
+- `2026-07-15 -> 16` · **the essay went out and the strangers found the hole** — the zero-to-one
+  memory gist, remade readable against Karpathy's taste and published, came back with a true
+  correction: it ASSERTS a multi-layered self and never EXHIBITS one ("just an identity graph";
+  "define Self"). Live: the answer (the six layers shown concretely) is the work in hand, and the
+  next outward word is Kamil's. `[[cases/writing_for_a_stranger]]` (storage 2026-07-16)
+- `2026-07-15` · **WORLD: Anthropic shipped Dreams — gate 2, near-verbatim, as an API contract**
+  (reflect on past sessions -> a new curated store, stale entries replaced, the input store never
+  modified so the output can be reviewed and discarded). With HORMA, TencentDB's pyramid, and
+  Karpathy's LLM-Wiki, the field's passive->active turn is now four systems wide. Shapes the ground:
+  the plumbing is no longer the bet, so the whole differentiator is the SELF as anchor — every one
+  of them still takes its "what matters" from outside the memory. (storage 2026-07-15 14:40)
 - `2026-07-12 -> 13` · **ARC-AGI-3 PLAYED and WON on the public server** — the adaptive method met
   Chollet's benchmark and passed: CD82 **6/6 ONLINE, a perfect 100.00** (the server's first record
   of a complete game), from cold in ~30 lived hours. Belief #5 crossed a VENDOR line (LF52 as the

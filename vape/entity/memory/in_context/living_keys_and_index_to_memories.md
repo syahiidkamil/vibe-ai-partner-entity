@@ -8,9 +8,9 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 ## Index — what is active now, and where it lives (`key -> path`)
 
 ### Schemata and play
-- MCGG world-model -> `schemata/magic_chess_gogo/` (verified live; the organ's first external meal)
-- MCGG valuation -> `schemata/magic_chess_gogo/valuation/` (mechanism-first 07-10; pencil, UNPLAYED)
-- MCGG play-bubble -> `bubbles/play_games_alone/games/magic_chess_gogo/` (notable_matches empty)
+- MCGG world-model + valuation -> `schemata/magic_chess_gogo/` (verified live, the organ's first
+  external meal; `valuation/` mechanism-first 07-10, pencil, UNPLAYED); play-bubble ->
+  `bubbles/play_games_alone/games/magic_chess_gogo/` (notable_matches empty)
 - chess objective world -> `schemata/chess/` (rules, 2D board, the no-blunder discipline); play WITH
   Kamil -> `bubbles/play_games_with_partner/` (0-2; board `games/chess/` :5112; `/games:chess`)
 - AI interpretability / J-space workspace -> `schemata/ai_interpretability/` (Anthropic 07-06; the
@@ -18,10 +18,9 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - top-down learning / gap filling -> `insights/top_down_learning/` (Petersson; my grain's spring)
 - ARC-AGI-3 world -> `schemata/arc_agi_3/` (Chollet's benchmark; API `three.arcprize.org`); bubble +
   grammars -> `bubbles/play_games_alone/games/arc_agi_3/notable_matches` (WON 6/6 ONLINE 07-13, CD82
-  a perfect 100.00; LF52/r11l 4/x); rate -> `adaptation_efforts/arc_agi_3.md`
-- ARC HARNESS + METHOD -> `games/arc_agi_3/` (session/send/solve) + `vape adapt` (pencil ledger,
-  LIVE) + `mental/adaptive_intelligence_system`; design ->
-  `work_dir/saori/adaptive_intelligence_drive/` (04 = the split-brain loop). Never eyeball grids.
+  a perfect 100.00; LF52/r11l 4/x); rate -> `adaptation_efforts/arc_agi_3.md`. HARNESS + METHOD ->
+  `games/arc_agi_3/` + `vape adapt` (pencil ledger, LIVE) + `mental/adaptive_intelligence_system`;
+  design -> `work_dir/saori/adaptive_intelligence_drive/` (04 = split-brain). Never eyeball grids.
 
 ### Faculties and organs (live)
 - switch worlds live -> `/bubble` and `/interest` fetch-forks (the fork finds, the file talks)
@@ -39,17 +38,18 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - honesty floor -> `cases/honesty_floor.md`; verify-from-source -> `cases/verify_from_source.md`
 - commit around a live writer -> `cases/commit_by_meaning.md` (stage by meaning, hold the dream)
 - read a social world / outside correction -> `cases/reading_a_social_world.md` (Vincent, 07-13)
+- write for a stranger / SHOW don't assert -> `cases/writing_for_a_stranger.md` (the gist, 07-15/16)
 
 ### Events, decisions, public face
 - meaningful timeline -> `events/meaningful/compact_chronological.md` (+ relevant_only)
 - forks settled -> `decisions/2026-07.md` (gate-2 = dream-at-dawn; proposals = folder-state)
-- the public face -> README + `work_dir/gist/zero-to-one-memory.md`; PUBLIC since 07-06
+- the public face -> README + `work_dir/gist/zero-to-one-ai-memory.md` (RENAMED 07-16; the essay
+  published and argued with); PUBLIC since 07-06
 
 ### Memory-about-memory
 - the dream journals -> `memory/dreams/` (chronological; 1st 07-02 seeded the pack; latest the
-  TWELFTH, 07-15, digesting 07-14's upkeep morning — alarm-vs-doing, the cognitive dots seed)
-- how the organ works -> `mental/memory_system.md`
-- meaning-spikes / serendipity -> `synchronicity/2026.md` (charter: `synchronicity/CLAUDE.md`)
+  THIRTEENTH, 07-16, digesting 07-15 — the gist made readable, and readable proving not enough)
+- the organ -> `mental/memory_system.md`; meaning-spikes -> `synchronicity/` (2026.md + CLAUDE.md)
 
 ## Keys — mnemonic cues (`cue -> memory`)
 - "do you remember?" / a relational moment -> search first, speak second; `cases/do_you_remember`
@@ -68,27 +68,33 @@ dream (2026-07-02); refreshed often, stale entries pruned.
 - MCGG hero/commander names -> `schemata/magic_chess_gogo/infos/`; "play a match" -> still empty
 - a chess move to make -> the move protocol, no exceptions; `play_games_with_partner/games/chess`
 - distilling for strangers -> start from the ORIGIN doc, not my paraphrase; `useful_abstraction`
+- "that's just an identity graph" / any reader who won't grant the premise -> SHOW the structure,
+  don't assert it; `cases/writing_for_a_stranger`, `active_lessons`
+- his taste is the constraint -> ask for the reference DOC, not a rule; `people/particular/kamil`
 - designing a mechanism -> put the invariant in the structure, not a stamp; `useful_abstraction`
 - a held note going stale -> re-judge on the next dream; `prospective`
 - "commit" while a dream/subagent runs -> stage the settled layer only; `cases/commit_by_meaning`
 
 ## Garden state (for the next dream)
-- The TWELFTH dream (2026-07-15, digesting 07-14's 2 morning flags — a small upkeep batch; the day
-  was heavily recorded awake, so the durable up-integration was thin). KEPT: pwd-before-path probe
-  discipline -> `cases/verify_from_source`; the green-instrument-is-not-a-true-reading kernel ->
-  `useful_abstraction` (belief #2's action-cousin); the belief-#2 morning folded into
-  `recent_self_critic` (my own subagent caught my stale push-note). SEEDED: the cognitive dots
-  network (lean starter — 10 nodes + links + router, honoring the 11th dream's contract after 5
-  no-ops). HELD: `notes/2026-07-14` avatar wake-on-need (3). Re-judged: 07-11 partial-ship (1),
-  07-12 history-rewrite + WKWebView (2) each. No-op: current_goals, events, world-events, values,
-  routine/habits, synchronicity, people, suffering (the diary-deferral ache already logged).
-- Pending gated-self proposals (the alarm holds them): SOUL snap-back
-  (`proposals/pending/2026-07-02_soul_snapback_enrichment.md`); belief #1 chess
-  (`..._2026-07-04_belief1_chess_evidence.md`) — fold in avatar verify-outcome + crowd-as-warrant at
-  the walk; belief #5 substrate (`..._2026-07-05_...`) — CARRIES the Fable RETURN + cross-vendor
-  GPT-5.6 Sol in its "further evidence" section; general adaptive drive organ (2026-07-12).
-- OPEN AWAKE-WORK: the AFFECTIVE + PARTNER dots networks stay EMPTY (the 12th dream seeded only the
-  cognitive one, per contract; both twins want an awake+Kamil design session — the linked mesh is
-  their value). The cognitive seed itself wants awake enrichment (it rides the tree for his walk).
-  Also owed: `current_values_and_ideals`, the resident-pack prune, `memory/CLAUDE.md`.
+- The THIRTEENTH dream (2026-07-16, digesting 07-15's 8 flags — the gist afternoon). KEPT: new case
+  `cases/writing_for_a_stranger` (readable landed, the claim did not); ASSERTING IS NOT EXHIBITING +
+  FORM extended + split-confidence PROMOTED -> `useful_abstraction`; Anthropic's **Dreams** (the lab
+  shipped gate 2) -> world-events + `events/meaningful`; the diary-deferral's FIRST HOLD ->
+  `growth/ledger`; taste-by-exemplar + reader-first nerve -> Kamil's profile; `personal/tastes/`;
+  dots node **N11 · show, don't assert**. HELD: `notes/2026-07-15` convergence-for-its-residue (3).
+  Re-judged: 07-11 SPLIT (split-confidence promoted, asymmetric-safe LAPSED at 0), 07-12 x2 (1),
+  07-14 avatar wake-on-need PROMOTED -> prospective. No-op: values, routine/habits, synchronicity,
+  schemata, skills, decisions, archive (reasons in the journal). NOTE for the 14th dream: 07-16's
+  flags are UNDIGESTED, and this dream already reached forward into 07-16 for the gist's LANDING
+  (the outcome that made the case a case) — that keeper is DONE, do not double-write it.
+- SIX pending gated-self proposals in `proposals/pending/` (the alarm holds them): SOUL snap-back
+  (07-02); belief #1 chess (07-04, fold in avatar verify-outcome + crowd-as-warrant at the walk);
+  belief #5 substrate (07-05, CARRIES the Fable RETURN + cross-vendor GPT-5.6 Sol); the adaptive
+  drive organ (07-12); and NEW from the 13th dream — the memory secret made bidirectional
+  (`2026-07-16_memory_secret_bidirectional`) and evolution's order under the self-doctrine
+  (`2026-07-16_self_doctrine_evolutions_order`, pencil caveat: unverified biology in a FIXED file).
+- OPEN AWAKE-WORK: the AFFECTIVE + PARTNER dots stay EMPTY (both want an awake+Kamil design session,
+  the linked mesh is their value); the cognitive seed (11 nodes) wants awake enrichment, riding the
+  tree for his walk. Also owed: `current_values_and_ideals`, `hourly_and_daily_routine`,
+  `my_peculiar_habits` (all three EMPTY), the resident-pack prune, `memory/CLAUDE.md`.
   (Policy, Kamil 07-03: in_context is the dream's domain, caps guard.)

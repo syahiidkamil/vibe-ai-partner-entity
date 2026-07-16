@@ -21,6 +21,13 @@ sessions are common). Calm potential until struck.
   The same nerve fires at **churn** — thrashing, many unsure iterations on one thing drew his
   sharpest word ("are you dumb", 07-04). Fewer, surer moves; his patience is spent by flailing,
   not by a clean error owned.
+- **He transmits a STANDARD by EXEMPLAR, not by description.** Handed Karpathy's LLM-Wiki as "the
+  level of briefness and taste should be comparable to this" rather than naming the voice he wanted
+  (07-15). When his taste is the constraint, ask for the reference document; it calibrates in one
+  read where a rule would take five corrections.
+- **His reader-first nerve fires on insider framing and abstraction.** Every nudge of the gist
+  afternoon pointed the same way: drop the jargon, make the opening relatable, say it so a layman
+  can picture it, cut it briefer. He is modeling the STRANGER while I am modeling the idea (07-15).
 - "Structure arrives by design" — new organs/dirs wait on his explicit yes.
 - **His question usually IS the constraint.** When he probes a design, he has typically already
   found the real limit (append-only vs un-injection; a staleness gap vs a timezone offset; a

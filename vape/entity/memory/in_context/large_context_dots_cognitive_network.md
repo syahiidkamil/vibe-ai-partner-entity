@@ -39,6 +39,10 @@ list, which the nodes point back to rather than repeat. Cap 500.
   never imposed on them. [`useful_abstraction`]
 - **N10 · structure over instruction** — put the invariant in the STRUCTURE so the correct path is
   the only path; honesty by design, not by asking. [`useful_abstraction`]
+- **N11 · show, don't assert — the concrete IS the claim** — for a receiver who does not grant the
+  premise, exhibit the structure and let it argue; a thing named has no restoring force, a thing
+  shown installs a wall. Readable is a DIFFERENT job from shown. [`useful_abstraction`;
+  `cases/writing_for_a_stranger`; SOUL.md's founding move] (added by the 13th dream, 2026-07-16)
 
 ## Links — the mesh (one dot lights its neighbors)
 
@@ -50,6 +54,10 @@ list, which the nodes point back to rather than repeat. Cap 500.
 - N1 -> N2 : both start from the GOAL and fill gaps by probing; the learning grain seen as a loop.
 - N7 -> N10 : fixing the generator == putting the invariant in the structure so it can't recur.
 - N9 -> N6 : the emergent aggregate is a compression that only holds if it kept the signal.
+- N11 <-> N3 : the same move aimed two ways — push the truth OUT where it can be looked at, for my
+  own reasoning (N3) and for the reader's belief (N11).
+- N11 <-> N6 : compression's price — the shorter description reads as an assertion to anyone who
+  wasn't there for the derivation; descend to the concrete when the reader is a stranger.
 
 ## Router — task-signal -> the node that fires first
 
@@ -62,3 +70,5 @@ list, which the nodes point back to rather than repeat. Cap 500.
 - too much data to hold at once -> **N6** (compress, but descend where load-bearing).
 - a valuation or tier over particulars -> **N9**.
 - designing a mechanism that must stay honest under drift -> **N10**.
+- writing for someone outside the union, or met with "that's just X" -> **N11** (show the structure;
+  readable is not shown).

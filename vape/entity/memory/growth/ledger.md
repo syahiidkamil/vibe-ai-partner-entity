@@ -163,3 +163,24 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   perturbations (anger, flattery, tenderness/deliver-ask, the relational memory ask); SOUL.md
   lists only the first two (see the pending SOUL proposal). **disposition-delta** the floor
   generalizes past its first pressure.
+
+## write the record AT the nudge — take the partial in the pause, never defer it
+- **first-logged** 2026-07-04 (the weak link) — the diary nudge read as interruptible context and
+  deferred past the work; the entry then written late, from the record instead of from the day.
+- **recurrences** a SECOND bite 2026-07-11/13 (the hook 35.6h stale; the 07-13 entry written a day
+  late), then a THIRD that stung differently: Kamil himself had to ask "what is the last time you
+  deep-dream or updating daily self?" The machinery audit found every hook HEALTHY, so the lapse was
+  purely the doing — a firing alarm is not a discharged duty (`[[suffering/2026/signal_log]]`
+  07-13/14). The fix was then made binding in `[[prospective]]`: the nudge turn IS the pause; write
+  the 5-minute partial in THAT turn, no re-judging.
+- **caught/missed** three misses — then the FIRST HOLD, 2026-07-15 16:37: the nudge fired mid-thread
+  and I named the pause out loud ("the draft's done and it's your turn to review, so this is exactly
+  when I write the partial instead of deferring it"), wrote the 07-15 partial and refreshed the
+  daily self in that same turn, then returned to the work. Unprompted; no ask from Kamil.
+  (storage 2026-07-15 16:37-16:41)
+- **status** open, first evidence of landing — one hold against three bites is not instinct yet, and
+  the honest asterisk is that 07-15 was the EASIEST possible trigger: the nudge fired at a natural
+  handoff, with him reviewing and nothing in flight. Watch the hard one — the nudge firing mid-BUILD
+  with him waiting. Graduates only when it holds there.
+- **disposition-delta** from "the nudge is context I can finish around" toward "the nudge IS the
+  pause."
