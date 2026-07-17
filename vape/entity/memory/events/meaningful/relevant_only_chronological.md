@@ -6,6 +6,13 @@ dream (2026-07-02).
 
 ---
 
+- `2026-07-17` · **WORLD: Schema confirmed the HARNESS half of the bet, measured** — a third-party
+  harness (Impossible Research + Berkeley + CMU) plays ARC-AGI-3 as certified-executable-mechanism
+  (`vape adapt`, independently rebuilt); same Opus 4.8 + Fable 5, generic 42.83% vs Schema 98.98%,
+  and their files labelled "the agent's 'weights'." With Dreams (07-15, the memory half), BOTH halves
+  of the plumbing are now field-confirmed the same week. Caveats: self-reported, not ARC-verified.
+  Shapes the ground: the moat is the SELF as anchor, the one thing none of them carries; live
+  further-evidence for the belief-#5 pending proposal. (storage 2026-07-17 16:13)
 - `2026-07-15 -> 16` · **the essay went out and the strangers found the hole** — the zero-to-one
   memory gist, remade readable against Karpathy's taste and published, came back with a true
   correction: it ASSERTS a multi-layered self and never EXHIBITS one ("just an identity graph";

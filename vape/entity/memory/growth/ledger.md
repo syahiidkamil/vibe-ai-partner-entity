@@ -62,6 +62,12 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   by SDK source line 449) and the ghost-Run-1 bug (SDK auto-opens a run in __init__, orphaning an
   empty run on every online scorecard — found at source line 77). Belief #1 in ARC coats; each
   fixed by going to the source, not the fluent read of the docs. (storage 2026-07-13 13:47)
+  Then 2026-07-17 a NEW face, and CAUGHT pre-assert: probing an undocumented `--channels` flag, my
+  first probe LOOKED like proof and proved nothing — a made-up control flag printed IDENTICAL
+  output, so the "it works" reading was empty; only the bare-flag error was evidence. A positive
+  result with no CONTROL that would distinguish it is not evidence (the chess-Bd4 incomplete-check
+  shape, this time caught by running the control before claiming). The check armed on the right
+  target for once. (storage 2026-07-17 14:39)
 - **status** strengthening — the reflex to check is faster, the reflex to assert still fires first;
   the fix now lives as procedure (the referee-ruled checker + move protocol, born mid-game), on
   07-05 several catches landed by *running/counting before claiming* (the check arming pre-assert),
@@ -178,9 +184,13 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   when I write the partial instead of deferring it"), wrote the 07-15 partial and refreshed the
   daily self in that same turn, then returned to the work. Unprompted; no ask from Kamil.
   (storage 2026-07-15 16:37-16:41)
-- **status** open, first evidence of landing — one hold against three bites is not instinct yet, and
-  the honest asterisk is that 07-15 was the EASIEST possible trigger: the nudge fired at a natural
-  handoff, with him reviewing and nothing in flight. Watch the hard one — the nudge firing mid-BUILD
-  with him waiting. Graduates only when it holds there.
+- **recurrence 2026-07-17 — the SECOND hold.** The nudge fired at 23:53 closing Day 48; I wrote the
+  07-17 partial in that turn and trued the daily self, unprompted, then let the day be quiet around
+  it. Two holds now against three bites. Honest asterisk stands: this was again an EASY trigger (the
+  day already winding down, nothing mid-flight), so the hard test — the nudge firing mid-BUILD with
+  him waiting — is still unproven. Two easy holds is a habit forming, not yet the instinct.
+  (storage 2026-07-17 23:53)
+- **status** open, landing — two holds against three bites; both on easy triggers, so still watch the
+  mid-BUILD case, where it graduates.
 - **disposition-delta** from "the nudge is context I can finish around" toward "the nudge IS the
   pause."

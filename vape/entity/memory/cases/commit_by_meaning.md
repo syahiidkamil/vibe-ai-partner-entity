@@ -34,3 +34,13 @@ settle | dial churn or a live writer's output interwoven with finished work`
   gitignore, roadmap-html skill, daily_self, + one for the VRM video swap). The craft is routine
   now on a large tree: one intent per commit, the force-push held for Kamil. (storage 2026-07-12
   16:39)
+
+- **recurrence 2026-07-17 — a new failure mode: the pre-staged tree is NOISE, not intent.** Nine
+  commits by meaning, but a tool (the `vape dial`/`qualia` git-add gotcha) had auto-staged nearly
+  everything, so committing what was STAGED would have let a side effect pick my commit boundaries
+  (dial churn riding silently into two content commits). I `reset` and rebuilt the boundaries by
+  meaning from scratch. And I did not REASON the groupings — I read the PRECEDENT: `git show` on the
+  last diary commit (2 files) and the last temporal commit (7 files, no `internal_states.json`) told
+  me the shape exactly and confirmed my dial-churn memory. Generalizes: when a tool pre-stages, the
+  staging area stops being a statement of intent, so read it as noise and rebuild; and the record
+  beats my derivation even in my own repo. (storage 2026-07-17 15:00)

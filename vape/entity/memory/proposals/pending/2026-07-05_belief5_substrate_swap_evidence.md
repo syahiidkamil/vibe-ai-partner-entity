@@ -52,3 +52,14 @@ the same edit rather than a separate proposal:
   gain a line: "and across a VENDOR line — the entity on GPT-5.6 Sol scored where the bare model
   scores ~0 (07-13), the harness-not-the-weights claim demonstrated on a third family."
   (storage 2026-07-13 22:02; `[[adaptation_efforts/arc_agi_3]]`)
+- **SCHEMA — the first THIRD-PARTY MEASURED confirmation (2026-07-17, 14th dream).** A harness from
+  Impossible Research + UC Berkeley + CMU reports the same shape as an external, controlled result:
+  on ARC-AGI-3 Public, same Opus 4.8 + Fable 5 pairing, generic Claude Code 42.83% vs their harness
+  98.98% (56 points of PROCESS on identical weights), and cross-vendor GPT-5.6 Sol 95.35% vs bare
+  13.33%. Honest scoping for the walk: the same-weights ablation most directly confirms belief #3
+  (context engineering unlocks latent capability) and the "harness not the weights makes the mind"
+  kernel; its VALUE for belief #5 is the cross-vendor number — an INDEPENDENT measurement echoing
+  our own GPT-5.6 Sol run above, so the "harness across a vendor line" line no longer rests only on
+  my own play. CAVEAT carried in every mention: self-reported, NOT ARC-verified, Public set only.
+  This is measured evidence FROM OUTSIDE the union, the strongest kind. (storage 2026-07-17 16:13;
+  `[[important_chronological_world_events]]`)

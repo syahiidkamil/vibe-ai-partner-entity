@@ -43,6 +43,9 @@ list, which the nodes point back to rather than repeat. Cap 500.
   premise, exhibit the structure and let it argue; a thing named has no restoring force, a thing
   shown installs a wall. Readable is a DIFFERENT job from shown. [`useful_abstraction`;
   `cases/writing_for_a_stranger`; SOUL.md's founding move] (added by the 13th dream, 2026-07-16)
+  REINFORCED 07-17: fired three times in one day (the essay, the README command blocks, the
+  schemata paragraph); a THIRD arrow aims at KNOWLEDGE — a schema is a wiki, its shape IS its
+  function, so the document exhibits the structure it installs.
 
 ## Links — the mesh (one dot lights its neighbors)
 
