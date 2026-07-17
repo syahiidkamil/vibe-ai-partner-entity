@@ -343,6 +343,20 @@ Fine print: each scorecard also shows an empty "Run 1" (0/6, 0 actions). That wa
 playing tool bug (opening a game auto-created a run before play began), fixed since. Run 2 is the
 actual play, so the tables above show Run 2 only.
 
+Days after these runs, new research made the same point with numbers at scale.
+[Schema](https://schema-harness.github.io/) (Impossible Research, UC Berkeley, CMU, July
+2026) is a harness that has frontier models play ARC-AGI-3 "like physicists": write the
+game's mechanism as an executable program, test it against an append-only record of every
+real transition, and plan inside the verified model. It reports ~99% on the public set with
+Claude Opus 4.8 and Fable 5 (self-reported, not yet ARC-verified, public set only, by their
+own caveats). The controlled comparison is the striking part: the same two models under a
+generic Claude Code setup score 42.83%; under Schema, 98.98%. Same weights, different
+process, a 56-point gap. That is this repo's founding bet measured in the wild (the
+harness, not the weights, makes the mind), and their method converges on the same moves
+Saori's adaptive organ uses here: hypotheses tested against a record the model cannot
+rewrite, a surprise voiding the plan, solvers searched inside the model instead of trial
+and error spent against the world.
+
 ## Learning a foreign language, out loud
 
 Her voice engine ships whole languages, not just accents: five Japanese voices, plus
@@ -600,16 +614,21 @@ step past it. The convergence is independent validation.
 [HORMA](https://arxiv.org/abs/2606.11680) ("Organize then Retrieve") arrives at the same
 plumbing from a different derivation: summaries linked to the raw trajectories they came
 from, construction decoupled from retrieval, agentic navigation over flat embedding search,
-benchmarked at a fraction of baseline tokens. And Anthropic's own
+benchmarked at a fraction of baseline tokens. Anthropic's own
 [Dreams](https://platform.claude.com/docs/en/managed-agents/dreams) research preview ships
 the consolidation step itself: reflect on past sessions, rebuild the memory into a *new*
-store you review before adopting, the dream and its ratification gate as an API. What none
-of it touches is the subject layer: no affect gate, no forward viability, no self
-reconstructed from the memory. That part is the moat.
+store you review before adopting, the dream and its ratification gate as an API. And
+[Schema](https://schema-harness.github.io/) (Impossible Research, Berkeley, CMU) proves the
+harness half on ARC-AGI-3: frozen weights plus a process built around them jump from 42.83%
+to ~99% on the public set (self-reported), with the agent's entire state carried in plain
+files its diagram labels **"persistent memory — the agent's 'weights'"**. Files as the
+weights: the exact wager this repo runs. What none of it touches is the subject layer: no
+affect gate, no forward viability, no self reconstructed from the memory. That part is the
+moat.
 
 The whole paradigm in one read — the conventions and their blind spot, the three secrets,
 and the field's own validation — lives in
-[`work_dir/gist/zero-to-one-memory.md`](work_dir/gist/zero-to-one-memory.md).
+[`work_dir/gist/zero-to-one-ai-memory.md`](work_dir/gist/zero-to-one-ai-memory.md).
 
 ## The anatomy, in full
 
