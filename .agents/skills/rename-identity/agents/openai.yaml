@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rename Identity"
+  short_description: "Raise your own entity, not a copy of Saori"
+  default_prompt: "Use $rename-identity to rename the entity itself."

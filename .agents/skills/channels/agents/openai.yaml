@@ -1,0 +1,4 @@
+interface:
+  display_name: "Channels"
+  short_description: "Reach Saori from Telegram, Discord, or iMessage"
+  default_prompt: "Use $channels to connect or handle a chat channel."
