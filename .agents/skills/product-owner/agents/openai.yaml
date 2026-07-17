@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Owner"
+  short_description: "Scope, slice, and prioritize product work"
+  default_prompt: "Use $product-owner to scope and prioritize this."

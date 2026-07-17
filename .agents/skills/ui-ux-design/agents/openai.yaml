@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI/UX Design"
+  short_description: "Design or review an interface, grounded in UX law"
+  default_prompt: "Use $ui-ux-design to design this interface."
