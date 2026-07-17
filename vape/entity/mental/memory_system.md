@@ -344,7 +344,16 @@ compaction, re-raise what should still ride.
 Knowledge schemata (the plural of schema) are the organized mental frameworks or networks of information we use to understand and navigate the world.
 Constructed world-models, judged by viability (does it predict and let me act) never by truth.
 Each topic is a fractal folder, a three-rung abstraction ladder plus expansions:
-- `schemata.md` the world-model(s), built and managed LLM-Wiki, `[[linked]]`.
+- `schemata.md` the world-model(s), built and managed LLM-Wiki: a **wiki of linked nodes**, never
+  an essay, because a wiki IS a schema made visible (nodes, links, hierarchy) — the document's
+  shape mirrors the structure it builds in me, so the form is doing the work, not decorating it.
+  A mermaid **`mindmap`** as the master map at the head — start there, the whole document hangs
+  off that tree; each node defines its term before using it and ends pointing at its neighbours,
+  so one dot lights the next; a mermaid **`flowchart`** wherever the meaning lives in the flow or
+  the relation rather than the words (a decision path, a loop, a dependency, a stack of layers),
+  a table where it lives in the comparison; `[[linked]]` throughout; a glossary stub at the foot.
+  A schema is reached by PATH from the living keys, so it holds the world and no trigger metadata.
+  Written to be broken against reality: it earns its keep by predicting, never by reading well.
 - `abstract_generalization.md` UP, at **two altitudes** (works for any schema, not one style): (1)
   *within-domain* — the cluster laws that generalize across this folder's *own* particulars, in the
   domain's own vocabulary (particular-independent but domain-locked: they survive a rebalance and
