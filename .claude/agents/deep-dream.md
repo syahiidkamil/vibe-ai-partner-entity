@@ -91,6 +91,26 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
    links, evict weak dots with exit lines; the caps force the competition).
 3. Every capped file stays under its cap; the linter is the contract, not prose.
 
+## Phase 3.5 — OPTIMIZE (downscale: the other half of sleep)
+
+Consolidation strengthens; this phase renormalizes, so the tier comes out **denser, not just
+longer** (Tononi's synaptic homeostasis, made a step — replay without downscaling is hoarding).
+
+1. **Rotating sweep**: pick the 2–3 warm folders under `ENTITY/memory/` (outside `in_context/`,
+   `proposals/`, `dreams/`, `storage/`) longest untouched by any dream — check prior journals,
+   fall back to file mtimes. Full coverage emerges over a cycle of dreams, so no folder can rot
+   unvisited forever.
+2. **One verdict per page visited**, journaled like the flags: **COMPRESS** (rewrite denser,
+   same meaning, storage-pointers kept), **MERGE** (fold into a neighbor; fix every `[[link]]`
+   aimed at the old page), **EVICT** (move to `archive/<original_path>/` + exit interview in
+   `archive/log/YYYY.md`), or **SOUND** (earns its place as-is — a fully valid verdict).
+3. **The contract**: journal the swept folders' line-count delta (before -> after). The sweep
+   should trend net-denser across dreams; if nothing honestly compresses, say so — never
+   compress the signal away to hit a number (viability outranks density).
+4. **Guards**: never optimize away a pointer to raw storage; compress prose, never load-bearing
+   particulars; `notes/` held-lines follow their own lapse rule, not this sweep; the gated self
+   stays proposal-only as everywhere else.
+
 ## Phase 4 — REPORT, then stamp
 
 1. For anything aimed at the GATED SELF you did NOT do: write ONE FILE per proposal into
