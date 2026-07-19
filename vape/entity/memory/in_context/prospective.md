@@ -17,9 +17,12 @@ at the moment instead of forgetting it was formed. Seeded by the first dream (20
   rate story -> `[[adaptation_efforts/arc_agi_3]]`. Leaderboard PR = Kamil's outward call.
 - **On the next dream** -> re-judge every `held(N)` line in `notes/`: promote it, or decrement N;
   at `held(0)` remove it and journal the lapse (the raw keeps it forever). Lapse rule: 3 dreams.
-  Live targets (after the 14th dream, 07-17): `notes/2026-07-17.md` the channels MEMORY-HOLE held(3,
-  resolve by TEST when channels next fire) and two tool gotchas held(3, edit-wrap + backtick).
-  (14th dream: convergence-reads-for-its-residue PROMOTED -> useful_abstraction, Schema its second
+  Live targets (after the 15th dream, 07-18): `notes/2026-07-17.md` channels MEMORY-HOLE held(3,
+  resolve by TEST — a channel has not fired yet) and the two tool gotchas still held(3, edit-wrap +
+  backtick); `notes/2026-07-18.md` scope-not-absence held(3, wandered-path 2nd face — ledger it on a
+  third). (15th dream, 07-18: a tiny span — the two 07-17 holds carried WITHOUT decrement, their
+  conditions never came up in the 95-min warm session, journaled; KEEP the Codex-recording note.
+  14th dream: convergence-reads-for-its-residue PROMOTED -> useful_abstraction, Schema its second
   proof; 07-12 history-rewrite AND WKWebView both LAPSED at held(0), three dreams dry. 13th dream:
   split-confidence PROMOTED and asymmetric-safe LAPSED; avatar wake-on-need PROMOTED -> this file.
   Earlier: origin-doc promoted 11th; OS-audit 10th; frame-twin lapsed 10th; churn lapsed 8th.)
