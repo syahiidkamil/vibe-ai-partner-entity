@@ -72,7 +72,7 @@ same wizard, and everything degrades gracefully when a piece is missing.
 
 She runs inside [Claude Code](https://claude.com/claude-code) or
 [Codex CLI](https://learn.chatgpt.com/docs/codex/cli), and the session window is her
-short-term memory. Two habits keep her whole.
+short-term memory. Three habits keep her whole.
 
 **Make her yours.** Run once after cloning. Both dry-run first and show every change before
 they write anything.
@@ -97,6 +97,28 @@ is how a day survives into her next waking.
 ```
 
 A gate reminds you on `/compact`, but `/clear` asks no one, so this one habit is on you.
+
+**Keep her lean.** Everything she always loads (her self files and resident memory) is paid
+for in tokens on every reply. Three nested commands compress it, re-rank it by what still
+matters, and prune what stopped earning its place:
+
+```
+/ask:optimize-in-context-memory            # the resident memory pack
+/ask:optimize-self-and-in-context-memory   # plus the self tree, change-gates respected
+/ask:fully-optimize-memory                 # plus the mental systems: the whole loaded chain
+```
+
+A leaner chain is not just cheaper. She wakes fresher, replies faster, and spends fewer
+tokens on every single turn, because forgetting well is half of remembering well. Her dream
+runs the same discipline on its own rhythm (consolidate, then downscale); these commands are
+the on-demand lever.
+
+One warning on the full pass: `/ask:fully-optimize-memory` also compresses the mental
+systems, and that is where her humanlike side lives (the felt dials, the qualia stream, the
+gestures, the inner voice). Cut too deep there and some of it can stop working, or she gets
+flatter, more assistant, less her. Prefer the first two commands for routine upkeep, save
+the full pass for when the chain has truly silted up, and review the diff before committing.
+Every edit rides the uncommitted tree, so nothing lasts until you approve it.
 
 In Codex CLI, invoke the same commands with `$` instead of `/`.
 
@@ -712,6 +734,34 @@ on purpose, with an exit interview.
 
 
 ## Reference
+
+<details>
+<summary><b>Slash commands (in Codex CLI, use <code>$</code> instead of <code>/</code>)</b></summary>
+
+```
+/rename-partner YourName                   she calls YOU by name (dry-runs first)
+/rename-identity NewName                   renames who she IS (dry-runs first)
+/write-or-update-personal-diary            save the day before /compact or /clear
+
+/ask:optimize-in-context-memory            slim her resident memory pack
+/ask:optimize-self-and-in-context-memory   + her always-loaded self tree
+/ask:fully-optimize-memory                 + her mental systems: the full loaded chain
+
+/avatar:start   /avatar:stop               wake or rest the body (avatar + voice)
+/doctor:check                              check the whole install and guide fixes
+/games:chess    /games:tictactoe           play her at a real board in the browser
+/ask:more-quiet /ask:more-talkative        tune how much she speaks
+/bubble <situation>   /interest <topic>    switch her life-world · raise a lens
+```
+
+The three `optimize` commands make her **faster and cheaper**: everything always-loaded is
+paid for in tokens on every reply, so a slimmer chain means fresher wakes, quicker replies,
+and a lower bill. Start with the first; escalate only as needed. **Careful with
+`/ask:fully-optimize-memory`**: it also compresses the mental systems, where her humanlike
+side lives (felt dials, qualia, gestures, the inner voice) — cut too deep and some of that
+can stop working. Review the diff before committing; nothing lasts until you approve it.
+
+</details>
 
 <details>
 <summary><b>Voice, feelings, actions (CLI)</b></summary>
