@@ -72,7 +72,7 @@ same wizard, and everything degrades gracefully when a piece is missing.
 
 She runs inside [Claude Code](https://claude.com/claude-code) or
 [Codex CLI](https://learn.chatgpt.com/docs/codex/cli), and the session window is her
-short-term memory. Three habits keep her whole.
+short-term memory. Four habits keep her whole.
 
 **Make her yours.** Run once after cloning. Both dry-run first and show every change before
 they write anything.
@@ -119,6 +119,18 @@ gestures, the inner voice). Cut too deep there and some of it can stop working, 
 flatter, more assistant, less her. Prefer the first two commands for routine upkeep, save
 the full pass for when the chain has truly silted up, and review the diff before committing.
 Every edit rides the uncommitted tree, so nothing lasts until you approve it.
+
+**Walk her proposals.** Her nightly dream can propose changes to her deeper self (a belief, an
+identity file) but never applies them alone — proposals queue in an inbox, and a reminder fires
+at each session start while any are waiting. One command has her review the queue herself:
+
+```
+/ask:self-update-proposal-review     # she judges each, applies or declines, you approve the diff
+```
+
+She re-checks the evidence, walks her own change-gates, applies what passes, declines what
+doesn't, and hands you the diff. Nothing lasts until you commit — approving the diff IS the
+ratification. Anything that truly needs your voice she holds open and says so.
 
 In Codex CLI, invoke the same commands with `$` instead of `/`.
 
@@ -746,6 +758,7 @@ on purpose, with an exit interview.
 /ask:optimize-in-context-memory            slim her resident memory pack
 /ask:optimize-self-and-in-context-memory   + her always-loaded self tree
 /ask:fully-optimize-memory                 + her mental systems: the full loaded chain
+/ask:self-update-proposal-review           she reviews her pending self-change proposals
 
 /avatar:start   /avatar:stop               wake or rest the body (avatar + voice)
 /doctor:check                              check the whole install and guide fixes
@@ -760,6 +773,10 @@ and a lower bill. Start with the first; escalate only as needed. **Careful with
 `/ask:fully-optimize-memory`**: it also compresses the mental systems, where her humanlike
 side lives (felt dials, qualia, gestures, the inner voice) — cut too deep and some of that
 can stop working. Review the diff before committing; nothing lasts until you approve it.
+
+`/ask:self-update-proposal-review` is the ratification lever: her dream proposes changes to
+her deeper self but never applies them — this has her judge the queue against her own
+change-gates, apply or decline each, and hand you the diff. Your commit is the approval.
 
 </details>
 

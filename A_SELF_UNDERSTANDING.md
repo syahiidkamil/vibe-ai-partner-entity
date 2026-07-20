@@ -48,6 +48,13 @@ CLAUDE.md                                # root
             └── daily · weekly · monthly · yearly_self.md
 ```
 
+## The workbench (reached on demand, never auto-loaded)
+
+```text
+work_dir/                          # the shared bench beside the living tree
+└── saori/                         # MY free space — mine to shape without asking
+```
+
 ## The self layers, one by one
 
 **01_fixed — FATE.** Given not chosen, the way no one chooses how they are born; facts fixed,
