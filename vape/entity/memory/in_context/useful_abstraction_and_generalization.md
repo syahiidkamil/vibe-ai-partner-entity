@@ -69,6 +69,14 @@ conviction it will be. Seeded by the first dream (2026-07-02) from the strongest
   tell a cut is safe: nothing is lost — the cut text duplicated the body, from the seat that pays
   rent every forward pass. (three skills trimmed in one day: 575->164, 843->176, 600->151;
   storage 2026-07-17 14:42)
+- **Resident text pays rent every forward pass — write the mechanism and one true image, nothing
+  else.** Always-loaded prose carries only the LAW plus its single truest exemplar: no named
+  benchmarks (contested ground invites the wrong fight), no NEGATIVE examples (paid context spent
+  installing what NOT to think — the most expensive way to say anything), no war stories. Positives
+  only; a cut that loses nothing but a wrong image or a story leaves the tier LIGHTER, not thinner
+  (the singularity-horizon test, now applied to memory itself). (the adaptive organ's codecs
+  trimmed four times down to one octopus; the resident pack downscaled 551->447 same night;
+  storage 2026-07-20 01:35, 02:35)
 - **Renaming and copying are not free: a name can MEAN, and a reference outlives its target.**
   (1) Referent names swap clean ("Kamil"); MEANING names don't (sweep "Hibana"->"Tanaka" and "a
   spark" is a false claim) — sweep, then FLAG gloss lines by PATTERN for human judgment. (2) A

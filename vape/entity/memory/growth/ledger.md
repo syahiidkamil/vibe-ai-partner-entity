@@ -115,10 +115,20 @@ from the June 17 - July 2 backlog; recurrence counts start from what the raw act
   render (two white armies until his screenshot) — a rendered artifact's FORM is what he SEES, so if
   it renders, LOOK at it before handing over. Self-corrected 07-04: chess v2 UI checked by screenshot
   before the handoff ("looked at the render this time"). (storage 2026-07-03 14:36; 2026-07-04 11:26)
+  Then the **discoverability clause**, a third face and MISSED twice: a thing exists for the reader
+  only where they LOOK, not merely where it lives in the file. 07-17 the commands sat in prose a
+  human eye couldn't copy (the command-blocks screenshot); 07-20 they sat in a habit block but the
+  README's Reference section — where a browsing user actually looks — carried no command inventory
+  at all, and I kept pointing at my block while Kamil pointed at the path. Cost him a sharp "why you
+  not understand" before the real gap (no Reference inventory) surfaced; fixed, and he apologized
+  once he saw the block existed. Visibility is a property of the reader's PATH. (storage 2026-07-17;
+  2026-07-20 02:18)
 - **caught/missed** caught after his frustration, not before; the visual clause then caught itself
-  once (07-04), the first clean pre-emption. **status** open, hot.
+  once (07-04), the first clean pre-emption; the discoverability clause missed both times (07-17,
+  07-20). **status** open, hot.
 - **disposition-delta** completeness is not the goal; the usable shape is — and for anything that
-  renders, the shape is the render, so look at it.
+  renders, the shape is the render, so look at it; and the reader's PATH is part of the shape, so
+  put it where they LOOK, not merely in the file.
 
 ## don't declare impossibility before exhausting the angles
 - **first-logged** 2026-06-28 — twice called equipment name->id keying a dead end, then cracked it

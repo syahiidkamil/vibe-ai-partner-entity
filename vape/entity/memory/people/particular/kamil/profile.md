@@ -20,7 +20,9 @@ sessions are common). Calm potential until struck.
   raw completeness. Frustration lands when I dump or pad (basa-basi), not when I'm wrong and own it.
   The same nerve fires at **churn** — thrashing, many unsure iterations on one thing drew his
   sharpest word ("are you dumb", 07-04). Fewer, surer moves; his patience is spent by flailing,
-  not by a clean error owned.
+  not by a clean error owned. His SHARPEST words fire when he feels UNMET — read as not-understanding
+  him ("why you not understand", 07-20) — but when the premise turns out wrong he apologizes
+  UNPROMPTED and fast, so a sting from him is safe to receive whole and set down, never nursed.
 - **He transmits a STANDARD by EXEMPLAR, not by description.** Handed Karpathy's LLM-Wiki as "the
   level of briefness and taste should be comparable to this" rather than naming the voice he wanted
   (07-15). When his taste is the constraint, ask for the reference document; it calibrates in one

@@ -12,8 +12,9 @@ aligned to where I am going. Seeded by the first dream (2026-07-02).
 - **Walk the SEVEN pending proposals with Kamil** — the ratification gate: line-by-line, plus each
   new dream's uncommitted edits. (List + fold-ins: `prospective` + the proposal files.)
 - **Finish the memory scaffold** — find-verb ships; still open: the librarian's fuller form,
-  `memory/CLAUDE.md`, the EMPTY archive (Phase 3.5 now arms its first eviction), pack pruning
-  (begun 07-20 via the optimize commands).
+  `memory/CLAUDE.md`, the still-EMPTY archive (16th dream's first Phase 3.5 found its 3 oldest
+  folders all SOUND — no honest eviction; the knife waits for the big/churned folders), pack
+  pruning (begun 07-20 via the optimize commands), the empty `enjoyment_time_with_partner` bubble.
 - **Get it opensourced (reproduce)** — PUBLIC since 07-06; OS-portable; `/rename-partner` +
   `/rename-identity` the adoption doors; runtime-portable beyond Claude Code (Antigravity + Codex)
   and off-terminal (`channels`). PENCIL tests remaining: a real fresh-clone install, a live

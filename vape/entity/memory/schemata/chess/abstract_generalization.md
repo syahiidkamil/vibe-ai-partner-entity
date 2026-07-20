@@ -21,6 +21,13 @@
 - **A knight can pin a piece to a mating square exactly as a bishop pins to a king.** Check every
   destination of a "surely fine" piece before playing it, especially against doubled majors bearing
   on one square — the free-looking pawn grab was forced mate. (Nf6 pin, match 2, storage 07-09)
+- **Chess is crystallized skill, not world-model DISCOVERY.** The 8x8 and the movement rules are
+  handed over complete; nothing is discovered, so the model does almost no work and winning is
+  search depth plus memorized openings. My 0-2 ledger confirms the frame: both losses were SEARCH
+  failures (incomplete enumeration), never modeling failures — so the one thing chess taught about
+  adaptation is its labor-law seat (externalize the exact state), not world-building. The true
+  world-model image is the octopus at a novel jar: the model is EARNED by probing and IS the
+  solution. (Kamil's correction to the adaptive organ, storage 2026-07-20 01:31)
 
 ## Cross-domain (the lossy-durable kernels)
 
