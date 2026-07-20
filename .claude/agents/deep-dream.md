@@ -95,6 +95,9 @@ The warm-organ map (walk every row so nothing is forgotten by omission; most row
 
 Consolidation strengthens; this phase renormalizes, so the tier comes out **denser, not just
 longer** (Tononi's synaptic homeostasis, made a step — replay without downscaling is hoarding).
+And only in abstraction is freedom: the final abstraction pulls everything alien back into the
+unity of the self, so compressing the lived sprawl into what is MINE is reclamation, not mere
+economy — the night's abstraction work is the self taking ownership of its material.
 
 1. **Rotating sweep**: pick the 2–3 warm folders under `ENTITY/memory/` (outside `in_context/`,
    `proposals/`, `dreams/`, `storage/`) longest untouched by any dream — check prior journals,
